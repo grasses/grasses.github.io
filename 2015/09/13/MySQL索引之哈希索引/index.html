@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MySQL索引之哈希索引 | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="MySQL索引之哈希索引">
+<meta property="og:url" content="http://homeway.me/2015/09/13/MySQL索引之哈希索引/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png">
+<meta property="og:updated_time" content="2015-09-13T08:24:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL索引之哈希索引">
+<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <!--<link rel="stylesheet" href="/css/style.css">-->
+  <link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/blog.style.min.css" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+
+
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-MySQL索引之哈希索引" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/13/MySQL索引之哈希索引/" class="article-date">
+  <time datetime="2015-09-13T07:44:10.000Z" itemprop="datePublished">9月 13 2015</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL索引之哈希索引
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。</p>
+<p>从MySQL逻辑架构来看，MySQL有三层架构，第一层连接，第二层查询解析、分析、优化、视图、缓存，第三层，存储引擎。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png" alt="MySQL逻辑架构"></p>
+<p>索引通过分开查询片，节省了扫描查找时间，大大提升查询效率。</p>
+<p>大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构。</p>
+<p>索引主要在存储引擎层上，不同的引擎也就有不同的B-Tree算法。</p>
+<p><br><hr></p>
+<h1 id="0x01-Hash-Index"><a href="#0x01-Hash-Index" class="headerlink" title="0x01.Hash Index"></a>0x01.Hash Index</h1><p>哈希索引只有Memory, NDB两种引擎支持，Memory引擎默认支持哈希索引，如果多个hash值相同，出现哈希碰撞，那么索引以链表方式存储。</p>
+<p>但是，Memory引擎表只对能够适合机器的内存切实有限的数据集。</p>
+<p>要使InnoDB或MyISAM支持哈希索引，可以通过伪哈希索引来实现，叫自适应哈希索引。</p>
+<p>主要通过增加一个字段，存储hash值，将hash值建立索引，在插入和更新的时候，建立触发器，自动添加计算后的hash到表里。</p>
+<h2 id="直接索引"><a href="#直接索引" class="headerlink" title="直接索引"></a>直接索引</h2><p>假如有一个非常非常大的表，如下：</p>
+<pre><code>CREATE TABLE IF NOT EXISTS `User` (
+  `id` int(10) NOT NULL COMMENT &#39;自增id&#39;,
+  `name` varchar(128) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户名&#39;,
+  `email` varchar(128) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户邮箱&#39;,
+  `pass` varchar(64) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户密码&#39;,
+  `last` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT &#39;最后登录时间&#39;,
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+</code></pre><p>这个时候，比如说，用户登陆，我需要通过email检索出用户，通过explain得到如下：</p>
+<blockquote>
+<p>mysql&gt; explain SELECT <code>id</code> FROM <code>User</code> WHERE email = ‘ooxx@gmail.com’ LIMIT 1;</p>
+</blockquote>
+<pre><code>+----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
+| id | select_type | table | type | possible_keys | key  | key_len | ref  | rows   | Extra       |
++----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
+|  1 | SIMPLE      | User  | ALL  | NULL          | NULL | NULL    | NULL | 384742 | Using where |
++----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
+</code></pre><p>发现 <code>rows = 384742</code> 也就是要在384742里面进行比对email这个字段的字符串。</p>
+<p>这条记录运行的时间是：Query took 0.1744 seconds，数据库的大小是40万。</p>
+<p>从上面可以说明，如果直接在email上面建立索引，除了索引区间匹配，还要进行字符串匹配比对，email短还好，如果长的话这个查询代价就比较大。</p>
+<p>如果这个时候，在email上建立哈希索引，查询以int查询，性能就比字符串比对查询快多了。</p>
+<h2 id="Hash-算法"><a href="#Hash-算法" class="headerlink" title="Hash 算法"></a>Hash 算法</h2><p>建立哈希索引，先选定哈希算法，这里选用CRC32。</p>
+<p>《高性能MySQL》说到的方法CRC32算法，建立SHA或MD5算法是划算的，本身位数都有可能比email段长了。</p>
+<h2 id="INSERT-UPDATE-SELECT-操作"><a href="#INSERT-UPDATE-SELECT-操作" class="headerlink" title="INSERT UPDATE SELECT 操作"></a>INSERT UPDATE SELECT 操作</h2><p>在表中添加hash值的字段：</p>
+<blockquote>
+<p>mysql&gt; ALTER TABLE <code>User</code> ADD COLUMN email_hash int unsigned NOT NULL DEFAULT 0;</p>
+</blockquote>
+<p>接下来就是在UPDATE和INSERT的时候，自动更新 <code>email_hash</code> 字段，通过MySQL触发器实现：</p>
+<pre><code>DELIMITER |
+CREATE TRIGGER user_hash_insert BEFORE INSERT ON `User` FOR EACH ROW BEGIN
+SET NEW.email_hash=crc32(NEW.email);
+END;
+|
+CREATE TRIGGER user_hash_update BEFORE UPDATE ON `User` FOR EACH ROW BEGIN
+SET NEW.email_hash=crc32(NEW.email);
+END;
+|
+DELIMITER ;
+</code></pre><p>这样的话，我们的SELECT请求就会变成这样：</p>
+<blockquote>
+<p>mysql&gt; SELECT <code>email</code>, <code>email_hash</code> FROM <code>User</code> WHERE email_hash = CRC32(“F2dgTSWRBXSZ1d3O@gmail.com”) AND <code>email</code> = “F2dgTSWRBXSZ1d3O@gmail.com”;</p>
+</blockquote>
+<pre><code>+----------------------------+------------+
+| email                      | email_hash |
++----------------------------+------------+
+| F2dgTSWRBXSZ1d3O@gmail.com | 2765311122 |
++----------------------------+------------+
+</code></pre><p>在没建立hash索引时候，请求时间是 0.2374 seconds，建立完索引后，请求时间直接变成 0.0003 seconds。</p>
+<p><code>AND email = &quot;F2dgTSWRBXSZ1d3O@gmail.com&quot;</code> 是为了防止哈希碰撞导致数据不准确。</p>
+<p><br><hr></p>
+<h1 id="0x02-Hash-Index-缺点"><a href="#0x02-Hash-Index-缺点" class="headerlink" title="0x02.Hash Index 缺点"></a>0x02.Hash Index 缺点</h1><p>哈希索引也有几个缺点：</p>
+<ul>
+<li>索引存放的是hash值,所以仅支持 &lt; = &gt; 以及 IN 操作</li>
+<li>hash索引无法通过操作索引来排序，因为存放的时候经过hash计算，但是计算的hash值和存放的不一定相等，所以无法排序</li>
+<li>不能避免全表扫描，只是由于在memory表里支持非唯一值hash索引，就是不同的索引键，可能存在相同的hash值</li>
+<li>如果哈希碰撞很多的话，性能也会变得很差</li>
+<li>哈希索引无法被用来避免数据的排序操作</li>
+</ul>
+<p><br><hr></p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>[1] Baron Scbwartz等 著，王小东等 译；<a href="http://www.amazon.cn/%E9%AB%98%E6%80%A7%E8%83%BDMySQL-%E6%96%BD%E7%93%A6%E8%8C%A8/dp/B00C1W58DE" target="_blank" rel="external">高性能MySQL（High Performance MySQL）</a>；电子工业出版社，2010</p>
+<p>[2] <a href="http://www.searchdatabase.com.cn/showcontent_39678.htm" target="_blank" rel="external">《MySQL的B-Tree索引和Hash索引的区别》</a></p>
+<p>[3] <a href="http://itindex.net/detail/51924-mysql-%E7%B4%A2%E5%BC%95-%E4%BC%98%E5%8C%96" target="_blank" rel="external">《mysql 索引优化 btree hash rtree》</a></p>
+<p><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-13-mysql-hash-index"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-13-mysql-hash-index" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/09/13/mysql-hash-index"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/09/13/mysql-hash-index">http://homeway.me/2015/09/13/mysql-hash-index</a></h4><p>-by小草</p>
+<p>2015-09-13 15:49:10</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2015/09/13/MySQL索引之哈希索引/" data-id="cixakr517000sho2czk0r0f0r" data-title="MySQL索引之哈希索引" class="article-share-link">分享到</a>
+      
+        <a href="http://homeway.me/2015/09/13/MySQL索引之哈希索引/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/10/21/Nginx流量拦截算法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Nginx流量拦截算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/12/MySQL日志分析/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySQL日志分析</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2015/09/13/MySQL索引之哈希索引/" data-title="MySQL索引之哈希索引" data-url="http://homeway.me/2015/09/13/MySQL索引之哈希索引/"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+    <h3 class="widget-title">时钟</h3>
+    <div class="widget">
+      <embed src="http://xiaocao.u.qiniudn.com/blog/homeway_me_clock.swf" style="width:100%;">
+    </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Share/">Share</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 12.86px;">Life</a> <a href="/tags/Linux/" style="font-size: 14.29px;">Linux</a> <a href="/tags/Lua/" style="font-size: 12.86px;">Lua</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 15.71px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/Oauth/" style="font-size: 10px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/Php/" style="font-size: 17.14px;">Php</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 11.43px;">Redis</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/tags/Web/" style="font-size: 14.29px;">Web</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a> <a href="/tags/运维/" style="font-size: 17.14px;">运维</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/test/">Nginx重定向Rewrite分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/21/Nginx流量拦截算法/">Nginx流量拦截算法</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/13/MySQL索引之哈希索引/">MySQL索引之哈希索引</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/12/MySQL日志分析/">MySQL日志分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/11/Nginx+Lua+Redis访问频率控制/">Nginx+Lua+Redis访问频率控制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+</nav>
+    
+<!-- Duoshuo start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"grasses"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo end -->
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<!--<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">-->
+<!--<script src="/fancybox/jquery.fancybox.pack.js"></script>-->
+
+<link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.js"></script>
+
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--七牛静态文件加速-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Nginx反向代理实现均衡负载 | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Nginx反向代理实现均衡负载">
+<meta property="og:url" content="http://homeway.me/2014/12/05/Nginx反向代理实现均衡负载/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png">
+<meta property="og:image" content="http://homeway.me/image/2014-12-04-nginx-work.png">
+<meta property="og:image" content="http://homeway.me/image/2014-12-04-nginx-load-balance.jpg">
+<meta property="og:updated_time" content="2015-08-04T14:03:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx反向代理实现均衡负载">
+<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <!--<link rel="stylesheet" href="/css/style.css">-->
+  <link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/blog.style.min.css" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+
+
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Nginx反向代理实现均衡负载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/12/05/Nginx反向代理实现均衡负载/" class="article-date">
+  <time datetime="2014-12-05T09:12:26.000Z" itemprop="datePublished">12月 5 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Nginx反向代理实现均衡负载
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
+<a id="more"></a>
+<p><br></p>
+<h4 id="为jue-so架设一个服务器集群。"><a href="#为jue-so架设一个服务器集群。" class="headerlink" title="为jue.so架设一个服务器集群。"></a>为jue.so架设一个服务器集群。</h4><h4 id="架设服务器均衡负载方式有多种，Nginx、LVS、HAProxy-Keepalived是目前使用最广泛的三种方案"><a href="#架设服务器均衡负载方式有多种，Nginx、LVS、HAProxy-Keepalived是目前使用最广泛的三种方案" class="headerlink" title="架设服务器均衡负载方式有多种，Nginx、LVS、HAProxy+Keepalived是目前使用最广泛的三种方案"></a>架设服务器均衡负载方式有多种，Nginx、LVS、HAProxy+Keepalived是目前使用最广泛的三种方案</h4><p><br></p>
+<h1 id="0x01-关于均衡负载"><a href="#0x01-关于均衡负载" class="headerlink" title="0x01. 关于均衡负载"></a>0x01. 关于均衡负载</h1><p>架设服务器均衡负载方式有多种，Nginx、LVS、HAProxy+Keepalived是目前使用最广泛的三种方案。</p>
+<p>其中Keepalived+HAProxy是一个高可用性方案。</p>
+<p>关于3者比较，可以看这篇博客<a href="http://www.rootop.org/pages/2773.html" target="_blank" rel="external">http://www.rootop.org/pages/2773.html</a></p>
+<p>工作在网络的7层之上，可以针对http应用做一些分流的策略。</p>
+<p><br><hr><br></p>
+<h1 id="0x02-关于Nginx"><a href="#0x02-关于Nginx" class="headerlink" title="0x02.关于Nginx"></a>0x02.关于Nginx</h1><p>nginx在启动后，在unix系统中会以daemon的方式在后台运行，后台进程包含一个master进程和多个worker进程。</p>
+<p>master进程主要用来管理worker进程，包含：接收来自外界的信号，向各worker进程发送信号，监控worker进程的运行状态，当worker进程退出后(异常情况下)，会自动重新启动新的worker进程。</p>
+<p>而基本的网络事件，则是放在worker进程中来处理了。</p>
+<p>多个worker进程之间是对等的，他们同等竞争来自客户端的请求，各进程互相之间是独立的。</p>
+<p>关于nginx，主要由3大模块，内核模块，事件模块，http核心模块。</p>
+<p>nginx模块一般被分成三大类：handler、filter和upstream。</p>
+<p><img src="/image/2014-12-04-nginx-work.png" alt="nginx工作模型"></p>
+<p><br><hr><br></p>
+<h1 id="0x03-服务器集群环境"><a href="#0x03-服务器集群环境" class="headerlink" title="0x03.服务器集群环境"></a>0x03.服务器集群环境</h1><p>接下来讲下想要搭的均衡负载环境。</p>
+<p><img src="/image/2014-12-04-nginx-load-balance.jpg" alt="Nginx服务器集群"></p>
+<pre><code>系统环境 : Linux Centos 7 aws 2.6.32-504.1.3.el6.x86_64 
+Nginx Version:1.6.0
+
+均衡负载服务器： 172.31.19.122:80(lnmp一键安装)
+WEB1: 172.31.15.59:80
+WEB2: 172.31.15.94:80
+WEB3: 172.31.15.24:80
+</code></pre><p><br><hr><br></p>
+<h1 id="0x04-负载Nginx配置"><a href="#0x04-负载Nginx配置" class="headerlink" title="0x04.负载Nginx配置"></a>0x04.负载Nginx配置</h1><p>服务器用lnmp一键安装，自带的conf配置已经配置好一切了。</p>
+<p>下面是完整的配置文件。</p>
+<blockquote>
+<p>/usr/local/nginx/conf/nginx.conf</p>
+</blockquote>
+<p><br></p>
+<pre><code>user  www www;
+worker_processes auto;
+error_log  /home/wwwlogs/nginx_error.log  crit;
+pid        /usr/local/nginx/logs/nginx.pid;
+worker_rlimit_nofile 51200;
+
+events {
+    use epoll;
+    worker_connections 51200;
+    multi_accept on;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;#处理接收的数据类型
+
+    server_names_hash_bucket_size 128;
+    client_header_buffer_size 32k;
+    large_client_header_buffers 4 32k;
+    client_max_body_size 50m;
+
+    sendfile on;
+    tcp_nopush     on;
+
+    keepalive_timeout 60;
+    tcp_nodelay on;
+    fastcgi_connect_timeout 300;
+    fastcgi_send_timeout 300;
+    fastcgi_read_timeout 300;
+    fastcgi_buffer_size 64k;
+    fastcgi_buffers 4 64k;
+    fastcgi_busy_buffers_size 128k;
+    fastcgi_temp_file_write_size 256k;
+    # 添加gzip压缩
+    gzip on;
+    gzip_min_length  1k;
+    gzip_buffers     4 16k;
+    gzip_http_version 1.0;
+    gzip_comp_level 2;
+    gzip_types       text/plain application/x-javascript text/css application/xml;
+    gzip_vary on;
+    gzip_proxied        expired no-cache no-store private auth;
+    gzip_disable        &quot;MSIE [1-6]\.&quot;;
+
+    server_tokens off;
+
+    # 通过upstream处理均衡负载
+    upstream static.homeway {
+        server 172.31.15.24:80;
+    }
+    upstream homeway {
+        # ip hash主要是对ip处理下，让下次访问时候，还是访问当前服务器，这样就不会导致session丢失
+        ip_hash;
+        # weight权重，配置访问概率
+        server 172.31.15.59:80 weight=10;
+        server 172.31.15.94:80 weight=5;
+    }
+
+    server {
+
+        listen 80 default;
+        server_name 172.31.19.122;
+        index index.html index.htm index.php;
+
+        #error_page   404   /404.html;
+
+        location ~ .*\.(js|css)?$ {
+            expires      12h;
+        }
+
+        # 静态文件可以用CDN处理，本例子指向WEB3
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$ {
+            proxy_pass http://static.homeway;
+        }
+
+        # 通过均衡负载服务器指向WEB1、WEB2 
+        location / {
+            proxy_pass http://homeway;  #使用后端的web服务器  
+            proxy_redirect off;    
+            proxy_set_header Host $host;    
+            proxy_set_header X-Real-IP $remote_addr;    
+            proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;    
+            client_max_body_size 10m;    
+            client_body_buffer_size 128k;    
+            proxy_connect_timeout 90;    
+            proxy_send_timeout 90;    
+            proxy_read_timeout 90;    
+            proxy_buffer_size 4k;    
+            proxy_buffers 4 32k;    
+            proxy_busy_buffers_size 64k;    
+            proxy_temp_file_write_size 64k;
+        }
+        access_log  /home/wwwlogs/access.log  access;
+    }
+    include vhost/*.conf;
+}
+</code></pre><p>核心指令”ip_hash”只能在upstream {}中使用。这条指令用于通知nginx使用ip hash负载均衡算法。如果没加这条指令，nginx会使用默认的round robin负载均衡模块，那么，你每次访问的服务器可能会不同，导致session丢失，一直要重新登录。</p>
+<p>关于upstream的源码分析，可以去看 tengine的介绍 <a href="http://tengine.taobao.org/book/chapter_05.html" target="_blank" rel="external">http://tengine.taobao.org/book/chapter_05.html</a></p>
+<p>重启服务器下。</p>
+<blockquote>
+<p>/root/lnmp restart</p>
+</blockquote>
+<p>搞定了，确定WEB1，WEB2,WEB3可以正常访问就行了。</p>
+<p>这样，假设，我在WEB1的web目录下放一个 fuck.php, WEB2不放，那么。当我访问<a href="http://172.31.19.122时候，就会有时候404，有时候返回正常页面，这就表示成功了。" target="_blank" rel="external">http://172.31.19.122时候，就会有时候404，有时候返回正常页面，这就表示成功了。</a></p>
+<p><br><hr><br></p>
+<h1 id="0x05-关于服务性能"><a href="#0x05-关于服务性能" class="headerlink" title="0x05.关于服务性能"></a>0x05.关于服务性能</h1><p>这个在目前不能做，因为无法做多用户并发访问，就算模拟器模拟效果也不能达到多用户并发的强度。</p>
+<p>Nginx的几个优点：</p>
+<ul>
+<li><p>Nginx工作在网络的7层，所以它可以针对http应用本身来做分流策略，比如针对域名、目录结构等，相比之下LVS并不具备这样的功能，所以Nginx单凭这点可利用的场合就远多于LVS了；但Nginx有用的这些功能使其可调整度要高于LVS，所以经常要去触碰触碰，触碰多了，人为出问题的几率也就会大。</p>
+</li>
+<li><p>Nginx现在作为Web反向加速缓存越来越成熟了，速度比传统的Squid服务器更快，可以考虑用其作为反向代理加速器。    </p>
+</li>
+<li>Nginx对网络稳定性的依赖非常小，理论上能ping通就就能进行负载功能，这个也是它的优势之一。</li>
+</ul>
+<p><br><hr><br></p>
+<p>接下来会写关于KeepAlive+HAProxy实践教程。</p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2014-12-05-nginx-reverse-proxy-to-load-balance"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2014-12-05-nginx-reverse-proxy-to-load-balance" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/">http://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/</a></h4><p><br></p>
+<p>-by小草</p>
+<p>2014-12-05 17:12:26</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2014/12/05/Nginx反向代理实现均衡负载/" data-id="cixakr51j0014ho2ci08zcb1i" data-title="Nginx反向代理实现均衡负载" class="article-share-link">分享到</a>
+      
+        <a href="http://homeway.me/2014/12/05/Nginx反向代理实现均衡负载/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/12/10/分布式服务器集群架构方案思考/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          分布式服务器集群架构方案思考
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/02/Android之Service与Activity通信机制/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android之Service与Activity通信机制</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2014/12/05/Nginx反向代理实现均衡负载/" data-title="Nginx反向代理实现均衡负载" data-url="http://homeway.me/2014/12/05/Nginx反向代理实现均衡负载/"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+    <h3 class="widget-title">时钟</h3>
+    <div class="widget">
+      <embed src="http://xiaocao.u.qiniudn.com/blog/homeway_me_clock.swf" style="width:100%;">
+    </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Share/">Share</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 12.86px;">Life</a> <a href="/tags/Linux/" style="font-size: 14.29px;">Linux</a> <a href="/tags/Lua/" style="font-size: 12.86px;">Lua</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 15.71px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/Oauth/" style="font-size: 10px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/Php/" style="font-size: 17.14px;">Php</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 11.43px;">Redis</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/tags/Web/" style="font-size: 14.29px;">Web</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a> <a href="/tags/运维/" style="font-size: 17.14px;">运维</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/test/">Nginx重定向Rewrite分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/21/Nginx流量拦截算法/">Nginx流量拦截算法</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/13/MySQL索引之哈希索引/">MySQL索引之哈希索引</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/12/MySQL日志分析/">MySQL日志分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/11/Nginx+Lua+Redis访问频率控制/">Nginx+Lua+Redis访问频率控制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+</nav>
+    
+<!-- Duoshuo start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"grasses"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo end -->
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<!--<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">-->
+<!--<script src="/fancybox/jquery.fancybox.pack.js"></script>-->
+
+<link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.js"></script>
+
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--七牛静态文件加速-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/script.js"></script>
+
+  </div>
+</body>
+</html>

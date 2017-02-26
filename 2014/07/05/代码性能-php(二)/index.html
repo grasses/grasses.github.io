@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>代码性能-php(二) | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="The artile is about php cache and mysql speed.Test the speed of mysql and cache in the same conditions.First I test insert,select,update 3 times and then, test each a time.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="代码性能-php(二)">
+<meta property="og:url" content="http://homeway.me/2014/07/05/代码性能-php(二)/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:description" content="The artile is about php cache and mysql speed.Test the speed of mysql and cache in the same conditions.First I test insert,select,update 3 times and then, test each a time.">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fcache%26mysql-speed.png">
+<meta property="og:updated_time" content="2015-08-18T02:01:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="代码性能-php(二)">
+<meta name="twitter:description" content="The artile is about php cache and mysql speed.Test the speed of mysql and cache in the same conditions.First I test insert,select,update 3 times and then, test each a time.">
+<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog%2Fcache%26mysql-speed.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <!--<link rel="stylesheet" href="/css/style.css">-->
+  <link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/blog.style.min.css" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+
+
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-代码性能-php(二)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/07/05/代码性能-php(二)/" class="article-date">
+  <time datetime="2014-07-04T19:41:13.000Z" itemprop="datePublished">7月 5 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      代码性能-php(二)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<h5 id="The-artile-is-about-php-cache-and-mysql-speed"><a href="#The-artile-is-about-php-cache-and-mysql-speed" class="headerlink" title="The artile is about php cache and mysql speed."></a>The artile is about php cache and mysql speed.</h5><h5 id="Test-the-speed-of-mysql-and-cache-in-the-same-conditions"><a href="#Test-the-speed-of-mysql-and-cache-in-the-same-conditions" class="headerlink" title="Test the speed of mysql and cache in the same conditions."></a>Test the speed of mysql and cache in the same conditions.</h5><h5 id="First-I-test-insert-select-update-3-times-and-then-test-each-a-time"><a href="#First-I-test-insert-select-update-3-times-and-then-test-each-a-time" class="headerlink" title="First I test insert,select,update 3 times and then, test each a time."></a>First I test insert,select,update 3 times and then, test each a time.</h5><a id="more"></a>
+<p><br></p>
+<p>(Today’s all code is here <a href="http://xiaocao.u.qiniudn.com/work%2F2014-09-06-mysql-vs-cache.zip" target="_blank" rel="external">http://77l5jp.com1.z0.glb.clouddn.com/work%2F2014-09-06-mysql-vs-cache.zip</a>)</p>
+<p>Tool: </p>
+<p>Apache Benchmark And Siege (<a href="http://homeway.me/2014/09/04/%E4%BB%A3%E7%A0%81%E6%80%A7%E8%83%BD-php(%E4%B8%80">about ‘ab’  and ‘siege’</a> )</p>
+<p>model:</p>
+<ul>
+<li><p>insert、select、update x100loop x100get</p>
+</li>
+<li><p>insert x200loop x200get</p>
+</li>
+<li><p>select x200loop x200get</p>
+</li>
+<li><p>update x200loop x200get</p>
+</li>
+</ul>
+<h1 id="0x01-System-Environment"><a href="#0x01-System-Environment" class="headerlink" title="0x01.System Environment"></a>0x01.System Environment</h1><pre><code>- system
+
+MAC os
+Software  OS X 10.9.4 (13E28)
+Processor  2.4 GHz Intel Core i5
+Memory  8 GB 1600 MHz DDR3
+250GB SSD
+
+- environment
+xampp 1.8.3
+Apache/2.4.9
+PHP Version 5.5.11
+mysqlnd 5.0.11-dev - 20120503 - (mysql is empty)
+</code></pre><h1 id="0x02-Code："><a href="#0x02-Code：" class="headerlink" title="0x02.Code："></a>0x02.Code：</h1><blockquote>
+<p>cache.php</p>
+</blockquote>
+<pre><code>&lt;?php
+require &#39;src/cache.class.php&#39;;
+$cache = new SimpleCache();
+
+$cache-&gt;cache_path = &#39;cache/&#39;;
+$cache-&gt;cache_time = 3600;
+
+for ($i=1; $i &lt; 100 ; $i++) { 
+
+    $key = md5( uniqid().time() ) ;
+    $date = time();
+
+    //insert
+    $save = $cache-&gt;set_cache( $key, $data);
+    //get
+    $get = $cache-&gt;get_cache( $key );
+    //update
+    $update = $cache-&gt;set_cache( $key, $data);
+}
+
+exit();
+?&gt;
+</code></pre><p>cache.class.php is sample cache class， every key create a ‘key.data’ file, nothing special。</p>
+<p><br><hr></p>
+<blockquote>
+<p>mysql.php</p>
+</blockquote>
+<pre><code>&lt;?php
+
+$con = mysql_connect(&quot;localhost&quot;,$user,$pwd);
+if (!$con) {
+      die(&#39;Could not connect: &#39; . mysql_error());
+}
+
+mysql_select_db(&#39;phpcache&#39;,$con);
+
+for ($i=1; $i &lt; 100 ; $i++) { 
+
+    $time = time();
+
+    $insert = &quot;INSERT INTO `cache`( `time` ) VALUES ( &#39;$time&#39; )&quot;;
+
+    $select = &quot;SELECT * FROM `cache` WHERE `time` = &#39;$time&#39;&quot;;
+
+    $times=$time+1;
+
+    $update = &quot;UPDATE `cache` SET `cache`=&#39;$times&#39; WHERE `time`=&#39;$time&#39;&quot;;
+
+    $insert_result = mysql_query($insert);
+
+    $select_result = mysql_query($select);
+
+    $update_result = mysql_query($update);
+
+}
+?&gt;
+</code></pre><blockquote>
+<p>all ready. fire!!</p>
+</blockquote>
+<h1 id="0x03-TEST1-gt-insert、select、update-x100-Loop-x100-GET"><a href="#0x03-TEST1-gt-insert、select、update-x100-Loop-x100-GET" class="headerlink" title="0x03. TEST1 =&gt; insert、select、update x100 Loop x100 GET"></a>0x03. TEST1 =&gt; insert、select、update x100 Loop x100 GET</h1><h4 id="first-test"><a href="#first-test" class="headerlink" title="first test"></a>first test</h4><blockquote>
+<p>ab -n 100 -c 10 <a href="http://127.0.0.1/phpcache/cache.php" target="_blank" rel="external">http://127.0.0.1/phpcache/cache.php</a></p>
+</blockquote>
+<p>####result:</p>
+<pre><code>This is ApacheBench, Version 2.3 &lt;$Revision: 655654 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient).....done
+
+Server Software:        Apache/2.4.9
+Server Hostname:        127.0.0.1
+Server Port:            80
+
+Document Path:          /phpcache/cache.php
+Document Length:        27522 bytes
+
+Concurrency Level:      10
+Time taken for tests:   3.543 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      2773500 bytes
+HTML transferred:       2752200 bytes
+Requests per second:    28.22 [#/sec] (mean)
+Time per request:       354.349 [ms] (mean)
+Time per request:       35.435 [ms] (mean, across all concurrent requests)
+Transfer rate:          764.36 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   1.1      0      11
+Processing:   135  347 138.3    339     730
+Waiting:       36  101  44.8     80     204
+Total:        136  347 138.5    339     730
+
+Percentage of the requests served within a certain time (ms)
+      50%    339
+      66%    420
+      75%    434
+      80%    473
+      90%    530
+      95%    583
+      98%    624
+      99%    730
+     100%    730 (longest request)
+
+     all 10198 records
+</code></pre><blockquote>
+<p>ab -n 100 -c 10 <a href="http://127.0.0.1/phpcache/mysql.php" target="_blank" rel="external">http://127.0.0.1/phpcache/mysql.php</a></p>
+</blockquote>
+<p>####result:</p>
+<pre><code>This is ApacheBench, Version 2.3 &lt;$Revision: 655654 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking 127.0.0.1 (be patient).....done
+
+Server Software:        Apache/2.4.9
+Server Hostname:        127.0.0.1
+Server Port:            80
+
+Document Path:          /phpcache/mysql.php
+Document Length:        0 bytes
+
+Concurrency Level:      10
+Time taken for tests:   37.934 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      23200 bytes
+HTML transferred:       0 bytes
+Requests per second:    2.64 [#/sec] (mean)
+Time per request:       3793.356 [ms] (mean)
+Time per request:       379.336 [ms] (mean, across all concurrent requests)
+Transfer rate:          0.60 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       0
+Processing:  1229 3790 1623.9   4030    6359
+Waiting:     1229 3790 1623.9   4030    6359
+Total:       1230 3790 1623.9   4030    6359
+
+Percentage of the requests served within a certain time (ms)
+      50%   4030
+      66%   4650
+      75%   5187
+      80%   5793
+      90%   6293
+      95%   6348
+      98%   6356
+      99%   6359
+     100%   6359 (longest request)
+
+all 10198 records
+</code></pre><p><br></p>
+<p><hr><br><br></p>
+<h4 id="second-test（Without-clean-created-file）"><a href="#second-test（Without-clean-created-file）" class="headerlink" title="second test（Without clean created file）"></a>second test（Without clean created file）</h4><blockquote>
+<p>cache.php</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   7.518 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      23200 bytes
+HTML transferred:       0 bytes
+Requests per second:    13.30 [#/sec] (mean)
+Time per request:       751.756 [ms] (mean)
+Time per request:       75.176 [ms] (mean, across all concurrent requests)
+Transfer rate:          3.01 [Kbytes/sec] received
+
+Percentage of the requests served within a certain time (ms)
+      50%    591
+      66%    636
+      75%    682
+      80%    695
+      90%    752
+      95%    795
+      98%    859
+      99%    882
+     100%    882 (longest request)
+
+ all 19800 records    
+</code></pre><blockquote>
+<p>mysql.php     </p>
+</blockquote>
+<p>####result:    </p>
+<pre><code> Concurrency Level:      10
+Time taken for tests:   89.448 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      23200 bytes
+HTML transferred:       0 bytes
+Requests per second:    1.12 [#/sec] (mean)
+Time per request:       8944.776 [ms] (mean)
+Time per request:       894.478 [ms] (mean, across all concurrent requests)
+Transfer rate:          0.25 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       0
+Processing:  6474 8939 1506.3   9314   11180
+Waiting:     6474 8938 1506.3   9314   11179
+Total:       6474 8939 1506.2   9314   11180
+
+Percentage of the requests served within a certain time (ms)
+      50%   9314
+      66%   9722
+      75%  10388
+      80%  10701
+      90%  11058
+      95%  11148
+      98%  11167
+      99%  11180
+     100%  11180 (longest request)
+
+all 20010 records
+</code></pre><p><br></p>
+<p><hr><br><br>    </p>
+<h4 id="third-test（Without-clean-created-file）"><a href="#third-test（Without-clean-created-file）" class="headerlink" title="third test（Without clean created file）"></a>third test（Without clean created file）</h4><blockquote>
+<p>cache.php</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   8.563 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      23200 bytes
+HTML transferred:       0 bytes
+Requests per second:    11.68 [#/sec] (mean)
+Time per request:       856.292 [ms] (mean)
+Time per request:       85.629 [ms] (mean, across all concurrent requests)
+Transfer rate:          2.65 [Kbytes/sec] received
+
+Percentage of the requests served within a certain time (ms)
+      50%    838
+      66%    875
+      75%    899
+      80%    907
+      90%    968
+      95%   1007
+      98%   1034
+      99%   1034
+     100%   1034 (longest request)
+
+all 29362 records(-&gt;_-&gt; when I get folder info, it`s a litte slow)
+</code></pre><blockquote>
+<p>mysql.php</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   146.047 seconds
+Complete requests:      100
+Failed requests:        0
+Write errors:           0
+Total transferred:      23200 bytes
+HTML transferred:       0 bytes
+Requests per second:    0.68 [#/sec] (mean)
+Time per request:       14604.688 [ms] (mean)
+Time per request:       1460.469 [ms] (mean, across all concurrent requests)
+Transfer rate:          0.16 [Kbytes/sec] received
+
+Percentage of the requests served within a certain time (ms)
+      50%  14514
+      66%  14853
+      75%  15347
+      80%  16788
+      90%  18805
+      95%  18832
+      98%  18841
+      99%  18843
+     100%  18843 (longest request)
+
+ all 30141 records
+</code></pre><p><br></p>
+<p>Obviously, mysql is slower then cache so much.</p>
+<p>See here:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fcache%26mysql-speed.png" alt="mysql &amp; cache speed"></p>
+<hr>
+
+<h1 id="0x04-TEST2-gt-insert-x100-Loop-x200-GET"><a href="#0x04-TEST2-gt-insert-x100-Loop-x200-GET" class="headerlink" title="0x04. TEST2 =&gt; insert x100 Loop x200 GET"></a>0x04. TEST2 =&gt; insert x100 Loop x200 GET</h1><blockquote>
+<p>cache.php (ab -n 200 -c 10 <a href="http://127.0.0.1/phpcache/cache.php" target="_blank" rel="external">http://127.0.0.1/phpcache/cache.php</a>)</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   6.775 seconds
+Complete requests:      200
+Failed requests:        0
+Write errors:           0
+Total transferred:      46400 bytes
+HTML transferred:       0 bytes
+Requests per second:    29.52 [#/sec] (mean)
+Time per request:       338.728 [ms] (mean)
+Time per request:       33.873 [ms] (mean, across all concurrent requests)
+Transfer rate:          6.69 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   0.0      0       0
+Processing:    87  335  96.7    357     530
+Waiting:       87  335  96.4    355     530
+Total:         87  335  96.7    357     531
+
+Percentage of the requests served within a certain time (ms)
+      50%    357
+      66%    385
+      75%    401
+      80%    409
+      90%    436
+      95%    456
+      98%    478
+      99%    523
+     100%    531 (longest request)
+</code></pre><blockquote>
+<p>mysql.php (ab -n 200 -c 10 <a href="http://127.0.0.1/phpcache/mysql.php" target="_blank" rel="external">http://127.0.0.1/phpcache/mysql.php</a>)</p>
+</blockquote>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   1.179 seconds
+Complete requests:      200
+Failed requests:        0
+Write errors:           0
+Total transferred:      46400 bytes
+HTML transferred:       0 bytes    
+Requests per second:    169.57 [#/sec] (mean)
+Time per request:       58.972 [ms] (mean)
+Time per request:       5.897 [ms] (mean, across all concurrent requests)
+Transfer rate:          38.42 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       1
+Processing:    27   58  36.7     42     226
+Waiting:       27   58  36.7     42     226
+Total:         28   58  36.7     42     226
+
+Percentage of the requests served within a certain time (ms)
+      50%     42
+      66%     55
+      75%     63
+      80%     72
+      90%    116
+      95%    141
+      98%    173
+      99%    208
+     100%    226 (longest request)
+</code></pre><h5 id="gt-From-the-result-we-can-see-that-insert-data-into-msyql-or-writer-into-disk-is-quickly-And-mysql-is-more-quick-than-disk-Than-we-can-find-a-way-to-save-time-save-cache-in-a-file-not-create-a-file-for-each-data"><a href="#gt-From-the-result-we-can-see-that-insert-data-into-msyql-or-writer-into-disk-is-quickly-And-mysql-is-more-quick-than-disk-Than-we-can-find-a-way-to-save-time-save-cache-in-a-file-not-create-a-file-for-each-data" class="headerlink" title="=&gt; From the result, we can see that, insert data into msyql or writer into disk is quickly. And mysql is more quick than disk. Than we can find a way to save time, save cache in a file not create a file for each data."></a>=&gt; From the result, we can see that, insert data into msyql or writer into disk is quickly. And mysql is more quick than disk. Than we can find a way to save time, save cache in a file not create a file for each data.</h5><p><br></p>
+<p><hr><br><br></p>
+<h1 id="0x04-TEST3-gt-select-x100-Loop-x200-GET-select-a-does-not-existed-data"><a href="#0x04-TEST3-gt-select-x100-Loop-x200-GET-select-a-does-not-existed-data" class="headerlink" title="0x04. TEST3 =&gt; select x100 Loop x200 GET(select a does not existed data)"></a>0x04. TEST3 =&gt; select x100 Loop x200 GET(select a does not existed data)</h1><blockquote>
+<p>cache.php</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   0.201 seconds
+Complete requests:      200
+Failed requests:        0
+Write errors:           0
+Total transferred:      46400 bytes
+HTML transferred:       0 bytes
+Requests per second:    993.31 [#/sec] (mean)
+Time per request:       10.067 [ms] (mean)
+Time per request:       1.007 [ms] (mean, across all concurrent requests)
+Transfer rate:          225.05 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       1
+Processing:     4   10   1.8     10      14
+Waiting:        4   10   1.8     10      14
+Total:          4   10   1.8     10      14
+
+Percentage of the requests served within a certain time (ms)
+      50%     10
+      66%     11
+      75%     11
+      80%     11
+      90%     12
+      95%     13
+      98%     14
+      99%     14
+     100%     14 (longest request)
+
+so quickly!!
+</code></pre><blockquote>
+<p>mysql.php</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   70.006 seconds
+Complete requests:      200
+Failed requests:        0
+Write errors:           0
+Total transferred:      46400 bytes
+HTML transferred:       0 bytes
+Requests per second:    2.86 [#/sec] (mean)
+Time per request:       3500.306 [ms] (mean)
+Time per request:       350.031 [ms] (mean, across all concurrent requests)
+Transfer rate:          0.65 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       0
+Processing:  3000 3492 230.4   3438    4047
+Waiting:     3000 3491 230.4   3438    4047
+Total:       3000 3492 230.4   3438    4047
+
+Percentage of the requests served within a certain time (ms)
+      50%   3438
+      66%   3628
+      75%   3679
+      80%   3701
+      90%   3804
+      95%   3898
+      98%   4005
+      99%   4033
+     100%   4047 (longest request)
+
+so slow!!
+</code></pre><h4 id="The-results-are-very-clear-using-cache-to-search-data-is-qulcikly-than-mysql-select-a-lot-So-use-cache-to-save-some-data-reselected-many-times-will-be-more-quickly-so-much"><a href="#The-results-are-very-clear-using-cache-to-search-data-is-qulcikly-than-mysql-select-a-lot-So-use-cache-to-save-some-data-reselected-many-times-will-be-more-quickly-so-much" class="headerlink" title="The results are very clear, using cache to search data is qulcikly than mysql select a lot. So use cache to save some data reselected many times will be more quickly so much."></a>The results are very clear, using cache to search data is qulcikly than mysql select a lot. So use cache to save some data reselected many times will be more quickly so much.</h4><p><br></p>
+<p><hr><br><br></p>
+<h1 id="0x05-TEST4-gt-update-x100-Loop-x200-GET"><a href="#0x05-TEST4-gt-update-x100-Loop-x200-GET" class="headerlink" title="0x05. TEST4 =&gt; update x100 Loop x200 GET"></a>0x05. TEST4 =&gt; update x100 Loop x200 GET</h1><blockquote>
+<p>cache.php</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   0.973 seconds
+Complete requests:      200
+Failed requests:        0
+Write errors:           0
+Total transferred:      46400 bytes
+HTML transferred:       0 bytes
+Requests per second:    205.51 [#/sec] (mean)
+Time per request:       48.660 [ms] (mean)
+Time per request:       4.866 [ms] (mean, across all concurrent requests)
+Transfer rate:          46.56 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       1
+Processing:     9   47  54.9     23     267
+Waiting:        9   47  54.9     23     267
+Total:          9   47  54.9     23     267
+
+Percentage of the requests served within a certain time (ms)
+      50%     23
+      66%     42
+      75%     53
+      80%     59
+      90%    142
+      95%    175
+      98%    255
+      99%    265
+     100%    267 (longest request)
+</code></pre><blockquote>
+<p>mysql.php</p>
+</blockquote>
+<p>####result:</p>
+<pre><code>Concurrency Level:      10
+Time taken for tests:   1.411 seconds
+Complete requests:      200
+Failed requests:        0
+Write errors:           0
+Total transferred:      46400 bytes
+HTML transferred:       0 bytes
+Requests per second:    141.78 [#/sec] (mean)
+Time per request:       70.532 [ms] (mean)
+Time per request:       7.053 [ms] (mean, across all concurrent requests)
+Transfer rate:          32.12 [Kbytes/sec] received
+
+Connection Times (ms)
+          min  mean[+/-sd] median   max
+Connect:        0    0   0.1      0       0
+Processing:    39   70   7.9     68      97
+Waiting:       39   70   7.9     68      97
+Total:         39   70   8.0     68      97
+
+Percentage of the requests served within a certain time (ms)
+      50%     68
+      66%     70
+      75%     71
+      80%     73
+      90%     82
+      95%     90
+      98%     93
+      99%     94
+     100%     97 (longest request)
+</code></pre><h4 id="From-it-so-clear-Because-when-mysql-update-a-data-it-must-seach-id-in-all-data-so-it-include-select"><a href="#From-it-so-clear-Because-when-mysql-update-a-data-it-must-seach-id-in-all-data-so-it-include-select" class="headerlink" title="From it, so clear. Because when mysql update a data, it must seach id in all data, so it include select."></a>From it, so clear. Because when mysql update a data, it must seach id in all data, so it include select.</h4><p><br></p>
+<p><hr><br><br></p>
+<h1 id="0x06-Find-a-solution"><a href="#0x06-Find-a-solution" class="headerlink" title="0x06.Find a solution"></a>0x06.Find a solution</h1><p>As we know, speed is always the most important element in developing a website especially for those high traffic database driven website. You can try to turn on query cache to speed up query.</p>
+<p>To speed up query, enable the MySQL query cache, before that you need to set few variables in mysql configuration file (usually is my.cnf or my.ini)</p>
+<p>first, set query_cache_type to 1. (There are 3 possible settings: 0 (disable / off), 1 (enable / on) and 2 (on demand).</p>
+<pre><code>query-cache-type = 1
+</code></pre><p>second, set query_cache_size to your expected size. I’d prefer to set it at 20MB.</p>
+<pre><code>query-cache-size = 20M
+</code></pre><p>So use cache in right time is a batter way to speed your website.</p>
+<hr>
+
+<p>some useful link to make your mysql qulickly.</p>
+<p><a href="http://coolshell.cn/articles/1846.html" target="_blank" rel="external">http://coolshell.cn/articles/1846.html</a></p>
+<p><a href="http://soft.chinabyte.com/database/55/12710055.shtml" target="_blank" rel="external">http://soft.chinabyte.com/database/55/12710055.shtml</a></p>
+<p><a href="http://planetcassandra.org/nosql-performance-benchmarks/" target="_blank" rel="external">http://planetcassandra.org/nosql-performance-benchmarks/</a></p>
+<p><br></p>
+<p><hr><br><br></p>
+<p>Please indicate the source:<a href="http://homeway.me/2014/07/05/code-performance-php">http://homeway.me/2014/07/05/code-performance-php</a></p>
+<p><br></p>
+<p>-By xiaocao</p>
+<p> 2014-07-05 03:41:13</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2014/07/05/代码性能-php(二)/" data-id="cixakr5350033ho2cm1aksxqz" data-title="代码性能-php(二)" class="article-share-link">分享到</a>
+      
+        <a href="http://homeway.me/2014/07/05/代码性能-php(二)/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Php/">Php</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/08/06/推荐几本好书（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          推荐几本好书（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/07/04/代码性能-php(一)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">代码性能-php(一)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2014/07/05/代码性能-php(二)/" data-title="代码性能-php(二)" data-url="http://homeway.me/2014/07/05/代码性能-php(二)/"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+    <h3 class="widget-title">时钟</h3>
+    <div class="widget">
+      <embed src="http://xiaocao.u.qiniudn.com/blog/homeway_me_clock.swf" style="width:100%;">
+    </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Share/">Share</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 12.86px;">Life</a> <a href="/tags/Linux/" style="font-size: 14.29px;">Linux</a> <a href="/tags/Lua/" style="font-size: 12.86px;">Lua</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 15.71px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/Oauth/" style="font-size: 10px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/Php/" style="font-size: 17.14px;">Php</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 11.43px;">Redis</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/tags/Web/" style="font-size: 14.29px;">Web</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a> <a href="/tags/运维/" style="font-size: 17.14px;">运维</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/test/">Nginx重定向Rewrite分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/21/Nginx流量拦截算法/">Nginx流量拦截算法</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/13/MySQL索引之哈希索引/">MySQL索引之哈希索引</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/12/MySQL日志分析/">MySQL日志分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/11/Nginx+Lua+Redis访问频率控制/">Nginx+Lua+Redis访问频率控制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+</nav>
+    
+<!-- Duoshuo start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"grasses"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo end -->
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<!--<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">-->
+<!--<script src="/fancybox/jquery.fancybox.pack.js"></script>-->
+
+<link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.js"></script>
+
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--七牛静态文件加速-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Nginx流量拦截算法 | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Nginx流量拦截算法">
+<meta property="og:url" content="https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-leaky-bucket.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-token-bucket-lgorithm.jpg">
+<meta property="og:updated_time" content="2016-12-29T16:21:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Nginx流量拦截算法">
+<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <!--<link rel="stylesheet" href="/css/style.css">-->
+  <link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/blog.style.min.css" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+      
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--
+<div id="site_search" class="main-content-wrap">
+<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="form-control input--xlarge" autofocus="autofocus"/>
+<div id="local-search-result"></div>
+-->
+      <div class="outer">
+        <section id="main"><article id="post-nginx-lua-traffic-limit-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/10/21/nginx-lua-traffic-limit-algorithm/" class="article-date">
+  <time datetime="2015-10-21T11:39:10.000Z" itemprop="datePublished">10月 21 2015</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Nginx流量拦截算法
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>电商平台营销时候，经常会碰到的大流量问题，除了做流量分流处理，可能还要做用户黑白名单、信誉分析，进而根据用户ip信誉权重做相应的流量拦截、限制流量。</p>
+<p>Nginx自身有的请求限制模块<a href="http://nginx.org/en/docs/http/ngx_http_limit_req_module.html" target="_blank" rel="external">ngx_http_limit_req_module</a>、流量限制模块<a href="http://nginx.org/en/docs/stream/ngx_stream_limit_conn_module.html" target="_blank" rel="external">ngx_stream_limit_conn_module</a>基于令牌桶算法，可以方便的控制令牌速率，自定义调节限流，就能很好的限制请求数量，然而，nginx.conf问题还是在于无法热加载。</p>
+<p>之前做过的流量限制方案，《<a href="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/">Nginx+Lua+Redis访问频率控制</a>》，原理是动态的基于ip，实现简单的漏桶算法，限制访问频率。</p>
+<p>这里的话，就简单分析下流量限制算法：漏桶算法、令牌桶算法、滑动窗口等在Nginx+Lua中如何动态绑定uri，动态设定rate实现。</p>
+<p><hr><br></p>
+<h1 id="0x01-Leaky-Bucket-Algorithm"><a href="#0x01-Leaky-Bucket-Algorithm" class="headerlink" title="0x01.Leaky Bucket Algorithm"></a>0x01.Leaky Bucket Algorithm</h1><p>漏桶算法可以很好地限制容量池的大小，从而防止流量暴增。如果针对uri+ip作为监测的key，就可以实现定向的设定指定ip对指定uri容量大小，超出的请求做队列处理（队列处理要引入消息机制）或者丢弃处理。这也是v2ex对流量拦截的算法，针对uri+ip做流量监测。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-leaky-bucket.png" alt="Leaky Bucket Algorithm"></p>
+<p>漏桶算法实现上来说，就是建立一个队列，在Redis中以uri:ip作为key，队列上实现FIFO，在请求的前奏实现插入，请求完成后实现删除。</p>
+<p>实现方法是在Nginx发送http数据给用户后，通过<code>ngx.eof()</code>关闭TCP协议，做其他操作，可以参见<a href="http://wiki.jikexueyuan.com/project/openresty-best-practice/continue-after-eof.html" target="_blank" rel="external">请求返回后继续执行</a>。</p>
+<p>下面是部分代码：</p>
+<pre><code>local _M = { _VERSION = &quot;2015.10.19&quot;, OK = 1, BUSY = 2, FORBIDDEN = 3 }
+
+function _M.do_list(red, uri, key, size, rate)
+    local ok, err = red:expire(uri .. &quot;:&quot; .. key, size)
+    if not ok then
+        ngx.log(ngx.WARN, &quot;redis set expire error: &quot;, err)
+        return nil
+    end
+    local ok, err = red:rpush(uri .. &quot;:&quot; .. key, ngx.time())
+    if not ok then
+        ngx.log(ngx.WARN, &quot;redis rpush error: &quot;, err)
+        return nil
+    end
+    local res, err = red:lrange(uri .. &quot;:&quot; .. key, -(size * rate), -1)
+    if not ok then
+        ngx.log(ngx.WARN, &quot;redis lrange error: &quot;, err)
+        return nil
+    end
+    if #res &lt; (size * rate) or res[#res] - res[1] &lt; size then
+        return _M.OK
+    end
+    return nil
+end
+</code></pre><p>漏桶算法优点很明显，简单、高效，能恰当拦截容量外的暴力流量。</p>
+<p>但缺点也明显，无法对流量做频率处理，比如桶size大小设置范围内，进行并发攻击依然能大流量并发效果，桶容量不可以过小，否则容易卡死正常用户。</p>
+<h1 id="0x02-Token-Bucket-Algorithm"><a href="#0x02-Token-Bucket-Algorithm" class="headerlink" title="0x02.Token Bucket Algorithm"></a>0x02.Token Bucket Algorithm</h1><p>令牌桶算法通过发放令牌，根据令牌的rate频率做请求频率限制，容量限制等。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-token-bucket-lgorithm.jpg" alt="Token Bucket Algorithm"></p>
+<ul>
+<li><p>系统根据rate(r/s)频率参数向指定桶中添加token，满则保持，不添加</p>
+</li>
+<li><p>当用户请求Nginx时候，分析uri是否需要限制流量，限制则执行令牌桶算法</p>
+</li>
+<li><p>如果桶满了，则请求通过，消耗令牌一枚；如果请求Redis发现key不存在，则通过size装满令牌桶；如果桶内令牌空，则废弃或等待流量。</p>
+</li>
+</ul>
+<p>Nginx + Lua 模型中实现必然不能跑一个程序添加令牌了，这个时候需要在分析令牌时候，通过计算时间间隔一次性添加完令牌桶内令牌。具体算法是：rate * time_distance = token_count令牌数量， if token_count &gt; size 桶容量， token_count = size。</p>
+<p>实现的存储结构是用Hash哈希存储 uri:ip -&gt; token_count，字段通过EXPIRE设定过期时间，达到长时间不访问清除桶数据效果。</p>
+<p>桶的大小、请求的频率限制用Redis哈希表存储，不存在则默认不做流量拦截。</p>
+<p>用户黑白名单通过Order SET设定信誉权重，权重越大，代表危险性越大，进而通过百分比改变接口限定rate频率。</p>
+<p>令牌桶算法优势在于能针对uri做定向rate、size等，不仅限制总请求大小，还限制平均频率大小。缺点是，还是容易导致误判等问题，并切用户的信誉无法完全准确。</p>
+<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>1.<a href="https://en.wikipedia.org/wiki/Token_bucket" target="_blank" rel="external">Token Bucket Algorithm</a></p>
+<p>2.<a href="https://en.wikipedia.org/wiki/Leaky_bucket" target="_blank" rel="external">Token Bucket Algorithm</a></p>
+<p>3.<a href="http://www.cnblogs.com/zhengyun_ustc/archive/2012/11/17/topic1.html" target="_blank" rel="external">电商课题I：集群环境下业务限流</a></p>
+<p><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-10-21-nginx-lua-traffic-limit-algorithm"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-10-21-nginx-lua-traffic-limit-algorithm" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm">http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm</a></h4><p>-by小草</p>
+<p>2015-10-21 21:49:10</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/" data-id="cizmu5uh5001zj3awqufaccfv" data-title="Nginx流量拦截算法" class="article-share-link">Share</a>
+      
+        <a href="https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Lua/">Lua</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/13/understand-os-process-mutex-and-synchronization/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Userstand OS - Process
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/09/13/mysql-hash-index/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">MySQL索引之哈希索引</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2015/10/21/nginx-lua-traffic-limit-algorithm/" data-title="Nginx流量拦截算法" data-url="https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+    <h3 class="widget-title">时钟</h3>
+    <div class="widget">
+      <embed src="http://xiaocao.u.qiniudn.com/blog/homeway_me_clock.swf" style="width:100%;">
+    </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.43px;">Life</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Lua/" style="font-size: 12.86px;">Lua</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 14.29px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.43px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15.71px;">PHP</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/tags/Web/" style="font-size: 12.86px;">Web</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/13/understand-os-process-mutex-and-synchronization/">Userstand OS - Process</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/21/nginx-lua-traffic-limit-algorithm/">Nginx流量拦截算法</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/13/mysql-hash-index/">MySQL索引之哈希索引</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/12/mysql-log/">MySQL日志分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/11/nginx-lua-redis-access-control/">Nginx+Lua+Redis访问频率控制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+</nav>
+    
+<!-- Duoshuo start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"grasses"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo end -->
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<!--<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">-->
+<!--<script src="/fancybox/jquery.fancybox.pack.js"></script>-->
+
+<link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.js"></script>
+
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- search
+<script>
+var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            if (!$input) return;
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                var numOfPostFound = 0; // keeping track of # of result
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {//&& data_content != ''
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        numOfPostFound += 1; // keeping track of # of results
+                        str += "<li style='color:white;'><a style='color:white;' href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        /*
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 100;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        */
+                        str += "</li>";
+                    }
+                });
+                str += "</ul>";
+                // attaching a summary of searching result
+                if (numOfPostFound > 0) {
+                    if (numOfPostFound > 1) {
+                        summary = numOfPostFound + " posts found";
+                    } else {
+                        summary = numOfPostFound + " post found";
+                    }
+                } else {
+                    summary = "Nothing found";
+                }
+                var summary = "<p class=\"text-xlarge text-color-base archieve-result search-result-summary\">" + summary + "</ul>";
+                $resultContent.innerHTML = summary + str;
+                console.log($resultContent);
+            });
+        }
+    });
+}
+     
+     var search_path = "search.xml";
+     if (search_path.length == 0) {
+      search_path = "search.xml";
+     }
+     var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+-->
+
+<!--七牛静态文件加速-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/script.js"></script>
+
+  </div>
+</body>
+</html>

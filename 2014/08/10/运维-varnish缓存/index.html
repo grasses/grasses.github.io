@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>运维-varnish缓存 | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="###运维-服务器缓存之varnish
+
+
+####一、介绍下吧：
+首先了解几个概念，
+1. Varnish不缓存带有Set-Cookie头的http输出。
+
+2. 对于HTTP协议中缓存部分，Varnish遵从http协议部分。如：带有如下头信息，Control-Cache: no-store, no-cache, must-revalidate, post-check=0, pre-check">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运维-varnish缓存">
+<meta property="og:url" content="http://homeway.me/2014/08/10/运维-varnish缓存/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:description" content="###运维-服务器缓存之varnish
+
+
+####一、介绍下吧：
+首先了解几个概念，
+1. Varnish不缓存带有Set-Cookie头的http输出。
+
+2. 对于HTTP协议中缓存部分，Varnish遵从http协议部分。如：带有如下头信息，Control-Cache: no-store, no-cache, must-revalidate, post-check=0, pre-check">
+<meta property="og:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-1.png">
+<meta property="og:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-2.png">
+<meta property="og:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-3.png">
+<meta property="og:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-8.png">
+<meta property="og:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-7.png">
+<meta property="og:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-4.png">
+<meta property="og:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-5.jpg">
+<meta property="og:updated_time" content="2014-10-09T02:26:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="运维-varnish缓存">
+<meta name="twitter:description" content="###运维-服务器缓存之varnish
+
+
+####一、介绍下吧：
+首先了解几个概念，
+1. Varnish不缓存带有Set-Cookie头的http输出。
+
+2. 对于HTTP协议中缓存部分，Varnish遵从http协议部分。如：带有如下头信息，Control-Cache: no-store, no-cache, must-revalidate, post-check=0, pre-check">
+<meta name="twitter:image" content="http://xc-blog.qiniudn.com/img/20140810-varnish-1.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <!--<link rel="stylesheet" href="/css/style.css">-->
+  <link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/blog.style.min.css" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+
+
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-运维-varnish缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/10/运维-varnish缓存/" class="article-date">
+  <time datetime="2014-08-10T14:22:22.000Z" itemprop="datePublished">8月 10 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      运维-varnish缓存
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###运维-服务器缓存之varnish</p>
+<hr>
+
+<p>####一、介绍下吧：</p>
+<p>首先了解几个概念，</p>
+<pre><code>1. Varnish不缓存带有Set-Cookie头的http输出。
+
+2. 对于HTTP协议中缓存部分，Varnish遵从http协议部分。如：带有如下头信息，Control-Cache: no-store, no-cache, must-revalidate, post-check=0, pre-check=0，默认varnish不会缓存。
+
+3. HTTP协议中缓存部分，Control-Cache优先于Expires，Pragma: no-cache 是HTTP1.0的产物，可以不考虑。
+</code></pre><p>Varnish是一款高性能、开源的反向代理服务器和缓存服务器，其开发者Poul-Henning Kamp是FreeBSD核心的开发人员之一。Varnish采用全新的软件体系结构，和现在的硬件体系配合比较紧密。目前，Varnish可以在FreeBSD6.0/7.0、Solaris和Linux 2.6内核上运行。</p>
+<a id="more"></a>
+<p><br></p>
+<p>######Varnish和Squid的对比</p>
+<ul>
+<li><p>Varnish和Squid在完成相同负载的工作时，Squid服务器发生故障的几率要高于Varnish，因此Squid需要经常重启。</p>
+</li>
+<li><p>Varnish访问速度更快,Varnish采用了 Visual Page Cache技术，所有缓存的数据都直接从内存读取，而Squid从硬盘读取缓存的数据，所以</p>
+</li>
+<li><p>Varnish在访问速度方面会更快一些。</p>
+</li>
+<li><p>Varnish可以支持更多的并发连接,因为Varnish的TCP连接与释放比Squid快，所以在高并发连接情况下可以支持更多的TCP连接。</p>
+</li>
+<li><p>Varnish可以通过管理端口来管理缓存，使用正则表达式就可以批量清除部分缓存，而Squid做不到这一点。</p>
+</li>
+</ul>
+<p>####二、安装及配置</p>
+<p>强烈建议，不要编译安装，至于我是踩着坑走过来的。</p>
+<p>我的安装环境：（请注意主机环境！！）</p>
+<pre><code>Linux 
+2.6.32-358.6.2.el6.x86_64 #1 
+SMP Thu May 16 20:59:36 UTC 2013 x86_64 x86_64 x86_64 
+GNU/Linux
+apache 2.2.15
+</code></pre><p>官网讲的简单易用。<a href="https://www.varnish-cache.org/installation/redhat" target="_blank" rel="external">https://www.varnish-cache.org/installation/redhat</a></p>
+<ul>
+<li>step1</li>
+</ul>
+<p><code>rpm --nosignature -i https://repo.varnish-cache.org/redhat/varnish-4.0.el6.rpm</code></p>
+<p><code>yum install varnish</code></p>
+<ul>
+<li>step2 备份</li>
+</ul>
+<p>复制备份vcl</p>
+<p><code>cp /etc/varnish/default.vcl /etc/varnish/default.vcl.backup</code></p>
+<p><code>cp /etc/sysconfig/varnish /etc/sysconfig/varnish.backup</code></p>
+<ul>
+<li>step3</li>
+</ul>
+<p>用默认端口6021开启varnish</p>
+<p><code>/etc/init.d/varnish start</code></p>
+<p>你会得到如下信息：</p>
+<pre><code>[root@varnish ~]# netstat -tanp|grep varnish
+tcp        0      0 0.0.0.0:6081                0.0.0.0:*                   LISTEN      1640/varnishd       
+tcp        0      0 127.0.0.1:6082              0.0.0.0:*                   LISTEN      1639/varnishd       
+tcp        0      0 :::6081                     :::*                        LISTEN      1640/varnishd  
+</code></pre><ul>
+<li><p>step4</p>
+<p>我们看到，varnish已经开启，但是除了知道这个东西已经监听端口外，我们不知道发生了什么。</p>
+<p>接下来要做的，就是修改apache的监听端口，将varnish监听端口指向80，将apache监听端口指向一个其他端口，再将varnish出口端口指向apache指向的端口。</p>
+<p>这样，client-&gt;端口80-&gt;varinsh检测cache-&gt;apahce-&gt;client</p>
+</li>
+</ul>
+<p><code>vim /etc/sysconfig/varnish</code></p>
+<p><code>VARNISH_LISTEN_PORT=80</code></p>
+<ul>
+<li>step5</li>
+</ul>
+<p>修改出口端口,指到一个没有用的端口就好了，千万不要再1024内就好了。</p>
+<p><code>vim /etc/varnish/default.vcl</code></p>
+<p><code>backend default {</code></p>
+<p><code>.host = &quot;127.0.0.1&quot;;</code></p>
+<p><code>.port = &quot;8880&quot;;</code></p>
+<p><code>}</code></p>
+<ul>
+<li>step6</li>
+</ul>
+<p>修改apache的入口端口，和上面一个一样。</p>
+<p>做个备份吧。</p>
+<p><code>cp -p /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.backup</code></p>
+<p><br><br>修改吧：<br><br></p>
+<p><code>vim /etc/httpd/conf/httpd.conf</code></p>
+<p><code>Listen *:8880</code></p>
+<p><br><br>一直往下拉,还有（如果你已经配置了域名指向的话）:<br><br></p>
+<p><code>&lt;VirtualHost *:8880&gt;</code></p>
+<p><code>ServerAdmin sharad@example.com</code></p>
+<p><code>DocumentRoot /var/www/html/</code></p>
+<p><code>ErrorLog logs/sample-error.log</code></p>
+<p><code>CustomLog logs/sampleaccess_log common</code></p>
+<p><code>&lt;/VirtualHost&gt;</code></p>
+<hr>
+
+<p>#####下面可以测试下了</p>
+<p>我在我电脑本地的terminal里面输入：</p>
+<p><code>curl -I http://xiaocaozone.net</code></p>
+<p>可以看到回包：</p>
+<p><br></p>
+<p><img src="http://xc-blog.qiniudn.com/img/20140810-varnish-1.png" alt="http://xc-blog.qiniudn.com/img/20140810-varnish-1.png"></p>
+<p>查看使用的次数：</p>
+<p><code>ls -l /var/log/varnish/</code></p>
+<p><img src="http://xc-blog.qiniudn.com/img/20140810-varnish-2.png" alt=""></p>
+<p>####三、介绍下varnish配置信息：</p>
+<p>指定一下命令的快捷方式</p>
+<p><code>ln -s /usr/local/varnish/sbin/varnishd /usr/bin/varnishd</code></p>
+<p><code>ln -s /usr/local/varnish/bin/varnishlog /usr/bin/varnishlog</code></p>
+<p><code>ln -s /usr/local/varnish/bin/varnishncsa /usr/bin/varnishncsa</code></p>
+<p><code>ln -s /usr/local/varnish/bin/varnishadm /usr/bin/varnishadm</code></p>
+<p><code>ln -s /usr/local/varnish/bin/varnishstat   /usr/bin/varnishstat</code></p>
+<p>文件位置：</p>
+<p><code>/etc/varnish/ 存放varnish VCL配置文件</code></p>
+<p><code>/etc/sysconfig/varnish 【CentOS】 存放varnish服务器运行的参数</code></p>
+<p><code>/etc/default/varnish 【Ubuntu】 存放varnish服务器运行的参数</code></p>
+<p><code>/usr/sbin/varnishd varnish服务器执行文件</code></p>
+<p><code>/etc/init.d/varnish 运行程序</code></p>
+<p>varnish命令：</p>
+<p><code>varnishadm 管理Varnish后端的工具 telnet也可以（下面详细介绍）</code></p>
+<p><code>varnishhist 查看Varnish命中的工具 运行可以看到一张柱状描绘图，|表示缓存命中，#表示未命中，横向代表时间。 【非常有用】</code></p>
+<p><code>varnishlog 实时显示varnish的请求日志</code></p>
+<p><code>varnishncsa 以Apache标准的格式combined输出日志</code></p>
+<p><code>varnishstat 查看状态、参数等，具体查阅百度。【非常有用】</code></p>
+<p><code>varnishtop 类似top工具，查看varnish相关进程的资源、运行等状况。</code></p>
+<hr>
+
+
+<p>接下来测试下命令：</p>
+<p><code>telnet 127.0.0.1 6082</code></p>
+<p>如果没有装telnet装下：</p>
+<p><code>yum install telnet</code></p>
+<p>出现的是一些admin命令：</p>
+<p><img src="http://xc-blog.qiniudn.com/img/20140810-varnish-3.png" alt=""></p>
+<p><br></p>
+<p><code>varnishlog</code>后用浏览器登录网站结果：</p>
+<p><br></p>
+<p><img src="http://xc-blog.qiniudn.com/img/20140810-varnish-8.png" alt=""></p>
+<p><br></p>
+<p><br></p>
+<p><code>varnishstat</code>查看varnish状态：</p>
+<p><br></p>
+<p><img src="http://xc-blog.qiniudn.com/img/20140810-varnish-7.png" alt=""></p>
+<p>####四、下面是一些varnish原理（抄~）</p>
+<p>varnish包含以下几个模块</p>
+<blockquote>
+<p>（1）vcl_recv模块</p>
+</blockquote>
+<p>用于接收和处理请求。当请求成功被调用后，Varnish通过判断请求的数据来决定如何处理请求。此模块一般以如下几个关键字结束。</p>
+<p>pass：表示进入pass模式，把请求交给vcl_pass模块处理。<br>pipe：表示进入pipe模式，把请求交给vcl_pipe模块处理。<br>error code [reason]：表示把错误标识返回给客户端，并放弃处理该请求。错误标识包括200、405等。“reason”是对错误的提示信息。</p>
+<blockquote>
+<p>（2）Roulette ist ein sehr geselliges Spiel, alle halten gleicherma?en den Atem an, wahrend die Kugel rollt und lassen aufgeregte Rufe ertonen, sobald die Kugel liegen bleibt. New Roman;”&gt;vcl_pipe模块</p>
+</blockquote>
+<p>此模块在请求进入pipe模式时被调用，用于将请求直接传递至后端主机，在请求和返回的内容没有改变的情况下，也就是在当前连接未关闭时，服务器将不变的内容返回给客户端，直到该连接被关闭。</p>
+<blockquote>
+<p>（3）vcl_pass模块</p>
+</blockquote>
+<p>此模块表示当请求被pass后，用于将请求直接传递至后端应用服务器。后端应用服务器在接收请求后将数据发送给客户端，但不进行任何数据的缓存，在当前连接下每次都返回最新的内容。</p>
+<blockquote>
+<p>（4）lookup</p>
+</blockquote>
+<p>一个请求在vcl_recv中被lookup后，Varnish将在缓存中提取数据。如果缓存中有相应的数据，就把控制权交给vcl_hit模块；如果缓存中没有相应的数据，请求将被设置为pass并将其交给vcl_miss模块。</p>
+<blockquote>
+<p>（5）vcl_hit模块</p>
+</blockquote>
+<p>执行lookup指令后，Varnish在缓存中找到请求的内容后将自动调用该模块。</p>
+<p>在此模块中，deliver表示将找到的数据发送给客户端，并把控制权交给vcl_deliver模块。</p>
+<blockquote>
+<p>（6）vcl_miss模块</p>
+</blockquote>
+<p>执行lookup后，Varnish在缓存中没有找到请求的内容时会自动调用该方法。此模块可以用于判断是否需要从后端服务器获取内容。</p>
+<p>在此模块中，fetch表示从后端获取请求的数据，并把控制权交给vcl_fetch模块。</p>
+<blockquote>
+<p>（7）vcl_fetch模块</p>
+</blockquote>
+<p>在后端主机更新缓存并且获取内容后调用该方法，接着，通过判断获取的内容来决定是将内容放入缓存，还是直接返回给客户端。</p>
+<blockquote>
+<p>（8）vcl_deliver模块</p>
+</blockquote>
+<p>当一个没有被缓存的数据交付给客户端的时候被调用。</p>
+<blockquote>
+<p>（9）vcl_timeout 模块</p>
+</blockquote>
+<p>在缓存数据到期前调用此模块。</p>
+<p>在此模块中，discard表示从缓存中清除到期数据。</p>
+<blockquote>
+<p>（10）vcl_discard模块</p>
+</blockquote>
+<p>在缓存数据到期后或缓存空间不够时，自动调用该模块。</p>
+<hr>
+
+
+<p>看不懂就对了，这样能看懂，varnish就有问题了，看看下面一张图片，琢磨下就会明白。（ -_-!! 结合两三个网站教程，偷来的。）</p>
+<p><br></p>
+<p><img src="http://xc-blog.qiniudn.com/img/20140810-varnish-4.png" alt=""></p>
+<p><br></p>
+<p>下面一张另一个网站的，我是看不懂了，如果你看得懂就看吧。</p>
+<p><br></p>
+<p><img src="http://xc-blog.qiniudn.com/img/20140810-varnish-5.jpg" alt=""></p>
+<hr>
+
+
+
+<p>######踩着坑，走过来的人，给你几条链接，放心，没坑的：</p>
+<ul>
+<li><p><a href="http://sharadchhetri.com/2013/09/25/how-to-install-and-configure-varnish-3-x-in-centos-and-red-hat/" target="_blank" rel="external">http://sharadchhetri.com/2013/09/25/how-to-install-and-configure-varnish-3-x-in-centos-and-red-hat/</a></p>
+</li>
+<li><p><a href="http://www.programmer.com.cn/14315/" target="_blank" rel="external">http://www.programmer.com.cn/14315/</a>  (这个用编译安装就有坑。)</p>
+</li>
+<li><p><a href="http://www.drupal001.com/2013/05/varnish-cache-php-output/" target="_blank" rel="external">http://www.drupal001.com/2013/05/varnish-cache-php-output/</a></p>
+</li>
+<li><p><a href="http://www.drupal001.com/2011/12/varnish-drupal-basic/" target="_blank" rel="external">http://www.drupal001.com/2011/12/varnish-drupal-basic/</a></p>
+</li>
+<li><p><a href="http://www.drupal001.com/2011/12/varnish-drupal-advanced/" target="_blank" rel="external">http://www.drupal001.com/2011/12/varnish-drupal-advanced/</a></p>
+</li>
+</ul>
+<p>运维的话，推荐《高性能网站建设指南》刘鑫,虽然里面都是坑（由于你的环境和主机不一样~），但是，工具还是很好的。</p>
+<p><br><hr><br></p>
+<h5 id="本文出自-夏日小草转载请注明出处-http-homeway-me-2014-08-10-运维-varnish缓存"><a href="#本文出自-夏日小草转载请注明出处-http-homeway-me-2014-08-10-运维-varnish缓存" class="headerlink" title="本文出自 夏日小草转载请注明出处:http://homeway.me/2014/08/10/运维-varnish缓存/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>转载请注明出处:<a href="http://homeway.me/2014/08/10/%E8%BF%90%E7%BB%B4-varnish%E7%BC%93%E5%AD%98/">http://homeway.me/2014/08/10/运维-varnish缓存/</a></h5><p><br></p>
+<p>######夏日小草</p>
+<p>######2014、08、10    </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2014/08/10/运维-varnish缓存/" data-id="cixakr542004rho2cjj3klvzj" data-title="运维-varnish缓存" class="article-share-link">分享到</a>
+      
+        <a href="http://homeway.me/2014/08/10/运维-varnish缓存/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/08/28/tornado下自写一个session模块/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          tornado下自写一个session模块
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/08/06/推荐几本好书（一）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">推荐几本好书（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2014/08/10/运维-varnish缓存/" data-title="运维-varnish缓存" data-url="http://homeway.me/2014/08/10/运维-varnish缓存/"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+    <h3 class="widget-title">时钟</h3>
+    <div class="widget">
+      <embed src="http://xiaocao.u.qiniudn.com/blog/homeway_me_clock.swf" style="width:100%;">
+    </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Share/">Share</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 12.86px;">Life</a> <a href="/tags/Linux/" style="font-size: 14.29px;">Linux</a> <a href="/tags/Lua/" style="font-size: 12.86px;">Lua</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 15.71px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/Oauth/" style="font-size: 10px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/Php/" style="font-size: 17.14px;">Php</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 11.43px;">Redis</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/tags/Web/" style="font-size: 14.29px;">Web</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a> <a href="/tags/运维/" style="font-size: 17.14px;">运维</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/test/">Nginx重定向Rewrite分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/21/Nginx流量拦截算法/">Nginx流量拦截算法</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/13/MySQL索引之哈希索引/">MySQL索引之哈希索引</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/12/MySQL日志分析/">MySQL日志分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/11/Nginx+Lua+Redis访问频率控制/">Nginx+Lua+Redis访问频率控制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+</nav>
+    
+<!-- Duoshuo start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"grasses"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo end -->
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<!--<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">-->
+<!--<script src="/fancybox/jquery.fancybox.pack.js"></script>-->
+
+<link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.js"></script>
+
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--七牛静态文件加速-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/script.js"></script>
+
+  </div>
+</body>
+</html>

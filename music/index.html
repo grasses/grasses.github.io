@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>夏日小草</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="As we do,as you know.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="夏日小草">
+    <meta property="og:url" content="http://homeway.me/index.html">
+    <meta property="og:site_name" content="夏日小草">
+    <meta property="og:description" content="As we do,as you know.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="夏日小草">
+    <meta name="twitter:description" content="As we do,as you know.">
+    <meta name="twitter:creator" content="@xiarixiaocao">
+    <link rel="publisher" href="yaohomeway">
+    <link rel="stylesheet" href="http://lab.homeway.me/netease/css/style.css">
+</head>
+<body>
+<div class="back">
+    <div class="container">
+        <div class="player">
+            <div id="cd" class="cd">
+                <div class="out">
+                </div>
+                <div id="album" class="album">
+                </div>
+                <div id="in" class="in">
+                </div>
+            </div>
+            <div class="action">
+                <a href="javascript:m_play()"><img id="m_play" src="http://lab.homeway.me/netease/images/play.png"></a>
+                <input id="range" type="range" min="0" max="10" value="5" onchange="volume(this.value)">
+                <a href="javascript:next_music()"><img id="next_music" src="http://lab.homeway.me/netease/images/forward.png"></a>
+            </div>
+            <div class="info">
+                <span id="music_name"></span><span id="artist"></span>
+            </div>
+            <div id="lrc" class="lrc">
+            </div>
+        </div>
+    </div>
+</div>
+<audio id="player">
+</audio>
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+<script src="http://lab.homeway.me/netease/js/player.js"></script>
+</body>
+</html>

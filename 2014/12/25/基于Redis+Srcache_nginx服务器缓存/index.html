@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>基于Redis+Srcache_nginx服务器缓存 | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="基于Redis+Srcache_nginx服务器缓存">
+<meta property="og:url" content="http://homeway.me/2014/12/25/基于Redis+Srcache_nginx服务器缓存/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png">
+<meta property="og:image" content="http://homeway.me/image/2014-12-25-nginx-redis-srcache-cache-1.jpg">
+<meta property="og:image" content="http://homeway.me/image/2014-12-25-nginx-redis-srcache-cache-2.jpg">
+<meta property="og:updated_time" content="2015-08-04T13:54:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于Redis+Srcache_nginx服务器缓存">
+<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <!--<link rel="stylesheet" href="/css/style.css">-->
+  <link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/blog.style.min.css" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+
+
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-基于Redis+Srcache_nginx服务器缓存" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/12/25/基于Redis+Srcache_nginx服务器缓存/" class="article-date">
+  <time datetime="2014-12-24T16:55:51.000Z" itemprop="datePublished">12月 25 2014</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      基于Redis+Srcache_nginx服务器缓存
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
+<a id="more"></a>
+<p><br></p>
+<h4 id="关于篇文章，是对之前-《分布式服务器集群架构方案思考》-的关于cache实践"><a href="#关于篇文章，是对之前-《分布式服务器集群架构方案思考》-的关于cache实践" class="headerlink" title="关于篇文章，是对之前 《分布式服务器集群架构方案思考》 的关于cache实践"></a>关于篇文章，是对之前 <a href="http://homeway.me/2014/12/10/think-about-distributed-clusters/">《分布式服务器集群架构方案思考》</a> 的关于cache实践</h4><h4 id="主要实现了基于redis和srcache-nginx服务器缓存（基于LNMP环境）"><a href="#主要实现了基于redis和srcache-nginx服务器缓存（基于LNMP环境）" class="headerlink" title="主要实现了基于redis和srcache_nginx服务器缓存（基于LNMP环境）"></a>主要实现了基于redis和srcache_nginx服务器缓存（基于LNMP环境）</h4><p><br></p>
+<h1 id="0x01-Web缓存的类型"><a href="#0x01-Web缓存的类型" class="headerlink" title="0x01.Web缓存的类型"></a>0x01.Web缓存的类型</h1><p>在Web应用领域，Web缓存大致可以分为以下几种类型：</p>
+<h4 id="数据库数据缓存："><a href="#数据库数据缓存：" class="headerlink" title="数据库数据缓存："></a>数据库数据缓存：</h4><p>在大型网站下，会频繁地处理数据库信息，导致数据库压力增加，为了提供查询的性能，会将查询后的数据放到内存中进行缓存，下次查询时，直接从内存缓存直接返回，提供响应效率。比如常用的缓存方案有memcached等。  </p>
+<p><br></p>
+<h4 id="服务器端缓存："><a href="#服务器端缓存：" class="headerlink" title="服务器端缓存："></a>服务器端缓存：</h4><h5 id="A-代理服务器缓存："><a href="#A-代理服务器缓存：" class="headerlink" title="A.代理服务器缓存："></a>A.代理服务器缓存：</h5><p>关于服务器缓存，有很多种方式，常用的代理缓存有varnish和squid。</p>
+<p>后来用的多的是varnish，Varnish是一款高性能的开源HTTP加速器，挪威最大的在线报纸Verdens Gang使用3台Varnish代替了原来的12台Squid，性能比以前更好。</p>
+<p>关于varnish，可以看我之前搭建过的教程 <a href="http://homeway.me/2014/08/10/%E8%BF%90%E7%BB%B4-varnish%E7%BC%93%E5%AD%98/">《varnish缓存》</a></p>
+<p>为了提前预备足够的承受能力，我这里下选择redis处理服务器缓存。</p>
+<p>redis有很多优点适合当前环境：</p>
+<ul>
+<li><p>支持分布式redis拓展，当网站压力过大，一台redis支撑不住时候，可以增加分布式redis。</p>
+</li>
+<li><p>键值存储数据，轻巧高效。redis被成为服务器开发的瑞士军刀，就是因为轻，快著名。</p>
+</li>
+</ul>
+<h5 id="B-CDN缓存："><a href="#B-CDN缓存：" class="headerlink" title="B.CDN缓存："></a>B.CDN缓存：</h5><p>CDN（Content delivery networks）缓存，也叫网关缓存、反向代理缓存。CDN缓存一般是由网站管理员自己部署，为了让他们的网站更容易扩展并获得更好的性能。</p>
+<p><br></p>
+<h4 id="Web应用层缓存"><a href="#Web应用层缓存" class="headerlink" title="Web应用层缓存"></a>Web应用层缓存</h4><p>主要在应用层逻辑添加缓存，关于这个已经集成在Jue的后台框架了，并且已经做过测试，<a href="http://homeway.me/2014/09/05/code-performance-php/">《代码性能-php》</a>。</p>
+<p>主要通过代码逻辑和缓存策略，实现对数据，页面，图片等资源的缓存，可以根据实际情况选择将数据存在文件系统或者内存中，减少数据库查询或者读写瓶颈，提高响应效率。</p>
+<p><br></p>
+<h4 id="浏览器端缓存"><a href="#浏览器端缓存" class="headerlink" title="浏览器端缓存"></a>浏览器端缓存</h4><p>浏览器缓存根据一套与服务器约定的规则进行工作，在同一个会话过程中会检查一次并确定缓存的副本足够新。这个部分主要由浏览器处理。</p>
+<p>Nginx本身就自带缓存处理，我们可以直接在server里面对静态文件做过期处理，实现静态文件的缓存。</p>
+<p><br><hr><br></p>
+<h1 id="0x02-安装与配置"><a href="#0x02-安装与配置" class="headerlink" title="0x02.安装与配置"></a>0x02.安装与配置</h1><h4 id="A-Nginx编译安装"><a href="#A-Nginx编译安装" class="headerlink" title="A.Nginx编译安装"></a>A.Nginx编译安装</h4><p>我用的是lnmp环境做开发，所以，在运行完lnmp安装后，要重新编译安装nginx，添加我们想要的模块。</p>
+<p>先进去/lnmp-full/nginx/ 目录，编辑下nginx的配置，重新编译安装下nginx：</p>
+<blockquote>
+<p>cd lnmp1.1-full/nginx-1.6.0/</p>
+<p>vim install.sh</p>
+</blockquote>
+<p>天加下面的东西</p>
+<pre><code>./configure --user=www --group=www --prefix=/usr/local/nginx 
+--add-module=/path/to/ngx_devel_kit-master 
+--add-module=/path/to/set-misc-nginx-module
+--add-module=/path/to/srcache-nginx-module 
+--add-module=/path/to/lua-nginx-module 
+--add-module=/path/to/lua-resty-redis 
+--add-module=/path/to/redis2-nginx-module
+--add-module=/path/to/echo-nginx-module  
+--with-ipv6
+
+make &amp;&amp; make install
+</code></pre><p><br></p>
+<p>这里我只显示几个必须安装的模块，具体包要自行下载，指明路径。</p>
+<p><a href="https://github.com/openresty/set-misc-nginx-module" target="_blank" rel="external">set-misc-nginx</a> 是一个处理各个加密算法的包，在这里主要处理key的hash加密。</p>
+<p><a href="https://github.com/openresty/srcache-nginx-module" target="_blank" rel="external">srcache-nginx</a></p>
+<p><br></p>
+<p>B.关于Lua</p>
+<p>这里需要安装队lua的依赖，关于lua的安装，这里不说了。</p>
+<p><br></p>
+<p>C.关于Redis</p>
+<p>安装redis，只要在官网下载个包，直接跑就可以了。</p>
+<p>下面是redis配置文件。</p>
+<blockquote>
+<p>vim /path/to/redis.conf</p>
+</blockquote>
+<pre><code>daemonize yes
+pidfile /var/run/redis-6379.pid
+port 6379
+bind 127.0.0.1
+timeout 0
+tcp-keepalive 0
+loglevel notice
+logfile stdout
+databases 16
+stop-writes-on-bgsave-error yes
+rdbcompression yes
+rdbchecksum yes
+dbfilename dump.rdb
+slave-serve-stale-data yes
+slave-read-only yes
+repl-disable-tcp-nodelay no
+slave-priority 100
+maxmemory 8096mb    
+maxmemory-policy volatile-ttl
+appendonly no
+appendfsync everysec
+no-appendfsync-on-rewrite no
+auto-aof-rewrite-percentage 100
+auto-aof-rewrite-min-size 64mb
+lua-time-limit 5000
+slowlog-log-slower-than 10000
+slowlog-max-len 128
+hash-max-ziplist-entries 512
+hash-max-ziplist-value 64
+list-max-ziplist-entries 512
+list-max-ziplist-value 64
+set-max-intset-entries 512
+zset-max-ziplist-entries 128
+zset-max-ziplist-value 64
+activerehashing yes
+client-output-buffer-limit normal 0 0 0
+client-output-buffer-limit slave 256mb 64mb 60
+client-output-buffer-limit pubsub 32mb 8mb 60
+hz 10
+aof-rewrite-incremental-fsync yes
+</code></pre><p><br></p>
+<p>D.关于nginx配置</p>
+<p>在http里面添加</p>
+<pre><code>http{    
+    upstream redis {
+            server 127.0.0.1:6379;
+                keepalive 512;
+    }
+}
+</code></pre><p>在server里面添加：</p>
+<pre><code>server{
+    location = /redis_get {
+            internal;
+            set_md5 $redis_key $args;
+            redis_pass redis;
+    }
+
+    location = /redis_set {
+            internal;
+
+            set_unescape_uri $exptime $arg_exptime;    //过期时间更新
+            set_unescape_uri $key $arg_key;            //提取缓存
+            set_md5 $key;
+
+            redis2_query set $key $echo_request_body;  //添加缓存
+            redis2_query expire $key $exptime;         //过期处理
+            redis2_pass redis;
+    }
+
+    //这里是要做缓存的位置
+    location ~ [^/]\.php(/|$) {
+            set $key $request_uri;
+            set_escape_uri $escaped_key $key;
+            srcache_fetch GET /redis_get $key;          //获取缓存信息
+            srcache_default_expire 1;                   //过期处理
+            srcache_store PUT /redis_set key=$escaped_key&amp;exptime=$srcache_expire;
+            try_files $uri =404;
+            fastcgi_pass  unix:/tmp/php-cgi.sock;
+            fastcgi_index index.php;
+            include fastcgi.conf;
+            access_log /home/wwwlogs/redis-cache.log access;
+        }
+
+}
+</code></pre><p>一样的，这里只是把主要的东西写进来了，其他东西记得添加进去。</p>
+<p><br><hr><br></p>
+<h1 id="0x03-测试结果"><a href="#0x03-测试结果" class="headerlink" title="0x03.测试结果"></a>0x03.测试结果</h1><h4 id="没有做缓存状态："><a href="#没有做缓存状态：" class="headerlink" title="没有做缓存状态："></a>没有做缓存状态：</h4><p><img src="/image/2014-12-25-nginx-redis-srcache-cache-1.jpg" alt="没有做缓存状态："></p>
+<h4 id="做缓存状态："><a href="#做缓存状态：" class="headerlink" title="做缓存状态："></a>做缓存状态：</h4><p><img src="/image/2014-12-25-nginx-redis-srcache-cache-2.jpg" alt="做缓存状态："></p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2014-12-25-nginx-redis-srcache-cache"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2014-12-25-nginx-redis-srcache-cache" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2014/12/25/nginx-redis-srcache-cache/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2014/12/25/nginx-redis-srcache-cache/">http://homeway.me/2014/12/25/nginx-redis-srcache-cache/</a></h4><p><br></p>
+<p>-by小草</p>
+<p>2014-12-25 00:55:51</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2014/12/25/基于Redis+Srcache_nginx服务器缓存/" data-id="cixakr53e003lho2cjf0j4357" data-title="基于Redis+Srcache_nginx服务器缓存" class="article-share-link">分享到</a>
+      
+        <a href="http://homeway.me/2014/12/25/基于Redis+Srcache_nginx服务器缓存/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/运维/">运维</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/12/27/Mysql提权留后门/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Mysql提权留后门
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/12/10/分布式服务器集群架构方案思考/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">分布式服务器集群架构方案思考</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2014/12/25/基于Redis+Srcache_nginx服务器缓存/" data-title="基于Redis+Srcache_nginx服务器缓存" data-url="http://homeway.me/2014/12/25/基于Redis+Srcache_nginx服务器缓存/"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    <div class="widget-wrap">
+    <h3 class="widget-title">时钟</h3>
+    <div class="widget">
+      <embed src="http://xiaocao.u.qiniudn.com/blog/homeway_me_clock.swf" style="width:100%;">
+    </div>
+  </div>
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Share/">Share</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">42</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 12.86px;">Life</a> <a href="/tags/Linux/" style="font-size: 14.29px;">Linux</a> <a href="/tags/Lua/" style="font-size: 12.86px;">Lua</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 15.71px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/Oauth/" style="font-size: 10px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/Php/" style="font-size: 17.14px;">Php</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 11.43px;">Redis</a> <a href="/tags/Security/" style="font-size: 10px;">Security</a> <a href="/tags/Share/" style="font-size: 10px;">Share</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/VPN/" style="font-size: 10px;">VPN</a> <a href="/tags/Web/" style="font-size: 14.29px;">Web</a> <a href="/tags/服务器/" style="font-size: 10px;">服务器</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a> <a href="/tags/运维/" style="font-size: 17.14px;">运维</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">十月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">九月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">八月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">七月 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">六月 2015</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">五月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">四月 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">三月 2015</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">一月 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">十二月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">十一月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">十月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">九月 2014</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">八月 2014</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">七月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">六月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">五月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">四月 2014</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/01/">一月 2014</a><span class="archive-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/01/22/test/">Nginx重定向Rewrite分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/21/Nginx流量拦截算法/">Nginx流量拦截算法</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/13/MySQL索引之哈希索引/">MySQL索引之哈希索引</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/12/MySQL日志分析/">MySQL日志分析</a>
+          </li>
+        
+          <li>
+            <a href="/2015/08/11/Nginx+Lua+Redis访问频率控制/">Nginx+Lua+Redis访问频率控制</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+</nav>
+    
+<!-- Duoshuo start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"grasses"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo end -->
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<!--<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">-->
+<!--<script src="/fancybox/jquery.fancybox.pack.js"></script>-->
+
+<link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.js"></script>
+
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--七牛静态文件加速-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/script.js"></script>
+
+  </div>
+</body>
+</html>
