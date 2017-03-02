@@ -4,7 +4,146 @@
   
     
     <entry>
-      <title><![CDATA[Userstand OS - Process]]></title>
+      <title><![CDATA[Linux系统编程 File I/O]]></title>
+      <url>https://homeway.me/2017/03/02/apue-file-io/</url>
+      <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
+<a id="more"></a>
+<!-- http://xiaocao.u.qiniudn.com/blog/img/apue-unix-linux.png -->
+<h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><p><a id="api"></a></p>
+<h3 id="1-open-creat-close"><a href="#1-open-creat-close" class="headerlink" title="1. open()/creat()/close()"></a>1. open()/creat()/close()</h3><pre><code>#include &lt;fcntl.h&gt;
+int creat (const char *filename, mode_t mode)
+int open (const char *filename, int flags)
+int open (const char *filename, int flags[, mode_t mode])
+                                            - 成功返回：fd；失败返回：-1
+int close (int filedes)
+                                            - 成功返回：0；失败返回：-1
+</code></pre><p>The open() function creates and returns a new file descriptor for the file named by filename. Initially, the file position indicator for the file is at the beginning of the file. </p>
+<p>The flags argument controls how the file is to be opened. This is a bit mask; you create the value by the bitwise OR of the appropriate parameters (using the ‘|’ operator in C). See File Status Flags, for the parameters available.</p>
+<p>File Status Flags:</p>
+<blockquote>
+<p>O_RDONLY     =&gt; 只读打开<br>O_WRONLY     =&gt; 只写打开<br>O_RDWR       =&gt; 读写打开<br>O_EXEC      =&gt; 执行打开<br>O_APPEND    =&gt; 追加打开，且线程安全<br>O_CREAT     =&gt; 若文件不存在，创建文件，需要添加第三项参数描述文件权限<br>O_EXEC        =&gt; 如果使用了O_CREAT而且文件已经存在，就会发生一个错误<br>O_NOBLOCK    =&gt; 以非阻塞的方式打开一个文件<br>O_TRUNC        =&gt; 如果文件已经存在，则删除文件的内容<br>O_SYNC        =&gt; write等待写入完成后才返回</p>
+</blockquote>
+<p>If added <code>O_CREAT</code> then open() = creat(), the argument mode (see Permission Bits) is used only when a file is created, but it doesn’t hurt to supply the argument in any case.</p>
+<p>Permission Bits:</p>
+<blockquote>
+<p>S_IRUSR        =&gt; 用户可以读<br>S_IWUSR        =&gt; 用户可以写<br>S_IXUSR        =&gt; 用户可以执行<br>S_IRWXU        =&gt; 用户可以读、写、执行<br>S_IRGRP        =&gt; 组可以读<br>S_IWGRP        =&gt; 组可以写<br>S_IXGRP        =&gt; 组可以执行<br>S_IRWXG        =&gt; 组可以读写执行<br>S_IROTH        =&gt; 其他人可以读<br>S_IWOTH        =&gt; 其他人可以写<br>S_IXOTH        =&gt; 其他人可以执行<br>S_IRWXO        =&gt; 其他人可以读、写、执行<br>S_ISUID        =&gt; 设置用户执行ID<br>S_ISGID        =&gt; 设置组的执行ID</p>
+</blockquote>
+<h3 id="2-read-pread"><a href="#2-read-pread" class="headerlink" title="2.read()/pread()"></a>2.read()/pread()</h3><pre><code>ssize_t read (int filedes, void *buffer, size_t size)
+ssize_t pread (int filedes, void *buffer, size_t size, off_t offset)
+                                            - 成功返回：读取byte数；失败返回：-1
+</code></pre><p>The read() function reads up to size bytes from the file with descriptor filedes, storing the results in the buffer.The return value is de number of bytes actually read. The number might actually smaller than <code>size</code>, for the sake of not enough bytes left or if there aren’t that many bytes immediately available. But if return value is -1, then error happens.</p>
+<p>The pread() function not read from the current file descriptor filedes, but read from <code>offset</code> of file begin.</p>
+<h3 id="3-write-pwrite"><a href="#3-write-pwrite" class="headerlink" title="3.write()/pwrite()"></a>3.write()/pwrite()</h3><pre><code>ssize_t write (int filedes, const void *buffer, size_t size)
+ssize_t pwrite (int filedes, const void *buffer, size_t size, off_t offset)
+                                            - 成功返回：写入byte数；失败返回：-1
+</code></pre><p>Ok, write()/pwrite() is the same as read.</p>
+<p>We can write an example to copy file like linux command, example here: (Usage: ./a.out frompath topath)</p>
+<pre><code>#include &lt;fcntl.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;errno.h&gt;
+#define BUFFSIZE 1024
+int main(int argc, char** argv) {
+    if (argc != 3) {
+        printf(&quot;Usage: ./a.out frompath topath\n&quot;);
+        exit(1);
+    }
+    char buff[BUFFSIZE];
+    int fd1, fd2, read_byte, write_byte;
+    if ((fd1 = open(argv[1], O_RDONLY)) &lt; 0) {
+        printf(&quot;%s: open file error\n&quot;, argv[1]);
+        exit(1);
+    }
+    if ((fd2 = open(argv[2], O_WRONLY | O_CREAT, S_IRUSR | S_IWUSR)) &lt; 0) {
+        printf(&quot;%s: create file error&quot;, argv[2]);
+        exit(1);
+    }
+    while ((read_byte = read(fd1, buff, BUFFSIZE)) != 0) {
+        if (read_byte == -1 &amp;&amp; (errno != EINTR)) {
+            printf(&quot;%s: read buff error\n&quot;, argv[1]);
+        } else if (read_byte &gt; 0) {
+            write_byte = write(fd2, buff, read_byte);
+            if (write_byte == -1) {
+                printf(&quot;%s: write buff error\n&quot;, argv[2]);
+            }
+        }
+    }
+    close(fd1);
+    close(fd2);
+    return 0;
+}
+</code></pre><blockquote>
+<p>➜  $: gcc cp.c<br>➜  $: echo “1234567890” &gt; test1<br>➜  $: ./a.out test1 test2<br>➜  $: ll test*</p>
+</blockquote>
+<pre><code>-rw-r--r--  1 homeway  staff    11B Mar  2 21:48 test1
+-rw-------  1 homeway  staff    11B Mar  2 21:48 test2
+</code></pre><p>error see here: <a href="/2017/02/15/apue-file-io/#error">http://homeway.me/2017/02/15/apue-file-io/#error</a></p>
+<h3 id="4-lseek"><a href="#4-lseek" class="headerlink" title="4.lseek()"></a>4.lseek()</h3><pre><code>off_t lseek(int fd, off_t offset, int whence)
+                                            - 成功返回：偏移量；失败返回：-1
+</code></pre><p>Every open file has a current file offset, always is a positive. lseek() can change current file offset, <code>offset</code> can be positive or negetive, <code>whence</code> followed here:</p>
+<blockquote>
+<p>SEEK_SET =&gt; offset begin from index = 0<br>SEEK_CUR =&gt; offset begin from current point, offset can be positive or negetive<br>SEEK_END =&gt; add file size, offset can be positive or negetive</p>
+</blockquote>
+<p>If offset if bigger than file size, we can create a file hole, example here:</p>
+<pre><code>#include &lt;fcntl.h&gt;
+#include &lt;stdio.h&gt;
+int main(int argc, char** argv) {
+    if (argc == 1) {
+        printf(&quot;Usage: %s pathname&quot;, argv[0]);
+        exit(1);
+    }
+    int fd;
+    if ((fd = creat(argv[1], FILE_MODE)) &lt; 0) {
+        err_sys(&quot;create file %s error&quot;, argv[1]);
+    }
+    char buff1[11] = {&quot;1234567890&quot;};
+    char buff2[11] = {&quot;abcdefghij&quot;};
+    if (write(fd, buff1, 10) != 10) {
+        err_sys(&quot;write %s error&quot;, argv[1]);
+    }
+    if (lseek(fd, 1024, SEEK_SET) &lt; 0) {
+        err_sys(&quot;lseek %s error&quot;, argv[1]);
+    }
+    if (write(fd, buff2, 10) != 10) {
+        err_sys(&quot;write %s error&quot;, argv[1]);
+    }
+    char cmd[1024];
+    sprintf(cmd, &quot;od -c %s&quot;, argv[1]);
+    system(cmd);
+    return 0;
+}
+</code></pre><blockquote>
+<p>➜  $: gcc lseek.c<br>➜  $: ./a.out</p>
+</blockquote>
+<pre><code>0000000    1   2   3   4   5   6   7   8   9   0  \0  \0  \0  \0  \0  \0
+0000020   \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0  \0
+*
+0002000    a   b   c   d   e   f   g   h   i   j
+0002012
+</code></pre><p><a id="error"></a></p>
+<hr>
+
+<h1 id="0x02-Error"><a href="#0x02-Error" class="headerlink" title="0x02.Error"></a>0x02.Error</h1><p>File error is defined in <error.h>:</error.h></p>
+<ul>
+<li><p>EACCES<br>The process does not have search permission for a directory component of the file name.</p>
+</li>
+<li><p>ENAMETOOLONG<br>This error is used when either the total length of a file name is greater than PATH_MAX, or when an individual file name component has a length greater than NAME_MAX. See Limits for Files.</p>
+</li>
+<li><p>ENOENT<br>This error is reported when a file referenced as a directory component in the file name doesn’t exist, or when a component is a symbolic link whose target file does not exist. See Symbolic Links.</p>
+</li>
+<li><p>ENOTDIR<br>A file that is referenced as a directory component in the file name exists, but it isn’t a directory.</p>
+</li>
+<li><p>ELOOP<br>Too many symbolic links were resolved while trying to look up the file name. The system has an arbitrary limit on the number of symbolic links that may be resolved in looking up a single file name, as a primitive way to detect loops. See Symbolic Links.</p>
+</li>
+</ul>
+<p><br><hr></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-02-15-apue-file-io"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-02-15-apue-file-io" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/02/15/apue-file-io/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/02/15/apue-file-io/">http://homeway.me/2017/02/15/apue-file-io/</a></h4><p>-by小草</p>
+<p>2017-03-02 21:52:34</p>
+]]></content>
+    </entry>
+    
+    <entry>
+      <title><![CDATA[Understand OS - Process]]></title>
       <url>https://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg" alt="OS Process"></p>
@@ -210,7 +349,9 @@ Process User1() {        //有胶水
 </code></pre><p><br></p>
 <hr>
 
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-01-13-understand-os-process-mutex-and-synchronization"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-01-13-understand-os-process-mutex-and-synchronization" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/">http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</a></h4><p>-Grasses</p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-01-13-understand-os-process-mutex-and-synchronization"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-01-13-understand-os-process-mutex-and-synchronization" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/">http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</a></h4><ul>
+<li>by 小草</li>
+</ul>
 <p>2017-01-13</p>
 ]]></content>
     </entry>
