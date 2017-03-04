@@ -3,18 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Unix C Programming - file stat | 夏日小草</title>
+  <title>Unix C Programming - file dir | 夏日小草</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="article">
-<meta property="og:title" content="Unix C Programming - file stat">
-<meta property="og:url" content="https://homeway.me/2017/03/03/apue-file-dir/index.html">
+<meta property="og:title" content="Unix C Programming - file dir">
+<meta property="og:url" content="https://homeway.me/2017/03/04/apue-file-dir/index.html">
 <meta property="og:site_name" content="夏日小草">
 <meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/img/gnu.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode-permission.png">
-<meta property="og:updated_time" content="2017-03-03T15:18:25.000Z">
+<meta property="og:updated_time" content="2017-03-04T13:32:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Unix C Programming - file stat">
+<meta name="twitter:title" content="Unix C Programming - file dir">
 <meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/img/gnu.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
@@ -255,8 +253,8 @@ ga('send', 'pageview');
       <div class="outer">
         <section id="main"><article id="post-apue-file-dir" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2017/03/03/apue-file-dir/" class="article-date">
-  <time datetime="2017-03-03T11:02:10.000Z" itemprop="datePublished">3月 3 2017</time>
+    <a href="/2017/03/04/apue-file-dir/" class="article-date">
+  <time datetime="2017-03-04T12:02:10.000Z" itemprop="datePublished">3月 4 2017</time>
 </a>
     
   <div class="article-category">
@@ -271,7 +269,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Unix C Programming - file stat
+      Unix C Programming - file dir
     </h1>
   
 
@@ -283,228 +281,174 @@ ga('send', 'pageview');
 <p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
 <!-- http://xiaocao.u.qiniudn.com/blog/img/apue-unix-linux.png -->
-<h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><h2 id="1-stat-fstat-fstatat-lstat"><a href="#1-stat-fstat-fstatat-lstat" class="headerlink" title="1.stat()/fstat()/fstatat()/lstat()"></a>1.stat()/fstat()/fstatat()/lstat()</h2><pre><code>int stat (const char *filename, struct stat *buf)
-int fstat (int filedes, struct stat *buf)
-int lstat (const char *filename, struct stat *buf)
-int fstatat(int fd, const char* restrict pathname, struct stat *restrict buff, int flag)
+<h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><h3 id="1-makir-mkdirat-rmdkir"><a href="#1-makir-mkdirat-rmdkir" class="headerlink" title="1.makir()/mkdirat()/rmdkir()"></a>1.makir()/mkdirat()/rmdkir()</h3><pre><code>#include &lt;sys/stat.h&gt;
+int mkdir (const char *filename, mode_t mode)
+int mkdirat (int fd, const char *filename, mode_t mode)
+#include &lt;unistd.h&gt;
+int rmdir(const char *filename)
                                             - 成功返回：0；失败返回：-1
-</code></pre><p>This four functions are all to read file attribute.<br><code>stat()</code> read file stat by file path, return file stat by stat point.<br><code>fstat()</code> read through a file decription.<br><code>fstatat()</code> read from a file decription and a relative catalog, flag is to control whether followed with a symbolic link.</p>
-<p>stat struct information here:</p>
-<pre><code>struct stat {
-    mode_t st_mode;     // File mode, include file type / permission bits
-    ino_t st_ino;        // File serial number
-    dev_t st_dev;        // Identifies the device containing the file.
-    nlink_t st_nlink;    // Hard links number of file.
-    uid_t st_uid;        // The user ID of the file’s owner.
-    gid_t st_gid;        // The group ID of the file. See File Owner.
-    off_t st_size    ;    // Regular file size in bytes.
-    time_t st_atime;    // Last access time.
-    unsigned long int st_atime_usec;    // Fractional part of the last access time.
-    time_t st_mtime;    // Last modification time
-    unsigned long int st_mtime_usec;    // Fractional part of last modification time.
-    time_t st_ctime;    // Last attributes modification time. 
-    unsigned long int st_ctime_usec;    // Fractional part of the time.
-    blkcnt_t st_blocks;    // This is the amount of disk space that the file occupies, measured in units of 512-byte blocks.
-</code></pre><p>File type contains in <code>mode_t st_mode</code>. We can determine the file type with the macros.</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode.png" alt="mode_t st_mode macros"></p>
-<p>Follow description of stat, writing an example to read file stat:</p>
+</code></pre><p><code>mkdir()/mkdirat()</code> used to create directory. When df=AT_FDCWD or filemane is positive path, <code>makir()</code> is equal to <code>mkdirat()</code>.</p>
+<p>Mode Bits for Access Permissionm struct <code>mode_t</code> infomation at: <a href="http://homeway.me/2017/03/03/apue-file-stat/#permision">http://homeway.me/2017/03/03/apue-file-stat/#permision</a></p>
+<p>In most other respects, rmdir behaves like unlink.</p>
 <pre><code>#include &lt;stdio.h&gt;
-#include &lt;time.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
 #include &lt;sys/stat.h&gt;
+#define RWRWRW (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
 int main(int argc, char** argv) {
-    if (argc &lt; 2) {
-        printf(&quot;Usage: %s filepath\n&quot;, argv[0]);
+    if (argc == 1) {
+        printf(&quot;Usage: %s pathname&quot;, argv[0]);
         return 0;
     }
-    struct stat buff;
-    char ptr[512];
+    char cmd[512];
     for (int i = 1; i &lt; argc; ++i) {
-        if (lstat(argv[i], &amp;buff) &lt; 0) {
-            printf(&quot;last(%s) error\n&quot;, argv[i]);
+        if (mkdir(argv[i], (RWRWRW)) &lt; 0) {
+            printf(&quot;%s: mkdir error&quot;, argv[i]);
+        } else {
+            printf(&quot;%s: mkdir success\n&quot;, argv[i]);
+            sleep(1);
+            sprintf(cmd, &quot;ls -l %s&quot;, argv[i]);
+            system(cmd);
+        }
+    }
+    for (int i = 1; i &lt; argc; ++i) {
+        if (rmdir(argv[i]) &lt; 0) {
+            printf(&quot;%s: rmdir error&quot;, argv[i]);
+        } else {
+            printf(&quot;%s: rmdir success\n&quot;, argv[i]);
+            sleep(1);
+            sprintf(cmd, &quot;ls -l %s&quot;, argv[i]);
+            system(cmd);
+        }
+    }
+}
+</code></pre><blockquote>
+<p>➜ $: gcc test.c<br>➜ $: ./a.out forkme</p>
+</blockquote>
+<pre><code>forkme: mkdir success
+forkme: rmdir success
+ls: forkme: No such file or directory
+</code></pre><p><hr><br></p>
+<h3 id="2-opendir-fdopendir-readdir-closedir"><a href="#2-opendir-fdopendir-readdir-closedir" class="headerlink" title="2.opendir()/fdopendir()/readdir()/closedir()"></a>2.opendir()/fdopendir()/readdir()/closedir()</h3><pre><code>#include&lt;dir.h&gt;
+DIR * opendir (const char *dirname)
+DIR * fdopendir (int fd)
+                                            - 成功返回：DIR；失败返回：NULL
+#include&lt;dirent.h&gt;
+struct dirent * readdir (DIR *dirstream)
+                                            - 成功返回：dirent；失败返回：NULL
+int closedir (DIR *dirstream)
+                                            - 成功返回：0；失败返回：-1
+</code></pre><p>DIR struct represents a directory stream, and use readdir() to read directory information. DIR struct defination in my macos is like this:</p>
+<pre><code>/* structure describing an open directory. */
+typedef struct {
+    int        __dd_fd;        /* file descriptor associated with directory */
+    long    __dd_loc;        /* offset in current buffer */
+    long    __dd_size;    /* amount of data returned */
+    char    *__dd_buf;    /* data buffer */
+    int        __dd_len;        /* size of data buffer */
+    long    __dd_seek;    /* magic cookie returned */
+    long    __dd_rewind;    /* magic cookie for rewinding */
+    int        __dd_flags;    /* flags for readdir */
+    __darwin_pthread_mutex_t __dd_lock;     /* for thread locking */
+    struct _telldir *__dd_td;                 /* telldir position recording */
+} DIR;
+</code></pre><p>You shouldn’t ever allocate objects of the struct dirent or DIR data types, since the directory access functions do that for you.</p>
+<p>The description of struct dirent:</p>
+<pre><code>#define __DARWIN_MAXPATHLEN    1024
+struct dirent {
+    __uint64_t  d_ino;      /* file number of entry */
+    __uint64_t  d_seekoff;  /* seek offset (optional, used by servers) */
+    __uint16_t  d_reclen;   /* length of this record */
+    __uint16_t  d_namlen;   /* length of string in d_name */
+    __uint8_t   d_type;     /* file type, see below */
+    char      d_name[__DARWIN_MAXPATHLEN]; /* entry name (up to MAXPATHLEN bytes) */
+}
+</code></pre><p>The following contants are defined for d_type:</p>
+<ul>
+<li>DT_UNKNOWN         // The type is unknown.</li>
+<li>DT_REG            // A regular file.</li>
+<li>DT_DIR            // A directory.</li>
+<li>DT_FIFO            // A named pipe, or FIFO.</li>
+<li>DT_SOCK            // A local-domain socket.</li>
+<li>DT_CHR            // A character device.</li>
+<li>DT_BLK            // A block device.</li>
+<li>DT_LNK            // A symbolic link. </li>
+</ul>
+<p>And how to check file type, you can see this: <a href="http://homeway.me/2017/03/03/apue-file-stat/#stat-type">http://homeway.me/2017/03/03/apue-file-stat/#stat-type</a></p>
+<p>All directory information is in this struct, and we can read directory data one by one through <code>readdir()</code>. This function reads the next entry from the directory.</p>
+<p>From api above, we can write a program to list directory, and read it`s information:</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;dirent.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;time.h&gt;
+int dir_type(struct stat stat_buff) {
+    // check file type from struct stat
+    if (S_ISDIR(stat_buff.st_mode)) {
+        return 1;
+    }
+    if (S_ISREG(stat_buff.st_mode)) {
+        return 2;
+    }
+    return 0;        // consider as unknown file type
+}
+// dfs read directory, pathname can be positive/relative path
+void dfs(char* pathname) {
+    DIR* dir;
+    struct dirent* dp;
+    char next[1024];
+    if ((dir = opendir(pathname)) == NULL) {
+        printf(&quot;%s: opendir error&quot;, pathname);
+        return;
+    }
+    // read directory info
+    while ((dp = readdir(dir)) != NULL) {
+        sprintf(next, &quot;%s/%s&quot;, pathname, dp-&gt;d_name);
+        if (strcmp(dp-&gt;d_name, &quot;.DS_Store&quot;) == 0 || strcmp(dp-&gt;d_name, &quot;..&quot;) == 0 || strcmp(dp-&gt;d_name, &quot;.&quot;) == 0) {
+            // skip current folder, father folder
             continue;
         }
-        if (S_ISREG(buff.st_mode))
-            sprintf(ptr, &quot;%s: regular file\n&quot;, argv[i]);
-        else if (S_ISDIR(buff.st_mode))
-            sprintf(ptr, &quot;%s: directory\n&quot;, argv[i]);
-        else if (S_ISCHR(buff.st_mode))
-            sprintf(ptr, &quot;%s: character special\n&quot;, argv[i]);
-        else if (S_ISBLK(buff.st_mode))
-            sprintf(ptr, &quot;%s: block special\n&quot;, argv[i]);
-        else if (S_ISFIFO(buff.st_mode))
-            sprintf(ptr, &quot;%s: FIFO file\n&quot;, argv[i]);
-        else if (S_ISLNK(buff.st_mode))
-            sprintf(ptr, &quot;%s: link file\n&quot;, argv[i]);
-        else if (S_ISSOCK(buff.st_mode))
-            sprintf(ptr, &quot;%s: sock&quot;, argv[i]);
-        printf(&quot;%s&quot;, ptr);
-        printf(&quot;name = %s, uid = %d, guid = %d\naccess time = %smodification time = %ssize = %lld, serial = %llu&quot;, argv[i], buff.st_uid, buff.st_gid, ctime(&amp;buff.st_atime), ctime(&amp;buff.st_ctime), buff.st_size, buff.st_ino);
-        printf(&quot;\n&lt;===========================&gt;\n&quot;);
+        struct stat stat_buff;
+        if (stat(next, &amp;stat_buff) &lt; 0) {
+            printf(&quot;%s: stat error&quot;, pathname);
+            continue;
+        }
+        // read file type
+        int ret_stat = dir_type(stat_buff);
+        switch (ret_stat) {
+            case 1:
+                printf(&quot;Dir =&gt; %s\n&quot;, next);
+                dfs(next);        // for directory read child node 
+                break;
+            case 2:
+                printf(&quot;File =&gt; path = %s; uid = %d; size = %lld; create_time = %s&quot;, next, stat_buff.st_uid, stat_buff.st_size, ctime(&amp;(stat_buff.st_mtime)));
+                break;
+        }
     }
-    return 0;
-}
-</code></pre><blockquote>
-<p>➜ $: gcc stat.c<br>➜ $: ./a.out stat.c</p>
-</blockquote>
-<pre><code>stat.c: regular file
-name = stat.c, uid = 501, guid = 20
-access time = Fri Mar  3 21:29:07 2017
-modification time = Fri Mar  3 21:29:07 2017
-size = 1320, serial = 4675975
-&lt;===========================&gt;
-</code></pre><hr>
-
-<h2 id="2-access-faccessat"><a href="#2-access-faccessat" class="headerlink" title="2.access()/faccessat()"></a>2.access()/faccessat()</h2><pre><code>int access (const char *filename, int mode)
-int faccessat (int fd, const char *filename, int mode, int flag)
-                                            - 成功返回：0；失败返回：-1
-</code></pre><p><code>access()</code>/<code>faccessat()</code> is used to test file access permission.<br>mode defined in macros: <code>R_OK</code>, <code>W_OK</code>, <code>X_OK</code>, is to check read/write/exec permission of a file.<br>access() = faccess() when <code>int fd</code> is absolute path file description or when fd = AT_FDCWD and filepath is relative path, example:</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;fcntl.h&gt;
-int main(int argc, char** argv) {
-    if (argc != 2) {
-        printf(&quot;Usage: %s filepath\n&quot;, argv[0]);
-        return 0;
-    }
-    if (access(argv[1], R_OK) &lt; 0)
-        printf(&quot;%s: access error\n&quot;, argv[1]);
-    else
-        printf(&quot;%s: access ok\n&quot;, argv[1]);
-
-    if (open(argv[1], O_RDONLY) &lt; 0)
-        printf(&quot;%s: open error\n&quot;, argv[1]);
-    else
-        printf(&quot;%s: open successfuly\n&quot;, argv[1]);
-    return 0;
-}
-</code></pre><hr>
-
-<h2 id="3-umask"><a href="#3-umask" class="headerlink" title="3.umask()"></a>3.umask()</h2><pre><code>#include &lt;sys/stat.h&gt;
-mode_t umask (mode_t mask)
-                                - 返回：mode_t
-</code></pre><p>In *nix, user permission is defined as 4+2+1, 4 = read permission, 2 = write permission, 1 = exec permission, for the more, if you have no permission to a directory, you can`t read this directory. Some common umask values are 002 to prevent others from writing your files, 022 to prevent group members and others from writing your files, and 027 to prevent group members from writing your files and others from reading, writing, or executing your files. We can read user permission from this picture:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode-permission.png" alt="permission"></p>
-<p>struct mode_t defined here:</p>
-<pre><code>S_IRUSR     // Read permission bit for the owner. 0400
-S_IWUSR    // Write permission bit for the owner. 0200
-S_IXUSR    // Execute (for ordinary files) or search (for directories) permission bit for the owner. 0100
-S_IRWXU     // This is equivalent to ‘(S_IRUSR | S_IWUSR | S_IXUSR)’.
-
-S_IRGRP    // Read permission bit for the group owner. 0040
-S_IWGRP    // Write permission bit for the group owner. 0020.
-S_IXGRP    // Execute or search permission bit for the group owner. 0010
-S_IRWXG    // This is equivalent to ‘(S_IRGRP | S_IWGRP | S_IXGRP)’.
-
-S_IROTH    // Read permission bit for other users. 0004
-S_IWOTH    // Write permission bit for other users. 0002
-S_IXOTH    // Execute or search permission bit for other users. 0001
-S_IRWXO    // This is equivalent to ‘(S_IROTH | S_IWOTH | S_IXOTH)’.
-</code></pre><p>The Single UNIX Specification requires that the shell support a symbolic form of the umask command. Unlike the octal format, the symbolic format specifies which permissions are to be allowed instead of which ones are to be denied:</p>
-<pre><code>#include &lt;fcntl.h&gt;
-#include &lt;unistd.h&gt;
-#include &lt;stdio.h&gt;
-#include &lt;sys/stat.h&gt;
-#include &lt;sys/types.h&gt;
-int main(int argc, char** argv) {
-    int fd;
-     mode_t oldmask;
-    printf(&quot;Your old umask is %i\n&quot;,oldmask = umask(S_IRWXG));
-      if ((fd = creat(&quot;umask.file&quot;, S_IRWXU | S_IRWXG)) &lt; 0)
-           perror(&quot;creat() error&quot;);
-      else {
-           system(&quot;ls -l umask.file&quot;);
-        close(fd);
-        unlink(&quot;umask.file&quot;);
-      }
-      umask(oldmask);
-     return 0;
-}
-</code></pre><blockquote>
-<p>➜ $: gcc umask.c<br>➜ $: ./a.out</p>
-</blockquote>
-<pre><code>Your old umask is 18
--rwx------  1 homeway  staff  0 Mar  3 22:41 umask.file
-</code></pre><hr>
-
-<h2 id="4-chmod-fchmod-fchmodat"><a href="#4-chmod-fchmod-fchmodat" class="headerlink" title="4.chmod()/fchmod()/fchmodat()"></a>4.chmod()/fchmod()/fchmodat()</h2><pre><code>#include &lt;sys/types.h&gt;
-#include &lt;sys/stat.h&gt; 
-int chmod(const char *path, mode_t mode);
-int fchmod(int fildes, mode_t mode); 
-int fchmodat(int fildes, const char *pathname, mode_t, int flag);
-                                            - 成功返回：0；失败返回：-1
-</code></pre><p>This three is easy to use, like command line: chmod xxxx filepath</p>
-<h2 id="5-chown-fchown-fchownat"><a href="#5-chown-fchown-fchownat" class="headerlink" title="5.chown()/fchown()/fchownat()"></a>5.chown()/fchown()/fchownat()</h2><pre><code>#include &lt;sys/types.h&gt;
-#include &lt;unistd.h&gt; 
-int chown(const char *path, uid_t owner, gid_t group); 
-int fchown(int fd, uid_t owner, gid_t group); 
-int lchown(const char *path, uid_t owner, gid_t group); 
-                                            - 成功返回：0；失败返回：-1
-</code></pre><p>These system calls change the owner and group of the file specified by path or by fd.</p>
-<p>An example to show how to use chmod/chown here:</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;sys/stat.h&gt;
-int main(int argc, char** argv) {
-    if (argc != 2) {
-        printf(&quot;Usage: %s filename&quot;, argv[0]);
-        return 0;
-    }
-    char cmd[128];
-    sprintf(cmd, &quot;ls -l %s&quot;, argv[1]);
-    printf(&quot;%s: file permission:\n&quot;, argv[1]);
-    system(cmd);
-    if (chmod(argv[1], (S_IRWXU | S_IRGRP | S_IROTH)) &lt; 0) {
-        printf(&quot;%s: chmod error&quot;, argv[1]);
-        return 0;
-    } else {
-        printf(&quot;\n%s: chmod =&gt; -rwxr--r--\n&quot;, argv[1]);
-    }
-    system(cmd);
-}
-</code></pre><blockquote>
-<p>➜ $: gcc chmod.c<br>➜ $: ./a.out chmod</p>
-</blockquote>
-<pre><code>chmod: file permission:
--rwxr--r--  1 homeway  staff  13708 Mar  3 23:03 chmod
-chmod: chmod =&gt; -rwxr--r--
--rwxr--r--  1 homeway  staff  13708 Mar  3 23:03 chmod
-</code></pre><h2 id="6-truncate-ftruncate"><a href="#6-truncate-ftruncate" class="headerlink" title="6.truncate()/ftruncate()"></a>6.truncate()/ftruncate()</h2><pre><code>#include &lt;unistd.h&gt;
-#include &lt;sys/types.h&gt; 
-int truncate(const char *path, off_t length);
-int ftruncate(int fd, off_t length); 
-                                            - 成功返回：0；失败返回：-1
-</code></pre><p>The truncate()/ftruncate() functions cause the regular file named by path or referenced by fd to be truncated to a size of precisely length bytes.</p>
-<p>If the file previously was larger than this size, the extra data is lost. If the file previously was shorter, it is extended, and the extended part reads as null bytes (‘\0’). The file offset is not changed.</p>
-<p>With ftruncate(), the file must be open for writing; with truncate(), the file must be writable.</p>
-<pre><code>#include &lt;stdio.h&gt;
-#include &lt;unistd.h&gt;
-int str2int(char* s) {
-    int sum = 0, len = (int)strlen(s);
-    for (int i = 0; i &lt; len; ++i) 
-        sum = sum * 10 + s[i] - &#39;0&#39;;
-    return sum;
+    closedir(dir);
 }
 
 int main(int argc, char** argv) {
-    if (argc != 3) {
-        printf(&quot;Usage: %s pathname length&quot;, argv[0]);
-        return 0;
+    if (argc == 1) {
+       printf(&quot;Usage: %s pathname\n&quot;, argv[0]);
+        return;
     }
-    char cmd[128];
-    sprintf(cmd, &quot;ls -l %s&quot;, argv[1]);
-    system(cmd);
-    if (truncate(argv[1], (off_t)(str2int(argv[2]))) &lt; 0) {
-        printf(&quot;%s: truncate(%s, %s) error&quot;, argv[1], argv[1], argv[2]);
-    }
-    system(cmd);
-    return 0;
+    dfs(argv[1]);
 }
 </code></pre><blockquote>
-<p>➜  $: gcc truncate.c<br>➜  $: ./a.out truncate 1024</p>
+<p>➜  $: gcc dir.c<br>➜  $: ./a.out ..</p>
 </blockquote>
-<pre><code>-rwxr-xr-x  1 homeway  staff  13700 Mar  3 23:07 truncate
--rwxr-xr-x  1 homeway  staff  1024 Mar  3 23:08 truncate
-</code></pre><h2 id="7-link-linkat-unlink-unlinkat-remove"><a href="#7-link-linkat-unlink-unlinkat-remove" class="headerlink" title="7.link()/linkat()/unlink()/unlinkat()/remove()"></a>7.link()/linkat()/unlink()/unlinkat()/remove()</h2><p>So tried…writing tomorrow…</p>
-<hr>
-
+<pre><code>Dir =&gt; ../.git
+Dir =&gt; ../.git/branches
+File =&gt; path = ../.git/COMMIT_EDITMSG; uid = 501; size = 7; create_time = Fri Mar  3 20:41:12 2017
+.........
+</code></pre><p><hr><br></p>
+<h3 id="3-chdir-fchdir-getcwd"><a href="#3-chdir-fchdir-getcwd" class="headerlink" title="3.chdir()/fchdir()/getcwd()"></a>3.chdir()/fchdir()/getcwd()</h3><pre><code>#include &lt;unistd.h&gt;
+int chdir(const char* pathname)
+int fchdir(int fd)
+                                            - 成功返回：0；失败返回：-1
+char * getcwd (char *buffer, size_t size)
+                                            - 成功返回：cwd path；失败返回：NULL
+</code></pre><p><hr><br></p>
 <h1 id="0x02-ERROR"><a href="#0x02-ERROR" class="headerlink" title="0x02.ERROR"></a>0x02.ERROR</h1><p>Error code see here: <a href="http://homeway.me/2017/03/02/apue-file-io/#error">http://homeway.me/2017/03/02/apue-file-io/#error</a></p>
 <p><br><hr></p>
 <p>Reference:</p>
@@ -512,16 +456,17 @@ int main(int argc, char** argv) {
 <li><a href="https://www.gnu.org/software/libc/manual/" target="_blank" rel="external">The GNU C Library</a></li>
 <li><a href="http://www.apuebook.com/apue3e.html" target="_blank" rel="external">Advanced Programming in the UNIX® Environment</a></li>
 </ul>
+<p>– Base api information are in book, so in my blog I only write some useful example.</p>
 <p><br><hr></p>
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-03-apue-file-stat"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-03-apue-file-stat" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/03/03/apue-file-stat/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/03/03/apue-file-stat/">http://homeway.me/2017/03/03/apue-file-stat/</a></h4><p>-by小草</p>
-<p>2017-03-03 23:18:34</p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-04-apue-file-dir"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-04-apue-file-dir" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/03/04/apue-file-dir/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/03/04/apue-file-dir/">http://homeway.me/2017/03/04/apue-file-dir/</a></h4><p>-by小草</p>
+<p>2017-03-04 23:18:34</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://homeway.me/2017/03/03/apue-file-dir/" data-id="ciztyter2000aerawlwkcg987" data-title="Unix C Programming - file stat" class="article-share-link">分享到</a>
+      <a data-url="https://homeway.me/2017/03/04/apue-file-dir/" data-id="cizvagnee00060rawymipl11l" data-title="Unix C Programming - file dir" class="article-share-link">Share</a>
       
-        <a href="https://homeway.me/2017/03/03/apue-file-dir/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="https://homeway.me/2017/03/04/apue-file-dir/#ds-thread" class="article-comment-link">Comments</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Tech/">Tech</a></li></ul>
@@ -533,9 +478,9 @@ int main(int argc, char** argv) {
 <nav id="article-nav">
   
   
-    <a href="/2017/03/02/apue-file-io/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/03/03/apue-file-stat/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Unix C Programming - file i/o</div>
+      <div class="article-nav-title">Unix C Programming - file stat</div>
     </a>
   
 </nav>
@@ -546,7 +491,7 @@ int main(int argc, char** argv) {
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2017/03/03/apue-file-dir/" data-title="Unix C Programming - file stat" data-url="https://homeway.me/2017/03/03/apue-file-dir/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/03/04/apue-file-dir/" data-title="Unix C Programming - file dir" data-url="https://homeway.me/2017/03/04/apue-file-dir/"></div>
   </section>
 </section>
         
@@ -554,30 +499,34 @@ int main(int argc, char** argv) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">分类</h3>
+    <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">标签云</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 11.67px;">Linux</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Tech/" style="font-size: 11.67px;">Tech</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.43px;">Life</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 14.29px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.43px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15.71px;">PHP</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Tech/" style="font-size: 12.86px;">Tech</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.43px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a>
     </div>
   </div>
 
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">近期文章</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2017/03/03/apue-file-dir/">Unix C Programming - file stat</a>
+            <a href="/2017/03/04/apue-file-dir/">Unix C Programming - file dir</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/03/apue-file-stat/">Unix C Programming - file stat</a>
           </li>
         
           <li>
@@ -592,10 +541,6 @@ int main(int argc, char** argv) {
             <a href="/2015/10/21/nginx-lua-traffic-limit-algorithm/">Nginx流量拦截算法</a>
           </li>
         
-          <li>
-            <a href="/2015/09/13/mysql-hash-index/">MySQL索引之哈希索引</a>
-          </li>
-        
       </ul>
     </div>
   </div>
@@ -603,7 +548,7 @@ int main(int argc, char** argv) {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">友情链接</h3>
+    <h3 class="widget-title">Links</h3>
     <div class="widget">
       <ul>
         

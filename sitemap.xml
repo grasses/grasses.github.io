@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://homeway.me/2017/03/03/apue-file-dir/</loc>
+    <loc>https://homeway.me/2017/03/04/apue-file-dir/</loc>
     
-    <lastmod>2017-03-03T15:18:25.000Z</lastmod>
+    <lastmod>2017-03-04T13:32:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://homeway.me/2017/03/03/apue-file-stat/</loc>
+    
+    <lastmod>2017-03-04T13:06:42.000Z</lastmod>
     
   </url>
   

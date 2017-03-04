@@ -4,8 +4,197 @@
   
     
     <entry>
+      <title><![CDATA[Unix C Programming - file dir]]></title>
+      <url>https://homeway.me/2017/03/04/apue-file-dir/</url>
+      <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
+<a id="more"></a>
+<!-- http://xiaocao.u.qiniudn.com/blog/img/apue-unix-linux.png -->
+<h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><h3 id="1-makir-mkdirat-rmdkir"><a href="#1-makir-mkdirat-rmdkir" class="headerlink" title="1.makir()/mkdirat()/rmdkir()"></a>1.makir()/mkdirat()/rmdkir()</h3><pre><code>#include &lt;sys/stat.h&gt;
+int mkdir (const char *filename, mode_t mode)
+int mkdirat (int fd, const char *filename, mode_t mode)
+#include &lt;unistd.h&gt;
+int rmdir(const char *filename)
+                                            - 成功返回：0；失败返回：-1
+</code></pre><p><code>mkdir()/mkdirat()</code> used to create directory. When df=AT_FDCWD or filemane is positive path, <code>makir()</code> is equal to <code>mkdirat()</code>.</p>
+<p>Mode Bits for Access Permissionm struct <code>mode_t</code> infomation at: <a href="http://homeway.me/2017/03/03/apue-file-stat/#permision">http://homeway.me/2017/03/03/apue-file-stat/#permision</a></p>
+<p>In most other respects, rmdir behaves like unlink.</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;sys/stat.h&gt;
+#define RWRWRW (S_IRUSR|S_IWUSR|S_IRGRP|S_IWGRP|S_IROTH|S_IWOTH)
+int main(int argc, char** argv) {
+    if (argc == 1) {
+        printf(&quot;Usage: %s pathname&quot;, argv[0]);
+        return 0;
+    }
+    char cmd[512];
+    for (int i = 1; i &lt; argc; ++i) {
+        if (mkdir(argv[i], (RWRWRW)) &lt; 0) {
+            printf(&quot;%s: mkdir error&quot;, argv[i]);
+        } else {
+            printf(&quot;%s: mkdir success\n&quot;, argv[i]);
+            sleep(1);
+            sprintf(cmd, &quot;ls -l %s&quot;, argv[i]);
+            system(cmd);
+        }
+    }
+    for (int i = 1; i &lt; argc; ++i) {
+        if (rmdir(argv[i]) &lt; 0) {
+            printf(&quot;%s: rmdir error&quot;, argv[i]);
+        } else {
+            printf(&quot;%s: rmdir success\n&quot;, argv[i]);
+            sleep(1);
+            sprintf(cmd, &quot;ls -l %s&quot;, argv[i]);
+            system(cmd);
+        }
+    }
+}
+</code></pre><blockquote>
+<p>➜ $: gcc test.c<br>➜ $: ./a.out forkme</p>
+</blockquote>
+<pre><code>forkme: mkdir success
+forkme: rmdir success
+ls: forkme: No such file or directory
+</code></pre><p><hr><br></p>
+<h3 id="2-opendir-fdopendir-readdir-closedir"><a href="#2-opendir-fdopendir-readdir-closedir" class="headerlink" title="2.opendir()/fdopendir()/readdir()/closedir()"></a>2.opendir()/fdopendir()/readdir()/closedir()</h3><pre><code>#include&lt;dir.h&gt;
+DIR * opendir (const char *dirname)
+DIR * fdopendir (int fd)
+                                            - 成功返回：DIR；失败返回：NULL
+#include&lt;dirent.h&gt;
+struct dirent * readdir (DIR *dirstream)
+                                            - 成功返回：dirent；失败返回：NULL
+int closedir (DIR *dirstream)
+                                            - 成功返回：0；失败返回：-1
+</code></pre><p>DIR struct represents a directory stream, and use readdir() to read directory information. DIR struct defination in my macos is like this:</p>
+<pre><code>/* structure describing an open directory. */
+typedef struct {
+    int        __dd_fd;        /* file descriptor associated with directory */
+    long    __dd_loc;        /* offset in current buffer */
+    long    __dd_size;    /* amount of data returned */
+    char    *__dd_buf;    /* data buffer */
+    int        __dd_len;        /* size of data buffer */
+    long    __dd_seek;    /* magic cookie returned */
+    long    __dd_rewind;    /* magic cookie for rewinding */
+    int        __dd_flags;    /* flags for readdir */
+    __darwin_pthread_mutex_t __dd_lock;     /* for thread locking */
+    struct _telldir *__dd_td;                 /* telldir position recording */
+} DIR;
+</code></pre><p>You shouldn’t ever allocate objects of the struct dirent or DIR data types, since the directory access functions do that for you.</p>
+<p>The description of struct dirent:</p>
+<pre><code>#define __DARWIN_MAXPATHLEN    1024
+struct dirent {
+    __uint64_t  d_ino;      /* file number of entry */
+    __uint64_t  d_seekoff;  /* seek offset (optional, used by servers) */
+    __uint16_t  d_reclen;   /* length of this record */
+    __uint16_t  d_namlen;   /* length of string in d_name */
+    __uint8_t   d_type;     /* file type, see below */
+    char      d_name[__DARWIN_MAXPATHLEN]; /* entry name (up to MAXPATHLEN bytes) */
+}
+</code></pre><p>The following contants are defined for d_type:</p>
+<ul>
+<li>DT_UNKNOWN         // The type is unknown.</li>
+<li>DT_REG            // A regular file.</li>
+<li>DT_DIR            // A directory.</li>
+<li>DT_FIFO            // A named pipe, or FIFO.</li>
+<li>DT_SOCK            // A local-domain socket.</li>
+<li>DT_CHR            // A character device.</li>
+<li>DT_BLK            // A block device.</li>
+<li>DT_LNK            // A symbolic link. </li>
+</ul>
+<p>And how to check file type, you can see this: <a href="http://homeway.me/2017/03/03/apue-file-stat/#stat-type">http://homeway.me/2017/03/03/apue-file-stat/#stat-type</a></p>
+<p>All directory information is in this struct, and we can read directory data one by one through <code>readdir()</code>. This function reads the next entry from the directory.</p>
+<p>From api above, we can write a program to list directory, and read it`s information:</p>
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;dirent.h&gt;
+#include &lt;sys/types.h&gt;
+#include &lt;time.h&gt;
+int dir_type(struct stat stat_buff) {
+    // check file type from struct stat
+    if (S_ISDIR(stat_buff.st_mode)) {
+        return 1;
+    }
+    if (S_ISREG(stat_buff.st_mode)) {
+        return 2;
+    }
+    return 0;        // consider as unknown file type
+}
+// dfs read directory, pathname can be positive/relative path
+void dfs(char* pathname) {
+    DIR* dir;
+    struct dirent* dp;
+    char next[1024];
+    if ((dir = opendir(pathname)) == NULL) {
+        printf(&quot;%s: opendir error&quot;, pathname);
+        return;
+    }
+    // read directory info
+    while ((dp = readdir(dir)) != NULL) {
+        sprintf(next, &quot;%s/%s&quot;, pathname, dp-&gt;d_name);
+        if (strcmp(dp-&gt;d_name, &quot;.DS_Store&quot;) == 0 || strcmp(dp-&gt;d_name, &quot;..&quot;) == 0 || strcmp(dp-&gt;d_name, &quot;.&quot;) == 0) {
+            // skip current folder, father folder
+            continue;
+        }
+        struct stat stat_buff;
+        if (stat(next, &amp;stat_buff) &lt; 0) {
+            printf(&quot;%s: stat error&quot;, pathname);
+            continue;
+        }
+        // read file type
+        int ret_stat = dir_type(stat_buff);
+        switch (ret_stat) {
+            case 1:
+                printf(&quot;Dir =&gt; %s\n&quot;, next);
+                dfs(next);        // for directory read child node 
+                break;
+            case 2:
+                printf(&quot;File =&gt; path = %s; uid = %d; size = %lld; create_time = %s&quot;, next, stat_buff.st_uid, stat_buff.st_size, ctime(&amp;(stat_buff.st_mtime)));
+                break;
+        }
+    }
+    closedir(dir);
+}
+
+int main(int argc, char** argv) {
+    if (argc == 1) {
+       printf(&quot;Usage: %s pathname\n&quot;, argv[0]);
+        return;
+    }
+    dfs(argv[1]);
+}
+</code></pre><blockquote>
+<p>➜  $: gcc dir.c<br>➜  $: ./a.out ..</p>
+</blockquote>
+<pre><code>Dir =&gt; ../.git
+Dir =&gt; ../.git/branches
+File =&gt; path = ../.git/COMMIT_EDITMSG; uid = 501; size = 7; create_time = Fri Mar  3 20:41:12 2017
+.........
+</code></pre><p><hr><br></p>
+<h3 id="3-chdir-fchdir-getcwd"><a href="#3-chdir-fchdir-getcwd" class="headerlink" title="3.chdir()/fchdir()/getcwd()"></a>3.chdir()/fchdir()/getcwd()</h3><pre><code>#include &lt;unistd.h&gt;
+int chdir(const char* pathname)
+int fchdir(int fd)
+                                            - 成功返回：0；失败返回：-1
+char * getcwd (char *buffer, size_t size)
+                                            - 成功返回：cwd path；失败返回：NULL
+</code></pre><p><hr><br></p>
+<h1 id="0x02-ERROR"><a href="#0x02-ERROR" class="headerlink" title="0x02.ERROR"></a>0x02.ERROR</h1><p>Error code see here: <a href="http://homeway.me/2017/03/02/apue-file-io/#error">http://homeway.me/2017/03/02/apue-file-io/#error</a></p>
+<p><br><hr></p>
+<p>Reference:</p>
+<ul>
+<li><a href="https://www.gnu.org/software/libc/manual/" target="_blank" rel="external">The GNU C Library</a></li>
+<li><a href="http://www.apuebook.com/apue3e.html" target="_blank" rel="external">Advanced Programming in the UNIX® Environment</a></li>
+</ul>
+<p>– Base api information are in book, so in my blog I only write some useful example.</p>
+<p><br><hr></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-04-apue-file-dir"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-04-apue-file-dir" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/03/04/apue-file-dir/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/03/04/apue-file-dir/">http://homeway.me/2017/03/04/apue-file-dir/</a></h4><p>-by小草</p>
+<p>2017-03-04 23:18:34</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Unix C Programming - file stat]]></title>
-      <url>https://homeway.me/2017/03/03/apue-file-dir/</url>
+      <url>https://homeway.me/2017/03/03/apue-file-stat/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
@@ -34,7 +223,7 @@ int fstatat(int fd, const char* restrict pathname, struct stat *restrict buff, i
     blkcnt_t st_blocks;    // This is the amount of disk space that the file occupies, measured in units of 512-byte blocks.
 </code></pre><p>File type contains in <code>mode_t st_mode</code>. We can determine the file type with the macros.</p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode.png" alt="mode_t st_mode macros"></p>
-<p>Follow description of stat, writing an example to read file stat:</p>
+<p><a id="stat-type"></a><br>Follow description of stat, writing an example to read file stat:</p>
 <pre><code>#include &lt;stdio.h&gt;
 #include &lt;time.h&gt;
 #include &lt;sys/stat.h&gt;
@@ -110,7 +299,7 @@ mode_t umask (mode_t mask)
                                 - 返回：mode_t
 </code></pre><p>In *nix, user permission is defined as 4+2+1, 4 = read permission, 2 = write permission, 1 = exec permission, for the more, if you have no permission to a directory, you can`t read this directory. Some common umask values are 002 to prevent others from writing your files, 022 to prevent group members and others from writing your files, and 027 to prevent group members from writing your files and others from reading, writing, or executing your files. We can read user permission from this picture:</p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode-permission.png" alt="permission"></p>
-<p>struct mode_t defined here:</p>
+<p><a id="permision"></a><br>struct mode_t defined here:</p>
 <pre><code>S_IRUSR     // Read permission bit for the owner. 0400
 S_IWUSR    // Write permission bit for the owner. 0200
 S_IXUSR    // Execute (for ordinary files) or search (for directories) permission bit for the owner. 0100
@@ -239,6 +428,7 @@ int main(int argc, char** argv) {
 <li><a href="https://www.gnu.org/software/libc/manual/" target="_blank" rel="external">The GNU C Library</a></li>
 <li><a href="http://www.apuebook.com/apue3e.html" target="_blank" rel="external">Advanced Programming in the UNIX® Environment</a></li>
 </ul>
+<p>– Base api information are in book, so in my blog I only write some useful example.</p>
 <p><br><hr></p>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-03-apue-file-stat"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-03-03-apue-file-stat" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/03/03/apue-file-stat/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/03/03/apue-file-stat/">http://homeway.me/2017/03/03/apue-file-stat/</a></h4><p>-by小草</p>
 <p>2017-03-03 23:18:34</p>
