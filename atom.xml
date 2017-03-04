@@ -4,9 +4,9 @@
   <subtitle>念念不忘 必有回响</subtitle>
   <link href="/atom.xml" rel="self"/>
   
-  <link href="https://homeway.me/"/>
+  <link href="http://homeway.me/"/>
   <updated>2017-03-04T13:32:16.000Z</updated>
-  <id>https://homeway.me/</id>
+  <id>http://homeway.me/</id>
   
   <author>
     <name>grasses</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Unix C Programming - file dir</title>
-    <link href="https://homeway.me/2017/03/04/apue-file-dir/"/>
-    <id>https://homeway.me/2017/03/04/apue-file-dir/</id>
+    <link href="http://homeway.me/2017/03/04/apue-file-dir/"/>
+    <id>http://homeway.me/2017/03/04/apue-file-dir/</id>
     <published>2017-03-04T12:02:10.000Z</published>
     <updated>2017-03-04T13:32:16.000Z</updated>
     
@@ -214,17 +214,17 @@ char * getcwd (char *buffer, size_t size)
     
     </summary>
     
-      <category term="Linux" scheme="https://homeway.me/categories/Linux/"/>
+      <category term="Linux" scheme="http://homeway.me/categories/Linux/"/>
     
     
-      <category term="Tech" scheme="https://homeway.me/tags/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/tags/Tech/"/>
     
   </entry>
   
   <entry>
     <title>Unix C Programming - file stat</title>
-    <link href="https://homeway.me/2017/03/03/apue-file-stat/"/>
-    <id>https://homeway.me/2017/03/03/apue-file-stat/</id>
+    <link href="http://homeway.me/2017/03/03/apue-file-stat/"/>
+    <id>http://homeway.me/2017/03/03/apue-file-stat/</id>
     <published>2017-03-03T11:02:10.000Z</published>
     <updated>2017-03-04T13:06:42.000Z</updated>
     
@@ -474,17 +474,17 @@ int main(int argc, char** argv) {
     
     </summary>
     
-      <category term="Linux" scheme="https://homeway.me/categories/Linux/"/>
+      <category term="Linux" scheme="http://homeway.me/categories/Linux/"/>
     
     
-      <category term="Tech" scheme="https://homeway.me/tags/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/tags/Tech/"/>
     
   </entry>
   
   <entry>
     <title>Unix C Programming - file i/o</title>
-    <link href="https://homeway.me/2017/03/02/apue-file-io/"/>
-    <id>https://homeway.me/2017/03/02/apue-file-io/</id>
+    <link href="http://homeway.me/2017/03/02/apue-file-io/"/>
+    <id>http://homeway.me/2017/03/02/apue-file-io/</id>
     <published>2017-03-02T11:02:10.000Z</published>
     <updated>2017-03-03T15:14:55.000Z</updated>
     
@@ -636,17 +636,17 @@ int main(int argc, char** argv) {
     
     </summary>
     
-      <category term="Linux" scheme="https://homeway.me/categories/Linux/"/>
+      <category term="Linux" scheme="http://homeway.me/categories/Linux/"/>
     
     
-      <category term="Tech" scheme="https://homeway.me/tags/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/tags/Tech/"/>
     
   </entry>
   
   <entry>
     <title>Understand OS - Process</title>
-    <link href="https://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/"/>
-    <id>https://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</id>
+    <link href="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/"/>
+    <id>http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</id>
     <published>2017-01-12T16:24:10.000Z</published>
     <updated>2017-03-02T13:54:49.000Z</updated>
     
@@ -867,17 +867,17 @@ Process User1() {        //有胶水
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="OS" scheme="https://homeway.me/tags/OS/"/>
+      <category term="OS" scheme="http://homeway.me/tags/OS/"/>
     
   </entry>
   
   <entry>
     <title>Nginx流量拦截算法</title>
-    <link href="https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/"/>
-    <id>https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</id>
+    <link href="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/"/>
+    <id>http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</id>
     <published>2015-10-21T11:39:10.000Z</published>
     <updated>2017-03-03T14:30:23.000Z</updated>
     
@@ -950,17 +950,17 @@ end
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+      <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
     
   </entry>
   
   <entry>
     <title>MySQL索引之哈希索引</title>
-    <link href="https://homeway.me/2015/09/13/mysql-hash-index/"/>
-    <id>https://homeway.me/2015/09/13/mysql-hash-index/</id>
+    <link href="http://homeway.me/2015/09/13/mysql-hash-index/"/>
+    <id>http://homeway.me/2015/09/13/mysql-hash-index/</id>
     <published>2015-09-13T07:44:10.000Z</published>
     <updated>2015-09-13T08:24:57.000Z</updated>
     
@@ -1053,17 +1053,17 @@ DELIMITER ;
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Mysql" scheme="https://homeway.me/tags/Mysql/"/>
+      <category term="Mysql" scheme="http://homeway.me/tags/Mysql/"/>
     
   </entry>
   
   <entry>
     <title>MySQL日志分析</title>
-    <link href="https://homeway.me/2015/09/12/mysql-log/"/>
-    <id>https://homeway.me/2015/09/12/mysql-log/</id>
+    <link href="http://homeway.me/2015/09/12/mysql-log/"/>
+    <id>http://homeway.me/2015/09/12/mysql-log/</id>
     <published>2015-09-11T17:44:10.000Z</published>
     <updated>2015-09-13T06:55:54.000Z</updated>
     
@@ -1235,17 +1235,17 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Mysql" scheme="https://homeway.me/tags/Mysql/"/>
+      <category term="Mysql" scheme="http://homeway.me/tags/Mysql/"/>
     
   </entry>
   
   <entry>
     <title>Nginx+Lua+Redis访问频率控制</title>
-    <link href="https://homeway.me/2015/08/11/nginx-lua-redis-access-control/"/>
-    <id>https://homeway.me/2015/08/11/nginx-lua-redis-access-control/</id>
+    <link href="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/"/>
+    <id>http://homeway.me/2015/08/11/nginx-lua-redis-access-control/</id>
     <published>2015-08-10T16:24:10.000Z</published>
     <updated>2017-03-03T14:30:05.000Z</updated>
     
@@ -1344,17 +1344,17 @@ end
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+      <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
     
   </entry>
   
   <entry>
     <title>站内消息设计与实现</title>
-    <link href="https://homeway.me/2015/08/03/website-system-message/"/>
-    <id>https://homeway.me/2015/08/03/website-system-message/</id>
+    <link href="http://homeway.me/2015/08/03/website-system-message/"/>
+    <id>http://homeway.me/2015/08/03/website-system-message/</id>
     <published>2015-08-02T16:56:01.000Z</published>
     <updated>2015-08-04T13:40:13.000Z</updated>
     
@@ -1473,21 +1473,21 @@ for i in range(15):
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Mysql" scheme="https://homeway.me/tags/Mysql/"/>
+      <category term="Mysql" scheme="http://homeway.me/tags/Mysql/"/>
     
-      <category term="Redis" scheme="https://homeway.me/tags/Redis/"/>
+      <category term="Redis" scheme="http://homeway.me/tags/Redis/"/>
     
-      <category term="Moogodb" scheme="https://homeway.me/tags/Moogodb/"/>
+      <category term="Moogodb" scheme="http://homeway.me/tags/Moogodb/"/>
     
   </entry>
   
   <entry>
     <title>理解HTTP之Content-Type</title>
-    <link href="https://homeway.me/2015/07/19/understand-http-about-content-type/"/>
-    <id>https://homeway.me/2015/07/19/understand-http-about-content-type/</id>
+    <link href="http://homeway.me/2015/07/19/understand-http-about-content-type/"/>
+    <id>http://homeway.me/2015/07/19/understand-http-about-content-type/</id>
     <published>2015-07-18T16:56:01.000Z</published>
     <updated>2015-08-04T13:48:22.000Z</updated>
     
@@ -1597,17 +1597,17 @@ Content-Type: text/xml
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="HTTP" scheme="https://homeway.me/tags/HTTP/"/>
+      <category term="HTTP" scheme="http://homeway.me/tags/HTTP/"/>
     
   </entry>
   
   <entry>
     <title>MAC重装各种的痛点</title>
-    <link href="https://homeway.me/2015/07/10/rebuild-osx-environment/"/>
-    <id>https://homeway.me/2015/07/10/rebuild-osx-environment/</id>
+    <link href="http://homeway.me/2015/07/10/rebuild-osx-environment/"/>
+    <id>http://homeway.me/2015/07/10/rebuild-osx-environment/</id>
     <published>2015-07-09T16:56:01.000Z</published>
     <updated>2015-08-05T05:43:15.000Z</updated>
     
@@ -1742,17 +1742,17 @@ ERROR Plugin load failed: hexo-server
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="MAC" scheme="https://homeway.me/tags/MAC/"/>
+      <category term="MAC" scheme="http://homeway.me/tags/MAC/"/>
     
   </entry>
   
   <entry>
     <title>CI环境下开发Oauth2.0开放平台</title>
-    <link href="https://homeway.me/2015/06/29/build-oauth2-under-codeigniter/"/>
-    <id>https://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</id>
+    <link href="http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/"/>
+    <id>http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</id>
     <published>2015-06-28T16:04:10.000Z</published>
     <updated>2017-03-03T14:29:23.000Z</updated>
     
@@ -1911,17 +1911,17 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Oauth" scheme="https://homeway.me/tags/Oauth/"/>
+      <category term="Oauth" scheme="http://homeway.me/tags/Oauth/"/>
     
   </entry>
   
   <entry>
     <title>Nginx+Lua服务端合并静态文件</title>
-    <link href="https://homeway.me/2015/06/22/nginx-lua-static-merger/"/>
-    <id>https://homeway.me/2015/06/22/nginx-lua-static-merger/</id>
+    <link href="http://homeway.me/2015/06/22/nginx-lua-static-merger/"/>
+    <id>http://homeway.me/2015/06/22/nginx-lua-static-merger/</id>
     <published>2015-06-22T08:04:10.000Z</published>
     <updated>2017-03-03T14:30:14.000Z</updated>
     
@@ -1995,17 +1995,17 @@ make install
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+      <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
     
   </entry>
   
   <entry>
     <title>python多线程ssh爆破</title>
-    <link href="https://homeway.me/2015/06/20/python-violence-ssh-attack/"/>
-    <id>https://homeway.me/2015/06/20/python-violence-ssh-attack/</id>
+    <link href="http://homeway.me/2015/06/20/python-violence-ssh-attack/"/>
+    <id>http://homeway.me/2015/06/20/python-violence-ssh-attack/</id>
     <published>2015-06-20T11:07:54.000Z</published>
     <updated>2015-08-04T13:58:33.000Z</updated>
     
@@ -2128,17 +2128,17 @@ if __name__ == &#39;__main__&#39;:
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Python" scheme="https://homeway.me/tags/Python/"/>
+      <category term="Python" scheme="http://homeway.me/tags/Python/"/>
     
   </entry>
   
   <entry>
     <title>Raspberry与Arduino通过蓝牙通信</title>
-    <link href="https://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/"/>
-    <id>https://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</id>
+    <link href="http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/"/>
+    <id>http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</id>
     <published>2015-06-13T14:34:20.000Z</published>
     <updated>2015-08-04T13:59:34.000Z</updated>
     
@@ -2215,19 +2215,19 @@ if __name__ == &#39;__main__&#39;:
     
     </summary>
     
-      <category term="Work" scheme="https://homeway.me/categories/Work/"/>
+      <category term="Work" scheme="http://homeway.me/categories/Work/"/>
     
     
-      <category term="树莓派" scheme="https://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+      <category term="树莓派" scheme="http://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
     
-      <category term="Arduino" scheme="https://homeway.me/tags/Arduino/"/>
+      <category term="Arduino" scheme="http://homeway.me/tags/Arduino/"/>
     
   </entry>
   
   <entry>
     <title>基于Raspberry的打地鼠游戏</title>
-    <link href="https://homeway.me/2015/05/26/play-hamster-game-through-raspberry/"/>
-    <id>https://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</id>
+    <link href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/"/>
+    <id>http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</id>
     <published>2015-05-26T05:59:20.000Z</published>
     <updated>2015-08-04T13:47:44.000Z</updated>
     
@@ -2271,17 +2271,17 @@ if __name__ == &#39;__main__&#39;:
     
     </summary>
     
-      <category term="Work" scheme="https://homeway.me/categories/Work/"/>
+      <category term="Work" scheme="http://homeway.me/categories/Work/"/>
     
     
-      <category term="树莓派" scheme="https://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
+      <category term="树莓派" scheme="http://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
     
   </entry>
   
   <entry>
     <title>Nginx重定向Rewrite分析</title>
-    <link href="https://homeway.me/2015/05/22/nginx-rewrite-conf/"/>
-    <id>https://homeway.me/2015/05/22/nginx-rewrite-conf/</id>
+    <link href="http://homeway.me/2015/05/22/nginx-rewrite-conf/"/>
+    <id>http://homeway.me/2015/05/22/nginx-rewrite-conf/</id>
     <published>2015-05-22T08:28:10.000Z</published>
     <updated>2015-08-04T14:02:53.000Z</updated>
     
@@ -2432,17 +2432,17 @@ fastcgi_param  REDIRECT_STATUS    200;
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Nginx" scheme="https://homeway.me/tags/Nginx/"/>
+      <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
     
   </entry>
   
   <entry>
     <title>浅谈web开发</title>
-    <link href="https://homeway.me/2015/05/12/think-about-web-develop/"/>
-    <id>https://homeway.me/2015/05/12/think-about-web-develop/</id>
+    <link href="http://homeway.me/2015/05/12/think-about-web-develop/"/>
+    <id>http://homeway.me/2015/05/12/think-about-web-develop/</id>
     <published>2015-05-11T16:32:20.000Z</published>
     <updated>2015-08-04T13:49:26.000Z</updated>
     
@@ -2616,17 +2616,17 @@ if(query-&gt;row_num()!=0){
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Web" scheme="https://homeway.me/tags/Web/"/>
+      <category term="Web" scheme="http://homeway.me/tags/Web/"/>
     
   </entry>
   
   <entry>
     <title>OpenWrt路由器开发</title>
-    <link href="https://homeway.me/2015/04/29/openwrt-develop-base-util/"/>
-    <id>https://homeway.me/2015/04/29/openwrt-develop-base-util/</id>
+    <link href="http://homeway.me/2015/04/29/openwrt-develop-base-util/"/>
+    <id>http://homeway.me/2015/04/29/openwrt-develop-base-util/</id>
     <published>2015-04-29T14:32:20.000Z</published>
     <updated>2015-08-04T14:01:05.000Z</updated>
     
@@ -2967,17 +2967,17 @@ mail.send()
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="OpenWRT" scheme="https://homeway.me/tags/OpenWRT/"/>
+      <category term="OpenWRT" scheme="http://homeway.me/tags/OpenWRT/"/>
     
   </entry>
   
   <entry>
     <title>Java思想之容器implements与接口interface处理</title>
-    <link href="https://homeway.me/2015/04/13/Java-implements-and-interface/"/>
-    <id>https://homeway.me/2015/04/13/Java-implements-and-interface/</id>
+    <link href="http://homeway.me/2015/04/13/Java-implements-and-interface/"/>
+    <id>http://homeway.me/2015/04/13/Java-implements-and-interface/</id>
     <published>2015-04-13T10:32:20.000Z</published>
     <updated>2015-08-04T14:05:09.000Z</updated>
     
@@ -3206,10 +3206,10 @@ ClassImplements =&gt; onCallStop()
     
     </summary>
     
-      <category term="Tech" scheme="https://homeway.me/categories/Tech/"/>
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
     
     
-      <category term="Java" scheme="https://homeway.me/tags/Java/"/>
+      <category term="Java" scheme="http://homeway.me/tags/Java/"/>
     
   </entry>
   

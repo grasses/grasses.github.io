@@ -5,7 +5,7 @@
     
     <entry>
       <title><![CDATA[Unix C Programming - file dir]]></title>
-      <url>https://homeway.me/2017/03/04/apue-file-dir/</url>
+      <url>http://homeway.me/2017/03/04/apue-file-dir/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
@@ -194,7 +194,7 @@ char * getcwd (char *buffer, size_t size)
     
     <entry>
       <title><![CDATA[Unix C Programming - file stat]]></title>
-      <url>https://homeway.me/2017/03/03/apue-file-stat/</url>
+      <url>http://homeway.me/2017/03/03/apue-file-stat/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
@@ -437,7 +437,7 @@ int main(int argc, char** argv) {
     
     <entry>
       <title><![CDATA[Unix C Programming - file i/o]]></title>
-      <url>https://homeway.me/2017/03/02/apue-file-io/</url>
+      <url>http://homeway.me/2017/03/02/apue-file-io/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
@@ -582,7 +582,7 @@ int main(int argc, char** argv) {
     
     <entry>
       <title><![CDATA[Understand OS - Process]]></title>
-      <url>https://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</url>
+      <url>http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg" alt="OS Process"></p>
 <a id="more"></a>
@@ -796,7 +796,7 @@ Process User1() {        //有胶水
     
     <entry>
       <title><![CDATA[Nginx流量拦截算法]]></title>
-      <url>https://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</url>
+      <url>http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
 <a id="more"></a>
@@ -862,7 +862,7 @@ end
     
     <entry>
       <title><![CDATA[MySQL索引之哈希索引]]></title>
-      <url>https://homeway.me/2015/09/13/mysql-hash-index/</url>
+      <url>http://homeway.me/2015/09/13/mysql-hash-index/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
 <a id="more"></a>
@@ -948,7 +948,7 @@ DELIMITER ;
     
     <entry>
       <title><![CDATA[MySQL日志分析]]></title>
-      <url>https://homeway.me/2015/09/12/mysql-log/</url>
+      <url>http://homeway.me/2015/09/12/mysql-log/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
 <a id="more"></a>
@@ -1113,7 +1113,7 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
     
     <entry>
       <title><![CDATA[Nginx+Lua+Redis访问频率控制]]></title>
-      <url>https://homeway.me/2015/08/11/nginx-lua-redis-access-control/</url>
+      <url>http://homeway.me/2015/08/11/nginx-lua-redis-access-control/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-redis"></p>
 <a id="more"></a>
@@ -1205,7 +1205,7 @@ end
     
     <entry>
       <title><![CDATA[站内消息设计与实现]]></title>
-      <url>https://homeway.me/2015/08/03/website-system-message/</url>
+      <url>http://homeway.me/2015/08/03/website-system-message/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png" alt="http"></p>
 <a id="more"></a>
@@ -1317,7 +1317,7 @@ for i in range(15):
     
     <entry>
       <title><![CDATA[理解HTTP之Content-Type]]></title>
-      <url>https://homeway.me/2015/07/19/understand-http-about-content-type/</url>
+      <url>http://homeway.me/2015/07/19/understand-http-about-content-type/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-http.png" alt="http"></p>
 <a id="more"></a>
@@ -1420,7 +1420,7 @@ Content-Type: text/xml
     
     <entry>
       <title><![CDATA[MAC重装各种的痛点]]></title>
-      <url>https://homeway.me/2015/07/10/rebuild-osx-environment/</url>
+      <url>http://homeway.me/2015/07/10/rebuild-osx-environment/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png" alt="OSX"></p>
 <a id="more"></a>
@@ -1548,7 +1548,7 @@ ERROR Plugin load failed: hexo-server
     
     <entry>
       <title><![CDATA[CI环境下开发Oauth2.0开放平台]]></title>
-      <url>https://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</url>
+      <url>http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-oauth2.png" alt="Oauth2.0"></p>
 <a id="more"></a>
@@ -1700,7 +1700,7 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
     
     <entry>
       <title><![CDATA[Nginx+Lua服务端合并静态文件]]></title>
-      <url>https://homeway.me/2015/06/22/nginx-lua-static-merger/</url>
+      <url>http://homeway.me/2015/06/22/nginx-lua-static-merger/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
 <a id="more"></a>
@@ -1767,7 +1767,7 @@ make install
     
     <entry>
       <title><![CDATA[python多线程ssh爆破]]></title>
-      <url>https://homeway.me/2015/06/20/python-violence-ssh-attack/</url>
+      <url>http://homeway.me/2015/06/20/python-violence-ssh-attack/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-python.png" alt="Python"></p>
 <a id="more"></a>
@@ -1883,7 +1883,7 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title><![CDATA[Raspberry与Arduino通过蓝牙通信]]></title>
-      <url>https://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</url>
+      <url>http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png" alt="Arduino"></p>
 <a id="more"></a>
@@ -1953,7 +1953,7 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title><![CDATA[基于Raspberry的打地鼠游戏]]></title>
-      <url>https://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</url>
+      <url>http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png" alt="Raspberry-Pi"></p>
 <a id="more"></a>
@@ -1990,7 +1990,7 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title><![CDATA[Nginx重定向Rewrite分析]]></title>
-      <url>https://homeway.me/2015/05/22/nginx-rewrite-conf/</url>
+      <url>http://homeway.me/2015/05/22/nginx-rewrite-conf/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
 <a id="more"></a>
@@ -2134,7 +2134,7 @@ fastcgi_param  REDIRECT_STATUS    200;
     
     <entry>
       <title><![CDATA[浅谈web开发]]></title>
-      <url>https://homeway.me/2015/05/12/think-about-web-develop/</url>
+      <url>http://homeway.me/2015/05/12/think-about-web-develop/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-web-developer.png" alt="web"></p>
 <a id="more"></a>
@@ -2301,7 +2301,7 @@ if(query-&gt;row_num()!=0){
     
     <entry>
       <title><![CDATA[OpenWrt路由器开发]]></title>
-      <url>https://homeway.me/2015/04/29/openwrt-develop-base-util/</url>
+      <url>http://homeway.me/2015/04/29/openwrt-develop-base-util/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png" alt="OpenWrt"></p>
 <a id="more"></a>
@@ -2635,7 +2635,7 @@ mail.send()
     
     <entry>
       <title><![CDATA[Java思想之容器implements与接口interface处理]]></title>
-      <url>https://homeway.me/2015/04/13/Java-implements-and-interface/</url>
+      <url>http://homeway.me/2015/04/13/Java-implements-and-interface/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-java.png" alt="Java"></p>
 <a id="more"></a>
@@ -2857,7 +2857,7 @@ ClassImplements =&gt; onCallStop()
     
     <entry>
       <title><![CDATA[Raspberry与Arduino建立不可靠串口通信]]></title>
-      <url>https://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</url>
+      <url>http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png" alt="Arduino"></p>
 <a id="more"></a>
@@ -2949,7 +2949,7 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title><![CDATA[基于树莓派的体感音乐游戏]]></title>
-      <url>https://homeway.me/2015/03/30/play-music-through-senses/</url>
+      <url>http://homeway.me/2015/03/30/play-music-through-senses/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png" alt="Raspberry-Pi"></p>
 <a id="more"></a>
@@ -3013,7 +3013,7 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title><![CDATA[Typecho添加验证码]]></title>
-      <url>https://homeway.me/2015/03/25/add-check-code-for-typecho/</url>
+      <url>http://homeway.me/2015/03/25/add-check-code-for-typecho/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo-typecho.png" alt="Typecho"></p>
 <a id="more"></a>
@@ -3107,7 +3107,7 @@ class Widget_Login extends Widget_Abstract_Users implements Widget_Interface_Do 
     
     <entry>
       <title><![CDATA[mac下用python播放mp3]]></title>
-      <url>https://homeway.me/2015/03/17/play-mp3-under-mac-use-python/</url>
+      <url>http://homeway.me/2015/03/17/play-mp3-under-mac-use-python/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-python.png" alt="Python"></p>
 <a id="more"></a>
@@ -3167,7 +3167,7 @@ while 1:
     
     <entry>
       <title><![CDATA[基于网易云音乐API的无线音箱]]></title>
-      <url>https://homeway.me/2015/03/15/netease-wireless-music-box/</url>
+      <url>http://homeway.me/2015/03/15/netease-wireless-music-box/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png" alt="Raspberry-Pi"></p>
 <a id="more"></a>
@@ -3210,7 +3210,7 @@ while 1:
     
     <entry>
       <title><![CDATA[Nodejs关于gzip/deflate压缩]]></title>
-      <url>https://homeway.me/2015/03/03/nodejs-gzip-deflate-compression/</url>
+      <url>http://homeway.me/2015/03/03/nodejs-gzip-deflate-compression/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-node.png" alt="NodeJs-Logo"></p>
 <a id="more"></a>
@@ -3317,7 +3317,7 @@ request.on(&#39;response&#39;, function(response) {
     
     <entry>
       <title><![CDATA[再见2014，写下2015]]></title>
-      <url>https://homeway.me/2015/01/05/goodbye-2014-hello-2015/</url>
+      <url>http://homeway.me/2015/01/05/goodbye-2014-hello-2015/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo-2015.jpg" alt="再见2014，写下2015"></p>
 <a id="more"></a>
@@ -3391,7 +3391,7 @@ request.on(&#39;response&#39;, function(response) {
     
     <entry>
       <title><![CDATA[Mysql提权留后门]]></title>
-      <url>https://homeway.me/2014/12/27/hack-mysql/</url>
+      <url>http://homeway.me/2014/12/27/hack-mysql/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-hack.jpg" alt="MYSQL提权留后门"></p>
 <a id="more"></a>
@@ -3490,7 +3490,7 @@ write_buffer = 2M
     
     <entry>
       <title><![CDATA[基于Redis+Srcache_nginx服务器缓存]]></title>
-      <url>https://homeway.me/2014/12/25/nginx-redis-srcache-cache/</url>
+      <url>http://homeway.me/2014/12/25/nginx-redis-srcache-cache/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
 <a id="more"></a>
@@ -3647,7 +3647,7 @@ aof-rewrite-incremental-fsync yes
     
     <entry>
       <title><![CDATA[分布式服务器集群架构方案思考]]></title>
-      <url>https://homeway.me/2014/12/10/think-about-distributed-clusters/</url>
+      <url>http://homeway.me/2014/12/10/think-about-distributed-clusters/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-big-data-cloud.jpg" alt="nginx-reverse-proxy-conf"></p>
 <a id="more"></a>
@@ -3709,7 +3709,7 @@ aof-rewrite-incremental-fsync yes
     
     <entry>
       <title><![CDATA[Nginx反向代理实现均衡负载]]></title>
-      <url>https://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/</url>
+      <url>http://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
 <a id="more"></a>
@@ -3868,7 +3868,7 @@ http {
     
     <entry>
       <title><![CDATA[Android之Service与Activity通信机制]]></title>
-      <url>https://homeway.me/2014/12/02/android-service-share-data-with-activity/</url>
+      <url>http://homeway.me/2014/12/02/android-service-share-data-with-activity/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-android.png" alt="android"></p>
 <a id="more"></a>
@@ -4099,7 +4099,7 @@ startService(startIntent);
     
     <entry>
       <title><![CDATA[为Nginx添加访问限制]]></title>
-      <url>https://homeway.me/2014/11/11/nginx-http-auth-request-module/</url>
+      <url>http://homeway.me/2014/11/11/nginx-http-auth-request-module/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2014-11-11-nginx.png" alt="nginx-http-auth-request-module"></p>
 <a id="more"></a>
@@ -4149,7 +4149,7 @@ startService(startIntent);
     
     <entry>
       <title><![CDATA[403.Forbidden]]></title>
-      <url>https://homeway.me/2014/11/08/403-Forbidden/</url>
+      <url>http://homeway.me/2014/11/08/403-Forbidden/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="/image/2014-11-08-403.forbidden-1.gif" alt="403.forbidden"></p>
 <a id="more"></a>
@@ -4187,7 +4187,7 @@ startService(startIntent);
     
     <entry>
       <title><![CDATA[Oauth2.0原理]]></title>
-      <url>https://homeway.me/2014/11/05/how-oauth2-work-1/</url>
+      <url>http://homeway.me/2014/11/05/how-oauth2-work-1/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="Oauth2-0是第三方接入的一个安全协议"><a href="#Oauth2-0是第三方接入的一个安全协议" class="headerlink" title="Oauth2.0是第三方接入的一个安全协议"></a>Oauth2.0是第三方接入的一个安全协议</h4><h4 id="今天查了查Oauth2-0接入原理，感觉挺有意思的"><a href="#今天查了查Oauth2-0接入原理，感觉挺有意思的" class="headerlink" title="今天查了查Oauth2.0接入原理，感觉挺有意思的"></a>今天查了查Oauth2.0接入原理，感觉挺有意思的</h4><a id="more"></a>
 <p><br><hr><br></p>
@@ -4265,7 +4265,7 @@ startService(startIntent);
     
     <entry>
       <title><![CDATA[用shell写个service启动程序]]></title>
-      <url>https://homeway.me/2014/10/29/linux-shell-write-service/</url>
+      <url>http://homeway.me/2014/10/29/linux-shell-write-service/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="我们经常会用到service-httpd-d-start，service-mysql-start"><a href="#我们经常会用到service-httpd-d-start，service-mysql-start" class="headerlink" title="我们经常会用到service httpd.d start，service mysql start"></a>我们经常会用到service httpd.d start，service mysql start</h4><h4 id="那么service到底是怎么工作的呢？"><a href="#那么service到底是怎么工作的呢？" class="headerlink" title="那么service到底是怎么工作的呢？"></a>那么service到底是怎么工作的呢？</h4><a id="more"></a>
 <p><br><hr><br></p>
@@ -4372,7 +4372,7 @@ SCRIPTNAME=/etc/init.d/$NAME
     
     <entry>
       <title><![CDATA[Nginx反向代理重定向]]></title>
-      <url>https://homeway.me/2014/10/28/nginx-reverse-proxy-conf/</url>
+      <url>http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
 <a id="more"></a>
@@ -4489,7 +4489,7 @@ server {
     
     <entry>
       <title><![CDATA[Python网络编程-socket]]></title>
-      <url>https://homeway.me/2014/10/21/python-socket-1/</url>
+      <url>http://homeway.me/2014/10/21/python-socket-1/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo-python.png" alt="Python"></p>
 <a id="more"></a>
@@ -4655,7 +4655,7 @@ SerSock.close()
     
     <entry>
       <title><![CDATA[树莓派-像打地鼠一样玩Flappy-Bird和远程控制PPT]]></title>
-      <url>https://homeway.me/2014/10/15/raspberry-socket-remote-ppt-flappy-bird/</url>
+      <url>http://homeway.me/2014/10/15/raspberry-socket-remote-ppt-flappy-bird/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="在土豆Hackthon上完成的，两个基于WebSoceket和树莓派的小应用"><a href="#在土豆Hackthon上完成的，两个基于WebSoceket和树莓派的小应用" class="headerlink" title="在土豆Hackthon上完成的，两个基于WebSoceket和树莓派的小应用."></a>在土豆Hackthon上完成的，两个基于WebSoceket和树莓派的小应用.</h4><h4 id="第一个是基于websocket的远程ppt系统"><a href="#第一个是基于websocket的远程ppt系统" class="headerlink" title="第一个是基于websocket的远程ppt系统."></a>第一个是基于websocket的远程ppt系统.</h4><h4 id="第二个是基于websocket的敲击式Flappy-Bird"><a href="#第二个是基于websocket的敲击式Flappy-Bird" class="headerlink" title="第二个是基于websocket的敲击式Flappy Bird."></a>第二个是基于websocket的敲击式Flappy Bird.</h4><a id="more"></a>
 <p><br><hr><br></p>
@@ -4703,7 +4703,7 @@ SerSock.close()
     
     <entry>
       <title><![CDATA[树莓派基础-GPIO、CPU、温度、内存]]></title>
-      <url>https://homeway.me/2014/10/09/raspberry-the-current-status-and-data/</url>
+      <url>http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-raspberry-pi.png" alt="Raspberry Pi"></p>
 <a id="more"></a>
@@ -4829,7 +4829,7 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title><![CDATA[一个base62的短连接服务]]></title>
-      <url>https://homeway.me/2014/09/25/base62-shorter-url-server/</url>
+      <url>http://homeway.me/2014/09/25/base62-shorter-url-server/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。"><a href="#本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。" class="headerlink" title="本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。"></a>本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。</h4><h5 id="服务主页详见-gt-homeway-me-T-T-没域名了，暂且这个。类似谷歌的-gt-goo-gl"><a href="#服务主页详见-gt-homeway-me-T-T-没域名了，暂且这个。类似谷歌的-gt-goo-gl" class="headerlink" title="服务主页详见 =&gt; homeway.me , T_T 没域名了，暂且这个。类似谷歌的 =&gt; goo.gl"></a>服务主页详见 =&gt; <a href="http://homeway.me">homeway.me</a> , T_T 没域名了，暂且这个。类似谷歌的 =&gt; <a href="http://goo.gl" target="_blank" rel="external">goo.gl</a></h5><h5 id="关于源代码，暂不公开，尚缺一个监控模块和用户中心。"><a href="#关于源代码，暂不公开，尚缺一个监控模块和用户中心。" class="headerlink" title="关于源代码，暂不公开，尚缺一个监控模块和用户中心。"></a>关于源代码，暂不公开，尚缺一个监控模块和用户中心。</h5><a id="more"></a>
 <p><br></p>
@@ -4894,7 +4894,7 @@ echo $object-&gt;base62_decode($object-&gt;base62_encode($str)) . &quot;\n&quot;
     
     <entry>
       <title><![CDATA[php封装一个mysql包]]></title>
-      <url>https://homeway.me/2014/09/19/php-package-for-mysql/</url>
+      <url>http://homeway.me/2014/09/19/php-package-for-mysql/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="The-artile-is-about-a-php-package-for-mysql-writed-by-myself"><a href="#The-artile-is-about-a-php-package-for-mysql-writed-by-myself" class="headerlink" title="The artile is about a php package for mysql writed by myself."></a>The artile is about a php package for mysql writed by myself.</h4><h5 id="It-likes-codeigniter-but-has-some-other-feature"><a href="#It-likes-codeigniter-but-has-some-other-feature" class="headerlink" title="It likes codeigniter,but has some other feature."></a>It likes <a href="http://codeigniter.org/" target="_blank" rel="external">codeigniter</a>,but has some other feature.</h5><h5 id="And-then-I-test-It-s-speed"><a href="#And-then-I-test-It-s-speed" class="headerlink" title="And then, I test It`s speed."></a>And then, I test It`s speed.</h5><h5 id="Fork-me-here-https-github-com-grasses-JueQuery"><a href="#Fork-me-here-https-github-com-grasses-JueQuery" class="headerlink" title="Fork me here: https://github.com/grasses/JueQuery"></a>Fork me here: <a href="https://github.com/grasses/JueQuery" target="_blank" rel="external">https://github.com/grasses/JueQuery</a></h5><a id="more"></a>
 <p><br></p>
@@ -4970,7 +4970,7 @@ for($i=0; $i&lt;100; $i++){
     
     <entry>
       <title><![CDATA[Android基础学习-1]]></title>
-      <url>https://homeway.me/2014/09/13/Android-Learning-1/</url>
+      <url>http://homeway.me/2014/09/13/Android-Learning-1/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="本文主要记录Android学习中的几个类，初学基础，学习笔记。"><a href="#本文主要记录Android学习中的几个类，初学基础，学习笔记。" class="headerlink" title="本文主要记录Android学习中的几个类，初学基础，学习笔记。"></a>本文主要记录Android学习中的几个类，初学基础，学习笔记。</h4><h5 id="源码：-http-77l5jp-com1-z0-glb-clouddn-com-blog-2FAndroid-Learning-Vibrator-Toast-2014-09-14-zip"><a href="#源码：-http-77l5jp-com1-z0-glb-clouddn-com-blog-2FAndroid-Learning-Vibrator-Toast-2014-09-14-zip" class="headerlink" title="源码： http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip"></a>源码： <a href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip" target="_blank" rel="external">http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip</a></h5><p>感觉移动端好玩的东西很多，就去玩玩了。</p>
 <p>看过android一阵子了，由于没学过java对android一直比较陌生，刚入门，抄得多写的少。</p>
@@ -5178,7 +5178,7 @@ private void read() {
     
     <entry>
       <title><![CDATA[写在新学期之前]]></title>
-      <url>https://homeway.me/2014/09/04/writed-before-school/</url>
+      <url>http://homeway.me/2014/09/04/writed-before-school/</url>
       <content type="html"><![CDATA[<h1 id="0x01-零零碎碎"><a href="#0x01-零零碎碎" class="headerlink" title="0x01.零零碎碎"></a>0x01.零零碎碎</h1><div id="pices"></div>
 
 <p>算是沉淀了大半年吧，没写几篇博客，留下蛮多想说的话。</p>
@@ -5243,7 +5243,7 @@ private void read() {
     
     <entry>
       <title><![CDATA[tornado下自写一个session模块]]></title>
-      <url>https://homeway.me/2014/07/28/mongosion/</url>
+      <url>http://homeway.me/2014/07/28/mongosion/</url>
       <content type="html"><![CDATA[<p><br><hr><br></p>
 <p><a href="https://github.com/grasses/mongosion" target="_blank" rel="external">https://github.com/grasses/mongosion</a></p>
 <p>#####An easy session module, writed by python base on pymongo using for tornado.py or web.py!</p>
@@ -5359,7 +5359,7 @@ expired() 不需要参数
     
     <entry>
       <title><![CDATA[代码性能-php(二)]]></title>
-      <url>https://homeway.me/2014/07/05/code-performance-php-2/</url>
+      <url>http://homeway.me/2014/07/05/code-performance-php-2/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h5 id="The-artile-is-about-php-cache-and-mysql-speed"><a href="#The-artile-is-about-php-cache-and-mysql-speed" class="headerlink" title="The artile is about php cache and mysql speed."></a>The artile is about php cache and mysql speed.</h5><h5 id="Test-the-speed-of-mysql-and-cache-in-the-same-conditions"><a href="#Test-the-speed-of-mysql-and-cache-in-the-same-conditions" class="headerlink" title="Test the speed of mysql and cache in the same conditions."></a>Test the speed of mysql and cache in the same conditions.</h5><h5 id="First-I-test-insert-select-update-3-times-and-then-test-each-a-time"><a href="#First-I-test-insert-select-update-3-times-and-then-test-each-a-time" class="headerlink" title="First I test insert,select,update 3 times and then, test each a time."></a>First I test insert,select,update 3 times and then, test each a time.</h5><a id="more"></a>
 <p><br></p>
@@ -5908,7 +5908,7 @@ Percentage of the requests served within a certain time (ms)
     
     <entry>
       <title><![CDATA[代码性能-php(一)]]></title>
-      <url>https://homeway.me/2014/07/04/code-performance-php/</url>
+      <url>http://homeway.me/2014/07/04/code-performance-php/</url>
       <content type="html"><![CDATA[<p>写了几天python.tornado，换下口味，看看教程，回顾下PHP。</p>
 <p>本文关于php路由 &amp;&amp; php性能。 </p>
 <h2 id="php性能测试"><a href="#php性能测试" class="headerlink" title="php性能测试"></a>php性能测试</h2><a id="more"></a>    
@@ -6156,7 +6156,7 @@ Percentage of the requests served within a certain time (ms)
     
     <entry>
       <title><![CDATA[php封装一个useragent包]]></title>
-      <url>https://homeway.me/2014/06/21/php-package-for-useragent/</url>
+      <url>http://homeway.me/2014/06/21/php-package-for-useragent/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h1 id="0x01-JueUserAgent"><a href="#0x01-JueUserAgent" class="headerlink" title="0x01.JueUserAgent"></a>0x01.JueUserAgent</h1><p>JueUserAgent 是一个为<a href="http://jue.so" target="_blank" rel="external">http://jue.so</a> 而写的php包.</p>
 <p>主要用于获取用户浏览器代理信息，用户referrer，设备，版本等。</p>
@@ -6312,7 +6312,7 @@ if ($jue-&gt;is_browser(&#39;Safari&#39;)) {
     
     <entry>
       <title><![CDATA[小草浅浅谈web（二）]]></title>
-      <url>https://homeway.me/2014/06/11/xiaocao-share-web-2/</url>
+      <url>http://homeway.me/2014/06/11/xiaocao-share-web-2/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="本文主要包含：http-amp-web加速"><a href="#本文主要包含：http-amp-web加速" class="headerlink" title="本文主要包含：http &amp; web加速"></a>本文主要包含：http &amp; web加速</h4><a id="more"></a>
 <p><br><hr><br></p>
@@ -6408,7 +6408,7 @@ if ($jue-&gt;is_browser(&#39;Safari&#39;)) {
     
     <entry>
       <title><![CDATA[Centos搭建VPN-iftop流量监测]]></title>
-      <url>https://homeway.me/2014/05/23/centos-install-vpn-and-use-iftop-monitoring-traffic/</url>
+      <url>http://homeway.me/2014/05/23/centos-install-vpn-and-use-iftop-monitoring-traffic/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h4 id="关于Centos安装、配置VPN，以及用iftop检测系统流量。"><a href="#关于Centos安装、配置VPN，以及用iftop检测系统流量。" class="headerlink" title="关于Centos安装、配置VPN，以及用iftop检测系统流量。"></a>关于Centos安装、配置VPN，以及用iftop检测系统流量。</h4><a id="more"></a>
 <p><br><hr><br></p>
@@ -6496,7 +6496,7 @@ if ($jue-&gt;is_browser(&#39;Safari&#39;)) {
     
     <entry>
       <title><![CDATA[pyquery抓取页面]]></title>
-      <url>https://homeway.me/2014/05/06/python-pquery-reptile/</url>
+      <url>http://homeway.me/2014/05/06/python-pquery-reptile/</url>
       <content type="html"><![CDATA[<p><br></p>
 <h5 id="Python学习笔记"><a href="#Python学习笔记" class="headerlink" title="Python学习笔记."></a>Python学习笔记.</h5><h5 id="Python基础，尝试用pyquery做爬虫测试"><a href="#Python基础，尝试用pyquery做爬虫测试" class="headerlink" title="Python基础，尝试用pyquery做爬虫测试."></a>Python基础，尝试用pyquery做爬虫测试.</h5><a id="more"></a>
 <p><br><hr><br></p>
@@ -6522,7 +6522,7 @@ if ($jue-&gt;is_browser(&#39;Safari&#39;)) {
     
     <entry>
       <title><![CDATA[服务器对比]]></title>
-      <url>https://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/</url>
+      <url>http://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-amazon.jpg" alt="nginx-reverse-proxy-conf"></p>
 <a id="more"></a>
@@ -6600,7 +6600,7 @@ dd: 正在写入&quot;null&quot;: 设备上没有空间
     
     <entry>
       <title><![CDATA[Python模块学习-1]]></title>
-      <url>https://homeway.me/2014/04/04/Python-Module-Learning-1/</url>
+      <url>http://homeway.me/2014/04/04/Python-Module-Learning-1/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo-python.png" alt="Python"></p>
 <a id="more"></a>
@@ -6810,7 +6810,7 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title><![CDATA[再见2013，写下2014]]></title>
-      <url>https://homeway.me/2014/01/02/goodbye-2013-hello-2014/</url>
+      <url>http://homeway.me/2014/01/02/goodbye-2013-hello-2014/</url>
       <content type="html"><![CDATA[<p><br><br>探头问一句，你好2014，我和你一样年轻！<br>小草主要博客：<a href="http://homeway.me/">http://homeway.me/</a></p>
 <a id="more"></a>
 <p><br></p>
@@ -6832,7 +6832,25 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title></title>
-      <url>https://homeway.me/music/index.html</url>
+      <url>http://homeway.me/resume/index.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1><p>夏日小草<br>社交: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">微博</a> | <a href="http://v2ex.com/member/grasses" target="_blank" rel="external">v2ex</a> | <a href="http://cn.linkedin.com/in/homeway" target="_blank" rel="external">Linkedin</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
+<p>Blog: <a href="http://hoemway.me" target="_blank" rel="external">http://hoemway.me</a><br>Github: <iframe src="https://ghbtns.com/github-btn.html?user=grasses&#038;type=follow&#038;count=true&#038;size=normal" frameborder="0" scrolling="0" width="250px" height="20px"></iframe></p>
+<p><hr></p>
+<h1 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h1><p>杭州电子科技大学            信息安全        2012.9-2016.6</p>
+<p><hr></p>
+<h1 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h1><p><b>魅族科技    在线商城-研发工程师    2015.10-2016.3</b><br>在线商城抢购、预约反黄牛系统后台研发。</p>
+<p><hr></p>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>关于web开发，nginx，python，Raspberry<br>本网站博客遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank" rel="external">署名-非商业性使用-相同方式共享 3.0</a>版权协议，转载请注明出处。</p>
+</blockquote>
+<div><center style="text-align:center"><br><a href="/"><img style="width=80px; border:dashed 0px #000000; -moz-border-radius: 0%; -webkit-border-radius:0%; border-radius:0%;" src="http://xiaocao.u.qiniudn.com/blog/code-site.png"><br></a><br></center><br></div>
+
+]]></content>
+    </entry>
+    
+    <entry>
+      <title></title>
+      <url>http://homeway.me/music/index.html</url>
       <content type="html"><![CDATA[<!DOCTYPE html>
 <html>
 <head>
@@ -6883,26 +6901,6 @@ if __name__ == &#39;__main__&#39;:
 <script src="http://lab.homeway.me/netease/js/player.js"></script>
 </body>
 </html>]]></content>
-    </entry>
-    
-    <entry>
-      <title></title>
-      <url>https://homeway.me/resume/index.html</url>
-      <content type="html"><![CDATA[<blockquote>
-<h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1><p>夏日小草<br>社交: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">微博</a> | <a href="http://v2ex.com/member/grasses" target="_blank" rel="external">v2ex</a> | <a href="http://cn.linkedin.com/in/homeway" target="_blank" rel="external">Linkedin</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
-<p>Blog: <a href="http://hoemway.me" target="_blank" rel="external">http://hoemway.me</a><br>Github: <iframe src="https://ghbtns.com/github-btn.html?user=grasses&#038;type=follow&#038;count=true&#038;size=normal" frameborder="0" scrolling="0" width="250px" height="20px"></iframe></p>
-<p><hr></p>
-<h1 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h1><p>杭州电子科技大学            信息安全        2012.9-2016.6</p>
-<p><hr></p>
-<h1 id="Open-Source-Project"><a href="#Open-Source-Project" class="headerlink" title="Open Source Project"></a>Open Source Project</h1><p>0x01.体感控制音乐的超级玛丽游戏，软硬结合（2015沪港马拉松全场大奖，并且去香港参与全球决赛）<br><a href="http://homeway.me/2015/03/30/play-music-through-senses/">http://homeway.me/2015/03/30/play-music-through-senses/</a><br>0x02.鼓手玩打地鼠游戏，软硬结合（2015安控杯黑客马拉松，第二名）<br><a href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/">http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</a><br>0x03.基于声波认证的手机签到系统（国家级创新训练项目）</p>
-<p><hr></p>
-<h1 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h1><p><b>魅族科技    在线商城-研发工程师    2015.10-2016.3</b><br>在线商城抢购、预约反黄牛系统后台研发。</p>
-<p><hr></p>
-<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>关于web开发，nginx，python，Raspberry<br>本网站博客遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank" rel="external">署名-非商业性使用-相同方式共享 3.0</a>版权协议，转载请注明出处。</p>
-</blockquote>
-<div><center style="text-align:center"><br><a href="/"><img style="width=80px; border:dashed 0px #000000; -moz-border-radius: 0%; -webkit-border-radius:0%; border-radius:0%;" src="http://xiaocao.u.qiniudn.com/blog/code-site.png"><br></a><br></center><br></div>
-
-]]></content>
     </entry>
     
   
