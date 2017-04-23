@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Machine Learning - K-Nearest Neighbor | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning - K-Nearest Neighbor">
+<meta property="og:url" content="http://homeway.me/2017/04/21/machine-learning-knn/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png">
+<meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_logo.png">
+<meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_euclidean_function.svg">
+<meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine_similarity.png">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/200px-Manhattan_distance.svg.png">
+<meta property="og:updated_time" content="2017-04-23T06:41:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine Learning - K-Nearest Neighbor">
+<meta name="twitter:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <!--<link rel="stylesheet" href="/css/style.css">-->
+  <link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/blog.style.min.css" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/resume/">Resume</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+ 
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+ 
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+ 
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+ 
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+ 
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+ 
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+ 
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+ 
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+ 
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+ 
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+ 
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+ 
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+ 
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+      
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--
+<div id="site_search" class="main-content-wrap">
+<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="form-control input--xlarge" autofocus="autofocus"/>
+<div id="local-search-result"></div>
+-->
+      <div class="outer">
+        <section id="main"><article id="post-machine-learning-knn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/21/machine-learning-knn/" class="article-date">
+  <time datetime="2017-04-21T14:02:10.000Z" itemprop="datePublished">4月 21 2017</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Study/">Study</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Machine Learning - K-Nearest Neighbor
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png" alt="machine-learning"></p>
+<a id="more"></a>
+<h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p>K-Nearest Neighbor is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
+<p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_logo.png" alt="Figue 1:  Example of k-NN classification. The test sample (green circle) should be classified either to the first class of blue squares or to the second class of red triangles. If k = 3 (solid line circle) it is assigned to the second class because there are 2 triangles and only 1 square inside the inner circle. If k = 5 (dashed line circle) it is assigned to the first class (3 squares vs. 2 triangles inside the outer circle)."></p>
+<p>As is show in figue 1, the KNN algorithm offers an alternative approach to classification using lazy learning.</p>
+<p><hr><br></p>
+<h1 id="2-How-does-it-works"><a href="#2-How-does-it-works" class="headerlink" title="2.How does it works"></a>2.How does it works</h1><h2 id="2-1-Simple-Step"><a href="#2-1-Simple-Step" class="headerlink" title="2.1 Simple Step"></a>2.1 Simple Step</h2><p>We think two point have the closest distance, they may have the similar attribute, and then we classify them as a class. First, we should change thoses elements into vector and then count their distance, finally we get their neighbors, classify them.</p>
+<p>Suppose we have pairs samples <code>&lt;X1, Y1&gt;, &lt;X2, Y2&gt; ... &lt;Xn, Yn&gt;</code>, and we want to predict the sample <code>&lt;X, Y&gt;</code> belong to which class, we should caculate the distance bettween <code>&lt;X, Y&gt;</code> and <code>&lt;Xm, Ym&gt;</code> (m ∈ (1, n)), and find type of <code>&lt;X, Y&gt;</code> by some math approach.</p>
+<p>As is described about, the KNN algorithm logic following steps:</p>
+<pre><code>1.Build training model, change training samples into matrix matrix vector
+2.Choose the number of k and a distance metric.
+3.Caculate distances bettween &lt;X, Y&gt; and &lt;Xm, Ym&gt;, and save k nearest neighbors
+4.Decided &lt;X, Y&gt; by weight vote.
+</code></pre><h2 id="2-2-Distance-Algorithm"><a href="#2-2-Distance-Algorithm" class="headerlink" title="2.2 Distance Algorithm"></a>2.2 Distance Algorithm</h2><p>The Euclidean distance between points p and q is the length of the line segment connecting them.</p>
+<p>In Cartesian coordinates(笛卡尔坐标), if p = (p1, p2,…, pn) and q = (q1, q2,…, qn) are two points in Euclidean n-space, then the distance (d) from p to q, or from q to p is given by the Pythagorean formula:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_euclidean_function.svg" alt="Euclidean Distance Algorithm"></p>
+<p>Cosine similarity is the cosine of the angle between two n-dimensional vectors in an n-dimensional space. It is the dot product of the two vectors divided by the product of the two vectors’ lengths (or magnitudes). For two vectors A and B in an n-dimensional space:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine_similarity.png" alt="Cosine Similarity"></p>
+<p>Cosine similarity ranges between -1 and 1, where -1 is perfectly dissimilar and 1 is perfectly similar. </p>
+<p>The another algorithm is Manhattan distance.The distance between two points in a grid based on a strictly horizontal and/or vertical path (that is, along the grid lines), as opposed to the diagonal or “as the crow flies” distance. The Manhattan distance is the simple sum of the horizontal and vertical components, whereas the diagonal distance might be computed by applying the Pythagorean theorem.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/200px-Manhattan_distance.svg.png" alt="Manhattan distance"></p>
+<p><hr><br></p>
+<h1 id="3-Coding"><a href="#3-Coding" class="headerlink" title="3.Coding"></a>3.Coding</h1><p>My github example project: <a href="https://github.com/grasses/Machine-Learning/tree/master/ml/knn" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/tree/master/ml/knn</a></p>
+<p>Testing csv data: <a href="https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv</a></p>
+<p>That’s start with an example, we have a table with row described as <code>&lt;x1, x2, x3, x4&gt;</code>, now we want to predict <code>&lt;5.1, 3.5, 1.4, 0.2&gt;</code></p>
+<h2 id="step-1-building-training-matrix"><a href="#step-1-building-training-matrix" class="headerlink" title="step 1 building training matrix"></a>step 1 building training matrix</h2><pre><code>    def train_predict(data_list = [], datalist = None, split = 0.5):
+        train_list = []
+        test_list = []
+        # build training list &amp;&amp; testing list
+        for x in range(len(data_list)):
+            if random.random() &lt; split:
+                test_list.append(data_list[x])
+            else:
+                train_list.append(data_list[x])
+        for x in range(len(test_list)):
+            y = test_list[x][len(test_list[x]) - 1]
+            # training one by one
+            test(test_list[x], y)
+</code></pre><h2 id="step-2-Choose-the-number-of-k-and-a-distance-metric"><a href="#step-2-Choose-the-number-of-k-and-a-distance-metric" class="headerlink" title="step 2 Choose the number of k and a distance metric"></a>step 2 Choose the number of k and a distance metric</h2><pre><code>    &#39;&#39;&#39;
+    Test() is the entrance of knn
+    @input  test_X        list        [1,2,3,4]format
+    @return predict     string      predict result
+    &#39;&#39;&#39;
+    def test(test_X = [], predict = &#39;&#39;):
+        neighbors = get_neighbors(test_X)
+        result = get_min_dest(neighbors)
+
+        total_count = 0
+        right_count = 0
+
+        if str(result) == str(predict):
+            right_count += 1
+        total_count += 1
+
+        # append test test_X to self.tets_list by default
+        test_X.append(predict)
+        test_list.append(test_X)
+</code></pre><h2 id="step-3-Caculate-distances"><a href="#step-3-Caculate-distances" class="headerlink" title="step 3 Caculate distances"></a>step 3 Caculate distances</h2><pre><code>    &#39;&#39;&#39;
+    Count &lt;X1, Y2&gt; -&gt; &lt;X2, Y2&gt; with euclidean distance algorithm
+    &#39;&#39;&#39;
+    def get_dest(source, destination):
+        distance = 0
+        for i in range(len(source) - 1):
+            distance += pow((float(source[i]) - float(destination[i])), 2)
+        return math.sqrt(distance)
+
+   &#39;&#39;&#39;
+   Get train list neighbors sorted by distance.
+   &#39;&#39;&#39;
+    def get_neighbors(train_list = [], test_X = [], k = 5):
+        distances = []
+        neighbors = []
+        for x in range(len(train_list)):
+            distances.append((train_list[x], get_dest(test_X, train_list[x])))
+        distances.sort(key = operator.itemgetter(1))
+
+        for i in range(k):
+            neighbors.append(distances[i][0])
+        return neighbors
+</code></pre><h2 id="step-4-Decided-by-weight-vote"><a href="#step-4-Decided-by-weight-vote" class="headerlink" title="step 4 Decided  by weight vote"></a>step 4 Decided <x, y=""> by weight vote</x,></h2><pre><code>&#39;&#39;&#39;
+    get_min_dest() return closest neighbor by vote
+    @input  neighbors        list    [[], []]format
+    @return neighbor        []        closest neighbor
+    &#39;&#39;&#39;
+    def get_min_dest(neighbors = []):
+        class_votes = {}
+        for x in range(len(neighbors)):
+            response = neighbors[x][-1]
+            if response in class_votes:
+                class_votes[response] += 1
+            else:
+                class_votes[response] = 1
+        sorted_vote = sorted(class_votes.iteritems(), key = operator.itemgetter(1), reverse=True)
+        return sorted_vote[0][0]
+</code></pre><h2 id="Example-Output"><a href="#Example-Output" class="headerlink" title="Example Output"></a>Example Output</h2><pre><code>===============test instance()=================
+test()-&gt; knn predicted = &#39;Iris-versicolor&#39;, your given actual = &#39;Iris-versicolor&#39;
+test()-&gt; knn predicted = &#39;Iris-virginica&#39;, your given actual = &#39;Iris-versicolor&#39;
+
+===============accuracy()=================
+training size = 150, testing size = 2
+accuracy()-&gt; total instance = 2, right instance = 1, error instance = 1, right rate = 50.0%
+
+===============predict()=================
+predict()-&gt; instance = [7.1, 3.0, 5.9, 2.1], knn predict = Iris-virginica
+
+===============mult_predict()=================
+predict()-&gt; instance = [4.6, 3.4, 1.4, 1.3], knn predict = Iris-setosa
+predict()-&gt; instance = [7.1, 3.0, 5.9, 1.1], knn predict = Iris-virginica
+predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
+</code></pre><p><hr><br></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ul>
+<li><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">Wikipedia: k-nearest neighbors algorithm</a></li>
+<li><a href="https://en.wiktionary.org/wiki/Manhattan_distance" target="_blank" rel="external">Wiktionary: Manhattan distance</a></li>
+<li><a href="http://www.bogotobogo.com/python/scikit-learn/scikit_machine_learning_k-NN_k-nearest-neighbors-algorithm.php" target="_blank" rel="external">SCIKIT-LEARN : K-NEAREST NEIGHBORS (K-NN) ALGORITHM</a></li>
+<li><a href="http://www.pyimagesearch.com/2014/03/03/charizard-explains-describe-quantify-image-using-feature-vectors/" target="_blank" rel="external">Charizard Explains How To Describe and Quantify an Image Using Feature Vectors</a></li>
+<li>‘Introduction to Machine Learning’ by Alex Smola and S.V.N. Vishwanathan</li>
+</ul>
+<p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-21-machine-learning-knn"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-21-machine-learning-knn" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/04/21/machine-learning-knn/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/04/21/machine-learning-knn/">http://homeway.me/2017/04/21/machine-learning-knn/</a></h4><p>-by grasses</p>
+<p>2017-04-21 23:52:34</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2017/04/21/machine-learning-knn/" data-id="cj1ubtkf70019wb51ugh5mowh" data-title="Machine Learning - K-Nearest Neighbor" class="article-share-link">分享到</a>
+      
+        <a href="http://homeway.me/2017/04/21/machine-learning-knn/#ds-thread" class="article-comment-link">Comments</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/03/04/apue-file-dir/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Unix C Programming - file dir</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+  <section id="comments">
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/04/21/machine-learning-knn/" data-title="Machine Learning - K-Nearest Neighbor" data-url="http://homeway.me/2017/04/21/machine-learning-knn/"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.43px;">Life</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Machine-Learning/" style="font-size: 10px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 14.29px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.43px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15.71px;">PHP</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Tech/" style="font-size: 12.86px;">Tech</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.43px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">近期文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/04/21/machine-learning-knn/">Machine Learning - K-Nearest Neighbor</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/04/apue-file-dir/">Unix C Programming - file dir</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/03/apue-file-stat/">Unix C Programming - file stat</a>
+          </li>
+        
+          <li>
+            <a href="/2017/03/02/apue-file-io/">Unix C Programming - file i/o</a>
+          </li>
+        
+          <li>
+            <a href="/2017/01/13/understand-os-process-mutex-and-synchronization/">Understand OS - Process</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">友情链接</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    <iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/resume/" class="mobile-nav-link">Resume</a>
+  
+</nav>
+    
+<!-- Duoshuo start -->
+<script type="text/javascript">
+var duoshuoQuery = {short_name:"grasses"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+<!-- Duoshuo end -->
+
+
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<!--<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">-->
+<!--<script src="/fancybox/jquery.fancybox.pack.js"></script>-->
+
+<link rel="stylesheet" href="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.fancybox.js"></script>
+
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!-- search
+<script>
+var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            if (!$input) return;
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                var numOfPostFound = 0; // keeping track of # of result
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {//&& data_content != ''
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        numOfPostFound += 1; // keeping track of # of results
+                        str += "<li style='color:white;'><a style='color:white;' href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        /*
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 100;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        */
+                        str += "</li>";
+                    }
+                });
+                str += "</ul>";
+                // attaching a summary of searching result
+                if (numOfPostFound > 0) {
+                    if (numOfPostFound > 1) {
+                        summary = numOfPostFound + " posts found";
+                    } else {
+                        summary = numOfPostFound + " post found";
+                    }
+                } else {
+                    summary = "Nothing found";
+                }
+                var summary = "<p class=\"text-xlarge text-color-base archieve-result search-result-summary\">" + summary + "</ul>";
+                $resultContent.innerHTML = summary + str;
+                console.log($resultContent);
+            });
+        }
+    });
+}
+     
+     var search_path = "search.xml";
+     if (search_path.length == 0) {
+      search_path = "search.xml";
+     }
+     var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+-->
+
+<!--七牛静态文件加速-->
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/jquery.qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/qrcode.js"></script>
+<script src="http://77l5jp.com1.z0.glb.clouddn.com/blog/script.js"></script>
+
+  </div><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-03-04T13:32:16.000Z</updated>
+  <updated>2017-04-23T06:41:22.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -14,6 +14,151 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Machine Learning - K-Nearest Neighbor</title>
+    <link href="http://homeway.me/2017/04/21/machine-learning-knn/"/>
+    <id>http://homeway.me/2017/04/21/machine-learning-knn/</id>
+    <published>2017-04-21T14:02:10.000Z</published>
+    <updated>2017-04-23T06:41:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png" alt="machine-learning"></p>
+<a id="more"></a>
+<h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p>K-Nearest Neighbor is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
+<p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_logo.png" alt="Figue 1:  Example of k-NN classification. The test sample (green circle) should be classified either to the first class of blue squares or to the second class of red triangles. If k = 3 (solid line circle) it is assigned to the second class because there are 2 triangles and only 1 square inside the inner circle. If k = 5 (dashed line circle) it is assigned to the first class (3 squares vs. 2 triangles inside the outer circle)."></p>
+<p>As is show in figue 1, the KNN algorithm offers an alternative approach to classification using lazy learning.</p>
+<p><hr><br></p>
+<h1 id="2-How-does-it-works"><a href="#2-How-does-it-works" class="headerlink" title="2.How does it works"></a>2.How does it works</h1><h2 id="2-1-Simple-Step"><a href="#2-1-Simple-Step" class="headerlink" title="2.1 Simple Step"></a>2.1 Simple Step</h2><p>We think two point have the closest distance, they may have the similar attribute, and then we classify them as a class. First, we should change thoses elements into vector and then count their distance, finally we get their neighbors, classify them.</p>
+<p>Suppose we have pairs samples <code>&lt;X1, Y1&gt;, &lt;X2, Y2&gt; ... &lt;Xn, Yn&gt;</code>, and we want to predict the sample <code>&lt;X, Y&gt;</code> belong to which class, we should caculate the distance bettween <code>&lt;X, Y&gt;</code> and <code>&lt;Xm, Ym&gt;</code> (m ∈ (1, n)), and find type of <code>&lt;X, Y&gt;</code> by some math approach.</p>
+<p>As is described about, the KNN algorithm logic following steps:</p>
+<pre><code>1.Build training model, change training samples into matrix matrix vector
+2.Choose the number of k and a distance metric.
+3.Caculate distances bettween &lt;X, Y&gt; and &lt;Xm, Ym&gt;, and save k nearest neighbors
+4.Decided &lt;X, Y&gt; by weight vote.
+</code></pre><h2 id="2-2-Distance-Algorithm"><a href="#2-2-Distance-Algorithm" class="headerlink" title="2.2 Distance Algorithm"></a>2.2 Distance Algorithm</h2><p>The Euclidean distance between points p and q is the length of the line segment connecting them.</p>
+<p>In Cartesian coordinates(笛卡尔坐标), if p = (p1, p2,…, pn) and q = (q1, q2,…, qn) are two points in Euclidean n-space, then the distance (d) from p to q, or from q to p is given by the Pythagorean formula:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_euclidean_function.svg" alt="Euclidean Distance Algorithm"></p>
+<p>Cosine similarity is the cosine of the angle between two n-dimensional vectors in an n-dimensional space. It is the dot product of the two vectors divided by the product of the two vectors’ lengths (or magnitudes). For two vectors A and B in an n-dimensional space:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine_similarity.png" alt="Cosine Similarity"></p>
+<p>Cosine similarity ranges between -1 and 1, where -1 is perfectly dissimilar and 1 is perfectly similar. </p>
+<p>The another algorithm is Manhattan distance.The distance between two points in a grid based on a strictly horizontal and/or vertical path (that is, along the grid lines), as opposed to the diagonal or “as the crow flies” distance. The Manhattan distance is the simple sum of the horizontal and vertical components, whereas the diagonal distance might be computed by applying the Pythagorean theorem.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/200px-Manhattan_distance.svg.png" alt="Manhattan distance"></p>
+<p><hr><br></p>
+<h1 id="3-Coding"><a href="#3-Coding" class="headerlink" title="3.Coding"></a>3.Coding</h1><p>My github example project: <a href="https://github.com/grasses/Machine-Learning/tree/master/ml/knn" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/tree/master/ml/knn</a></p>
+<p>Testing csv data: <a href="https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv</a></p>
+<p>That’s start with an example, we have a table with row described as <code>&lt;x1, x2, x3, x4&gt;</code>, now we want to predict <code>&lt;5.1, 3.5, 1.4, 0.2&gt;</code></p>
+<h2 id="step-1-building-training-matrix"><a href="#step-1-building-training-matrix" class="headerlink" title="step 1 building training matrix"></a>step 1 building training matrix</h2><pre><code>    def train_predict(data_list = [], datalist = None, split = 0.5):
+        train_list = []
+        test_list = []
+        # build training list &amp;&amp; testing list
+        for x in range(len(data_list)):
+            if random.random() &lt; split:
+                test_list.append(data_list[x])
+            else:
+                train_list.append(data_list[x])
+        for x in range(len(test_list)):
+            y = test_list[x][len(test_list[x]) - 1]
+            # training one by one
+            test(test_list[x], y)
+</code></pre><h2 id="step-2-Choose-the-number-of-k-and-a-distance-metric"><a href="#step-2-Choose-the-number-of-k-and-a-distance-metric" class="headerlink" title="step 2 Choose the number of k and a distance metric"></a>step 2 Choose the number of k and a distance metric</h2><pre><code>    &#39;&#39;&#39;
+    Test() is the entrance of knn
+    @input  test_X        list        [1,2,3,4]format
+    @return predict     string      predict result
+    &#39;&#39;&#39;
+    def test(test_X = [], predict = &#39;&#39;):
+        neighbors = get_neighbors(test_X)
+        result = get_min_dest(neighbors)
+
+        total_count = 0
+        right_count = 0
+
+        if str(result) == str(predict):
+            right_count += 1
+        total_count += 1
+
+        # append test test_X to self.tets_list by default
+        test_X.append(predict)
+        test_list.append(test_X)
+</code></pre><h2 id="step-3-Caculate-distances"><a href="#step-3-Caculate-distances" class="headerlink" title="step 3 Caculate distances"></a>step 3 Caculate distances</h2><pre><code>    &#39;&#39;&#39;
+    Count &lt;X1, Y2&gt; -&gt; &lt;X2, Y2&gt; with euclidean distance algorithm
+    &#39;&#39;&#39;
+    def get_dest(source, destination):
+        distance = 0
+        for i in range(len(source) - 1):
+            distance += pow((float(source[i]) - float(destination[i])), 2)
+        return math.sqrt(distance)
+
+   &#39;&#39;&#39;
+   Get train list neighbors sorted by distance.
+   &#39;&#39;&#39;
+    def get_neighbors(train_list = [], test_X = [], k = 5):
+        distances = []
+        neighbors = []
+        for x in range(len(train_list)):
+            distances.append((train_list[x], get_dest(test_X, train_list[x])))
+        distances.sort(key = operator.itemgetter(1))
+
+        for i in range(k):
+            neighbors.append(distances[i][0])
+        return neighbors
+</code></pre><h2 id="step-4-Decided-by-weight-vote"><a href="#step-4-Decided-by-weight-vote" class="headerlink" title="step 4 Decided  by weight vote"></a>step 4 Decided <x, y=""> by weight vote</x,></h2><pre><code>&#39;&#39;&#39;
+    get_min_dest() return closest neighbor by vote
+    @input  neighbors        list    [[], []]format
+    @return neighbor        []        closest neighbor
+    &#39;&#39;&#39;
+    def get_min_dest(neighbors = []):
+        class_votes = {}
+        for x in range(len(neighbors)):
+            response = neighbors[x][-1]
+            if response in class_votes:
+                class_votes[response] += 1
+            else:
+                class_votes[response] = 1
+        sorted_vote = sorted(class_votes.iteritems(), key = operator.itemgetter(1), reverse=True)
+        return sorted_vote[0][0]
+</code></pre><h2 id="Example-Output"><a href="#Example-Output" class="headerlink" title="Example Output"></a>Example Output</h2><pre><code>===============test instance()=================
+test()-&gt; knn predicted = &#39;Iris-versicolor&#39;, your given actual = &#39;Iris-versicolor&#39;
+test()-&gt; knn predicted = &#39;Iris-virginica&#39;, your given actual = &#39;Iris-versicolor&#39;
+
+===============accuracy()=================
+training size = 150, testing size = 2
+accuracy()-&gt; total instance = 2, right instance = 1, error instance = 1, right rate = 50.0%
+
+===============predict()=================
+predict()-&gt; instance = [7.1, 3.0, 5.9, 2.1], knn predict = Iris-virginica
+
+===============mult_predict()=================
+predict()-&gt; instance = [4.6, 3.4, 1.4, 1.3], knn predict = Iris-setosa
+predict()-&gt; instance = [7.1, 3.0, 5.9, 1.1], knn predict = Iris-virginica
+predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
+</code></pre><p><hr><br></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ul>
+<li><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">Wikipedia: k-nearest neighbors algorithm</a></li>
+<li><a href="https://en.wiktionary.org/wiki/Manhattan_distance" target="_blank" rel="external">Wiktionary: Manhattan distance</a></li>
+<li><a href="http://www.bogotobogo.com/python/scikit-learn/scikit_machine_learning_k-NN_k-nearest-neighbors-algorithm.php" target="_blank" rel="external">SCIKIT-LEARN : K-NEAREST NEIGHBORS (K-NN) ALGORITHM</a></li>
+<li><a href="http://www.pyimagesearch.com/2014/03/03/charizard-explains-describe-quantify-image-using-feature-vectors/" target="_blank" rel="external">Charizard Explains How To Describe and Quantify an Image Using Feature Vectors</a></li>
+<li>‘Introduction to Machine Learning’ by Alex Smola and S.V.N. Vishwanathan</li>
+</ul>
+<p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-21-machine-learning-knn"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-21-machine-learning-knn" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/04/21/machine-learning-knn/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/04/21/machine-learning-knn/">http://homeway.me/2017/04/21/machine-learning-knn/</a></h4><p>-by grasses</p>
+<p>2017-04-21 23:52:34</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png&quot; alt=&quot;machine-learning&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Study" scheme="http://homeway.me/categories/Study/"/>
+    
+    
+      <category term="Machine Learning" scheme="http://homeway.me/tags/Machine-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Unix C Programming - file dir</title>
@@ -2971,245 +3116,6 @@ mail.send()
     
     
       <category term="OpenWRT" scheme="http://homeway.me/tags/OpenWRT/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Java思想之容器implements与接口interface处理</title>
-    <link href="http://homeway.me/2015/04/13/Java-implements-and-interface/"/>
-    <id>http://homeway.me/2015/04/13/Java-implements-and-interface/</id>
-    <published>2015-04-13T10:32:20.000Z</published>
-    <updated>2015-08-04T14:05:09.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-java.png" alt="Java"></p>
-<a id="more"></a>
-<p><br><hr><br></p>
-<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>查了一些国内资料，都说java中extended与implements的区别是，一个类只能有一个继承，一个类可以有多个容器。</p>
-<p>后来去看了些国外资料。</p>
-<p>在我理解上，interface就是一个公共的类，可以包含公共函数、变量。</p>
-<p>Java接口是用于指定一组抽象方法的类来实现一个抽象类型。</p>
-<p>当一个类实现一个接口，它必须继承所有的内声明的抽象方法，好像签订了一份合同，并履行协议。</p>
-<p><hr><br></p>
-<h1 id="0x02-Example"><a href="#0x02-Example" class="headerlink" title="0x02.Example"></a>0x02.Example</h1><p>先来看看怎么声明一个接口，文件保存为 <code>InterFace.java</code>：</p>
-<pre><code>public class InterFace {
-    public static void main(String[] args) {
-        MyTest x = new MyTest();
-        x.speak();
-        x.say();
-        x.fuck();
-    }
-}
-class MyTest implements MyInterface2, MyInterface3 {
-    @Override
-    public void speak() {
-        System.out.println(&quot;MyTest Called =&gt; jump() =&gt;&quot;+MyInterface.hello);
-    }
-    @Override
-    public void fuck() {
-        System.out.println(&quot;MyTest Called =&gt; fuck()&quot;);
-    }
-    @Override
-    public void say() {
-        System.out.println(&quot;MyTest Called =&gt; say()&quot;);
-    }    
-}
-interface MyInterface1{
-    public String hello = &quot;hello&quot;;
-    public void speak();
-}
-interface MyInterface2{
-    public int num = 1;
-    public void fuck();
-}
-// 接口之间可以相互继承
-interface MyInterface3 extends MyInterface1{
-    public void say();
-}
-</code></pre><p>输出如下：</p>
-<pre><code>$javac InterFace.java
-$java InterFace
-
-MyTest Called =&gt; jump() =&gt;hello
-MyTest Called =&gt; say()
-MyTest Called =&gt; fuck()
-</code></pre><p>这里我们声明了3个接口，并且interface3继承自interface1，所以当类容器导入接口interface3就会导入父类接口interface1。</p>
-<p>只要添加了容器implements，就会包含接口中的所有东西，所以必须在<code>MyTest</code>类中添加该重写函数，否则找不到该函数会报错。</p>
-<hr>
-
-<p>再看下面一个例子，多个类共同使用一个interface接口，保存为<code>Account.java</code>：</p>
-<pre><code>interface Transaction {
-    int BALANCE = 500;
-    Object transaction(Object input);
-}
-class CurrentAccount implements Transaction {
-    int bal;
-    public Object transaction(Object input) {
-        this.bal = BALANCE - (int)input;
-        return bal;
-    }
-    public String toString() { return &quot;Current acc&quot;; }
-}
-class SavingsAccount implements Transaction {
-    int bal;
-    public Object transaction(Object input) {
-        this.bal = BALANCE + (int)input;
-        return bal;
-    }
-    public String toString() { return &quot;Savings acc&quot;; }
-}
-public class Account {
-    public static void payment(Transaction t, Object input) {
-        System.out.println(t + &quot; is debited:   &quot; +  t.transaction(input));
-    }
-    public static void deposit(Transaction t, Object input) {
-        System.out.println(t + &quot; is credited:   &quot; +  t.transaction(input));
-    }
-    public static void main(String[] args) {
-        Integer input = new Integer(600);
-        deposit(new SavingsAccount(), input);
-        payment(new CurrentAccount(), input);
-    }
-}
-</code></pre><p>代码输出：</p>
-<pre><code>$javac Account.java
-$java Account
-
-Savings acc is credited:   1100
-Current acc is debited:   -100
-</code></pre><p>一个接口可以供多个类共同使用，并且多个类之间使用不冲突，这样看来，interface倒有点像是静态函数了。</p>
-<p>观察一下这两个实现类活期账户和储蓄账户自动的向上转型在接受Transaction接口Account类中的方法。</p>
-<p>payment()和deposit()方法利用我们所讲的战略设计模式，代表了接口的实现完全脱钩的一个实例。</p>
-<p>从理论上说，你可以适应任何类，只需使它们符合的界面，使用这些方法。</p>
-<hr>
-
-<p>对于接口与容器，我见过的一个更具有实用价值的地方，在于类之间的监听函数调用。</p>
-<p>类似于js中的事件驱动函数，当有事件发生时候，通过回调函数，通知主函数。</p>
-<p>实例代码如下，文件命名为Homeway.java：</p>
-<pre><code>public class Homeway {
-    public static void main(String[] args) {
-        System.out.println(&quot;\n=======================Implements======================\n&quot;);
-        ClassImplements mClassImplements = new ClassImplements();
-        mClassImplements.run();
-    }
-}
-class ClassImplements implements Implements1.Listener {
-    public Implements1 mImplements1 = null;
-    public ClassImplements(){
-        mImplements1 = new Implements1();
-        mImplements1.setListener(this);
-    }
-    @Override
-    public void onCallStart(){
-        System.out.println(&quot;ClassImplements =&gt; onCallStart()&quot;);
-    }
-    @Override
-    public void onCallStop(){
-        System.out.println(&quot;ClassImplements =&gt; onCallStop()&quot;);
-    }
-    public void run(){
-        mImplements1.run();
-    }
-}
-//test 2level implements for class
-class Implements1 implements Implements2.Listener {
-    private Listener mListener;
-    private Implements2 mImplements2;
-    public Implements1(){
-        mImplements2 = new Implements2();//把当前类传给下个类
-        mImplements2.setListener(this);
-        System.out.println(&quot;Init Implements1 =&gt;...&quot;);
-    }
-    public static interface Listener {
-        void onCallStart();
-        void onCallStop();
-    }
-    public void setListener(Listener listener) {
-        mListener = listener;
-    }
-    @Override
-    public void onCallStart(){
-        System.out.println(&quot;Implements1 =&gt; onCallStart()&quot;);
-        mListener.onCallStart();//call at Implements1 and then throw to ClassImplements
-    }
-    @Override
-    public void onCallStop(){
-        System.out.println(&quot;Implements1 =&gt; onCallStop()&quot;);
-        mListener.onCallStop();//call at Implements1 and then throw to ClassImplements
-    }
-    public void run(){
-        this.mImplements2.run();
-    }
-}
-
-//3 level implement test
-class Implements2{
-    private Listener mListener;
-    public Implements2(){
-        System.out.println(&quot;Init Implements2 =&gt;...&quot;);
-    }
-    public static interface Listener {
-        void onCallStart();
-        void onCallStop();
-    }
-    public void setListener(Listener listener) {
-        mListener = listener;
-    }
-    public void onCallStart(){
-        System.out.println(&quot;Implements2 =&gt; onCallStart()&quot;);
-    }
-    public void onCallStop(){
-        System.out.println(&quot;Implements2 =&gt; onCallStop()&quot;);
-    }
-    public void run() {
-        System.out.println(&quot;Run some functions and then callback from Listener...&quot;);
-        mListener.onCallStart();
-        mListener.onCallStop();
-    }
-
-}
-</code></pre><p>输出如下：</p>
-<pre><code>$javac Homeway.java
-$java Homeway
-=======================Implements======================
-Init Implements2 =&gt;...
-Init Implements1 =&gt;...
-Run some functions and then callback from Listener...
-Implements1 =&gt; onCallStart()
-ClassImplements =&gt; onCallStart()
-Implements1 =&gt; onCallStop()
-ClassImplements =&gt; onCallStop()
-</code></pre><p>我们先是声明了类ClassImplements，这个是我们的主类，并且implements了<code>Implements1.Listener</code>通过一个Listener建立了监听接口，</p>
-<p>然后<code>Implements1</code>又implements了<code>Implements2.Listener</code>建立了第2级的监听。</p>
-<p>一旦<code>Implements1</code>或<code>Implements2</code>内的某个函数触发了某个事件，就能通过监听接口发送给主函数<code>ClassImplements</code>，类似js中的事件回调函数。</p>
-<p>父类与子类通过Listener实现接口调用，此时Listener即为父类本身。</p>
-<p>大致的模型如下：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-13-java-implements-and-interface.jpg" alt="模型"></p>
-<p>implements容器与interface接口在java类中有很多很好用的模型，有时间该多去研究研究。</p>
-<p><hr><br></p>
-<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><ul>
-<li><p><a href="http://tutorials.jenkov.com/java/interfaces.html" target="_blank" rel="external">《Java Interfaces》</a></p>
-</li>
-<li><p><a href="https://weblogs.java.net/blog/hellofadude/archive/2014/01/18/java-interfaces-and-concept-multiple-inheritance" target="_blank" rel="external">《Java interfaces and the concept of multiple inheritance》</a> </p>
-</li>
-<li><p><a href="https://blog.udemy.com/java-interface-example/" target="_blank" rel="external">《Java Interface Example, Explanation, and Implementation》</a></p>
-</li>
-</ul>
-<p><br><hr><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-13-java-implements-and-interface"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-13-java-implements-and-interface" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/04/13/java-implements-and-interface/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/04/13/java-implements-and-interface/">http://homeway.me/2015/04/13/java-implements-and-interface/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-04-13 20:10:20</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-java.png&quot; alt=&quot;Java&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
-    
-    
-      <category term="Java" scheme="http://homeway.me/tags/Java/"/>
     
   </entry>
   

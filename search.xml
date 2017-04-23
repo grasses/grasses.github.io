@@ -4,6 +4,134 @@
   
     
     <entry>
+      <title><![CDATA[Machine Learning - K-Nearest Neighbor]]></title>
+      <url>http://homeway.me/2017/04/21/machine-learning-knn/</url>
+      <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png" alt="machine-learning"></p>
+<a id="more"></a>
+<h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p>K-Nearest Neighbor is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
+<p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_logo.png" alt="Figue 1:  Example of k-NN classification. The test sample (green circle) should be classified either to the first class of blue squares or to the second class of red triangles. If k = 3 (solid line circle) it is assigned to the second class because there are 2 triangles and only 1 square inside the inner circle. If k = 5 (dashed line circle) it is assigned to the first class (3 squares vs. 2 triangles inside the outer circle)."></p>
+<p>As is show in figue 1, the KNN algorithm offers an alternative approach to classification using lazy learning.</p>
+<p><hr><br></p>
+<h1 id="2-How-does-it-works"><a href="#2-How-does-it-works" class="headerlink" title="2.How does it works"></a>2.How does it works</h1><h2 id="2-1-Simple-Step"><a href="#2-1-Simple-Step" class="headerlink" title="2.1 Simple Step"></a>2.1 Simple Step</h2><p>We think two point have the closest distance, they may have the similar attribute, and then we classify them as a class. First, we should change thoses elements into vector and then count their distance, finally we get their neighbors, classify them.</p>
+<p>Suppose we have pairs samples <code>&lt;X1, Y1&gt;, &lt;X2, Y2&gt; ... &lt;Xn, Yn&gt;</code>, and we want to predict the sample <code>&lt;X, Y&gt;</code> belong to which class, we should caculate the distance bettween <code>&lt;X, Y&gt;</code> and <code>&lt;Xm, Ym&gt;</code> (m ∈ (1, n)), and find type of <code>&lt;X, Y&gt;</code> by some math approach.</p>
+<p>As is described about, the KNN algorithm logic following steps:</p>
+<pre><code>1.Build training model, change training samples into matrix matrix vector
+2.Choose the number of k and a distance metric.
+3.Caculate distances bettween &lt;X, Y&gt; and &lt;Xm, Ym&gt;, and save k nearest neighbors
+4.Decided &lt;X, Y&gt; by weight vote.
+</code></pre><h2 id="2-2-Distance-Algorithm"><a href="#2-2-Distance-Algorithm" class="headerlink" title="2.2 Distance Algorithm"></a>2.2 Distance Algorithm</h2><p>The Euclidean distance between points p and q is the length of the line segment connecting them.</p>
+<p>In Cartesian coordinates(笛卡尔坐标), if p = (p1, p2,…, pn) and q = (q1, q2,…, qn) are two points in Euclidean n-space, then the distance (d) from p to q, or from q to p is given by the Pythagorean formula:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_euclidean_function.svg" alt="Euclidean Distance Algorithm"></p>
+<p>Cosine similarity is the cosine of the angle between two n-dimensional vectors in an n-dimensional space. It is the dot product of the two vectors divided by the product of the two vectors’ lengths (or magnitudes). For two vectors A and B in an n-dimensional space:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine_similarity.png" alt="Cosine Similarity"></p>
+<p>Cosine similarity ranges between -1 and 1, where -1 is perfectly dissimilar and 1 is perfectly similar. </p>
+<p>The another algorithm is Manhattan distance.The distance between two points in a grid based on a strictly horizontal and/or vertical path (that is, along the grid lines), as opposed to the diagonal or “as the crow flies” distance. The Manhattan distance is the simple sum of the horizontal and vertical components, whereas the diagonal distance might be computed by applying the Pythagorean theorem.</p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/200px-Manhattan_distance.svg.png" alt="Manhattan distance"></p>
+<p><hr><br></p>
+<h1 id="3-Coding"><a href="#3-Coding" class="headerlink" title="3.Coding"></a>3.Coding</h1><p>My github example project: <a href="https://github.com/grasses/Machine-Learning/tree/master/ml/knn" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/tree/master/ml/knn</a></p>
+<p>Testing csv data: <a href="https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv</a></p>
+<p>That’s start with an example, we have a table with row described as <code>&lt;x1, x2, x3, x4&gt;</code>, now we want to predict <code>&lt;5.1, 3.5, 1.4, 0.2&gt;</code></p>
+<h2 id="step-1-building-training-matrix"><a href="#step-1-building-training-matrix" class="headerlink" title="step 1 building training matrix"></a>step 1 building training matrix</h2><pre><code>    def train_predict(data_list = [], datalist = None, split = 0.5):
+        train_list = []
+        test_list = []
+        # build training list &amp;&amp; testing list
+        for x in range(len(data_list)):
+            if random.random() &lt; split:
+                test_list.append(data_list[x])
+            else:
+                train_list.append(data_list[x])
+        for x in range(len(test_list)):
+            y = test_list[x][len(test_list[x]) - 1]
+            # training one by one
+            test(test_list[x], y)
+</code></pre><h2 id="step-2-Choose-the-number-of-k-and-a-distance-metric"><a href="#step-2-Choose-the-number-of-k-and-a-distance-metric" class="headerlink" title="step 2 Choose the number of k and a distance metric"></a>step 2 Choose the number of k and a distance metric</h2><pre><code>    &#39;&#39;&#39;
+    Test() is the entrance of knn
+    @input  test_X        list        [1,2,3,4]format
+    @return predict     string      predict result
+    &#39;&#39;&#39;
+    def test(test_X = [], predict = &#39;&#39;):
+        neighbors = get_neighbors(test_X)
+        result = get_min_dest(neighbors)
+
+        total_count = 0
+        right_count = 0
+
+        if str(result) == str(predict):
+            right_count += 1
+        total_count += 1
+
+        # append test test_X to self.tets_list by default
+        test_X.append(predict)
+        test_list.append(test_X)
+</code></pre><h2 id="step-3-Caculate-distances"><a href="#step-3-Caculate-distances" class="headerlink" title="step 3 Caculate distances"></a>step 3 Caculate distances</h2><pre><code>    &#39;&#39;&#39;
+    Count &lt;X1, Y2&gt; -&gt; &lt;X2, Y2&gt; with euclidean distance algorithm
+    &#39;&#39;&#39;
+    def get_dest(source, destination):
+        distance = 0
+        for i in range(len(source) - 1):
+            distance += pow((float(source[i]) - float(destination[i])), 2)
+        return math.sqrt(distance)
+
+   &#39;&#39;&#39;
+   Get train list neighbors sorted by distance.
+   &#39;&#39;&#39;
+    def get_neighbors(train_list = [], test_X = [], k = 5):
+        distances = []
+        neighbors = []
+        for x in range(len(train_list)):
+            distances.append((train_list[x], get_dest(test_X, train_list[x])))
+        distances.sort(key = operator.itemgetter(1))
+
+        for i in range(k):
+            neighbors.append(distances[i][0])
+        return neighbors
+</code></pre><h2 id="step-4-Decided-by-weight-vote"><a href="#step-4-Decided-by-weight-vote" class="headerlink" title="step 4 Decided  by weight vote"></a>step 4 Decided <x, y=""> by weight vote</x,></h2><pre><code>&#39;&#39;&#39;
+    get_min_dest() return closest neighbor by vote
+    @input  neighbors        list    [[], []]format
+    @return neighbor        []        closest neighbor
+    &#39;&#39;&#39;
+    def get_min_dest(neighbors = []):
+        class_votes = {}
+        for x in range(len(neighbors)):
+            response = neighbors[x][-1]
+            if response in class_votes:
+                class_votes[response] += 1
+            else:
+                class_votes[response] = 1
+        sorted_vote = sorted(class_votes.iteritems(), key = operator.itemgetter(1), reverse=True)
+        return sorted_vote[0][0]
+</code></pre><h2 id="Example-Output"><a href="#Example-Output" class="headerlink" title="Example Output"></a>Example Output</h2><pre><code>===============test instance()=================
+test()-&gt; knn predicted = &#39;Iris-versicolor&#39;, your given actual = &#39;Iris-versicolor&#39;
+test()-&gt; knn predicted = &#39;Iris-virginica&#39;, your given actual = &#39;Iris-versicolor&#39;
+
+===============accuracy()=================
+training size = 150, testing size = 2
+accuracy()-&gt; total instance = 2, right instance = 1, error instance = 1, right rate = 50.0%
+
+===============predict()=================
+predict()-&gt; instance = [7.1, 3.0, 5.9, 2.1], knn predict = Iris-virginica
+
+===============mult_predict()=================
+predict()-&gt; instance = [4.6, 3.4, 1.4, 1.3], knn predict = Iris-setosa
+predict()-&gt; instance = [7.1, 3.0, 5.9, 1.1], knn predict = Iris-virginica
+predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
+</code></pre><p><hr><br></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ul>
+<li><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">Wikipedia: k-nearest neighbors algorithm</a></li>
+<li><a href="https://en.wiktionary.org/wiki/Manhattan_distance" target="_blank" rel="external">Wiktionary: Manhattan distance</a></li>
+<li><a href="http://www.bogotobogo.com/python/scikit-learn/scikit_machine_learning_k-NN_k-nearest-neighbors-algorithm.php" target="_blank" rel="external">SCIKIT-LEARN : K-NEAREST NEIGHBORS (K-NN) ALGORITHM</a></li>
+<li><a href="http://www.pyimagesearch.com/2014/03/03/charizard-explains-describe-quantify-image-using-feature-vectors/" target="_blank" rel="external">Charizard Explains How To Describe and Quantify an Image Using Feature Vectors</a></li>
+<li>‘Introduction to Machine Learning’ by Alex Smola and S.V.N. Vishwanathan</li>
+</ul>
+<p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-21-machine-learning-knn"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-21-machine-learning-knn" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/04/21/machine-learning-knn/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/04/21/machine-learning-knn/">http://homeway.me/2017/04/21/machine-learning-knn/</a></h4><p>-by grasses</p>
+<p>2017-04-21 23:52:34</p>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Unix C Programming - file dir]]></title>
       <url>http://homeway.me/2017/03/04/apue-file-dir/</url>
       <content type="html"><![CDATA[<p><br></p>
@@ -6854,7 +6982,7 @@ if __name__ == &#39;__main__&#39;:
       <content type="html"><![CDATA[<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
     <title>夏日小草</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <meta name="description" content="As we do,as you know.">
@@ -6868,10 +6996,10 @@ if __name__ == &#39;__main__&#39;:
     <meta name="twitter:description" content="As we do,as you know.">
     <meta name="twitter:creator" content="@xiarixiaocao">
     <link rel="publisher" href="yaohomeway">
-    <link rel="stylesheet" href="http://lab.homeway.me/netease/css/style.css">
+    <link rel="stylesheet" href="http://lab.homeway.me/netease/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </head>
 <body>
-<div class="back">
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="back">
     <div class="container">
         <div class="player">
             <div id="cd" class="cd">
@@ -6898,7 +7026,7 @@ if __name__ == &#39;__main__&#39;:
 <audio id="player">
 </audio>
 <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
-<script src="http://lab.homeway.me/netease/js/player.js"></script>
+<script src="http://lab.homeway.me/netease/js/player.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>]]></content>
     </entry>
