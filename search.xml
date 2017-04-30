@@ -7,7 +7,7 @@
       <title><![CDATA[Machine Learning - Artificial Neural Network]]></title>
       <url>http://homeway.me/2017/04/30/machine-learning-ann/</url>
       <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-brain-logo.png" alt="machine-learning"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logo3.png" alt="machine-learning"></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>Artifical Neural Network(ANN) which is inspired by human brain neural, provide a general, practical method for learning real-valued, discrete-valued, and vector-valued functions from examples. Artifical Neural Network algorithm such as Backpropagation use gradient descent to tune network parameters to best fit a training set of input-outputpairs.</p>
 <p><hr><br></p>
@@ -170,7 +170,7 @@ class NeuralNetwork(object):
       <title><![CDATA[Machine Learning - K-Nearest Neighbor]]></title>
       <url>http://homeway.me/2017/04/21/machine-learning-knn/</url>
       <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-brain-logo.png" alt="machine-learning"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logo3.png" alt="machine-learning"></p>
 <a id="more"></a>
 <h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">K-Nearest Neighbor</a> is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
 <p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
@@ -7124,6 +7124,24 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title></title>
+      <url>http://homeway.me/resume/index.html</url>
+      <content type="html"><![CDATA[<blockquote>
+<h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1><p>夏日小草<br>社交: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">微博</a> | <a href="http://v2ex.com/member/grasses" target="_blank" rel="external">v2ex</a> | <a href="http://cn.linkedin.com/in/homeway" target="_blank" rel="external">Linkedin</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
+<p>Blog: <a href="http://hoemway.me" target="_blank" rel="external">http://hoemway.me</a><br>Github: <iframe src="https://ghbtns.com/github-btn.html?user=grasses&#038;type=follow&#038;count=true&#038;size=normal" frameborder="0" scrolling="0" width="250px" height="20px"></iframe></p>
+<p><hr></p>
+<h1 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h1><p>杭州电子科技大学            信息安全        2012.9-2016.6</p>
+<p><hr></p>
+<h1 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h1><p><b>魅族科技    在线商城-研发工程师    2015.10-2016.3</b><br>在线商城抢购、预约反黄牛系统后台研发。</p>
+<p><hr></p>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>关于web开发，nginx，python，Raspberry<br>本网站博客遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank" rel="external">署名-非商业性使用-相同方式共享 3.0</a>版权协议，转载请注明出处。</p>
+</blockquote>
+<div><center style="text-align:center"><br><a href="/"><img style="width=80px; border:dashed 0px #000000; -moz-border-radius: 0%; -webkit-border-radius:0%; border-radius:0%;" src="http://xiaocao.u.qiniudn.com/blog/code-site.png"><br></a><br></center><br></div>
+
+]]></content>
+    </entry>
+    
+    <entry>
+      <title></title>
       <url>http://homeway.me/music/index.html</url>
       <content type="html"><![CDATA[<!DOCTYPE html>
 <html>
@@ -7175,24 +7193,6 @@ if __name__ == &#39;__main__&#39;:
 <script src="http://lab.homeway.me/netease/js/player.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
 </body>
 </html>]]></content>
-    </entry>
-    
-    <entry>
-      <title></title>
-      <url>http://homeway.me/resume/index.html</url>
-      <content type="html"><![CDATA[<blockquote>
-<h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1><p>夏日小草<br>社交: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">微博</a> | <a href="http://v2ex.com/member/grasses" target="_blank" rel="external">v2ex</a> | <a href="http://cn.linkedin.com/in/homeway" target="_blank" rel="external">Linkedin</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
-<p>Blog: <a href="http://hoemway.me" target="_blank" rel="external">http://hoemway.me</a><br>Github: <iframe src="https://ghbtns.com/github-btn.html?user=grasses&#038;type=follow&#038;count=true&#038;size=normal" frameborder="0" scrolling="0" width="250px" height="20px"></iframe></p>
-<p><hr></p>
-<h1 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h1><p>杭州电子科技大学            信息安全        2012.9-2016.6</p>
-<p><hr></p>
-<h1 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h1><p><b>魅族科技    在线商城-研发工程师    2015.10-2016.3</b><br>在线商城抢购、预约反黄牛系统后台研发。</p>
-<p><hr></p>
-<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>关于web开发，nginx，python，Raspberry<br>本网站博客遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank" rel="external">署名-非商业性使用-相同方式共享 3.0</a>版权协议，转载请注明出处。</p>
-</blockquote>
-<div><center style="text-align:center"><br><a href="/"><img style="width=80px; border:dashed 0px #000000; -moz-border-radius: 0%; -webkit-border-radius:0%; border-radius:0%;" src="http://xiaocao.u.qiniudn.com/blog/code-site.png"><br></a><br></center><br></div>
-
-]]></content>
     </entry>
     
   
