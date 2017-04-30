@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-04-30T12:06:24.000Z</updated>
+  <updated>2017-04-30T15:15:25.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://homeway.me/2017/04/30/machine-learning-ann/"/>
     <id>http://homeway.me/2017/04/30/machine-learning-ann/</id>
     <published>2017-04-30T14:02:10.000Z</published>
-    <updated>2017-04-30T12:06:24.000Z</updated>
+    <updated>2017-04-30T15:15:25.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png" alt="machine-learning"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-brain-logo.png" alt="machine-learning"></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>Artifical Neural Network(ANN) which is inspired by human brain neural, provide a general, practical method for learning real-valued, discrete-valued, and vector-valued functions from examples. Artifical Neural Network algorithm such as Backpropagation use gradient descent to tune network parameters to best fit a training set of input-outputpairs.</p>
 <p><hr><br></p>
@@ -49,7 +49,34 @@
 <li>Add momentum. Along with using the current gradient to define the step, also continue in the same direction as the previous step. If you take a fraction of the previous step as the momentum term, there is a tendency to keep going, which can take the search past the local minimum. By using a fraction, the steps decay exponentially, so poor steps aren’t a big problem. This was always a popular modification to gradient descent when used to train neural networks, where gradient descent is known as backpropagation.</li>
 <li>Use a hybrid search. First use a global search (e.g., genetic algorithms, various Monte Carlo methods) to find some good starting points, then apply gradient descent to take advantage of the gradient information in the function.</li>
 </ul>
-<h2 id="4-BackPropagation"><a href="#4-BackPropagation" class="headerlink" title="4.BackPropagation"></a>4.BackPropagation</h2><p><hr><br></p>
+<h2 id="4-BackPropagation"><a href="#4-BackPropagation" class="headerlink" title="4.BackPropagation"></a>4.BackPropagation</h2><p>The backward propagation of errors, or backpropagation, is a common method of training artificial neural networks and used in conjunction with an optimization method such as gradient descent. </p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-basic-neural-network-unit-neuron.png" alt="Figue 7: BackPropagation alogrithm"></p>
+<p>The algorithm repeats a two phase cycle, propagation and weight update. First one is caculate nodes output by giving weight, bias, squashing function, then get output node value; the second one needs to correcte predict value and target value, then return an error check value, which using gradient descent algorithm to feed-forward the weights.</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-1.png" alt="Formula 1: Neuron node sum"></p>
+<p>Let`s return to the case of a single neuron N with weights W = (w0, … , wn) and an input X = (x1, x2 … xn), as is shown at Formula 1. And momentarily, let us add the activation function from Figue 3. </p>
+<p>Supposing we predict output value as Yj, and f(x) as sigmoid function, the output may be this:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-3.png" alt="Formula 2: Neuron node predict value"></p>
+<p>where θ is the bias of node, and as return of Formula 1 for simple. Now after processing, we may get all output values, so it is easy to get prediction square error:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-4.png" alt="Formula 3: Neuron prediction square error"></p>
+<p>For convenience we add a factor of 1/2 to real E and drop the subscript N from f(N). Since minimizing E is the same as minimizing 0.5 * E, this changes nothing about the minima of the function. </p>
+<p>Note that E is never negative, and so it will have a global minimum value at or near 0 (if it is possible for the neuron to represent the target function perfectly, it will be zero). That is, our update rule should be:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-5.png" alt="Formula 4: weight update rule"></p>
+<p>where η is some fixed parameter between 0 and 1 that represent the “learning rate.”, δE is prediction square error. We will not mention η too much except to say that as long as it is sufficiently small and we allow ourselves enough time to learn, we are guaranteed to get a good approximation of some local minimum (though it might not be a global one).</p>
+<p>And further, consider BackPropagation algotithm is base on <a href="http://homeway.me/2017/04/30/machine-learning-ann/#Gradient descent">Gradient descent</a>, we need seeking guidance for E:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-6.png" alt="Formula 5: seeking guidance for E"></p>
+<p>Due to the continuity of the neural network, we can split the Formula 5 for:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-7.png" alt="Formula 6: split the appeal formula"></p>
+<p>Here, we found sigmoid f(x) = 1 / (1 + np.exp(-x)), has a good attribute, which can be described:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-8.png" alt="Formula 7: sigmoid function&#39;s useful attribute"></p>
+<p>Finally, we may base on Formula 5/6/7, return a new formula:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-9.png" alt="Formula 8: combine formula 5/6/7"></p>
+<p>And now we can get the new weight formula:</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-10.png" alt="Formula 9: new weight formula"></p>
+<h2 id="5-Cross-Validation"><a href="#5-Cross-Validation" class="headerlink" title="5.Cross Validation"></a>5.Cross Validation</h2><p>www.cs.cmu.edu’s slider “Overfitting, Cross-Validation”: <a href="http://www.cs.cmu.edu/~guestrin/Class/10701-S05/slides/NNet-CrossValidation-2-2-2005.pdf" target="_blank" rel="external">http://www.cs.cmu.edu/~guestrin/Class/10701-S05/slides/NNet-CrossValidation-2-2-2005.pdf</a></p>
+<p>Cross-validation, sometimes called rotation estimation, is a model validation technique for assessing how the results of a statistical analysis will generalize to an independent data set, which can easily described by Figue 8:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-ann-cross-validation.jpg" alt="Figue 8: Cross Validation"></p>
+<p>For Figue 8, we may choose different groups data and finally caculate their average, more information is avaiable in wikipedia: <a href="https://en.wikipedia.org/wiki/Cross-validation" target="_blank" rel="external">https://en.wikipedia.org/wiki/Cross-validation</a> </p>
+<p><hr><br></p>
 <h1 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h1><p>Github code: <a href="https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py</a></p>
 <pre><code>import numpy as np
 
@@ -137,11 +164,13 @@ class NeuralNetwork(object):
         for l in range(0, len(self.weights)):
             a = self.activation(np.dot(a, self.weights[l]))
         return a
-</code></pre><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>*《机器学习-周志华》<a href="https://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B01ARKEV1G/" target="_blank" rel="external">https://www.amazon.cn/图书/dp/B01ARKEV1G/</a></p>
+</code></pre><p><hr><br></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>*《机器学习-周志华》<a href="https://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B01ARKEV1G/" target="_blank" rel="external">https://www.amazon.cn/图书/dp/B01ARKEV1G/</a></p>
 <ul>
 <li>Wikipedia Artificial Neural Network: <a href="https://en.wikipedia.org/wiki/Artificial_neural_network" target="_blank" rel="external">https://en.wikipedia.org/wiki/Artificial_neural_network</a></li>
 <li>Wikipedia Gradient Descent: <a href="https://en.wikipedia.org/wiki/Gradient_descent" target="_blank" rel="external">https://en.wikipedia.org/wiki/Gradient_descent</a></li>
 <li>Artificial Neural Network (ANN) - Introduction: <a href="http://www.bogotobogo.com/python/scikit-learn/Artificial-Neural-Network-ANN-1-Introduction.php" target="_blank" rel="external">http://www.bogotobogo.com</a></li>
+<li>Neural Networks and the Backpropagation Algorithm:<a href="https://jeremykun.com/2012/12/09/neural-networks-and-backpropagation/" target="_blank" rel="external">https://jeremykun.com/2012/12/09/neural-networks-and-backpropagation/</a></li>
 </ul>
 <!--neural-networks-working.png
 
@@ -155,7 +184,7 @@ class NeuralNetwork(object):
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png&quot; alt=&quot;machine-learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-brain-logo.png&quot; alt=&quot;machine-learning&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -171,10 +200,10 @@ class NeuralNetwork(object):
     <link href="http://homeway.me/2017/04/21/machine-learning-knn/"/>
     <id>http://homeway.me/2017/04/21/machine-learning-knn/</id>
     <published>2017-04-21T14:02:10.000Z</published>
-    <updated>2017-04-30T08:41:04.000Z</updated>
+    <updated>2017-04-30T13:02:09.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png" alt="machine-learning"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-brain-logo.png" alt="machine-learning"></p>
 <a id="more"></a>
 <h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">K-Nearest Neighbor</a> is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
 <p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
@@ -301,7 +330,7 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png&quot; alt=&quot;machine-learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-brain-logo.png&quot; alt=&quot;machine-learning&quot;&gt;&lt;/p&gt;
     
     </summary>
     
