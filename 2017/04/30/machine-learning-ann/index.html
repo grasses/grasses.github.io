@@ -3,21 +3,23 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>Android基础学习-1 | 夏日小草</title>
+  <title>Machine Learning - Artificial Neural Network | 夏日小草</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="本文主要记录Android学习中的几个类，初学基础，学习笔记。源码： http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip感觉移动端好玩的东西很多，就去玩玩了。
-看过android一阵子了，由于没学过java对android一直比较陌生，刚入门，抄得多写的少。">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Android基础学习-1">
-<meta property="og:url" content="http://homeway.me/2014/09/13/Android-Learning-1/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning - Artificial Neural Network">
+<meta property="og:url" content="http://homeway.me/2017/04/30/machine-learning-ann/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:description" content="本文主要记录Android学习中的几个类，初学基础，学习笔记。源码： http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip感觉移动端好玩的东西很多，就去玩玩了。
-看过android一阵子了，由于没学过java对android一直比较陌生，刚入门，抄得多写的少。">
-<meta property="og:updated_time" content="2015-08-04T13:45:23.000Z">
+<meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neuron.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-sgn-function.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-squashing-function.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neural-networks-working.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-multilayer-perceptron.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-global-minimum-local-minimum.png">
+<meta property="og:updated_time" content="2017-04-30T12:06:24.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android基础学习-1">
-<meta name="twitter:description" content="本文主要记录Android学习中的几个类，初学基础，学习笔记。源码： http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip感觉移动端好玩的东西很多，就去玩玩了。
-看过android一阵子了，由于没学过java对android一直比较陌生，刚入门，抄得多写的少。">
+<meta name="twitter:title" content="Machine Learning - Artificial Neural Network">
+<meta name="twitter:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -255,14 +257,14 @@ ga('send', 'pageview');
 <div id="local-search-result"></div>
 -->
       <div class="outer">
-        <section id="main"><article id="post-Android-Learning-1" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-machine-learning-ann" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/09/13/Android-Learning-1/" class="article-date">
-  <time datetime="2014-09-13T11:33:55.000Z" itemprop="datePublished">9月 13 2014</time>
+    <a href="/2017/04/30/machine-learning-ann/" class="article-date">
+  <time datetime="2017-04-30T14:02:10.000Z" itemprop="datePublished">4月 30 2017</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
   </div>
 
   </div>
@@ -273,7 +275,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Android基础学习-1
+      Machine Learning - Artificial Neural Network
     </h1>
   
 
@@ -282,217 +284,143 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<h4 id="本文主要记录Android学习中的几个类，初学基础，学习笔记。"><a href="#本文主要记录Android学习中的几个类，初学基础，学习笔记。" class="headerlink" title="本文主要记录Android学习中的几个类，初学基础，学习笔记。"></a>本文主要记录Android学习中的几个类，初学基础，学习笔记。</h4><h5 id="源码：-http-77l5jp-com1-z0-glb-clouddn-com-blog-2FAndroid-Learning-Vibrator-Toast-2014-09-14-zip"><a href="#源码：-http-77l5jp-com1-z0-glb-clouddn-com-blog-2FAndroid-Learning-Vibrator-Toast-2014-09-14-zip" class="headerlink" title="源码： http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip"></a>源码： <a href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip" target="_blank" rel="external">http://77l5jp.com1.z0.glb.clouddn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip</a></h5><p>感觉移动端好玩的东西很多，就去玩玩了。</p>
-<p>看过android一阵子了，由于没学过java对android一直比较陌生，刚入门，抄得多写的少。</p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png" alt="machine-learning"></p>
 <a id="more"></a>
-<p><br><hr><br></p>
-<h1 id="0x01-android-widget-Toast"><a href="#0x01-android-widget-Toast" class="headerlink" title="0x01.android.widget.Toast"></a>0x01.android.widget.Toast</h1><p><br></p>
-<p>Toast是一个显示info信息的小工具，不会获取焦点，所以很多时候显示消息很好用，不会影响用户体验。</p>
-<p><br></p>
-<h5 id="Toast-官网给了两个例子，一个简单调用，一个自定义形式："><a href="#Toast-官网给了两个例子，一个简单调用，一个自定义形式：" class="headerlink" title="Toast 官网给了两个例子，一个简单调用，一个自定义形式："></a>Toast 官网给了两个例子，一个简单调用，一个自定义形式：</h5><pre><code>// Toast 简单调用
-Toast.makeText( MainActivity.this, &#39;some msg&#39;, Toast.LENGTH_SHORT).show();
-</code></pre><p><br></p>
-<pre><code>// Toast 自定义模式 
-LayoutInflater inflater = getLayoutInflater();
-View layout = inflater.inflate(R.layout.toast, (ViewGroup) findViewById(R.id.toast_layout));
-
-TextView text = (TextView) layout.findViewById(R.id.text);
-text.setText(&quot;This is a custom toast&quot;);
-
-Toast toast = new Toast(getApplicationContext());
-toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-toast.setDuration(Toast.LENGTH_LONG);    
-toast.setView(layout);
-toast.show();
-</code></pre><p><br><hr><br></p>
-<h5 id="经过google-Toast有这么几个函数吧"><a href="#经过google-Toast有这么几个函数吧" class="headerlink" title="经过google, Toast有这么几个函数吧:"></a>经过google, Toast有这么几个函数吧:</h5><blockquote>
-<p>toast.setGravity(Gravity.RIGHT | Gravity.TOP, 0, 0);</p>
-</blockquote>
-<pre><code>//设置位置和偏移
-Gravity.CENTER 居中
-Gravity.LEFT 靠左
-Gravity.RIGHT 靠右
-Gravity.TOP 靠上
-Gravity.BOTTOM 靠下
-Gravity.CENTER_HORIZONTAL 横向居中
-Gravity.CENTER_VERTICAL 纵向居中
-Gravity.FILL 占满
-Gravity.FILL_HORIZONTAL 横向占满
-Gravity.FILL_VERTICAL 纵向占满
-Gravity.NO_GRAVITY 清除所有设置还原默认设置了，貌似就居中了
-</code></pre><p><br></p>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>Artifical Neural Network(ANN) which is inspired by human brain neural, provide a general, practical method for learning real-valued, discrete-valued, and vector-valued functions from examples. Artifical Neural Network algorithm such as Backpropagation use gradient descent to tune network parameters to best fit a training set of input-outputpairs.</p>
+<p><hr><br></p>
+<h1 id="How-to-work"><a href="#How-to-work" class="headerlink" title="How to work"></a>How to work</h1><h2 id="1-Neuron"><a href="#1-Neuron" class="headerlink" title="1.Neuron"></a>1.Neuron</h2><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neuron.png" alt="Figue 1: Artificial Neural Network (picture from 《机器学习-周志华》)"></p>
+<p>The basic component of an ANN network is node unit called neuron. These neurons connect with pre-neurons with bridges in different weights. Every neuron receive signal from bridges and evaluated by activation function to output. In ideal situation, activation function is like figue 2, input value from pre-neuron and return 0 or 1:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-sgn-function.png" alt="Figue 2: Output in ideal situation"></p>
+<p>Besides the logistic function, sigmoid functions include the ordinary arctangent, the hyperbolic tangent, the Gudermannian function, and the error function, but also the generalised logistic function and algebraic functions(Figue 3):</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-squashing-function.png" alt="Figue 3: Some sigmoid functions: In the drawing all functions are normalized in such a way &lt;br&gt;that their slope at the origin is like figue 2.(picture from wikipedia)"></p>
+<h2 id="2-Multilayer-perceptron"><a href="#2-Multilayer-perceptron" class="headerlink" title="2.Multilayer perceptron"></a>2.Multilayer perceptron</h2><p>An ANN network consists at least a input, output layer and hidden layer in which consists multilayer perceptron(MLP), which is a feedforward artificial neural network model that maps sets of input data onto a set of appropriate outputs. </p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neural-networks-working.png" alt="Figue 4: Multilayer perceptron module"></p>
+<p>A single perceptron can be used to represent many boolean functions(such as AND/OR/NOT). For example:</p>
 <blockquote>
-<p>toast.setDuration(Toast.LENGTH_SHORT);</p>
+<p>AND (X1 ^ X2): Suppose w1 = w2 = 1, θ = 2, X0(bias) = 0, and y = f(1 · X1 + 1 · X2 - 2), then only when X1 = X2 = 1, y = 1<br>OR (X1 v X2): Suppose w1 = w2 = 1, θ = 0.5, X0(bias) = 0, and y = f(1 · X1 + 1 · X2 - 0.5), then only when X1 = 1 or X2 = 1, y = 1<br>NOT (!X1): Suppose w1 = 1, w2 = 0, θ = -0.5, X0(bias) = 0, and y = f(1 · X1 + 0 · X2 + 0.5), when X1 =  1, y = 0; X1 = 0, y = 1</p>
 </blockquote>
-<pre><code>//设置时间，只能是Toast.LENGTH_LONG和Toast.LENGTH_SHORT两个，长的约4s，短的约2s。
-</code></pre><p><br></p>
-<blockquote>
-<p>toast.setView(layout);</p>
-</blockquote>
-<p><br></p>
-<blockquote>
-<p>toast.show();</p>
-</blockquote>
-<p><br><hr><br></p>
-<h5 id="网上摘抄的一个完全自定义Toast-源码"><a href="#网上摘抄的一个完全自定义Toast-源码" class="headerlink" title="网上摘抄的一个完全自定义Toast( 源码 ):"></a>网上摘抄的一个完全自定义Toast( <a href="http://xiaocao.u.qiniudn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip" target="_blank" rel="external">源码</a> ):</h5><pre><code>protected void myToast(String Title, String Msg){
+<p>Unfortunately, however, some boolean func- tions cannot be represented by a single perceptron, such as the XOR function whose value is 1 if and only if x1 ≠ x2. Note the set of linearly nonseparable training examples shown in figure 5 corresponds to this XOR function:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-multilayer-perceptron.png" alt="Figue 5: AND/OR/XOR/NOT boolearn function(picture from 《机器学习-周志华》)"></p>
+<p>The ability of perceptrons to represent AND, OR, AND, and NOR is important because every boolean function can be represented by some network of interconnected units based on these primitives. In fact, every boolean function can be represented by some network of perceptrons only two levels deep, in which the inputs are fed to multiple units, and the outputs of these units are then input to a second, final stage. One way is to represent the boolean function in disjunctive normal form (i.e., as the disjunction (OR) of a set of conjunctions (ANDs) of the inputs and their negations). Note that the input to an AND perceptron can be negated simply by changing the sign of the corresponding input weight.</p>
+<h2 id="3-Gradient-descent"><a href="#3-Gradient-descent" class="headerlink" title="3.Gradient descent"></a>3.Gradient descent</h2><p>Gradient descent is a first-order iterative optimization algorithm. To find a local minimum of a function using gradient descent, one takes steps proportional to the negative of the gradient (or of the approximate gradient) of the function at the current point. (From: <a href="https://en.wikipedia.org/wiki/Gradient_descent#Description" target="_blank" rel="external">https://en.wikipedia.org/wiki/Gradient_descent#Description</a>).</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-global-minimum-local-minimum.png" alt="Figue 6: global minimum and local minmum (picture from 《机器学习-周志华》)"></p>
+<p>To sum, we may use gradient descent to approach the minimum for a formula. And from gradient descent we may get local minimum and global minimum, but how could we check whether the data I caculate is global minimum but local minimum?(<a href="http://stackoverflow.com/questions/9163801/gradient-descent-implementation" target="_blank" rel="external">http://stackoverflow.com/questions/9163801/gradient-descent-implementation</a>)</p>
+<ul>
+<li>Add noise. This reduces the precision of the parameters you’ve found, which can “blur” out local minima. The search can then jump out of local minima that are small compared to the noise, while still being trapped in deeper minima. A well-known approach for adding noise is simulated annealing.</li>
+<li>Add momentum. Along with using the current gradient to define the step, also continue in the same direction as the previous step. If you take a fraction of the previous step as the momentum term, there is a tendency to keep going, which can take the search past the local minimum. By using a fraction, the steps decay exponentially, so poor steps aren’t a big problem. This was always a popular modification to gradient descent when used to train neural networks, where gradient descent is known as backpropagation.</li>
+<li>Use a hybrid search. First use a global search (e.g., genetic algorithms, various Monte Carlo methods) to find some good starting points, then apply gradient descent to take advantage of the gradient information in the function.</li>
+</ul>
+<h2 id="4-BackPropagation"><a href="#4-BackPropagation" class="headerlink" title="4.BackPropagation"></a>4.BackPropagation</h2><p><hr><br></p>
+<h1 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h1><p>Github code: <a href="https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py</a></p>
+<pre><code>import numpy as np
 
-    //创建一个布局，用于承载Toast中的内容
-    LayoutInflater inflater = getLayoutInflater();
-    View view = inflater.inflate(R.layout.cell, null);
+class NeuralNetwork(object):
+    &#39;&#39;&#39;
+    :param layers: A list containing the number of units in each layer. Should be at least two values.
+    :param activation: The activation function to be used. Can be &quot;logistic&quot; or &quot;tanh&quot;.
+    &#39;&#39;&#39;
+    def __init__(self, layers, activation = &#39;tanh&#39;):
+        if activation == &#39;logistic&#39;:
+            self.activation = self.logistic
+            self.activation_deriv = self.logistic_derivative
+        elif activation == &#39;tanh&#39;:
+            self.activation = self.tanh
+            self.activation_deriv = self.tanh_deriv
+        &#39;&#39;&#39;
+        generate weight matrix with random float
+        &#39;&#39;&#39;
+        self.weights = []
+        for i in range(1, len(layers) - 1):
+            self.weights.append((2 * np.random.random((layers[i - 1] + 1, layers[i] + 1)) - 1) * 0.25)
+            self.weights.append((2 * np.random.random((layers[i] + 1, layers[i + 1])) - 1) * 0.25)
 
-    //Toast中的内容之一ImageView用于显示图片
-    ImageView img = (ImageView) view.findViewById(R.id.ToastImg);
-    img.setImageResource( R.drawable.ic_launcher);
+    @staticmethod
+    def tanh(x):
+        return np.tanh(x)
 
-    //Toast中的内容之二TextView用于显示Toast的标题
-    TextView title = (TextView) view.findViewById(R.id.ToastTitle);
-    title.setText( Title );
+    @staticmethod
+    def tanh_deriv(x):
+        return 1.0 - np.tanh(x) * np.tanh(x)
 
-    //Toast中的内容之三TextView用于显示Toast的信息内容
-    TextView text = (TextView) view.findViewById(R.id.ToastMsg);
-    text.setText( Msg );
+    @staticmethod
+    def logistic(x):
+        return 1 / (1 + np.exp(-x))
 
-    //创建一个Toast对象
-    Toast toast = new Toast(MainActivity.this);
+    @staticmethod
+    def logistic_derivative(x):
+        return NeuralNetwork.logistic(x) * (1 - NeuralNetwork.logistic(x))
 
-    //设置Toast的显示位置为屏幕的右上方
-    toast.setGravity(Gravity.CENTER, 0,0);
+    &#39;&#39;&#39;
+    :param X        numpy.array     train matrix
+    :param y        numpy.array     result label
+    :param learning_rate    float
+    :param epochs   int             backprobagation times
+    &#39;&#39;&#39;
+    def fit(self, X, y, learning_rate = 0.2, epochs = 10000):
+        X = np.atleast_2d(X)
+        temp = np.ones([X.shape[0], X.shape[1] + 1])
+        temp[:, 0:-1] = X
+        X = temp
+        y = np.array(y)
 
-    //设置Toast的显示时间
-    toast.setDuration(Toast.LENGTH_SHORT);
+        &#39;&#39;&#39;
+        loop operation for epochs times
+        &#39;&#39;&#39;
+        for k in range(epochs):
+            # select a random line from X for training
+            i = np.random.randint(X.shape[0])
+            a = [X[i]]
 
-    //设置Toast显示的布局
-    toast.setView(view);
+            # going forward network, for each layer
+            for l in range(len(self.weights)):
+                # computer the node value for each layer (O_i) using activation function
+                a.append(self.activation(np.dot(a[l], self.weights[l])))
+            # computer the error at the top layer
+            error = y[i] - a[-1]
+            deltas = [
+                error * self.activation_deriv(a[-1])]  # For output layer, Err calculation (delta is updated error)
 
-    //显示
-    toast.show();
+            # start backprobagation
+            for l in range(len(a) - 2, 0, -1):  # we need to begin at the second to last layer
+                # compute the updated error (i,e, deltas) for each node going from top layer to input layer
+                deltas.append(deltas[-1].dot(self.weights[l].T) * self.activation_deriv(a[l]))
+            deltas.reverse()
+            for i in range(len(self.weights)):
+                layer = np.atleast_2d(a[i])
+                delta = np.atleast_2d(deltas[i])
+                self.weights[i] += learning_rate * layer.T.dot(delta)
 
-}
-</code></pre><p><br></p>
-<p>经过亲测，可行，就是这个，显示的时间有点长啊。。</p>
-<p><br><hr><br></p>
-<h1 id="0x02-android-os-Vibrator"><a href="#0x02-android-os-Vibrator" class="headerlink" title="0x02.android.os.Vibrator"></a>0x02.android.os.Vibrator</h1><p><br></p>
-<p>Vibrator是系统震动的一个类。</p>
-<p><br></p>
-<h5 id="官网只提供了4个api"><a href="#官网只提供了4个api" class="headerlink" title="官网只提供了4个api."></a>官网只提供了4个api.</h5><pre><code>// Turn the vibrator off.
-abstract void    cancel()
+    def predict(self, x):
+        x = np.array(x)
+        temp = np.ones(x.shape[0] + 1)
+        temp[0:-1] = x
+        a = temp
+        for l in range(0, len(self.weights)):
+            a = self.activation(np.dot(a, self.weights[l]))
+        return a
+</code></pre><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>*《机器学习-周志华》<a href="https://www.amazon.cn/%E5%9B%BE%E4%B9%A6/dp/B01ARKEV1G/" target="_blank" rel="external">https://www.amazon.cn/图书/dp/B01ARKEV1G/</a></p>
+<ul>
+<li>Wikipedia Artificial Neural Network: <a href="https://en.wikipedia.org/wiki/Artificial_neural_network" target="_blank" rel="external">https://en.wikipedia.org/wiki/Artificial_neural_network</a></li>
+<li>Wikipedia Gradient Descent: <a href="https://en.wikipedia.org/wiki/Gradient_descent" target="_blank" rel="external">https://en.wikipedia.org/wiki/Gradient_descent</a></li>
+<li>Artificial Neural Network (ANN) - Introduction: <a href="http://www.bogotobogo.com/python/scikit-learn/Artificial-Neural-Network-ANN-1-Introduction.php" target="_blank" rel="external">http://www.bogotobogo.com</a></li>
+</ul>
+<!--neural-networks-working.png
 
-// Check whether the hardware has a vibrator.
-abstract boolean    hasVibrator()
-
-// Vibrate with a given pattern.
-abstract void    vibrate(long[] pattern, int repeat)
-
-//Vibrate constantly for the specified period of time.
-abstract void    vibrate(long milliseconds)
-</code></pre><p>关于介绍也很简单了，网上的例子也是清一色的一个版本，手触摸屏幕，震动2s。</p>
-<p>等看过android音频处理后，想去试试随音乐节奏震动的效果。    </p>
-<p><br><hr><br></p>
-<h5 id="下面是那个网上清一色的例子-源码"><a href="#下面是那个网上清一色的例子-源码" class="headerlink" title="下面是那个网上清一色的例子( 源码 ):"></a>下面是那个网上清一色的例子( <a href="http://xiaocao.u.qiniudn.com/blog%2FAndroid-Learning-Vibrator-Toast-2014-09-14.zip" target="_blank" rel="external">源码</a> ):</h5><p><br></p>
-<pre><code>public class MainActivity extends ActionBarActivity {
-
-    Vibrator vibrator;  
-    @Override  
-    protected void onCreate(Bundle savedInstanceState) {  
-        super.onCreate(savedInstanceState);  
-        setContentView(R.layout.activity_main);  
-        //获取系统的Vibrator服务  
-        vibrator=(Vibrator)getSystemService(Service.VIBRATOR_SERVICE);  
-    } 
-
-    protected void onStart( Bundle savedInstanceState ) {  
-        //super.(savedInstanceState);  
-        Toast.makeText(this, &quot;程序开始运行&quot;, Toast.LENGTH_LONG).show();  
-    }
-
-    //重写onTouchEvent方法，当用户触碰触摸屏是触发该方法  
-    @Override  
-    public boolean onTouchEvent(MotionEvent event) {  
-        Toast.makeText(this, &quot;触摸屏幕手机震动&quot;, Toast.LENGTH_LONG).show();  
-
-        //震动手机两秒  
-        vibrator.vibrate(200);  
-        return super.onTouchEvent(event);  
-    }
-}
-</code></pre><p><br><hr><br></p>
-<h1 id="0x03-文件读写-FileOutputStream"><a href="#0x03-文件读写-FileOutputStream" class="headerlink" title="0x03.文件读写-FileOutputStream"></a>0x03.文件读写-FileOutputStream</h1><pre><code>/**
- * @author xiaocao
- * 读取刚才用户保存的内容
- */
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-
-private String fileName=&#39;save.txt&#39;;
-
-private void save() {
-
-    String content = &#39;xxx&#39;;
-    try {
-        /* 根据用户提供的文件名，以及文件的应用模式，打开一个输出流.文件不存系统会为你创建一个的，
-         * 至于为什么这个地方还有FileNotFoundException抛出，我也比较纳闷。在Context中是这样定义的
-         *   public abstract FileOutputStream openFileOutput(String name, int mode)
-         *   throws FileNotFoundException;
-         * openFileOutput(String name, int mode);
-         * 第一个参数，代表文件名称，注意这里的文件名称不能包括任何的/或者/这种分隔符，只能是文件名
-         *          该文件会被保存在/data/data/应用名称/files/save.txt
-         * 第二个参数，代表文件的操作模式
-         *             MODE_PRIVATE 私有（只能创建它的应用访问） 重复写入时会文件覆盖
-         *             MODE_APPEND  私有   重复写入时会在文件的末尾进行追加，而不是覆盖掉原来的文件
-         *             MODE_WORLD_READABLE 公用  可读
-         *             MODE_WORLD_WRITEABLE 公用 可读写
-         *  */
-
-        FileOutputStream outputStream = openFileOutput(fileName,
-                Activity.MODE_PRIVATE);
-        outputStream.write(content.getBytes());
-        outputStream.flush();
-        outputStream.close();
-        Toast.makeText(MainActivity.this, &quot;保存成功&quot;, Toast.LENGTH_LONG).show();
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-
-}
-
-private void read() {
-    try {
-        FileInputStream inputStream = this.openFileInput(fileName);
-        byte[] bytes = new byte[1024];
-        ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-        while (inputStream.read(bytes) != -1) {
-            arrayOutputStream.write(bytes, 0, bytes.length);
-        }
-        inputStream.close();
-        arrayOutputStream.close();
-        String content = new String(arrayOutputStream.toByteArray());
-        showTextView.setText(content);
-
-    } catch (FileNotFoundException e) {
-        e.printStackTrace();
-    } catch (IOException e) {
-        e.printStackTrace();
-    }
-}
-</code></pre><p><br></p>
-<p>以上是今天的学习笔记！</p>
-<h5 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2014-09-13-Android-Learning-1"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2014-09-13-Android-Learning-1" class="headerlink" title="本文出自 夏日小草, 转载请注明出处： http://homeway.me/2014/09/13/Android-Learning-1/ "></a>本文出自 <a href="http://homeway.me">夏日小草</a>, 转载请注明出处： <a href="http://homeway.me/2014/09/13/Android-Learning-1/">http://homeway.me/2014/09/13/Android-Learning-1/ </a></h5><p><br><hr><br></p>
-<p>-By 小草</p>
-<p>2014-09-13 19:33:55</p>
+-blog/2017-04-30-sigmoid-function.png
+-->
+<p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-30-machine-learning-ann"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-04-30-machine-learning-ann" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/04/30/machine-learning-ann/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/04/30/machine-learning-ann/">http://homeway.me/2017/04/30/machine-learning-ann/</a></h4><p>-by grasses</p>
+<p>2017-04-30 16:52:34</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/09/13/Android-Learning-1/" data-id="cj24ninjs0004w951m00vd7bl" data-title="Android基础学习-1" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2017/04/30/machine-learning-ann/" data-id="cj24ninln0019w9510fcdpogq" data-title="Machine Learning - Artificial Neural Network" class="article-share-link">分享到</a>
       
-        <a href="http://homeway.me/2014/09/13/Android-Learning-1/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://homeway.me/2017/04/30/machine-learning-ann/#ds-thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
 
     </footer>
   </div>
@@ -500,19 +428,10 @@ private void read() {
     
 <nav id="article-nav">
   
-    <a href="/2014/09/19/php-package-for-mysql/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          php封装一个mysql包
-        
-      </div>
-    </a>
   
-  
-    <a href="/2014/09/04/writed-before-school/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/04/21/machine-learning-knn/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">写在新学期之前</div>
+      <div class="article-nav-title">Machine Learning - K-Nearest Neighbor</div>
     </a>
   
 </nav>
@@ -523,7 +442,7 @@ private void read() {
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2014/09/13/Android-Learning-1/" data-title="Android基础学习-1" data-url="http://homeway.me/2014/09/13/Android-Learning-1/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/04/30/machine-learning-ann/" data-title="Machine Learning - Artificial Neural Network" data-url="http://homeway.me/2017/04/30/machine-learning-ann/"></div>
   </section>
 </section>
         

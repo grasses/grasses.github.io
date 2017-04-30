@@ -14,7 +14,7 @@
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_euclidean_function.svg">
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine_similarity.png">
 <meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/200px-Manhattan_distance.svg.png">
-<meta property="og:updated_time" content="2017-04-23T06:41:22.000Z">
+<meta property="og:updated_time" content="2017-04-30T08:41:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Machine Learning - K-Nearest Neighbor">
 <meta name="twitter:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png">
@@ -262,7 +262,7 @@ ga('send', 'pageview');
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Study/">Study</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
   </div>
 
   </div>
@@ -284,12 +284,12 @@ ga('send', 'pageview');
         <p><br></p>
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/machine-learning-logo.png" alt="machine-learning"></p>
 <a id="more"></a>
-<h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p>K-Nearest Neighbor is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
+<h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">K-Nearest Neighbor</a> is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
 <p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_logo.png" alt="Figue 1:  Example of k-NN classification. The test sample (green circle) should be classified either to the first class of blue squares or to the second class of red triangles. If k = 3 (solid line circle) it is assigned to the second class because there are 2 triangles and only 1 square inside the inner circle. If k = 5 (dashed line circle) it is assigned to the first class (3 squares vs. 2 triangles inside the outer circle)."></p>
 <p>As is show in figue 1, the KNN algorithm offers an alternative approach to classification using lazy learning.</p>
 <p><hr><br></p>
-<h1 id="2-How-does-it-works"><a href="#2-How-does-it-works" class="headerlink" title="2.How does it works"></a>2.How does it works</h1><h2 id="2-1-Simple-Step"><a href="#2-1-Simple-Step" class="headerlink" title="2.1 Simple Step"></a>2.1 Simple Step</h2><p>We think two point have the closest distance, they may have the similar attribute, and then we classify them as a class. First, we should change thoses elements into vector and then count their distance, finally we get their neighbors, classify them.</p>
+<h1 id="2-How-to-work"><a href="#2-How-to-work" class="headerlink" title="2.How to work"></a>2.How to work</h1><h2 id="2-1-Simple-Step"><a href="#2-1-Simple-Step" class="headerlink" title="2.1 Simple Step"></a>2.1 Simple Step</h2><p>We think two point have the closest distance, they may have the similar attribute, and then we classify them as a class. First, we should change thoses elements into vector and then count their distance, finally we get their neighbors, classify them.</p>
 <p>Suppose we have pairs samples <code>&lt;X1, Y1&gt;, &lt;X2, Y2&gt; ... &lt;Xn, Yn&gt;</code>, and we want to predict the sample <code>&lt;X, Y&gt;</code> belong to which class, we should caculate the distance bettween <code>&lt;X, Y&gt;</code> and <code>&lt;Xm, Ym&gt;</code> (m ∈ (1, n)), and find type of <code>&lt;X, Y&gt;</code> by some math approach.</p>
 <p>As is described about, the KNN algorithm logic following steps:</p>
 <pre><code>1.Build training model, change training samples into matrix matrix vector
@@ -302,10 +302,11 @@ ga('send', 'pageview');
 <p>Cosine similarity is the cosine of the angle between two n-dimensional vectors in an n-dimensional space. It is the dot product of the two vectors divided by the product of the two vectors’ lengths (or magnitudes). For two vectors A and B in an n-dimensional space:</p>
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine_similarity.png" alt="Cosine Similarity"></p>
 <p>Cosine similarity ranges between -1 and 1, where -1 is perfectly dissimilar and 1 is perfectly similar. </p>
-<p>The another algorithm is Manhattan distance.The distance between two points in a grid based on a strictly horizontal and/or vertical path (that is, along the grid lines), as opposed to the diagonal or “as the crow flies” distance. The Manhattan distance is the simple sum of the horizontal and vertical components, whereas the diagonal distance might be computed by applying the Pythagorean theorem.</p>
+<p>The another algorithm is <a href="https://en.wiktionary.org/wiki/Manhattan_distance" target="_blank" rel="external">Manhattan distance</a>.The distance between two points in a grid based on a strictly horizontal and/or vertical path (that is, along the grid lines), as opposed to the diagonal or “as the crow flies” distance. The Manhattan distance is the simple sum of the horizontal and vertical components, whereas the diagonal distance might be computed by applying the Pythagorean theorem.</p>
 <p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/200px-Manhattan_distance.svg.png" alt="Manhattan distance"></p>
 <p><hr><br></p>
-<h1 id="3-Coding"><a href="#3-Coding" class="headerlink" title="3.Coding"></a>3.Coding</h1><p>My github example project: <a href="https://github.com/grasses/Machine-Learning/tree/master/ml/knn" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/tree/master/ml/knn</a></p>
+<h1 id="3-Coding"><a href="#3-Coding" class="headerlink" title="3.Coding"></a>3.Coding</h1><p>python sklearn documents: <a href="http://scikit-learn.org/stable/modules/neighbors.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/neighbors.html</a></p>
+<p>My github example project: <a href="https://github.com/grasses/Machine-Learning/tree/master/ml/knn" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/tree/master/ml/knn</a></p>
 <p>Testing csv data: <a href="https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/ml/knn/knn.csv</a></p>
 <p>That’s start with an example, we have a table with row described as <code>&lt;x1, x2, x3, x4&gt;</code>, now we want to predict <code>&lt;5.1, 3.5, 1.4, 0.2&gt;</code></p>
 <h2 id="step-1-building-training-matrix"><a href="#step-1-building-training-matrix" class="headerlink" title="step 1 building training matrix"></a>step 1 building training matrix</h2><pre><code>    def train_predict(data_list = [], datalist = None, split = 0.5):
@@ -407,7 +408,7 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2017/04/21/machine-learning-knn/" data-id="cj1ubtkf70019wb51ugh5mowh" data-title="Machine Learning - K-Nearest Neighbor" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2017/04/21/machine-learning-knn/" data-id="cj24ninls001cw951kwauvny7" data-title="Machine Learning - K-Nearest Neighbor" class="article-share-link">分享到</a>
       
         <a href="http://homeway.me/2017/04/21/machine-learning-knn/#ds-thread" class="article-comment-link">Comments</a>
       
@@ -419,6 +420,15 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
   
     
 <nav id="article-nav">
+  
+    <a href="/2017/04/30/machine-learning-ann/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Machine Learning - Artificial Neural Network
+        
+      </div>
+    </a>
   
   
     <a href="/2017/03/04/apue-file-dir/" id="article-nav-older" class="article-nav-link-wrap">
@@ -444,7 +454,7 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
   <div class="widget-wrap">
     <h3 class="widget-title">分类</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Study/">Study</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">41</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -453,7 +463,7 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
   <div class="widget-wrap">
     <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.43px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.43px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.43px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.43px;">Life</a> <a href="/tags/Linux/" style="font-size: 11.43px;">Linux</a> <a href="/tags/MAC/" style="font-size: 10px;">MAC</a> <a href="/tags/Machine-Learning/" style="font-size: 10px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 14.29px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.43px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15.71px;">PHP</a> <a href="/tags/Python/" style="font-size: 17.14px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.43px;">Summary</a> <a href="/tags/Tech/" style="font-size: 12.86px;">Tech</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.43px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.57px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 11.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -463,6 +473,10 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
     <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2017/04/30/machine-learning-ann/">Machine Learning - Artificial Neural Network</a>
+          </li>
         
           <li>
             <a href="/2017/04/21/machine-learning-knn/">Machine Learning - K-Nearest Neighbor</a>
@@ -478,10 +492,6 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
         
           <li>
             <a href="/2017/03/02/apue-file-io/">Unix C Programming - file i/o</a>
-          </li>
-        
-          <li>
-            <a href="/2017/01/13/understand-os-process-mutex-and-synchronization/">Understand OS - Process</a>
           </li>
         
       </ul>
