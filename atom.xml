@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-04-30T15:39:22.000Z</updated>
+  <updated>2017-05-03T06:55:05.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://homeway.me/2017/04/30/machine-learning-ann/"/>
     <id>http://homeway.me/2017/04/30/machine-learning-ann/</id>
     <published>2017-04-30T14:02:10.000Z</published>
-    <updated>2017-04-30T15:39:22.000Z</updated>
+    <updated>2017-05-03T06:55:05.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logo3.png" alt="machine-learning"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>Artifical Neural Network(ANN) which is inspired by human brain neural, provide a general, practical method for learning real-valued, discrete-valued, and vector-valued functions from examples. Artifical Neural Network algorithm such as Backpropagation use gradient descent to tune network parameters to best fit a training set of input-outputpairs.</p>
 <p><hr><br></p>
@@ -184,7 +184,7 @@ class NeuralNetwork(object):
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logo3.png&quot; alt=&quot;machine-learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -200,10 +200,10 @@ class NeuralNetwork(object):
     <link href="http://homeway.me/2017/04/21/machine-learning-knn/"/>
     <id>http://homeway.me/2017/04/21/machine-learning-knn/</id>
     <published>2017-04-21T14:02:10.000Z</published>
-    <updated>2017-04-30T15:40:06.000Z</updated>
+    <updated>2017-05-03T06:55:00.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logo3.png" alt="machine-learning"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <a id="more"></a>
 <h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">K-Nearest Neighbor</a> is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
 <p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
@@ -219,12 +219,12 @@ class NeuralNetwork(object):
 4.Decided &lt;X, Y&gt; by weight vote.
 </code></pre><h2 id="2-2-Distance-Algorithm"><a href="#2-2-Distance-Algorithm" class="headerlink" title="2.2 Distance Algorithm"></a>2.2 Distance Algorithm</h2><p>The Euclidean distance between points p and q is the length of the line segment connecting them.</p>
 <p>In Cartesian coordinates(笛卡尔坐标), if p = (p1, p2,…, pn) and q = (q1, q2,…, qn) are two points in Euclidean n-space, then the distance (d) from p to q, or from q to p is given by the Pythagorean formula:</p>
-<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/knn_euclidean_function.svg" alt="Euclidean Distance Algorithm"></p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/euclidean-distance.jpg" alt="euclidean distance"></p>
 <p>Cosine similarity is the cosine of the angle between two n-dimensional vectors in an n-dimensional space. It is the dot product of the two vectors divided by the product of the two vectors’ lengths (or magnitudes). For two vectors A and B in an n-dimensional space:</p>
-<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine_similarity.png" alt="Cosine Similarity"></p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/cosine-distance.png" alt="cosine similarity distance"></p>
 <p>Cosine similarity ranges between -1 and 1, where -1 is perfectly dissimilar and 1 is perfectly similar. </p>
 <p>The another algorithm is <a href="https://en.wiktionary.org/wiki/Manhattan_distance" target="_blank" rel="external">Manhattan distance</a>.The distance between two points in a grid based on a strictly horizontal and/or vertical path (that is, along the grid lines), as opposed to the diagonal or “as the crow flies” distance. The Manhattan distance is the simple sum of the horizontal and vertical components, whereas the diagonal distance might be computed by applying the Pythagorean theorem.</p>
-<p><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Manhattan_distance.svg/200px-Manhattan_distance.svg.png" alt="Manhattan distance"></p>
+<p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/200px-Manhattan_distance.png" alt="Manhattan distance"></p>
 <p><hr><br></p>
 <h1 id="3-Coding"><a href="#3-Coding" class="headerlink" title="3.Coding"></a>3.Coding</h1><p>python sklearn documents: <a href="http://scikit-learn.org/stable/modules/neighbors.html" target="_blank" rel="external">http://scikit-learn.org/stable/modules/neighbors.html</a></p>
 <p>My github example project: <a href="https://github.com/grasses/Machine-Learning/tree/master/ml/knn" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/tree/master/ml/knn</a></p>
@@ -330,7 +330,7 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logo3.png&quot; alt=&quot;machine-learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
     
     </summary>
     
