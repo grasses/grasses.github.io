@@ -33,9 +33,24 @@
 <li>Add momentum. Along with using the current gradient to define the step, also continue in the same direction as the previous step. If you take a fraction of the previous step as the momentum term, there is a tendency to keep going, which can take the search past the local minimum. By using a fraction, the steps decay exponentially, so poor steps aren’t a big problem. This was always a popular modification to gradient descent when used to train neural networks, where gradient descent is known as backpropagation.</li>
 <li>Use a hybrid search. First use a global search (e.g., genetic algorithms, various Monte Carlo methods) to find some good starting points, then apply gradient descent to take advantage of the gradient information in the function.</li>
 </ul>
-<h2 id="4-BackPropagation"><a href="#4-BackPropagation" class="headerlink" title="4.BackPropagation"></a>4.BackPropagation</h2><p>The backward propagation of errors, or backpropagation, is a common method of training artificial neural networks and used in conjunction with an optimization method such as gradient descent. </p>
+<h2 id="4-BackPropagation"><a href="#4-BackPropagation" class="headerlink" title="4.BackPropagation"></a>4.BackPropagation</h2><p>The backward propagation of errors, or backpropagation, is a common method of training artificial neural networks and used in conjunction with an optimization method such as gradient descent. <a href="https://en.wikipedia.org/wiki/Backpropagation" target="_blank" rel="external">Backpropagatio wiki: https://en.wikipedia.org/wiki/Backpropagation</a></p>
+<p>The BackPropagation follows two steps: </p>
+<ul>
+<li><p>step 1: Propagation</p>
+<ul>
+<li>Forward propagation of a training pattern’s input through the neural network in order to generate the propagation’s output activations.</li>
+<li>Backward propagation of the propagation’s output activations through the neural network using the training pattern target in order to generate the deltas of all output and hidden neurons.</li>
+</ul>
+</li>
+<li><p>step 2: Weight update</p>
+<ul>
+<li>Multiply its output delta and input activation to get the gradient of the weight.</li>
+<li>Subtract a ratio (percentage) of the gradient from the weight.     </li>
+</ul>
+</li>
+</ul>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-basic-neural-network-unit-neuron.png" alt="Figue 7: BackPropagation alogrithm"></p>
-<p>The algorithm repeats a two phase cycle, propagation and weight update. First one is caculate nodes output by giving weight, bias, squashing function, then get output node value; the second one needs to correcte predict value and target value, then return an error check value, which using gradient descent algorithm to feed-forward the weights.</p>
+<p>Step one is caculate nodes output by giving weight, bias, squashing function, then get output node value; Step two needs to correcte predict value and target value, then return an error check value, which using gradient descent algorithm to feed-forward the weights.</p>
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-1.png" alt="Formula 1: Neuron node sum"></p>
 <p>Let`s return to the case of a single neuron N with weights W = (w0, … , wn) and an input X = (x1, x2 … xn), as is shown at Formula 1. And momentarily, let us add the activation function from Figue 3. </p>
 <p>Supposing we predict output value as Yj, and f(x) as sigmoid function, the output may be this:</p>
