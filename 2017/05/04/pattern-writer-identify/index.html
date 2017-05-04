@@ -3,19 +3,27 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>Nginx流量拦截算法 | 夏日小草</title>
+  <title>Pattern - writter identify | 夏日小草</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="article">
-<meta property="og:title" content="Nginx流量拦截算法">
-<meta property="og:url" content="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/index.html">
+<meta property="og:title" content="Pattern - writter identify">
+<meta property="og:url" content="http://homeway.me/2017/05/04/pattern-writer-identify/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-leaky-bucket.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-token-bucket-lgorithm.jpg">
-<meta property="og:updated_time" content="2017-03-03T14:30:23.000Z">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-1.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-2.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-1.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-2.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-3.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-4.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-3.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-4.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-5.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-5.png">
+<meta property="og:updated_time" content="2017-05-04T19:28:28.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Nginx流量拦截算法">
-<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png">
+<meta name="twitter:title" content="Pattern - writter identify">
+<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -253,14 +261,14 @@ ga('send', 'pageview');
 <div id="local-search-result"></div>
 -->
       <div class="outer">
-        <section id="main"><article id="post-nginx-lua-traffic-limit-algorithm" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-pattern-writer-identify" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/10/21/nginx-lua-traffic-limit-algorithm/" class="article-date">
-  <time datetime="2015-10-21T11:39:10.000Z" itemprop="datePublished">10月 21 2015</time>
+    <a href="/2017/05/04/pattern-writer-identify/" class="article-date">
+  <time datetime="2017-05-04T14:02:10.000Z" itemprop="datePublished">5月 4 2017</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
   </div>
 
   </div>
@@ -271,7 +279,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      Nginx流量拦截算法
+      Pattern - writter identify
     </h1>
   
 
@@ -280,75 +288,87 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
-<a id="more"></a>
-<p><br></p>
-<h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>电商平台营销时候，经常会碰到的大流量问题，除了做流量分流处理，可能还要做用户黑白名单、信誉分析，进而根据用户ip信誉权重做相应的流量拦截、限制流量。</p>
-<p>Nginx自身有的请求限制模块<a href="http://nginx.org/en/docs/http/ngx_http_limit_req_module.html" target="_blank" rel="external">ngx_http_limit_req_module</a>、流量限制模块<a href="http://nginx.org/en/docs/stream/ngx_stream_limit_conn_module.html" target="_blank" rel="external">ngx_stream_limit_conn_module</a>基于令牌桶算法，可以方便的控制令牌速率，自定义调节限流，就能很好的限制请求数量，然而，nginx.conf问题还是在于无法热加载。</p>
-<p>之前做过的流量限制方案，《<a href="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/">Nginx+Lua+Redis访问频率控制</a>》，原理是动态的基于ip，实现简单的漏桶算法，限制访问频率。</p>
-<p>这里的话，就简单分析下流量限制算法：漏桶算法、令牌桶算法、滑动窗口等在Nginx+Lua中如何动态绑定uri，动态设定rate实现。</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <p><hr><br></p>
-<h1 id="0x01-Leaky-Bucket-Algorithm"><a href="#0x01-Leaky-Bucket-Algorithm" class="headerlink" title="0x01.Leaky Bucket Algorithm"></a>0x01.Leaky Bucket Algorithm</h1><p>漏桶算法可以很好地限制容量池的大小，从而防止流量暴增。如果针对uri+ip作为监测的key，就可以实现定向的设定指定ip对指定uri容量大小，超出的请求做队列处理（队列处理要引入消息机制）或者丢弃处理。这也是v2ex对流量拦截的算法，针对uri+ip做流量监测。</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-leaky-bucket.png" alt="Leaky Bucket Algorithm"></p>
-<p>漏桶算法实现上来说，就是建立一个队列，在Redis中以uri:ip作为key，队列上实现FIFO，在请求的前奏实现插入，请求完成后实现删除。</p>
-<p>实现方法是在Nginx发送http数据给用户后，通过<code>ngx.eof()</code>关闭TCP协议，做其他操作，可以参见<a href="http://wiki.jikexueyuan.com/project/openresty-best-practice/continue-after-eof.html" target="_blank" rel="external">请求返回后继续执行</a>。</p>
-<p>下面是部分代码：</p>
-<pre><code>local _M = { _VERSION = &quot;2015.10.19&quot;, OK = 1, BUSY = 2, FORBIDDEN = 3 }
+<a id="more"></a>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>This tutorial is about an approach for writer identification using texture descriptors of handwritten fragments. At the begin of all, I may define image analysis = image conversion + digit analysis, where image conversion is to change image from matrix digital to list digital and digit analysis uses machine learning method.</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-1.png" alt="Figure 1: draws from different writters"></p>
+<p>Characterizing individual’s handwriting style plays an important role in handwritten document analysis and automatic writer identification has attracted a large number of researchers in the pattern recognition field based on modern handwritten text, musical scores and historical documents. We can learn from figure 1 that different writers have different handwriting style, even for letter ‘l’, well, this gives us a way to use texture descriptors of handwritten fragments identify writer.</p>
+<p>We may easily identify writer by texture descriptors following steps:</p>
+<pre><code>1.cutting image into pieces of letters
+2.resize pieces of letters into NxN piexls
+3.convert pieces of letters into digital array
+4.using machine learning method(SVM/KNN) identify writter
+</code></pre><p><hr><br></p>
+<h1 id="Image-Conversion"><a href="#Image-Conversion" class="headerlink" title="Image Conversion"></a>Image Conversion</h1><h2 id="1-Local-Binary-Pattern-LBP"><a href="#1-Local-Binary-Pattern-LBP" class="headerlink" title="1.Local Binary Pattern(LBP)"></a>1.Local Binary Pattern(LBP)</h2><h3 id="3x3-LBP"><a href="#3x3-LBP" class="headerlink" title="3x3 LBP"></a>3x3 LBP</h3><p>Local binary patterns (LBP) is a type of visual descriptor used for classification in computer vision. LBP is the particular case of the Texture Spectrum model proposed in 1990.<a href="https://en.wikipedia.org/wiki/Local_binary_patterns" target="_blank" rel="external">Local binary patterns(wiki): https://en.wikipedia.org/wiki/Local_binary_patterns</a></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-2.png" alt="Figure 2: LBP transform algorithm"></p>
+<p>Figure 2 shows how LBP transform algorithm works, the LBP operator labels the pixels of an image by thresholding the 3x3 neighborhood of each pixel with the center value and summing the thresholded values weighted by powers of 2. The resulting LBP can be expressed in decimal form as follows:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-1.png" alt="Formula 1: LBP formula"></p>
+<p>where gi and gc are, respectively, gray-level values of the central pixel and i surrounding pixels in the circular neighborhood with a radius R. We compare each point(gi) to the center point pigment(gc), if the color depth is greater than the center point we define it to 1, otherwise it is set to 0, the resulting data is multiplied by 2. And s(x) follows:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-2.png" alt="Formula 2: LBP s(x) leap formula"></p>
+<p>Ok, after Formula 1/2, we may get list of 3x3 blocks, the texture is represented by the histogram of the labels:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-3.png" alt="Formula 3: LBP histogram"></p>
+<p>where δ is the Kronecker delta and is given as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-4.png" alt="Formula 4: LBP histogram δ(x, y)"></p>
+<p>Figure 3 is an example shows LBP transform, even though right picture lost a lot of pixels detail, it still remain it’s texture descriptors:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-3.png" alt="Figure 3: Before LBP transform and after LBP transform"></p>
+<h3 id="Multiscale-LBP"><a href="#Multiscale-LBP" class="headerlink" title="Multiscale LBP"></a>Multiscale LBP</h3><p>Multiscale LBP is an improvment for 3x3 LBP, where multiscale LBP allow to convert image block by 8x8 or 16x16 pixels. The bigger block may accelerate it’s caculating speed, but also bring the losing of pixels information. See Figure 4 for how it works:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-4.png" alt="Figure 4: Multiscale LBP transform"></p>
+<h3 id="Rotation-LBP"><a href="#Rotation-LBP" class="headerlink" title="Rotation LBP"></a>Rotation LBP</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-5.png" alt="Figure 4: Multiscale LBP transform"></p>
+<p>Formally, rotation LBP can be achieved by defining:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-5.png" alt="Formula 5: Rotation LBP"></p>
+<p>where ‘d’ is rotation degree, d ∈ (0, 360), and after mapping, we choose minmium value for result value, which is an unique value.</p>
+<h3 id="simple-3x3-LBP-coding"><a href="#simple-3x3-LBP-coding" class="headerlink" title="simple 3x3 LBP coding"></a>simple 3x3 LBP coding</h3><pre><code>def thresholded(center, pixels):
+    out = []
+    for a in pixels:
+        if a &gt;= center: out.append(1)
+        else: out.append(0)
+    return out
 
-function _M.do_list(red, uri, key, size, rate)
-    local ok, err = red:expire(uri .. &quot;:&quot; .. key, size)
-    if not ok then
-        ngx.log(ngx.WARN, &quot;redis set expire error: &quot;, err)
-        return nil
-    end
-    local ok, err = red:rpush(uri .. &quot;:&quot; .. key, ngx.time())
-    if not ok then
-        ngx.log(ngx.WARN, &quot;redis rpush error: &quot;, err)
-        return nil
-    end
-    local res, err = red:lrange(uri .. &quot;:&quot; .. key, -(size * rate), -1)
-    if not ok then
-        ngx.log(ngx.WARN, &quot;redis lrange error: &quot;, err)
-        return nil
-    end
-    if #res &lt; (size * rate) or res[#res] - res[1] &lt; size then
-        return _M.OK
-    end
-    return nil
-end
-</code></pre><p>漏桶算法优点很明显，简单、高效，能恰当拦截容量外的暴力流量。</p>
-<p>但缺点也明显，无法对流量做频率处理，比如桶size大小设置范围内，进行并发攻击依然能大流量并发效果，桶容量不可以过小，否则容易卡死正常用户。</p>
-<h1 id="0x02-Token-Bucket-Algorithm"><a href="#0x02-Token-Bucket-Algorithm" class="headerlink" title="0x02.Token Bucket Algorithm"></a>0x02.Token Bucket Algorithm</h1><p>令牌桶算法通过发放令牌，根据令牌的rate频率做请求频率限制，容量限制等。</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-10-21-nginx-lua-traffic-limit-algorithm-token-bucket-lgorithm.jpg" alt="Token Bucket Algorithm"></p>
-<ul>
-<li><p>系统根据rate(r/s)频率参数向指定桶中添加token，满则保持，不添加</p>
-</li>
-<li><p>当用户请求Nginx时候，分析uri是否需要限制流量，限制则执行令牌桶算法</p>
-</li>
-<li><p>如果桶满了，则请求通过，消耗令牌一枚；如果请求Redis发现key不存在，则通过size装满令牌桶；如果桶内令牌空，则废弃或等待流量。</p>
-</li>
-</ul>
-<p>Nginx + Lua 模型中实现必然不能跑一个程序添加令牌了，这个时候需要在分析令牌时候，通过计算时间间隔一次性添加完令牌桶内令牌。具体算法是：rate * time_distance = token_count令牌数量， if token_count &gt; size 桶容量， token_count = size。</p>
-<p>实现的存储结构是用Hash哈希存储 uri:ip -&gt; token_count，字段通过EXPIRE设定过期时间，达到长时间不访问清除桶数据效果。</p>
-<p>桶的大小、请求的频率限制用Redis哈希表存储，不存在则默认不做流量拦截。</p>
-<p>用户黑白名单通过Order SET设定信誉权重，权重越大，代表危险性越大，进而通过百分比改变接口限定rate频率。</p>
-<p>令牌桶算法优势在于能针对uri做定向rate、size等，不仅限制总请求大小，还限制平均频率大小。缺点是，还是容易导致误判等问题，并切用户的信誉无法完全准确。</p>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>1.<a href="https://en.wikipedia.org/wiki/Token_bucket" target="_blank" rel="external">Token Bucket Algorithm</a></p>
-<p>2.<a href="https://en.wikipedia.org/wiki/Leaky_bucket" target="_blank" rel="external">Token Bucket Algorithm</a></p>
-<p>3.<a href="http://www.cnblogs.com/zhengyun_ustc/archive/2012/11/17/topic1.html" target="_blank" rel="external">电商课题I：集群环境下业务限流</a></p>
-<p><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-10-21-nginx-lua-traffic-limit-algorithm"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-10-21-nginx-lua-traffic-limit-algorithm" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm">http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm</a></h4><p>-by小草</p>
-<p>2015-10-21 21:49:10</p>
+def get_pixel(pixel_list, idx, idy, default = 0):
+    try:
+        return pixel_list[idx,idy]
+    except IndexError:
+        return default
+
+def main():
+    img = cv2.imread(r&#39;/path/to/img.png&#39;)
+    for x in range(0, len(img)):
+        for y in range(0, len(img[0])):
+            center        = img[x,y]
+            top_left      = get_pixel(img, x-1, y-1)
+            top_up        = get_pixel(img, x, y-1)
+            top_right     = get_pixel(img, x+1, y-1)
+            right         = get_pixel(img, x+1, y )
+            left          = get_pixel(img, x-1, y )
+            bottom_left   = get_pixel(img, x-1, y+1)
+            bottom_right  = get_pixel(img, x+1, y+1)
+            bottom_down   = get_pixel(img, x,   y+1 )
+
+            # get thresholded 0101 value
+            values = thresholded(center, [top_left, top_up, top_right, right, bottom_right, bottom_down, bottom_left, left])
+            weights = [1, 2, 4, 8, 16, 32, 64, 128]
+            # add thresholded weight
+            res = 0
+            for a in range(0, len(values)):
+                res += weights[a] * values[a]
+            transformed_img.itemset((x,y), res)
+    cv2.imshow(&#39;image&#39;, img)
+</code></pre><p><hr><br></p>
+<h2 id="2-Local-Ternary-Patterns-LTP"><a href="#2-Local-Ternary-Patterns-LTP" class="headerlink" title="2.Local Ternary Patterns(LTP)"></a>2.Local Ternary Patterns(LTP)</h2><p><hr><br></p>
+<h2 id="3-Local-Phase-Quantization-LPQ"><a href="#3-Local-Phase-Quantization-LPQ" class="headerlink" title="3.Local Phase Quantization(LPQ)"></a>3.Local Phase Quantization(LPQ)</h2><p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-04-pattern-writter-identify"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-04-pattern-writter-identify" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/05/04/pattern-writter-identify/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/05/04/pattern-writter-identify/">http://homeway.me/2017/05/04/pattern-writter-identify/</a></h4><p>-by grasses</p>
+<p>2017-05-05 03:22:34</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/" data-id="cj2at2rf3002cri51n1u8npj3" data-title="Nginx流量拦截算法" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/05/04/pattern-writer-identify/" data-id="cj2at2rfk002ori51vl3jtofv" data-title="Pattern - writter identify" class="article-share-link">Share</a>
       
-        <a href="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/#ds-thread" class="article-comment-link">Comments</a>
+        <a href="http://homeway.me/2017/05/04/pattern-writer-identify/#ds-thread" class="article-comment-link">Comments</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
 
     </footer>
   </div>
@@ -356,19 +376,10 @@ end
     
 <nav id="article-nav">
   
-    <a href="/2017/01/13/understand-os-process-mutex-and-synchronization/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Understand OS - Process
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/13/mysql-hash-index/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/04/30/machine-learning-ann/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">MySQL索引之哈希索引</div>
+      <div class="article-nav-title">Machine Learning - Artificial Neural Network</div>
     </a>
   
 </nav>
@@ -379,7 +390,7 @@ end
 
 
   <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2015/10/21/nginx-lua-traffic-limit-algorithm/" data-title="Nginx流量拦截算法" data-url="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/"></div>
+    <div id="ds-thread" class="ds-thread" data-thread-key="2017/05/04/pattern-writer-identify/" data-title="Pattern - writter identify" data-url="http://homeway.me/2017/05/04/pattern-writer-identify/"></div>
   </section>
 </section>
         

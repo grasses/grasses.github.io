@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-05-03T07:16:17.000Z</updated>
+  <updated>2017-05-04T19:28:28.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -14,6 +14,102 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Pattern - writter identify</title>
+    <link href="http://homeway.me/2017/05/04/pattern-writer-identify/"/>
+    <id>http://homeway.me/2017/05/04/pattern-writer-identify/</id>
+    <published>2017-05-04T14:02:10.000Z</published>
+    <updated>2017-05-04T19:28:28.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<p><hr><br></p>
+<a id="more"></a>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>This tutorial is about an approach for writer identification using texture descriptors of handwritten fragments. At the begin of all, I may define image analysis = image conversion + digit analysis, where image conversion is to change image from matrix digital to list digital and digit analysis uses machine learning method.</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-1.png" alt="Figure 1: draws from different writters"></p>
+<p>Characterizing individual’s handwriting style plays an important role in handwritten document analysis and automatic writer identification has attracted a large number of researchers in the pattern recognition field based on modern handwritten text, musical scores and historical documents. We can learn from figure 1 that different writers have different handwriting style, even for letter ‘l’, well, this gives us a way to use texture descriptors of handwritten fragments identify writer.</p>
+<p>We may easily identify writer by texture descriptors following steps:</p>
+<pre><code>1.cutting image into pieces of letters
+2.resize pieces of letters into NxN piexls
+3.convert pieces of letters into digital array
+4.using machine learning method(SVM/KNN) identify writter
+</code></pre><p><hr><br></p>
+<h1 id="Image-Conversion"><a href="#Image-Conversion" class="headerlink" title="Image Conversion"></a>Image Conversion</h1><h2 id="1-Local-Binary-Pattern-LBP"><a href="#1-Local-Binary-Pattern-LBP" class="headerlink" title="1.Local Binary Pattern(LBP)"></a>1.Local Binary Pattern(LBP)</h2><h3 id="3x3-LBP"><a href="#3x3-LBP" class="headerlink" title="3x3 LBP"></a>3x3 LBP</h3><p>Local binary patterns (LBP) is a type of visual descriptor used for classification in computer vision. LBP is the particular case of the Texture Spectrum model proposed in 1990.<a href="https://en.wikipedia.org/wiki/Local_binary_patterns" target="_blank" rel="external">Local binary patterns(wiki): https://en.wikipedia.org/wiki/Local_binary_patterns</a></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-2.png" alt="Figure 2: LBP transform algorithm"></p>
+<p>Figure 2 shows how LBP transform algorithm works, the LBP operator labels the pixels of an image by thresholding the 3x3 neighborhood of each pixel with the center value and summing the thresholded values weighted by powers of 2. The resulting LBP can be expressed in decimal form as follows:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-1.png" alt="Formula 1: LBP formula"></p>
+<p>where gi and gc are, respectively, gray-level values of the central pixel and i surrounding pixels in the circular neighborhood with a radius R. We compare each point(gi) to the center point pigment(gc), if the color depth is greater than the center point we define it to 1, otherwise it is set to 0, the resulting data is multiplied by 2. And s(x) follows:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-2.png" alt="Formula 2: LBP s(x) leap formula"></p>
+<p>Ok, after Formula 1/2, we may get list of 3x3 blocks, the texture is represented by the histogram of the labels:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-3.png" alt="Formula 3: LBP histogram"></p>
+<p>where δ is the Kronecker delta and is given as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-4.png" alt="Formula 4: LBP histogram δ(x, y)"></p>
+<p>Figure 3 is an example shows LBP transform, even though right picture lost a lot of pixels detail, it still remain it’s texture descriptors:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-3.png" alt="Figure 3: Before LBP transform and after LBP transform"></p>
+<h3 id="Multiscale-LBP"><a href="#Multiscale-LBP" class="headerlink" title="Multiscale LBP"></a>Multiscale LBP</h3><p>Multiscale LBP is an improvment for 3x3 LBP, where multiscale LBP allow to convert image block by 8x8 or 16x16 pixels. The bigger block may accelerate it’s caculating speed, but also bring the losing of pixels information. See Figure 4 for how it works:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-4.png" alt="Figure 4: Multiscale LBP transform"></p>
+<h3 id="Rotation-LBP"><a href="#Rotation-LBP" class="headerlink" title="Rotation LBP"></a>Rotation LBP</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-5.png" alt="Figure 4: Multiscale LBP transform"></p>
+<p>Formally, rotation LBP can be achieved by defining:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-5.png" alt="Formula 5: Rotation LBP"></p>
+<p>where ‘d’ is rotation degree, d ∈ (0, 360), and after mapping, we choose minmium value for result value, which is an unique value.</p>
+<h3 id="simple-3x3-LBP-coding"><a href="#simple-3x3-LBP-coding" class="headerlink" title="simple 3x3 LBP coding"></a>simple 3x3 LBP coding</h3><pre><code>def thresholded(center, pixels):
+    out = []
+    for a in pixels:
+        if a &gt;= center: out.append(1)
+        else: out.append(0)
+    return out
+
+def get_pixel(pixel_list, idx, idy, default = 0):
+    try:
+        return pixel_list[idx,idy]
+    except IndexError:
+        return default
+
+def main():
+    img = cv2.imread(r&#39;/path/to/img.png&#39;)
+    for x in range(0, len(img)):
+        for y in range(0, len(img[0])):
+            center        = img[x,y]
+            top_left      = get_pixel(img, x-1, y-1)
+            top_up        = get_pixel(img, x, y-1)
+            top_right     = get_pixel(img, x+1, y-1)
+            right         = get_pixel(img, x+1, y )
+            left          = get_pixel(img, x-1, y )
+            bottom_left   = get_pixel(img, x-1, y+1)
+            bottom_right  = get_pixel(img, x+1, y+1)
+            bottom_down   = get_pixel(img, x,   y+1 )
+
+            # get thresholded 0101 value
+            values = thresholded(center, [top_left, top_up, top_right, right, bottom_right, bottom_down, bottom_left, left])
+            weights = [1, 2, 4, 8, 16, 32, 64, 128]
+            # add thresholded weight
+            res = 0
+            for a in range(0, len(values)):
+                res += weights[a] * values[a]
+            transformed_img.itemset((x,y), res)
+    cv2.imshow(&#39;image&#39;, img)
+</code></pre><p><hr><br></p>
+<h2 id="2-Local-Ternary-Patterns-LTP"><a href="#2-Local-Ternary-Patterns-LTP" class="headerlink" title="2.Local Ternary Patterns(LTP)"></a>2.Local Ternary Patterns(LTP)</h2><p><hr><br></p>
+<h2 id="3-Local-Phase-Quantization-LPQ"><a href="#3-Local-Phase-Quantization-LPQ" class="headerlink" title="3.Local Phase Quantization(LPQ)"></a>3.Local Phase Quantization(LPQ)</h2><p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-04-pattern-writter-identify"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-04-pattern-writter-identify" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/05/04/pattern-writter-identify/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/05/04/pattern-writter-identify/">http://homeway.me/2017/05/04/pattern-writter-identify/</a></h4><p>-by grasses</p>
+<p>2017-05-05 03:22:34</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;hr&gt;&lt;br&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://homeway.me/categories/Machine-Learning/"/>
+    
+    
+      <category term="Machine Learning" scheme="http://homeway.me/tags/Machine-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Machine Learning - Artificial Neural Network</title>
@@ -2777,190 +2873,6 @@ fastcgi_param  REDIRECT_STATUS    200;
     
     
       <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>浅谈web开发</title>
-    <link href="http://homeway.me/2015/05/12/think-about-web-develop/"/>
-    <id>http://homeway.me/2015/05/12/think-about-web-develop/</id>
-    <published>2015-05-11T16:32:20.000Z</published>
-    <updated>2015-08-04T13:49:26.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-web-developer.png" alt="web"></p>
-<a id="more"></a>
-<p><br><hr><br></p>
-<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>平时写代码大多数都是一些小模块，很少会一个人完整地写一个大型的网站。</p>
-<p>我独自写过几个网站，都没发布，想想归结几个问题，要么界面太丑，要么逻辑细节漏洞太多，要么没有实际的使用价值。</p>
-<p>完整地一个大型网站很复杂，要做好前端的效果，业务逻辑，cdn静态文件，服务器集群。</p>
-<p>每一个我都尝试做过，之前在一篇<a href="http://homeway.me/2014/12/10/think-about-distributed-clusters/">《分布式服务器集群架构方案思考》</a>中分析过，关于网站架构的模型，也做过几篇关于nginx服务器集群处理的文章。</p>
-<p>这里做个小总结，分享下最近开发过程中一些零零碎碎的蛋疼东西。</p>
-<p><br><hr></p>
-<h1 id="0x02-前端说起"><a href="#0x02-前端说起" class="headerlink" title="0x02.前端说起"></a>0x02.前端说起</h1><p>前端的第一感觉要代码简约，数据清晰。</p>
-<p>1.命名简约，<a href="http://zh-google-styleguide.readthedocs.org/en/latest/google-cpp-styleguide/naming/" target="_blank" rel="external">《Google开源项目风格指南》</a></p>
-<p>大小写区分，变量函数区分，后来我写代码，就统一将变量写成小写+下划线，函数写成首字母大写，函数统一同一栏花括号。</p>
-<p>2.关于闭包</p>
-<p>简约就不得不说起闭包问题，闭包显然对于多人开发很好用，这也体现了js的灵活性。</p>
-<p>个人习惯是写一个base的函数库，然后每个页面需求写不同的js库。</p>
-<pre><code>(function(){
-    //main js
-    function index(){
-        var that = this;
-        this.fun1 = function(){};
-        this.fun2 = function(){};
-        this.fun3 = function(){};
-    }
-    window.index = index;//这样的话，外界浏览器就能访问到闭包内部了。
-})();
-</code></pre><p>这是一种方式，还可以用个简单地方法直接写在一个函数内部。</p>
-<pre><code>function index(){
-    this.fun1 = function(){}
-    return this;
-}
-</code></pre><p>类似MVC思想，可以把js分成：base层，common层，page层。</p>
-<p>base层：主要兼容一些浏览器特性，比较底层，类似mvc中的m层，封装不同浏览器特性公common层调用。</p>
-<p>common层：主要集成化插件，实现功能供page调用，mvc中典型的c层，控制页面的主体。</p>
-<p>page：其实我们平时用的插件都在用page层多，插件都是封装了base和common层。</p>
-<p>3.关于异步与同步</p>
-<p>这是我这几天碰到的问题，关于异步与同步转化问题。f1()与f2()</p>
-<pre><code>　 function f1(callback){
-　　　　setTimeout(function () {
-　　　　　　// f1的任务代码
-　　　　　　callback();
-　　　　}, 1000);
-　　}
-</code></pre><p>如果f1是一个很耗时的任务，可以考虑改写f1，把f2写成f1的回调函数。<code>f1(f2)</code></p>
-<p>4.下面是每次都会用到的代码片段</p>
-<pre><code>function SetCookie(name,value,expiredays){
-    var exdate=new Date()
-    exdate.setDate(exdate.getDate()+expiredays)
-    document.cookie=name+ &quot;=&quot; +escape(value)+
-    ((expiredays==null) ? &quot;&quot; : &quot;;expires=&quot;+exdate.toGMTString())
-}
-function GetCookie(c_name){
-    if (document.cookie.length&gt;0){
-    c_start=document.cookie.indexOf(c_name + &quot;=&quot;);
-    if (c_start!=-1){
-        c_start=c_start + c_name.length+1
-        c_end=document.cookie.indexOf(&quot;;&quot;,c_start)
-        if (c_end==-1) c_end=document.cookie.length
-            return unescape(document.cookie.substring(c_start,c_end));
-        }
-    }
-    return &quot;&quot;;
-}
-</code></pre><p><br><hr></p>
-<h1 id="0x03-关于后端代码"><a href="#0x03-关于后端代码" class="headerlink" title="0x03.关于后端代码"></a>0x03.关于后端代码</h1><p>1.关于模型与架构方式，可以用MVC，MVP，MVVC等。</p>
-<p>MVC作为快速，稳健开发是非常适合的，分层明显，结果清晰，层级与层级之间互为类，层级之间传输通过array形式。</p>
-<ul>
-<li><p>视图（View）：用户界面。</p>
-</li>
-<li><p>控制器（Controller）：业务逻辑</p>
-</li>
-<li><p>模型（Model）：数据保存</p>
-</li>
-</ul>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-12-mvc-model.png" alt="MVC架构"></p>
-<p>2.web中用户文件权限模型设计</p>
-<p>这是我最近在开发时候碰到的问题，如何去处理不同用户之间的权限等级，后来就想到了Linux的权限管理，先脑补下Linux权限表：</p>
-<ul>
-<li>Linux字母权限中，</li>
-</ul>
-<p>1，第一段：例子中字母“d”，表示文件所在目录</p>
-<p>2，第二段：例子中字符串“rwx”，表示文件所有者对此文件的操作权限</p>
-<p>3，第三段，例子中字符串“r-x”，表示文件所有者所在组对些文件的操作权限</p>
-<p>4，第四段，例子中字符串“r-x”，表示除2、3两种外的任何人对此文件的操作权限</p>
-<ul>
-<li>Linux里面数字权限中，r(read)-&gt;4，w(write)-&gt;2，x(execute)-&gt;1</li>
-</ul>
-<p>任何组合数都能从下面的表中得到结果：    </p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-12-ompetence-model.png" alt="用户权限"></p>
-<p><br></p>
-<p>回到问题中，我在数据库中储存了文件权限数字，我再应用时候要转化出来，转成字母形式，然后审查权限够不够。</p>
-<p>首先，这里不同，第一段是，文件所有者对此文件的操作权限；第二段是，文件被分享者对此文件的操作权限；第三段是普通参观者对文件操作权限。</p>
-<p>那么，我选权限，先分割766中，用户所在第几位。</p>
-<p>接着将第几位，数字表与字母表转化，最后分析权限够不够。</p>
-<p>伪代码如下：</p>
-<pre><code>$competence = 数字权限；
-if(query-&gt;row_num()!=0){
-    $res = str_split($competence,1);        
-    switch($type){
-        case &#39;admin&#39;:
-            return $res[0];
-            break;
-        case &#39;share&#39;:
-            return $res[1];
-            break;
-        case &#39;guest&#39;:
-            return $res[2];
-            break;
-        default:
-            return $res[2];
-            break;
-    }
-}
-</code></pre><p>接着确认用户权限够不够：</p>
-<pre><code>function CheckCompetence($expected, $input=000){
-    $res = &quot;---&quot;;
-    preg_match(&quot;/r/i&quot;, $expected, $matches);
-    if($matches){//read 
-        if($input==7 || $input==6 || $input==5 || $input==4) $res[0]=&quot;r&quot;;
-        else return false;
-    }
-    preg_match(&quot;/w/i&quot;, $expected, $matches);
-    if($matches){//write 
-        if($input==7 || $input==6 || $input==3 || $input==2) $res[1]=&quot;w&quot;;
-        else return false;
-    }
-    preg_match(&quot;/x/i&quot;, $expected, $matches);
-    if($matches){//exec
-        if($input==7 || $input==5 || $input==3 || $input==1) $res[2]=&quot;x&quot;;
-        else return false;
-    }
-    return $res;
-}
-</code></pre><p>期望的权限expected为字母，输入权限为input，如果用户权限不足，返回false。</p>
-<p><br></p>
-<p>通信传输常用的base加密代码片段</p>
-<pre><code>class base{
-    //private $string = &quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ-+*#@&quot;;
-    private $string = &quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
-    private $base = 62;
-
-    public function base62_encode($str) {
-        $out = &#39;&#39;;
-        for($t=floor(log10($str)/log10( $this-&gt;base )); $t&gt;=0; $t--) {
-            $a = floor($str / pow( $this-&gt;base, $t));
-            $out = $out.substr($this-&gt;string, $a, 1);
-            $str = $str - ($a * pow( $this-&gt;base, $t));
-        }     
-        return $out;
-    }
-    public function base62_decode($str) {
-        $out = 0;
-        $len = strlen($str) - 1;
-        for($t=0; $t&lt;=$len; $t++) {
-            $out = $out + strpos($this-&gt;string, substr($str, $t, 1)) * pow( $this-&gt;base, $len - $t);
-        } 
-        return substr(sprintf(&quot;%f&quot;, $out), 0, -7);
-    } 
-}
-</code></pre><p><br><hr><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-05-12-think-about-web-develop"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-05-12-think-about-web-develop" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/05/12/think-about-web-develop/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/05/12/think-about-web-develop/">http://homeway.me/2015/05/12/think-about-web-develop/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-05-12 1:29:20</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-web-developer.png&quot; alt=&quot;web&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
-    
-    
-      <category term="Web" scheme="http://homeway.me/tags/Web/"/>
     
   </entry>
   
