@@ -404,7 +404,7 @@ if __name__ == &#39;__main__&#39;:
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/" data-id="cj2gah08i004g1p515hlaoz6x" data-title="树莓派基础-GPIO、CPU、温度、内存" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/" data-id="cj2gcj7zw0049gs51pu49j0pa" data-title="树莓派基础-GPIO、CPU、温度、内存" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -414,11 +414,14 @@ if __name__ == &#39;__main__&#39;:
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2014/10/09/raspberry-the-current-status-and-data/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2014/10/09/raspberry-the-current-status-and-data/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/树莓派/">树莓派</a></li></ul>

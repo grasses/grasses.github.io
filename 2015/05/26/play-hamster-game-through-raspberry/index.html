@@ -319,7 +319,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/" data-id="cj2gah07600301p51hhpq2kx4" data-title="基于Raspberry的打地鼠游戏" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/" data-id="cj2gcj7ze003egs51fl7saxnq" data-title="基于Raspberry的打地鼠游戏" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -329,11 +329,14 @@ ga('send', 'pageview');
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2015/05/26/play-hamster-game-through-raspberry/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2015/05/26/play-hamster-game-through-raspberry/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/树莓派/">树莓派</a></li></ul>

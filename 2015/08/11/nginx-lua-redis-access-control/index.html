@@ -368,7 +368,7 @@ end
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/" data-id="cj2gah066001z1p51urokzfrz" data-title="Nginx+Lua+Redis访问频率控制" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/" data-id="cj2gcj7yk0029gs51b5a73cfy" data-title="Nginx+Lua+Redis访问频率控制" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -378,11 +378,14 @@ end
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2015/08/11/nginx-lua-redis-access-control/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2015/08/11/nginx-lua-redis-access-control/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>

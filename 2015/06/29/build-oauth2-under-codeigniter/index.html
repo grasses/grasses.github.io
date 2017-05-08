@@ -434,7 +434,7 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/" data-id="cj2gah04w000q1p516vvz45ep" data-title="CI环境下开发Oauth2.0开放平台" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/" data-id="cj2gcj7xc000tgs51fobpakc4" data-title="CI环境下开发Oauth2.0开放平台" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -444,11 +444,14 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2015/06/29/build-oauth2-under-codeigniter/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2015/06/29/build-oauth2-under-codeigniter/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oauth/">Oauth</a></li></ul>

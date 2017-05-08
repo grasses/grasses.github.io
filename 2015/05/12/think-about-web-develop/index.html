@@ -445,7 +445,7 @@ if(query-&gt;row_num()!=0){
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/05/12/think-about-web-develop/" data-id="cj2gah08v004x1p51shht99mp" data-title="浅谈web开发" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2015/05/12/think-about-web-develop/" data-id="cj2gcj806004jgs51mbk6k4fh" data-title="浅谈web开发" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -455,11 +455,14 @@ if(query-&gt;row_num()!=0){
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2015/05/12/think-about-web-develop/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2015/05/12/think-about-web-develop/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/">Web</a></li></ul>

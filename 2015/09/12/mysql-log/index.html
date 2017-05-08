@@ -441,7 +441,7 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/09/12/mysql-log/" data-id="cj2gah06900221p511f794ehw" data-title="MySQL日志分析" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2015/09/12/mysql-log/" data-id="cj2gcj7yg0022gs51tdo1ut66" data-title="MySQL日志分析" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -451,11 +451,14 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2015/09/12/mysql-log/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2015/09/12/mysql-log/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>

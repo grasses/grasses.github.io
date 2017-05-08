@@ -512,7 +512,7 @@ startService(startIntent);
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/12/02/android-service-share-data-with-activity/" data-id="cj2gah03w00081p51dlrhnse0" data-title="Android之Service与Activity通信机制" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2014/12/02/android-service-share-data-with-activity/" data-id="cj2gcj7wu000cgs51t3jit2sm" data-title="Android之Service与Activity通信机制" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -522,11 +522,14 @@ startService(startIntent);
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2014/12/02/android-service-share-data-with-activity/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2014/12/02/android-service-share-data-with-activity/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>

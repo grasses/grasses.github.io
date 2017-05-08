@@ -404,7 +404,7 @@ ERROR Plugin load failed: hexo-server
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/07/10/rebuild-osx-environment/" data-id="cj2gah07y003u1p51cc8oqoqd" data-title="MAC重装各种的痛点" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2015/07/10/rebuild-osx-environment/" data-id="cj2gcj7zv0046gs51rgyzlkjj" data-title="MAC重装各种的痛点" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -414,11 +414,14 @@ ERROR Plugin load failed: hexo-server
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2015/07/10/rebuild-osx-environment/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2015/07/10/rebuild-osx-environment/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>

@@ -406,7 +406,7 @@ expired() 不需要参数
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/07/28/mongosion/" data-id="cj2gah05o001j1p51oiqvfpe9" data-title="tornado下自写一个session模块" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2014/07/28/mongosion/" data-id="cj2gcj7y5001rgs51pzskhmd1" data-title="tornado下自写一个session模块" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -416,11 +416,14 @@ expired() 不需要参数
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2014/07/28/mongosion/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2014/07/28/mongosion/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>

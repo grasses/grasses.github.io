@@ -357,7 +357,7 @@ dd: 正在写入&quot;null&quot;: 设备上没有空间
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/" data-id="cj2gah08500421p51iipdbw9s" data-title="服务器对比" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/" data-id="cj2gcj800004cgs51830wh58u" data-title="服务器对比" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -367,11 +367,14 @@ dd: 正在写入&quot;null&quot;: 设备上没有空间
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2014/04/13/server-performance-test-for-aws-vs-qingcloud/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2014/04/13/server-performance-test-for-aws-vs-qingcloud/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>

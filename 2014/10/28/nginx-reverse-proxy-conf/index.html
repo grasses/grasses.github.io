@@ -395,7 +395,7 @@ server {
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/" data-id="cj2gah06i002b1p51r179sndj" data-title="Nginx反向代理重定向" class="article-share-link">分享到</a>
+      <a data-url="http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/" data-id="cj2gcj7yu002lgs51a7rbuk7g" data-title="Nginx反向代理重定向" class="article-share-link">分享到</a>
 
       
         <!-- disqus -->
@@ -405,11 +405,14 @@ server {
               var d = document, s = d.createElement('script');
               s.src = 'https://homeway.disqus.com/embed.js';
               s.setAttribute('data-timestamp', + new Date());
-              //(d.head || d.body).appendChild(s);
+              if (window.location.pathname.substring(1) == '2014/10/28/nginx-reverse-proxy-conf/') {
+                (d.head || d.body).appendChild(s);
+                console.log('2014/10/28/nginx-reverse-proxy-conf/', window.location.pathname.substring(1));
+              }
             })();
           </script>
           <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-          <script src='https://homeway.disqus.com/embed.js'></script>
+          <!--<script src='https://homeway.disqus.com/embed.js'></script>-->
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>

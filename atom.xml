@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-05-08T15:24:17.000Z</updated>
+  <updated>2017-05-08T16:24:05.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://homeway.me/2017/05/04/pattern-writer-identify/"/>
     <id>http://homeway.me/2017/05/04/pattern-writer-identify/</id>
     <published>2017-05-04T14:02:10.000Z</published>
-    <updated>2017-05-08T15:24:17.000Z</updated>
+    <updated>2017-05-08T16:24:05.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
@@ -119,16 +119,16 @@ if __name__ == &#39;__main__&#39;:
     main(r&#39;/path/to/img&#39;)
 </code></pre><p><hr><br></p>
 <h2 id="2-Local-Ternary-Patterns-LTP"><a href="#2-Local-Ternary-Patterns-LTP" class="headerlink" title="2.Local Ternary Patterns(LTP)"></a>2.Local Ternary Patterns(LTP)</h2><p>Local Ternary Patterns(LTP) is an advance version algrithm of LBP, which introduces gradient function for block transform.</p>
-<p><img src="http://10.1.20.33/2017-05-04-writer-identify-figure-6.png" alt="Figure 6: Multiscale LTP transform"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-6.png" alt="Figure 6: Multiscale LTP transform"></p>
 <p>From figure 6, with clockwise direction, we define position from 0 to 8, coordinate start at <code>(0, 0)</code>, center point coordinate as <code>(1, 1)</code>. With 3 gradients, (0, 30 - t), (30 - t, 30 + t), (30 + t, 256), follows 3 result value: -1, 0, 1. As is shown in picture, when <code>t = 5</code>:</p>
 <pre><code>G0=42 &gt; Gc=30 and G0 &gt; 35, then LTP(0, 0) = 1
 G1=55 &gt; Gc=30 and G1 &gt; 35, then LTP(0, 1) = 1
 ...
 G4=18 &lt; Gc=30 and G4 &lt; 25, then LTP(2, 2) = -1
 </code></pre><p>Then we may define the approach into math formula:</p>
-<p><img src="http://10.1.20.33/2017-05-04-writer-identify-formula-6.png" alt="Formula 6: LTP generater function"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-6.png" alt="Formula 6: LTP generater function"></p>
 <p>where gc is center pixel, gi is current pixel, range from 0 to 8, t is threshold. Then st() can be define like Formula 7:</p>
-<p><img src="http://10.1.20.33/2017-05-04-writer-identify-formula-7.png" alt="Formula 7: LTP st( ) function"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-7.png" alt="Formula 7: LTP st( ) function"></p>
 <p><hr><br></p>
 <h2 id="3-Local-Phase-Quantization-LPQ"><a href="#3-Local-Phase-Quantization-LPQ" class="headerlink" title="3.Local Phase Quantization(LPQ)"></a>3.Local Phase Quantization(LPQ)</h2><p><hr><br></p>
 <h1 id="Digit-Analysis"><a href="#Digit-Analysis" class="headerlink" title="Digit Analysis"></a>Digit Analysis</h1><p>K-Nearest Neighbor guide: <a href="http://homeway.me/2017/04/21/machine-learning-knn/">http://homeway.me/2017/04/21/machine-learning-knn/</a></p>
