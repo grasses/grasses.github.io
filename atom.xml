@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-05-04T19:28:28.000Z</updated>
+  <updated>2017-05-08T15:24:17.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Pattern - writter identify</title>
+    <title>Pattern - writter identify using texture descriptors</title>
     <link href="http://homeway.me/2017/05/04/pattern-writer-identify/"/>
     <id>http://homeway.me/2017/05/04/pattern-writer-identify/</id>
     <published>2017-05-04T14:02:10.000Z</published>
-    <updated>2017-05-04T19:28:28.000Z</updated>
+    <updated>2017-05-08T15:24:17.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
@@ -37,7 +37,7 @@
 </code></pre><p><hr><br></p>
 <h1 id="Image-Conversion"><a href="#Image-Conversion" class="headerlink" title="Image Conversion"></a>Image Conversion</h1><h2 id="1-Local-Binary-Pattern-LBP"><a href="#1-Local-Binary-Pattern-LBP" class="headerlink" title="1.Local Binary Pattern(LBP)"></a>1.Local Binary Pattern(LBP)</h2><h3 id="3x3-LBP"><a href="#3x3-LBP" class="headerlink" title="3x3 LBP"></a>3x3 LBP</h3><p>Local binary patterns (LBP) is a type of visual descriptor used for classification in computer vision. LBP is the particular case of the Texture Spectrum model proposed in 1990.<a href="https://en.wikipedia.org/wiki/Local_binary_patterns" target="_blank" rel="external">Local binary patterns(wiki): https://en.wikipedia.org/wiki/Local_binary_patterns</a></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-2.png" alt="Figure 2: LBP transform algorithm"></p>
-<p>Figure 2 shows how LBP transform algorithm works, the LBP operator labels the pixels of an image by thresholding the 3x3 neighborhood of each pixel with the center value and summing the thresholded values weighted by powers of 2. The resulting LBP can be expressed in decimal form as follows:</p>
+<p>Figure 2 shows how LBP transform algorithm works, with clockwise direction, we define position from 0 to 8, coordinate start at (0, 0), center point coordinate as (1, 1). The LBP operator labels the pixels of an image by thresholding the 3x3 neighborhood of each pixel with the center value and summing the thresholded values weighted by powers of 2. The resulting LBP can be expressed in decimal form as follows:</p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-1.png" alt="Formula 1: LBP formula"></p>
 <p>where gi and gc are, respectively, gray-level values of the central pixel and i surrounding pixels in the circular neighborhood with a radius R. We compare each point(gi) to the center point pigment(gc), if the color depth is greater than the center point we define it to 1, otherwise it is set to 0, the resulting data is multiplied by 2. And s(x) follows:</p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-2.png" alt="Formula 2: LBP s(x) leap formula"></p>
@@ -53,45 +53,87 @@
 <p>Formally, rotation LBP can be achieved by defining:</p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-5.png" alt="Formula 5: Rotation LBP"></p>
 <p>where ‘d’ is rotation degree, d ∈ (0, 360), and after mapping, we choose minmium value for result value, which is an unique value.</p>
-<h3 id="simple-3x3-LBP-coding"><a href="#simple-3x3-LBP-coding" class="headerlink" title="simple 3x3 LBP coding"></a>simple 3x3 LBP coding</h3><pre><code>def thresholded(center, pixels):
+<h3 id="simple-3x3-LBP-coding"><a href="#simple-3x3-LBP-coding" class="headerlink" title="simple 3x3 LBP coding"></a>simple 3x3 LBP coding</h3><p>Gist source code: <a href="https://gist.github.com/grasses/bacbdfae0626353de12cedc4ceaed552" target="_blank" rel="external">https://gist.github.com/grasses/bacbdfae0626353de12cedc4ceaed552</a></p>
+<pre><code>import numpy as np
+import cv2
+from matplotlib import pyplot as plt
+
+def thresholded(center, pixels):
     out = []
-    for a in pixels:
-        if a &gt;= center: out.append(1)
-        else: out.append(0)
+        for a in pixels:
+    if a &lt; center:
+        out.append(0)
+    else:
+        out.append(1)
     return out
 
 def get_pixel(pixel_list, idx, idy, default = 0):
     try:
-        return pixel_list[idx,idy]
+        return pixel_list[idx, idy]
     except IndexError:
         return default
 
-def main():
-    img = cv2.imread(r&#39;/path/to/img.png&#39;)
-    for x in range(0, len(img)):
-        for y in range(0, len(img[0])):
-            center        = img[x,y]
-            top_left      = get_pixel(img, x-1, y-1)
-            top_up        = get_pixel(img, x, y-1)
-            top_right     = get_pixel(img, x+1, y-1)
-            right         = get_pixel(img, x+1, y )
-            left          = get_pixel(img, x-1, y )
-            bottom_left   = get_pixel(img, x-1, y+1)
-            bottom_right  = get_pixel(img, x+1, y+1)
-            bottom_down   = get_pixel(img, x,   y+1 )
+def show(img, lbp_img):
+    plt.figure(figsize = (8, 8))
+    plt.subplot(221)
+    plt.title(&quot;original image&quot;)
+    plt.imshow(img, cmap=plt.cm.Greys_r)
 
+    plt.subplot(222)
+    plt.title(&quot;LBP transform image&quot;)
+    plt.imshow(lbp_img, cmap=plt.cm.Greys_r)
+
+    plt.subplot(223)
+    (hist, bins) = np.histogram(img.flatten(), 256, [0, 256])
+    cdf = hist.cumsum()
+    cdf_normalized = cdf * hist.max() / cdf.max()
+    plt.plot(cdf_normalized, color = &#39;b&#39;)
+    plt.hist(img.flatten(), 256, [0, 256], color = &#39;r&#39;)
+    plt.xlim([0, 256])
+    plt.legend((&#39;cdf&#39;, &#39;histogram&#39;), loc = &#39;upper left&#39;)
+
+    plt.show()
+
+def main(fpath):
+    img = cv2.imread(fpath, cv2.IMREAD_GRAYSCALE)
+    lbp_img = cv2.imread(fpath, cv2.IMREAD_GRAYSCALE)
+
+    offset = [(-1, -1), (0, -1), (1, -1), (1, 0), (-1, 0), (-1, 1), (1, 1), (0, 1)]
+    for x in range(len(img)):
+        for y in range(len(img[x])):
+            matrix = []
+            for z in range(len(offset)):
+                matrix.append(get_pixel(img, x + offset[z][0], y + offset[z][1]))
+            center = img[x, y]
             # get thresholded 0101 value
-            values = thresholded(center, [top_left, top_up, top_right, right, bottom_right, bottom_down, bottom_left, left])
+            values = thresholded(center, matrix)
             weights = [1, 2, 4, 8, 16, 32, 64, 128]
             # add thresholded weight
             res = 0
-            for a in range(0, len(values)):
+            for a in range(len(values)):
                 res += weights[a] * values[a]
-            transformed_img.itemset((x,y), res)
-    cv2.imshow(&#39;image&#39;, img)
+            lbp_img.itemset((x,y), res)
+    show(img, lbp_img)
+
+if __name__ == &#39;__main__&#39;:
+    main(r&#39;/path/to/img&#39;)
 </code></pre><p><hr><br></p>
-<h2 id="2-Local-Ternary-Patterns-LTP"><a href="#2-Local-Ternary-Patterns-LTP" class="headerlink" title="2.Local Ternary Patterns(LTP)"></a>2.Local Ternary Patterns(LTP)</h2><p><hr><br></p>
+<h2 id="2-Local-Ternary-Patterns-LTP"><a href="#2-Local-Ternary-Patterns-LTP" class="headerlink" title="2.Local Ternary Patterns(LTP)"></a>2.Local Ternary Patterns(LTP)</h2><p>Local Ternary Patterns(LTP) is an advance version algrithm of LBP, which introduces gradient function for block transform.</p>
+<p><img src="http://10.1.20.33/2017-05-04-writer-identify-figure-6.png" alt="Figure 6: Multiscale LTP transform"></p>
+<p>From figure 6, with clockwise direction, we define position from 0 to 8, coordinate start at <code>(0, 0)</code>, center point coordinate as <code>(1, 1)</code>. With 3 gradients, (0, 30 - t), (30 - t, 30 + t), (30 + t, 256), follows 3 result value: -1, 0, 1. As is shown in picture, when <code>t = 5</code>:</p>
+<pre><code>G0=42 &gt; Gc=30 and G0 &gt; 35, then LTP(0, 0) = 1
+G1=55 &gt; Gc=30 and G1 &gt; 35, then LTP(0, 1) = 1
+...
+G4=18 &lt; Gc=30 and G4 &lt; 25, then LTP(2, 2) = -1
+</code></pre><p>Then we may define the approach into math formula:</p>
+<p><img src="http://10.1.20.33/2017-05-04-writer-identify-formula-6.png" alt="Formula 6: LTP generater function"></p>
+<p>where gc is center pixel, gi is current pixel, range from 0 to 8, t is threshold. Then st() can be define like Formula 7:</p>
+<p><img src="http://10.1.20.33/2017-05-04-writer-identify-formula-7.png" alt="Formula 7: LTP st( ) function"></p>
+<p><hr><br></p>
 <h2 id="3-Local-Phase-Quantization-LPQ"><a href="#3-Local-Phase-Quantization-LPQ" class="headerlink" title="3.Local Phase Quantization(LPQ)"></a>3.Local Phase Quantization(LPQ)</h2><p><hr><br></p>
+<h1 id="Digit-Analysis"><a href="#Digit-Analysis" class="headerlink" title="Digit Analysis"></a>Digit Analysis</h1><p>K-Nearest Neighbor guide: <a href="http://homeway.me/2017/04/21/machine-learning-knn/">http://homeway.me/2017/04/21/machine-learning-knn/</a></p>
+<p>In this section, we use K-Nearest Neighbor(KNN) for digit analysis.</p>
+<p><hr><br></p>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-04-pattern-writter-identify"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-04-pattern-writter-identify" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/05/04/pattern-writter-identify/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/05/04/pattern-writter-identify/">http://homeway.me/2017/05/04/pattern-writter-identify/</a></h4><p>-by grasses</p>
 <p>2017-05-05 03:22:34</p>
 ]]></content>
