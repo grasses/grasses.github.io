@@ -439,15 +439,34 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
 
       
     </div>
+    
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/09/12/mysql-log/" data-id="cj2at2rek001wri51hb6mwlyi" data-title="MySQL日志分析" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/09/12/mysql-log/" data-id="cj2fvn8ld0020m1512wqj48u7" data-title="MySQL日志分析" class="article-share-link">Share</a>
+
       
-        <a href="http://homeway.me/2015/09/12/mysql-log/#ds-thread" class="article-comment-link">Comments</a>
+        <!-- disqus -->
+        <script type="text/javascript">
+          var disqus_shortname = 'yaohomeway';
+          var disqus_config = function () {
+            this.page.url = 'http://homeway.me/2015/09/12/mysql-log/';
+            this.page.identifier = '/2015/09/12/mysql-log/';
+            this.page.title = 'MySQL日志分析';
+          };
+          (function(){
+            var d = document;
+            var dsq = d.createElement('script');
+            dsq.type = 'text/javascript';
+            dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (d.head || d.body).appendChild(dsq);
+          })();
+        </script>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
 
     </footer>
+
   </div>
   
     
@@ -473,11 +492,6 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
   
 </article>
 
-
-
-  <section id="comments">
-    <div id="ds-thread" class="ds-thread" data-thread-key="2015/09/12/mysql-log/" data-title="MySQL日志分析" data-url="http://homeway.me/2015/09/12/mysql-log/"></div>
-  </section>
 </section>
         
           <aside id="sidebar">
@@ -587,19 +601,19 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
   
 </nav>
     
-<!-- Duoshuo start -->
-<script type="text/javascript">
-var duoshuoQuery = {short_name:"grasses"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0] 
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
+<script>
+  var disqus_shortname = 'yaohomeway';
+  
+  var disqus_url = 'http://homeway.me/2015/09/12/mysql-log/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//go.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
-  </script>
-<!-- Duoshuo end -->
+</script>
 
 
 <!--<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>-->
