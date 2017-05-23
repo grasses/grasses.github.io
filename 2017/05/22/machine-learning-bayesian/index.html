@@ -3,17 +3,32 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>夏日小草</title>
+  <title>Machine Learning - Naive Bayesian theory | 夏日小草</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="As we do,as you know.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="夏日小草">
-<meta property="og:url" content="http://homeway.me/page/5/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning - Naive Bayesian theory">
+<meta property="og:url" content="http://homeway.me/2017/05/22/machine-learning-bayesian/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:description" content="As we do,as you know.">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-figure-1.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-1.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-2.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-3.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-4.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-5.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-6.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-7.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-8.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-9.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-10.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-11.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-12.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-14.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-15.png">
+<meta property="og:updated_time" content="2017-05-23T15:56:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="夏日小草">
-<meta name="twitter:description" content="As we do,as you know.">
+<meta name="twitter:title" content="Machine Learning - Naive Bayesian theory">
+<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -251,16 +266,14 @@ ga('send', 'pageview');
 <div id="local-search-result"></div>
 -->
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-nginx-redis-srcache-cache" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-machine-learning-bayesian" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2014/12/25/nginx-redis-srcache-cache/" class="article-date">
-  <time datetime="2014-12-24T16:55:51.000Z" itemprop="datePublished">12月 25 2014</time>
+    <a href="/2017/05/22/machine-learning-bayesian/" class="article-date">
+  <time datetime="2017-05-22T08:12:10.000Z" itemprop="datePublished">5月 22 2017</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
   </div>
 
   </div>
@@ -270,8 +283,8 @@ ga('send', 'pageview');
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/25/nginx-redis-srcache-cache/">基于Redis+Srcache_nginx服务器缓存</a>
+    <h1 class="article-title" itemprop="name">
+      Machine Learning - Naive Bayesian theory
     </h1>
   
 
@@ -280,384 +293,95 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
-        
-          <p class="article-more-link">
-            <a href="/2014/12/25/nginx-redis-srcache-cache/#more">Read More</a>
-          </p>
-        
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<a id="more"></a>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bayes’ rule is a rigorous method for interpreting evidence in the context of previous experience or knowledge. It was discovered by Thomas Bayes (c. 1701-1761), and independently discovered by Pierre-Simon Laplace (1749-1827).</p>
+<p>The Naive Bayes algorithm is called “naive” because it makes the assumption that the occurrence of a certain feature is independent of the occurrence of other features.</p>
+<p>In naive bayesian, it`s diffcultly to predict posterior probability, and we can use proior probability p(x|y) to consider posterior probability:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-figure-1.png" alt="Figure-1: Naive Bayesian model"></p>
+<p>After this section, we begin talking about how this bayesian work.</p>
+<h2 id="Bayesian-decision-theory"><a href="#Bayesian-decision-theory" class="headerlink" title="Bayesian decision theory"></a>Bayesian decision theory</h2><p>Suppose n labels defined as <code>Y = {y1, y2, y3, y4...yn}</code>, <code>λij</code> defined as loss probability for wrongly classing yj as yi. After this we can get a conditional risk <code>R(yi | x)</code>: on condition x, probability for wrongly class yj as yi:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-1.png" alt="Formula1: Error risk on condition x"></p>
+<p>Make a mathematical expectation:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-2.png" alt="Formula2: Error risk expectation"></p>
+<p>To make E(h(x)) more smaller, we need to find a group of <code>{X -&gt; Y}</code> which make <code>R(h(x)|x)</code> mathematical expectation smallest. The smallest h(x) is called Bayes optiomal classifier. <code>λij</code> can be defined as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-3.png" alt="Formula-3: λij"></p>
+<p>Error risk probability:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-4.png" alt="Formula-4: risk probability"></p>
+<p>Where <code>P(yi|x)</code> is accurate judgment probability, and Bayes optiomal classifier can be defined as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-5.png" alt="Formula-5: h(x)"></p>
+<p>From here, we can make a conclusion: in order to make classfy risk more smaller, we need to find max mathematical expectation for P(y|x), but mostly, find bigest <code>P(y | x)</code> is not easy work, in bayesian theory:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-6.png" alt="Formula-6: bayesian formula"></p>
+<p>Where <code>P(y)</code> is prior probability, <code>P(x|y)</code> is on condition y probability(likehood).</p>
+<h2 id="Maximum-Likelihood-Estimator-MLE"><a href="#Maximum-Likelihood-Estimator-MLE" class="headerlink" title="Maximum Likelihood Estimator (MLE)"></a>Maximum Likelihood Estimator (MLE)</h2><p>In statistics, maximum likelihood estimation (MLE) is a method of estimating the parameters of a statistical model given observations, by finding the parameter values that maximize the likelihood of making the observations given the parameters.(<a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation" target="_blank" rel="external">Wiki: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation</a>)</p>
+<p>Without considering any prior opinion, a typical approach for estimating p is the method of maximum likelihood. For <code>xi ∈ X (i = 1,2,3,4...)</code>, all xi independent and with same distribution, then <code>P(Xi=xi|θ)</code> should be:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-7.png" alt="Formula-7: Likelihood probability"></p>
+<p>Now we look at this function from a different perspective by considering the observed values <code>x1, x2, …, xn</code> to be fixed “parameters” of this function, whereas θ will be the function’s variable and allowed to vary freely.In practice the algebra is often more convenient when working with the natural logarithm of the likelihood function, called the log-likelihood:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-8.png" alt="Formula-8:Log-likelihood"></p>
+<p>Because log(x) and multiplication function has same incremental decrement attribute, we choose log-likelihood for better caculating.<br>The method of maximum likelihood estimates θ by finding a value of θ that maximizes ln(L(θ)). This method of estimation defines a maximum likelihood estimator (MLE) of θ:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-9.png" alt="Formula-9: Maximum Likelihood Estimator"></p>
+<p>In order to find the maximum likelihood function, we need to derive the formula 9, find the derivative is 0 when the θ is the maximum likelihood function solution.</p>
+<h2 id="Naive-Bayesian-theory"><a href="#Naive-Bayesian-theory" class="headerlink" title="Naive Bayesian theory"></a>Naive Bayesian theory</h2><p>Ok, let’s go back to naive bayesian.</p>
+<p>We may find posterior probability <code>P(y|x)</code> not easy to calculate, but if the conditions are interrelated, we can not from the prior probability (<code>P(x|y)</code>) get the results. Bayesian uses the attribute conditional independence hypothesis, which supposing all conditions x do not affect each other. Based on attribute conditional independence hypothesis, formula 6 can be like:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-10.png" alt="Formula-10: attribute conditional independence hypothesis"></p>
+<p>Where X has m attributes, all working independently. Formula 5 can be rewrited as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-11.png" alt="Formula-11: attribute conditional independence hypothesis"></p>
+<p>Here we need to choose a distribution to describe p(x|y) called prior distribution.</p>
+<h2 id="Bayesian-prior"><a href="#Bayesian-prior" class="headerlink" title="Bayesian prior"></a>Bayesian prior</h2><p>There are many different bayesian prior: Gaussian or normal distribution, bernoulli distribution, conjugate distributions. Once we have chosen a prior distribution Pr(p)Pr(p), we then observe the process, and use Bayes’ theorem to update our probability distribution appropriately.</p>
+<p>For normal distribution:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-12.png" alt="Formula-12: normal distribution bayesian prior"></p>
+<p>From attributions of normal distribution, P(x|y) ~ N(u, σ^2), we can now get the estimating mathematical expectation and variance from maximum likelihood:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-14.png" alt="Formula-14: normal distribution mathematical expectation"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-15.png" alt="Formula-15: normal distribution variance"></p>
+<blockquote>
+<p>Next post I may write some code to express how naive bayesian works. </p>
+</blockquote>
+<p><hr><br></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ul>
+<li>《机器学习-周志华》</li>
+<li>Bayes’ Rule With Python - A Tutorial Introduction to Bayesian Analysis, by James V Stone</li>
+<li><a href="https://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf" target="_blank" rel="external">Kevin P. Murphy: Conjugate Bayesian analysis of the Gaussian distribution</a></li>
+<li><a href="http://marcharper.codes/2015-08-24/bayesian.html" target="_blank" rel="external">Bayesian Inference for Bernoulli processes: Is that coin fair?</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Bernoulli_distribution" target="_blank" rel="external">Wiki Bernoulli: https://en.wikipedia.org/wiki/Bernoulli_distribution</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation" target="_blank" rel="external">Wiki Maximum_likelihood: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation</a></li>
+</ul>
+<p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-22-machine-learning-naive-bayesian-theory"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-22-machine-learning-naive-bayesian-theory" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/05/22/machine-learning-naive-bayesian-theory/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/05/10/machine-learning-naive-bayesian-theory/">http://homeway.me/2017/05/22/machine-learning-naive-bayesian-theory/</a></h4><p>-by grasses</p>
+<p>2017-05-22 16:52:34</p>
+
       
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/12/25/nginx-redis-srcache-cache/" data-id="cj31qtsek002p5c51gnninlv8" data-title="基于Redis+Srcache_nginx服务器缓存" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/05/22/machine-learning-bayesian/" data-id="cj31qtscz001f5c51ywgvyftj" data-title="Machine Learning - Naive Bayesian theory" class="article-share-link">Share</a>
       <!--  -->
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
 
     </footer>
 
   </div>
   
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/05/04/pattern-writer-identify/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Pattern - writter identify using texture descriptors</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
 
-  
-    <article id="post-think-about-distributed-clusters" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/12/10/think-about-distributed-clusters/" class="article-date">
-  <time datetime="2014-12-10T15:27:01.000Z" itemprop="datePublished">12月 10 2014</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/10/think-about-distributed-clusters/">分布式服务器集群架构方案思考</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-big-data-cloud.jpg" alt="nginx-reverse-proxy-conf"></p>
-        
-          <p class="article-more-link">
-            <a href="/2014/12/10/think-about-distributed-clusters/#more">Read More</a>
-          </p>
-        
-      
+  <section id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
     </div>
-    
-    <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/12/10/think-about-distributed-clusters/" data-id="cj31qtsgb004m5c51l0x00o26" data-title="分布式服务器集群架构方案思考" class="article-share-link">Share</a>
-      <!--  -->
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
-
-    </footer>
-
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-nginx-reverse-proxy-to-load-balance" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/12/05/nginx-reverse-proxy-to-load-balance/" class="article-date">
-  <time datetime="2014-12-05T09:12:26.000Z" itemprop="datePublished">12月 5 2014</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/05/nginx-reverse-proxy-to-load-balance/">Nginx反向代理实现均衡负载</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
-        
-          <p class="article-more-link">
-            <a href="/2014/12/05/nginx-reverse-proxy-to-load-balance/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    
-    <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/" data-id="cj31qtseo002u5c51jf4ixko2" data-title="Nginx反向代理实现均衡负载" class="article-share-link">Share</a>
-      <!--  -->
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
-
-    </footer>
-
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-android-service-share-data-with-activity" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/12/02/android-service-share-data-with-activity/" class="article-date">
-  <time datetime="2014-12-01T17:27:34.000Z" itemprop="datePublished">12月 2 2014</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/12/02/android-service-share-data-with-activity/">Android之Service与Activity通信机制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-android.png" alt="android"></p>
-        
-          <p class="article-more-link">
-            <a href="/2014/12/02/android-service-share-data-with-activity/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    
-    <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/12/02/android-service-share-data-with-activity/" data-id="cj31qtsbr000c5c511i53uxdu" data-title="Android之Service与Activity通信机制" class="article-share-link">Share</a>
-      <!--  -->
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android/">Android</a></li></ul>
-
-    </footer>
-
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-nginx-http-auth-request-module" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/11/11/nginx-http-auth-request-module/" class="article-date">
-  <time datetime="2014-11-11T15:46:38.000Z" itemprop="datePublished">11月 11 2014</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/11/11/nginx-http-auth-request-module/">为Nginx添加访问限制</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2014-11-11-nginx.png" alt="nginx-http-auth-request-module"></p>
-        
-          <p class="article-more-link">
-            <a href="/2014/11/11/nginx-http-auth-request-module/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    
-    <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/11/11/nginx-http-auth-request-module/" data-id="cj31qtse6002b5c51rft3lab3" data-title="为Nginx添加访问限制" class="article-share-link">Share</a>
-      <!--  -->
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
-
-    </footer>
-
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-403-Forbidden" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/11/08/403-Forbidden/" class="article-date">
-  <time datetime="2014-11-08T09:04:04.000Z" itemprop="datePublished">11月 8 2014</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Life/">Life</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/11/08/403-Forbidden/">403.Forbidden</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<p><img src="/image/2014-11-08-403.forbidden-1.gif" alt="403.forbidden"></p>
-        
-          <p class="article-more-link">
-            <a href="/2014/11/08/403-Forbidden/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    
-    <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/11/08/403-Forbidden/" data-id="cj31qtsaq00005c51jtly2002" data-title="403.Forbidden" class="article-share-link">Share</a>
-      <!--  -->
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Life/">Life</a></li></ul>
-
-    </footer>
-
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-how-oauth2-work-1" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/11/05/how-oauth2-work-1/" class="article-date">
-  <time datetime="2014-11-04T17:37:08.000Z" itemprop="datePublished">11月 5 2014</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/11/05/how-oauth2-work-1/">Oauth2.0原理</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<h4 id="Oauth2-0是第三方接入的一个安全协议"><a href="#Oauth2-0是第三方接入的一个安全协议" class="headerlink" title="Oauth2.0是第三方接入的一个安全协议"></a>Oauth2.0是第三方接入的一个安全协议</h4><h4 id="今天查了查Oauth2-0接入原理，感觉挺有意思的"><a href="#今天查了查Oauth2-0接入原理，感觉挺有意思的" class="headerlink" title="今天查了查Oauth2.0接入原理，感觉挺有意思的"></a>今天查了查Oauth2.0接入原理，感觉挺有意思的</h4>
-        
-          <p class="article-more-link">
-            <a href="/2014/11/05/how-oauth2-work-1/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    
-    <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/11/05/how-oauth2-work-1/" data-id="cj31qtsdl001m5c51bh8u50gh" data-title="Oauth2.0原理" class="article-share-link">Share</a>
-      <!--  -->
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oauth/">Oauth</a></li></ul>
-
-    </footer>
-
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-linux-shell-write-service" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/10/29/linux-shell-write-service/" class="article-date">
-  <time datetime="2014-10-29T04:08:11.000Z" itemprop="datePublished">10月 29 2014</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/10/29/linux-shell-write-service/">用shell写个service启动程序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><br></p>
-<h4 id="我们经常会用到service-httpd-d-start，service-mysql-start"><a href="#我们经常会用到service-httpd-d-start，service-mysql-start" class="headerlink" title="我们经常会用到service httpd.d start，service mysql start"></a>我们经常会用到service httpd.d start，service mysql start</h4><h4 id="那么service到底是怎么工作的呢？"><a href="#那么service到底是怎么工作的呢？" class="headerlink" title="那么service到底是怎么工作的呢？"></a>那么service到底是怎么工作的呢？</h4>
-        
-          <p class="article-more-link">
-            <a href="/2014/10/29/linux-shell-write-service/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    
-    <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/10/29/linux-shell-write-service/" data-id="cj31qtscv001b5c514kng6dqu" data-title="用shell写个service启动程序" class="article-share-link">Share</a>
-      <!--  -->
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
-
-    </footer>
-
-  </div>
-  
-</article>
-
-
-  
-  
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/page/4/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/6/">Next &raquo;</a>
-    </nav>
-  
+  </section>
 </section>
         
           <aside id="sidebar">
@@ -770,11 +494,13 @@ ga('send', 'pageview');
 <script>
   var disqus_shortname = 'homeway';
   
+  var disqus_url = 'http://homeway.me/2017/05/22/machine-learning-bayesian/';
+  
   (function(){
     var dsq = document.createElement('script');
     dsq.type = 'text/javascript';
     dsq.async = true;
-    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
   })();
 </script>

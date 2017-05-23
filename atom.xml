@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-05-08T16:24:05.000Z</updated>
+  <updated>2017-05-23T15:56:10.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -14,6 +14,85 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Machine Learning - Naive Bayesian theory</title>
+    <link href="http://homeway.me/2017/05/22/machine-learning-bayesian/"/>
+    <id>http://homeway.me/2017/05/22/machine-learning-bayesian/</id>
+    <published>2017-05-22T08:12:10.000Z</published>
+    <updated>2017-05-23T15:56:10.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<a id="more"></a>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bayes’ rule is a rigorous method for interpreting evidence in the context of previous experience or knowledge. It was discovered by Thomas Bayes (c. 1701-1761), and independently discovered by Pierre-Simon Laplace (1749-1827).</p>
+<p>The Naive Bayes algorithm is called “naive” because it makes the assumption that the occurrence of a certain feature is independent of the occurrence of other features.</p>
+<p>In naive bayesian, it`s diffcultly to predict posterior probability, and we can use proior probability p(x|y) to consider posterior probability:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-figure-1.png" alt="Figure-1: Naive Bayesian model"></p>
+<p>After this section, we begin talking about how this bayesian work.</p>
+<h2 id="Bayesian-decision-theory"><a href="#Bayesian-decision-theory" class="headerlink" title="Bayesian decision theory"></a>Bayesian decision theory</h2><p>Suppose n labels defined as <code>Y = {y1, y2, y3, y4...yn}</code>, <code>λij</code> defined as loss probability for wrongly classing yj as yi. After this we can get a conditional risk <code>R(yi | x)</code>: on condition x, probability for wrongly class yj as yi:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-1.png" alt="Formula1: Error risk on condition x"></p>
+<p>Make a mathematical expectation:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-2.png" alt="Formula2: Error risk expectation"></p>
+<p>To make E(h(x)) more smaller, we need to find a group of <code>{X -&gt; Y}</code> which make <code>R(h(x)|x)</code> mathematical expectation smallest. The smallest h(x) is called Bayes optiomal classifier. <code>λij</code> can be defined as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-3.png" alt="Formula-3: λij"></p>
+<p>Error risk probability:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-4.png" alt="Formula-4: risk probability"></p>
+<p>Where <code>P(yi|x)</code> is accurate judgment probability, and Bayes optiomal classifier can be defined as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-5.png" alt="Formula-5: h(x)"></p>
+<p>From here, we can make a conclusion: in order to make classfy risk more smaller, we need to find max mathematical expectation for P(y|x), but mostly, find bigest <code>P(y | x)</code> is not easy work, in bayesian theory:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-6.png" alt="Formula-6: bayesian formula"></p>
+<p>Where <code>P(y)</code> is prior probability, <code>P(x|y)</code> is on condition y probability(likehood).</p>
+<h2 id="Maximum-Likelihood-Estimator-MLE"><a href="#Maximum-Likelihood-Estimator-MLE" class="headerlink" title="Maximum Likelihood Estimator (MLE)"></a>Maximum Likelihood Estimator (MLE)</h2><p>In statistics, maximum likelihood estimation (MLE) is a method of estimating the parameters of a statistical model given observations, by finding the parameter values that maximize the likelihood of making the observations given the parameters.(<a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation" target="_blank" rel="external">Wiki: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation</a>)</p>
+<p>Without considering any prior opinion, a typical approach for estimating p is the method of maximum likelihood. For <code>xi ∈ X (i = 1,2,3,4...)</code>, all xi independent and with same distribution, then <code>P(Xi=xi|θ)</code> should be:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-7.png" alt="Formula-7: Likelihood probability"></p>
+<p>Now we look at this function from a different perspective by considering the observed values <code>x1, x2, …, xn</code> to be fixed “parameters” of this function, whereas θ will be the function’s variable and allowed to vary freely.In practice the algebra is often more convenient when working with the natural logarithm of the likelihood function, called the log-likelihood:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-8.png" alt="Formula-8:Log-likelihood"></p>
+<p>Because log(x) and multiplication function has same incremental decrement attribute, we choose log-likelihood for better caculating.<br>The method of maximum likelihood estimates θ by finding a value of θ that maximizes ln(L(θ)). This method of estimation defines a maximum likelihood estimator (MLE) of θ:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-9.png" alt="Formula-9: Maximum Likelihood Estimator"></p>
+<p>In order to find the maximum likelihood function, we need to derive the formula 9, find the derivative is 0 when the θ is the maximum likelihood function solution.</p>
+<h2 id="Naive-Bayesian-theory"><a href="#Naive-Bayesian-theory" class="headerlink" title="Naive Bayesian theory"></a>Naive Bayesian theory</h2><p>Ok, let’s go back to naive bayesian.</p>
+<p>We may find posterior probability <code>P(y|x)</code> not easy to calculate, but if the conditions are interrelated, we can not from the prior probability (<code>P(x|y)</code>) get the results. Bayesian uses the attribute conditional independence hypothesis, which supposing all conditions x do not affect each other. Based on attribute conditional independence hypothesis, formula 6 can be like:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-10.png" alt="Formula-10: attribute conditional independence hypothesis"></p>
+<p>Where X has m attributes, all working independently. Formula 5 can be rewrited as:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-11.png" alt="Formula-11: attribute conditional independence hypothesis"></p>
+<p>Here we need to choose a distribution to describe p(x|y) called prior distribution.</p>
+<h2 id="Bayesian-prior"><a href="#Bayesian-prior" class="headerlink" title="Bayesian prior"></a>Bayesian prior</h2><p>There are many different bayesian prior: Gaussian or normal distribution, bernoulli distribution, conjugate distributions. Once we have chosen a prior distribution Pr(p)Pr(p), we then observe the process, and use Bayes’ theorem to update our probability distribution appropriately.</p>
+<p>For normal distribution:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-12.png" alt="Formula-12: normal distribution bayesian prior"></p>
+<p>From attributions of normal distribution, P(x|y) ~ N(u, σ^2), we can now get the estimating mathematical expectation and variance from maximum likelihood:</p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-14.png" alt="Formula-14: normal distribution mathematical expectation"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-15.png" alt="Formula-15: normal distribution variance"></p>
+<blockquote>
+<p>Next post I may write some code to express how naive bayesian works. </p>
+</blockquote>
+<p><hr><br></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h1><ul>
+<li>《机器学习-周志华》</li>
+<li>Bayes’ Rule With Python - A Tutorial Introduction to Bayesian Analysis, by James V Stone</li>
+<li><a href="https://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf" target="_blank" rel="external">Kevin P. Murphy: Conjugate Bayesian analysis of the Gaussian distribution</a></li>
+<li><a href="http://marcharper.codes/2015-08-24/bayesian.html" target="_blank" rel="external">Bayesian Inference for Bernoulli processes: Is that coin fair?</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Bernoulli_distribution" target="_blank" rel="external">Wiki Bernoulli: https://en.wikipedia.org/wiki/Bernoulli_distribution</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation" target="_blank" rel="external">Wiki Maximum_likelihood: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation</a></li>
+</ul>
+<p><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-22-machine-learning-naive-bayesian-theory"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-05-22-machine-learning-naive-bayesian-theory" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/05/22/machine-learning-naive-bayesian-theory/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/05/10/machine-learning-naive-bayesian-theory/">http://homeway.me/2017/05/22/machine-learning-naive-bayesian-theory/</a></h4><p>-by grasses</p>
+<p>2017-05-22 16:52:34</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://homeway.me/categories/Machine-Learning/"/>
+    
+    
+      <category term="Machine Learning" scheme="http://homeway.me/tags/Machine-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Pattern - writter identify using texture descriptors</title>
@@ -2754,167 +2833,6 @@ if __name__ == &#39;__main__&#39;:
     
     
       <category term="树莓派" scheme="http://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx重定向Rewrite分析</title>
-    <link href="http://homeway.me/2015/05/22/nginx-rewrite-conf/"/>
-    <id>http://homeway.me/2015/05/22/nginx-rewrite-conf/</id>
-    <published>2015-05-22T08:28:10.000Z</published>
-    <updated>2015-08-04T14:02:53.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png" alt="nginx-reverse-proxy-conf"></p>
-<a id="more"></a>
-<p><br></p>
-<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>之前写过Nginx重定向了，<a href="http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/">http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/</a>，但当时比较模糊。</p>
-<p>这里主要说两种常用的重定向，都是php中的重定向。</p>
-<p>一种是typecho的带 <code>index.php</code> 例如 <code>http://homeway.me/index.php/arg1/arg2</code>，另一种是隐藏 <code>index.php</code> 的 <code>http://homeway.me/arg1/arg2</code>。</p>
-<p>以下配置代码均亲测可用。</p>
-<p><br><hr></p>
-<h1 id="0x02-ngx-http-rewrite-module"><a href="#0x02-ngx-http-rewrite-module" class="headerlink" title="0x02.ngx_http_rewrite_module"></a>0x02.ngx_http_rewrite_module</h1><p>首先还是按常理，先脑补下nginx地rewrite规则，<a href="http://nginx.org/en/docs/http/ngx_http_rewrite_module.html" target="_blank" rel="external">http://nginx.org/en/docs/http/ngx_http_rewrite_module.html</a></p>
-<p>关于nginx重写的指令主要由这么一些：</p>
-<ol>
-<li>break指令        2. if指令    3. return指令    4. rewrite指令    5. rewrite_log指令    6. set指令</li>
-</ol>
-<ul>
-<li><p>break指令<br>停止执行当前虚拟主机的后续rewrite指令集</p>
-</li>
-<li><p>if指令<br>对给定的条件condition进行判断。如果为真，大括号内的rewrite指令将被执行。<br>有几个要记住的操作符：<br>使用=,!= 比较的一个变量和字符串<br>是用~,~*与正则表达式匹配的变量，如果这个正则表达式中包含}，;则整个表达式需要用” 或’ 包围<br>使用-f,!-f 检查一个文件是否存在<br>使用-d,!-d 检查一个目录是否存在<br>使用-e,!-e 检查一个文件、目录、符号链接是否存在<br>使用-x,!-x 检查一个文件是否可执行</p>
-</li>
-</ul>
-<p>详细中文看这里好了: <a href="http://www.nginx.cn/216.html" target="_blank" rel="external">http://www.nginx.cn/216.html</a></p>
-<p><br><hr></p>
-<h1 id="0x03-nginx-conf"><a href="#0x03-nginx-conf" class="headerlink" title="0x03.nginx.conf"></a>0x03.nginx.conf</h1><p>首先要明白我们现在要做的事情是两类， <code>/index.php/arg1/arg2</code> 和 <code>/arg1/arg2</code></p>
-<h2 id="1-类typecho的-index-php-arg1-arg2"><a href="#1-类typecho的-index-php-arg1-arg2" class="headerlink" title="1.类typecho的 /index.php/arg1/arg2"></a>1.类typecho的 <code>/index.php/arg1/arg2</code></h2><p><code>/index.php/arg1/arg2</code> 跑的location是index.php文件，也就是说，我们要做一个location匹配<code>.php</code>的正则，并且要让它分辨出uri中的 <code>/arg1/arg2</code></p>
-<p>这个正则有很多种写法，我用的是lnmp传统的写法<code>~ [^/]\.php(/|$)</code>。</p>
-<p>完整匹配如下：</p>
-<pre><code>location ~ [^/]\.php(/|$)
-{
-    #try_files $uri =404; 住址扫描目录用的，这里我们都是虚假目录，删除。
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass  unix:/tmp/php-cgi.sock;
-    fastcgi_index index.php;
-    include     fastcgi.conf;
-    #fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    #include    fastcgi_params;
-}
-</code></pre><p>我测了下，这样其实就搞定了，typecho重定向就好了，不要向网上说的3个if语句。</p>
-<p>只要访问<code>/index.php/arg1/arg2</code>就能访问到内容了。</p>
-<p>这里有几个问题：</p>
-<ul>
-<li>fastcgi_split_path_info干嘛用的？</li>
-</ul>
-<p>去查找官网文档吧， <a href="http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_split_path_info" target="_blank" rel="external">http://nginx.org/en/docs/http/ngx_http_fastcgi_module.html#fastcgi_split_path_info</a></p>
-<p>Defines a regular expression that captures a value for the $fastcgi_path_info variable. The regular expression should have two captures: the first becomes a value of the $fastcgi_script_name variable, the second becomes a value of the $fastcgi_path_info variable.</p>
-<p>也就是说，<code>fastcgi_split_path_info</code> 的作用就是把参数分割成 <code>$fastcgi_script_name</code> 和 <code>$fastcgi_path_info</code>，分割方式是后面的正则表达式。</p>
-<p>我用echo模块输出了这里的参数，得到下面的结果，上面的是不加<code>fastcgi_split_path_info</code>，下面是加了<code>fastcgi_split_path_info</code>的结果：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-22-nginx-rewrite-conf.png" alt="fastcgi_split_path_info分割uri"></p>
-<ul>
-<li>问题二，fastcgi.conf 和 fastcgi_params 是什么？</li>
-</ul>
-<p>这里用到的这两个配置文件是fastcgi的配置文件，我查看了下，发现<code>fastcgi.conf</code>和<code>fastcgi_params</code>的差别就在<code>fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;</code>这句话，也就是说，随意选一个。</p>
-<pre><code>fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;
-fastcgi_param  QUERY_STRING       $query_string;
-fastcgi_param  REQUEST_METHOD     $request_method;
-fastcgi_param  CONTENT_TYPE       $content_type;
-fastcgi_param  CONTENT_LENGTH     $content_length;
-
-fastcgi_param  SCRIPT_NAME        $fastcgi_script_name;
-fastcgi_param  REQUEST_URI        $request_uri;
-fastcgi_param  DOCUMENT_URI       $document_uri;
-fastcgi_param  DOCUMENT_ROOT      $document_root;
-fastcgi_param  SERVER_PROTOCOL    $server_protocol;
-fastcgi_param  HTTPS              $https if_not_empty;
-
-fastcgi_param  GATEWAY_INTERFACE  CGI/1.1;
-fastcgi_param  SERVER_SOFTWARE    nginx/$nginx_version;
-
-fastcgi_param  REMOTE_ADDR        $remote_addr;
-fastcgi_param  REMOTE_PORT        $remote_port;
-fastcgi_param  SERVER_ADDR        $server_addr;
-fastcgi_param  SERVER_PORT        $server_port;
-fastcgi_param  SERVER_NAME        $server_name;
-
-fastcgi_param  REDIRECT_STATUS    200;
-</code></pre><p><code>fastcgi_param  SCRIPT_FILENAME    $document_root$fastcgi_script_name;</code>也就用到了之前的那个函数<code>fastcgi_split_path_info</code>，如果不做分割，就会回调: No input file specified，没有指定文件，就是因为<code>$fastcgi_script_name</code>的值找不到对应的文件。</p>
-<p><br><hr></p>
-<h2 id="2-类CodeIgniter的-arg1-arg2"><a href="#2-类CodeIgniter的-arg1-arg2" class="headerlink" title="2.类CodeIgniter的 /arg1/arg2"></a>2.类CodeIgniter的 <code>/arg1/arg2</code></h2><p>其实，我在conf里面添加了echo输出，发现<code>/index.php/arg1/arg2</code>就只会访问.php那个location。</p>
-<p>然后，<code>/arg1/arg2</code>就用到了网上广为流传的那个typecho配置了：</p>
-<pre><code>location / {
-    index index.html index.php;
-    if (-f $request_filename/index.html){
-        rewrite (.*) $1/index.html break;
-    }
-    if (-f $request_filename/index.php){
-        rewrite (.*) $1/index.php;
-    }
-    if (!-f $request_filename){
-        rewrite (.*) /index.php;
-    }
-}
-</code></pre><p>看看就明白，目录<code>/arg1/arg2</code>，不会有有index.php可以匹配.php后缀，所以只能匹配到 <code>/</code> 里面。</p>
-<p>同样地，这里我用echo模块把参数输出了下：</p>
-<p>测试配置文件如下：</p>
-<pre><code>location / {
-        index index.html index.php;
-        if (-f $request_filename/index.html){
-            rewrite (.*) $1/index.html break;
-        }
-        if (-f $request_filename/index.php){
-               echo &quot;request_filename -f index.php = $request_filename&quot;;
-            echo &quot;request_filename -f index.php= $request_filename&quot;;
-            echo &quot;fastcgi_path_info -f index.php = $fastcgi_path_info&quot;;
-            #rewrite (.*) $1/index.php;
-        }
-        if (!-f $request_filename){
-            echo &quot;request_filename !-f index.php = $request_filename&quot;;
-            echo &quot;fastcgi_script_name !-f index.php = $fastcgi_script_name&quot;;
-            echo &quot;fastcgi_path_info !-f index.php = $fastcgi_path_info&quot;;
-            #rewrite (.*) /index.php;
-        }
-    }
-</code></pre><p>测试的结果如下：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-05-22-nginx-rewrite-conf-2.png" alt="location 重写"></p>
-<p>也就是访问了第3个if语句，发现没有/ajax这个文件，就重定向到<code>/index.php</code>去了。</p>
-<p>这里重定向到<code>/index.php</code>后，解析.php的fastcgi的规则用的又是上面用到的，原理也一样，把uri分割，然后匹配。</p>
-<p>配置代码如下：</p>
-<pre><code>location ~ [^/]\.php(/|$)
-{
-    #try_files $uri =404; 住址扫描目录用的，这里我们都是虚假目录，删除。
-    fastcgi_split_path_info ^(.+\.php)(/.+)$;
-    fastcgi_pass  unix:/tmp/php-cgi.sock;
-    fastcgi_index index.php;
-    include     fastcgi.conf;
-    #fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-    #include    fastcgi_params;
-}
-</code></pre><p><br><hr></p>
-<h1 id="0x04-About-nginx"><a href="#0x04-About-nginx" class="headerlink" title="0x04.About nginx"></a>0x04.About nginx</h1><p>嗯…今天就算是，重新证明了下，网上流传的那种，3个if语句的typecho语句，其实并没有什么卵用。</p>
-<p>最后进去的<code>/index.php/2015/05/22/</code>并不会去查询 <code>/</code> 的location匹配，而是.php的正则匹配。</p>
-<p>nginx的模块测试都比较麻烦，都要重新编译安装，关于echo模块调试起来比较方便。</p>
-<p><a href="http://wiki.nginx.org/HttpEchoModule" target="_blank" rel="external">http://wiki.nginx.org/HttpEchoModule</a></p>
-<p>下面是一些if判断用得到的nginx参数，可以通过echo输出测试查看：</p>
-<p>$args<br>$content_length<br>$content_type<br>$document_root<br>$document_uri<br>$host<br>$http_user_agent<br>$http_cookie<br>$limit_rate<br>$request_body_file<br>$request_method<br>$remote_addr<br>$remote_port<br>$remote_user<br>$request_filename<br>$request_uri<br>$query_string<br>$scheme<br>$server_protocol<br>$server_addr<br>$server_name<br>$server_port<br>$uri</p>
-<p>代码我保存了一份，可以点击链接下载：<a href="http://homeway.me/code/nginx-rewrite-conf.zip">http://homeway.me/code/nginx-rewrite-conf.zip</a></p>
-<p><br><hr><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-05-22-nginx-rewrite-conf"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-05-22-nginx-rewrite-conf" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/05/22/nginx-rewrite-conf/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/05/22/nginx-rewrite-conf/">http://homeway.me/2015/05/22/nginx-rewrite-conf/</a></h4><p><br></p>
-<p>-by小草</p>
-<p>2015-05-22 18:27:10</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx.png&quot; alt=&quot;nginx-reverse-proxy-conf&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
-    
-    
-      <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
     
   </entry>
   
