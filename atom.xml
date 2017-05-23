@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-05-23T16:00:01.000Z</updated>
+  <updated>2017-05-23T16:02:10.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -17,10 +17,10 @@
   
   <entry>
     <title>Machine Learning - Naive Bayesian theory</title>
-    <link href="http://homeway.me/2017/05/22/machine-learning-bayesian/"/>
-    <id>http://homeway.me/2017/05/22/machine-learning-bayesian/</id>
+    <link href="http://homeway.me/2017/05/22/machine-learning-naive-bayesian/"/>
+    <id>http://homeway.me/2017/05/22/machine-learning-naive-bayesian/</id>
     <published>2017-05-22T08:12:10.000Z</published>
-    <updated>2017-05-23T16:00:01.000Z</updated>
+    <updated>2017-05-23T16:02:10.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
