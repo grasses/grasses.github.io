@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homeway.me/resume/index.html</loc>
+    
+    <lastmod>2017-08-08T17:01:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</loc>
+    
+    <lastmod>2017-08-08T16:50:46.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homeway.me/2017/05/22/machine-learning-naive-bayesian/</loc>
     
     <lastmod>2017-05-23T16:02:10.000Z</lastmod>
@@ -54,13 +68,6 @@
     <loc>http://homeway.me/2017/03/02/apue-file-io/</loc>
     
     <lastmod>2017-04-26T00:23:53.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/resume/index.html</loc>
-    
-    <lastmod>2017-03-04T15:10:03.000Z</lastmod>
     
   </url>
   

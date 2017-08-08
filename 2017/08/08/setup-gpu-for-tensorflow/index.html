@@ -3,18 +3,19 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>MySQL索引之哈希索引 | 夏日小草</title>
+  <title>Deep Learning - Setup GPU for tensorflow | 夏日小草</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="article">
-<meta property="og:title" content="MySQL索引之哈希索引">
-<meta property="og:url" content="http://homeway.me/2015/09/13/mysql-hash-index/index.html">
+<meta property="og:title" content="Deep Learning - Setup GPU for tensorflow">
+<meta property="og:url" content="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png">
-<meta property="og:updated_time" content="2015-09-13T08:24:57.000Z">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png">
+<meta property="og:image" content="http://os20zg3p7.bkt.clouddn.com/note/wiznot/blog/image/2017-08-08-GPU-cuda.png">
+<meta property="og:image" content="http://os20zg3p7.bkt.clouddn.com/note/wiznote/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png">
+<meta property="og:updated_time" content="2017-08-08T16:50:46.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="MySQL索引之哈希索引">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png">
+<meta name="twitter:title" content="Deep Learning - Setup GPU for tensorflow">
+<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -252,14 +253,14 @@ ga('send', 'pageview');
 <div id="local-search-result"></div>
 -->
       <div class="outer">
-        <section id="main"><article id="post-mysql-hash-index" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-setup-gpu-for-tensorflow" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/13/mysql-hash-index/" class="article-date">
-  <time datetime="2015-09-13T07:44:10.000Z" itemprop="datePublished">9月 13 2015</time>
+    <a href="/2017/08/08/setup-gpu-for-tensorflow/" class="article-date">
+  <time datetime="2017-08-07T16:48:10.000Z" itemprop="datePublished">8月 8 2017</time>
 </a>
     
   <div class="article-category">
-    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
   </div>
 
   </div>
@@ -270,7 +271,7 @@ ga('send', 'pageview');
         
   
     <h1 class="article-title" itemprop="name">
-      MySQL索引之哈希索引
+      Deep Learning - Setup GPU for tensorflow
     </h1>
   
 
@@ -279,94 +280,139 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png" alt="Nvidia"></p>
 <a id="more"></a>
-<p><br></p>
-<h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。</p>
-<p>从MySQL逻辑架构来看，MySQL有三层架构，第一层连接，第二层查询解析、分析、优化、视图、缓存，第三层，存储引擎。</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png" alt="MySQL逻辑架构"></p>
-<p>索引通过分开查询片，节省了扫描查找时间，大大提升查询效率。</p>
-<p>大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构。</p>
-<p>索引主要在存储引擎层上，不同的引擎也就有不同的B-Tree算法。</p>
-<p><br><hr></p>
-<h1 id="0x01-Hash-Index"><a href="#0x01-Hash-Index" class="headerlink" title="0x01.Hash Index"></a>0x01.Hash Index</h1><p>哈希索引只有Memory, NDB两种引擎支持，Memory引擎默认支持哈希索引，如果多个hash值相同，出现哈希碰撞，那么索引以链表方式存储。</p>
-<p>但是，Memory引擎表只对能够适合机器的内存切实有限的数据集。</p>
-<p>要使InnoDB或MyISAM支持哈希索引，可以通过伪哈希索引来实现，叫自适应哈希索引。</p>
-<p>主要通过增加一个字段，存储hash值，将hash值建立索引，在插入和更新的时候，建立触发器，自动添加计算后的hash到表里。</p>
-<h2 id="直接索引"><a href="#直接索引" class="headerlink" title="直接索引"></a>直接索引</h2><p>假如有一个非常非常大的表，如下：</p>
-<pre><code>CREATE TABLE IF NOT EXISTS `User` (
-  `id` int(10) NOT NULL COMMENT &#39;自增id&#39;,
-  `name` varchar(128) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户名&#39;,
-  `email` varchar(128) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户邮箱&#39;,
-  `pass` varchar(64) NOT NULL DEFAULT &#39;&#39; COMMENT &#39;用户密码&#39;,
-  `last` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT &#39;最后登录时间&#39;,
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-</code></pre><p>这个时候，比如说，用户登陆，我需要通过email检索出用户，通过explain得到如下：</p>
-<blockquote>
-<p>mysql&gt; explain SELECT <code>id</code> FROM <code>User</code> WHERE email = ‘ooxx@gmail.com’ LIMIT 1;</p>
-</blockquote>
-<pre><code>+----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
-| id | select_type | table | type | possible_keys | key  | key_len | ref  | rows   | Extra       |
-+----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
-|  1 | SIMPLE      | User  | ALL  | NULL          | NULL | NULL    | NULL | 384742 | Using where |
-+----+-------------+-------+------+---------------+------+---------+------+--------+-------------+
-</code></pre><p>发现 <code>rows = 384742</code> 也就是要在384742里面进行比对email这个字段的字符串。</p>
-<p>这条记录运行的时间是：Query took 0.1744 seconds，数据库的大小是40万。</p>
-<p>从上面可以说明，如果直接在email上面建立索引，除了索引区间匹配，还要进行字符串匹配比对，email短还好，如果长的话这个查询代价就比较大。</p>
-<p>如果这个时候，在email上建立哈希索引，查询以int查询，性能就比字符串比对查询快多了。</p>
-<h2 id="Hash-算法"><a href="#Hash-算法" class="headerlink" title="Hash 算法"></a>Hash 算法</h2><p>建立哈希索引，先选定哈希算法，这里选用CRC32。</p>
-<p>《高性能MySQL》说到的方法CRC32算法，建立SHA或MD5算法是划算的，本身位数都有可能比email段长了。</p>
-<h2 id="INSERT-UPDATE-SELECT-操作"><a href="#INSERT-UPDATE-SELECT-操作" class="headerlink" title="INSERT UPDATE SELECT 操作"></a>INSERT UPDATE SELECT 操作</h2><p>在表中添加hash值的字段：</p>
-<blockquote>
-<p>mysql&gt; ALTER TABLE <code>User</code> ADD COLUMN email_hash int unsigned NOT NULL DEFAULT 0;</p>
-</blockquote>
-<p>接下来就是在UPDATE和INSERT的时候，自动更新 <code>email_hash</code> 字段，通过MySQL触发器实现：</p>
-<pre><code>DELIMITER |
-CREATE TRIGGER user_hash_insert BEFORE INSERT ON `User` FOR EACH ROW BEGIN
-SET NEW.email_hash=crc32(NEW.email);
-END;
-|
-CREATE TRIGGER user_hash_update BEFORE UPDATE ON `User` FOR EACH ROW BEGIN
-SET NEW.email_hash=crc32(NEW.email);
-END;
-|
-DELIMITER ;
-</code></pre><p>这样的话，我们的SELECT请求就会变成这样：</p>
-<blockquote>
-<p>mysql&gt; SELECT <code>email</code>, <code>email_hash</code> FROM <code>User</code> WHERE email_hash = CRC32(“F2dgTSWRBXSZ1d3O@gmail.com”) AND <code>email</code> = “F2dgTSWRBXSZ1d3O@gmail.com”;</p>
-</blockquote>
-<pre><code>+----------------------------+------------+
-| email                      | email_hash |
-+----------------------------+------------+
-| F2dgTSWRBXSZ1d3O@gmail.com | 2765311122 |
-+----------------------------+------------+
-</code></pre><p>在没建立hash索引时候，请求时间是 0.2374 seconds，建立完索引后，请求时间直接变成 0.0003 seconds。</p>
-<p><code>AND email = &quot;F2dgTSWRBXSZ1d3O@gmail.com&quot;</code> 是为了防止哈希碰撞导致数据不准确。</p>
-<p><br><hr></p>
-<h1 id="0x02-Hash-Index-缺点"><a href="#0x02-Hash-Index-缺点" class="headerlink" title="0x02.Hash Index 缺点"></a>0x02.Hash Index 缺点</h1><p>哈希索引也有几个缺点：</p>
-<ul>
-<li>索引存放的是hash值,所以仅支持 &lt; = &gt; 以及 IN 操作</li>
-<li>hash索引无法通过操作索引来排序，因为存放的时候经过hash计算，但是计算的hash值和存放的不一定相等，所以无法排序</li>
-<li>不能避免全表扫描，只是由于在memory表里支持非唯一值hash索引，就是不同的索引键，可能存在相同的hash值</li>
-<li>如果哈希碰撞很多的话，性能也会变得很差</li>
-<li>哈希索引无法被用来避免数据的排序操作</li>
+<p>The following explains how to setup tensorflow GPU environment on 64-bit Ubuntu 17.04 Linux.<br>Following the steps, I will show how to install Nvidia drivers, Nvidia toolkit, CudNN and tensorflow.</p>
+<h1 id="1-Nvidia-drivers"><a href="#1-Nvidia-drivers" class="headerlink" title="1. Nvidia drivers"></a>1. Nvidia drivers</h1><p>I just installed Nvidia drivers for graphic card GeForce GTX 1070.</p>
+<h3 id="1-1-Download-drivers"><a href="#1-1-Download-drivers" class="headerlink" title="1.1. Download drivers"></a>1.1. Download drivers</h3><p>First of all, you need to choose specific version and download Nvidia drivers from <a href="http://www.nvidia.com/Download/index.aspx?lang=en" target="_blank" rel="external">Nvidia home page</a>.<br>Here I choose version of 384.59:</p>
+<pre><code>NVIDIA-Linux-x86_64-384.59.run
+</code></pre><h3 id="1-2-Install-dependency"><a href="#1-2-Install-dependency" class="headerlink" title="1.2. Install dependency"></a>1.2. Install dependency</h3><p>Second, you need to install dependency environment for Nvidia drivers:</p>
+<pre><code>sudo apt-get update
+sudo apt-get install dkms build-essential linux-headers-generic
+</code></pre><p>Add <code>nouveau</code> into black list:</p>
+<pre><code>sudo mkdir /etc/modprobe.d/
+sudo touch /etc/modprobe.d/blacklist-nouveau.conf
+cat &gt;&gt; /etc/modprobe.d/blacklist-nouveau.conf &lt;&lt; EOF
+blacklist nouveau
+blacklist lbm-nouveau
+options nouveau modeset=0
+alias nouveau off
+alias lbm-nouveau off
+EOF
+</code></pre><p>Run it to forbiddent <code>nouveau</code>:</p>
+<pre><code>echo options nouveau modeset=0 | sudo tee -a /etc/modprobe.d/nouveau-kms.conf
+sudo update-initramfs -u
+</code></pre><p>Then restart your ubuntu:</p>
+<pre><code>sudo reboot
+</code></pre><h3 id="1-3-Install-Nvidia-drivers"><a href="#1-3-Install-Nvidia-drivers" class="headerlink" title="1.3. Install Nvidia drivers"></a>1.3. Install Nvidia drivers</h3><p>Before installing, you need to stop ubuntu gui:</p>
+<pre><code>sudo service lightdm stop
+</code></pre><p>OK, install it and reboot your machine:</p>
+<pre><code>sudo chmod u+xNVIDIA-Linux-x86_64-384.59.run
+sudo ./NVIDIA-Linux-x86_64-384.59.run
+sudo reboot
+</code></pre><p>After restart ubuntu, we can test it:</p>
+<pre><code>➜  $ nvidia-smi
+Tue Aug  8 22:40:47 2017
++-----------------------------------------------------------------------------+
+| NVIDIA-SMI 375.66                 Driver Version: 375.66                    |
+|-------------------------------+----------------------+----------------------+
+| GPU  Name        Persistence-M| Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp  Perf  Pwr:Usage/Cap|         Memory-Usage | GPU-Util  Compute M. |
+|===============================+======================+======================|
+|   0  GeForce GTX 1070    Off  | 0000:01:00.0     Off |                  N/A |
+|  0%   41C    P0    35W / 180W |      0MiB /  8112MiB |      3%      Default |
++-------------------------------+----------------------+----------------------+
+
++-----------------------------------------------------------------------------+
+| Processes:                                                       GPU Memory |
+|  GPU       PID  Type  Process name                               Usage      |
+|=============================================================================|
+|  No running processes found                                                 |
++-----------------------------------------------------------------------------+
+</code></pre><p>OK, this result suggests our Nvidia drivers installed successfully.</p>
+<hr>
+<h1 id="2-Nvidia-toolkit-amp-CudNN"><a href="#2-Nvidia-toolkit-amp-CudNN" class="headerlink" title="2. Nvidia toolkit &amp; CudNN"></a>2. Nvidia toolkit &amp; CudNN</h1><p>Nvidia toolkit is a base sdk for cuda, and you can download it from: <a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="external">https://developer.nvidia.com/cuda-downloads</a><br>For the more, we need CudNN for tensorflow deep learning, and download it from: <a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="external">https://developer.nvidia.com/rdp/cudnn-download</a></p>
+<h3 id="2-1-Download-cuda"><a href="#2-1-Download-cuda" class="headerlink" title="2.1 Download cuda"></a>2.1 Download cuda</h3><p>Here I choose local deb package <code>cuda-repo-ubuntu1604-8-0-local-ga2_8.0.61-1_amd64.deb</code>:<br><img src="http://os20zg3p7.bkt.clouddn.com/note/wiznot/blog/image/2017-08-08-GPU-cuda.png" alt="cuda installation version"></p>
+<h3 id="2-2-Install-cuda"><a href="#2-2-Install-cuda" class="headerlink" title="2.2 Install cuda"></a>2.2 Install cuda</h3><p>Following cuda installation command lines:</p>
+<pre><code>sudo dpkg -i cuda-repo-ubuntu1604-8-0-local-ga2_8.0.61-1_amd64.deb
+sudo apt-get update
+sudo apt-get install cuda
+</code></pre><p>Update cuda environment variables by appending conf after <code>~/.profile</code>:</p>
+<pre><code>CUDA_HOME=/usr/local/cuda-8.0
+cat &gt;&gt; ~/.profile &lt;&lt; EOF
+export CUDA_HOME=${CUDA_HOME}
+export LD_LIBRARY_PATH=${CUDA_HOME}/lib64 
+PATH=${CUDA_HOME}/bin:${PATH} 
+EOF
+source ~/.profile
+</code></pre><h3 id="2-3-Testing-cuda"><a href="#2-3-Testing-cuda" class="headerlink" title="2.3 Testing cuda"></a>2.3 Testing cuda</h3><p>Cuda package include a lot testing sample, just make a test for installation, this is my terminal returns:</p>
+<pre><code>➜ $ cd $CUDA_HOME/samples/1_Utilities/deviceQuery
+➜ $ make 
+➜ $ ./deviceQuery
+./deviceQuery Starting...
+
+ CUDA Device Query (Runtime API) version (CUDART static linking)
+
+Detected 1 CUDA Capable device(s)
+
+Device 0: &quot;GeForce GTX 1070&quot;
+......
+</code></pre><p>OK, this result suggests our Nvidia toolkit installed successfully.</p>
+<h3 id="2-4-Download-CudNN"><a href="#2-4-Download-CudNN" class="headerlink" title="2.4 Download CudNN"></a>2.4 Download CudNN</h3><p>At first, I choose to download lastest pckage of CudNN: <code>cuDNN v7.0 (August 3, 2017), for CUDA 9.0 RC</code>,<br>but I find it doesn’t work at all, my tensorflow can’t find my gpu,<br>then I try <code>cuDNN v5.1 (Jan 20, 2017), for CUDA 8.0</code> instead.</p>
+<p><img src="http://os20zg3p7.bkt.clouddn.com/note/wiznote/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png" alt="CudNN version"></p>
+<h3 id="2-5-Install-CudNN"><a href="#2-5-Install-CudNN" class="headerlink" title="2.5 Install CudNN"></a>2.5 Install CudNN</h3><p>To install CudNN, download cudNN v5.0 for Cuda 8.0 from Nvidia website and extract into <code>/usr/local/cuda</code> via:</p>
+<pre><code>tar xzvf cudnn-8.0-linux-x64-v5.1.tgz
+sudo cp cuda/include/cudnn.h /usr/local/cuda/include
+sudo cp cuda/lib64/libcudnn* /usr/local/cuda/lib64
+sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+</code></pre><hr>
+<h1 id="3-Tensorflow"><a href="#3-Tensorflow" class="headerlink" title="3. Tensorflow"></a>3. Tensorflow</h1><p>After checking Nvidia drivers, Nvidia toolkit, CudNN installed successfully,<br>we now start to install tensorflow-gpu, guide from: <a href="https://www.tensorflow.org/install/install_linux" target="_blank" rel="external">https://www.tensorflow.org/install/install_linux</a></p>
+<h3 id="3-1-Install-dependency"><a href="#3-1-Install-dependency" class="headerlink" title="3.1. Install dependency"></a>3.1. Install dependency</h3><p>Before installation, make sure everything is ok for ubuntu python dependency:</p>
+<pre><code>sudo apt-get install openjdk-8-jdk git python-dev python3-dev python-numpy\
+ python3-numpy python-six python3-six build-essential python-pip python3-pip\
+ python-virtualenv swig python-wheel python3-wheel libcurl3-dev libcupti-dev
+</code></pre><h3 id="3-2-Install-tensorflow"><a href="#3-2-Install-tensorflow" class="headerlink" title="3.2. Install tensorflow"></a>3.2. Install tensorflow</h3><pre><code>sudo pip install tensorflow tensorflow-gpu
+</code></pre><h3 id="3-3-Testing-tensorflow"><a href="#3-3-Testing-tensorflow" class="headerlink" title="3.3 Testing tensorflow"></a>3.3 Testing tensorflow</h3><p>Let’s write a sample code for tensorflow with gpu:</p>
+<pre><code># Creates a graph.
+with tf.device(&#39;/gpu:0&#39;):
+    a = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[2, 3], name=&#39;a&#39;)
+    b = tf.constant([1.0, 2.0, 3.0, 4.0, 5.0, 6.0], shape=[3, 2], name=&#39;b&#39;)
+c = tf.matmul(a, b)
+# Creates a session with log_device_placement set to True.
+sess = tf.Session(config=tf.ConfigProto(allow_soft_placement=True, log_device_placement=True))
+sess.run(tf.global_variables_initializer())
+# Runs the op.
+print(sess.run(c))
+</code></pre><p>You should see the following output:</p>
+<pre><code>Device mapping:
+/job:localhost/replica:0/task:0/gpu:0 -&gt; device: 0, name: Tesla K40c, pci bus
+id: 0000:05:00.0
+b: /job:localhost/replica:0/task:0/gpu:0
+a: /job:localhost/replica:0/task:0/gpu:0
+MatMul: /job:localhost/replica:0/task:0/gpu:0
+[[ 22.  28.]
+ [ 49.  64.]]
+</code></pre><p>Example from: <a href="https://www.tensorflow.org/tutorials/using_gpu" target="_blank" rel="external">https://www.tensorflow.org/tutorials/using_gpu</a></p>
+<hr>
+<h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
+<li><a href="https://gist.github.com/dangbiao1991/7825db1d17df9231f4101f034ecd5a2b" target="_blank" rel="external">Ubuntu 16.04 安装英伟达（Nvidia）显卡驱动</a></li>
+<li><a href="https://alliseesolutions.wordpress.com/2016/09/08/install-gpu-tensorflow-from-sources-w-ubuntu-16-04-and-cuda-8-0/" target="_blank" rel="external">Install GPU TensorFlow From Sources w/ Ubuntu 16.04 and Cuda 8.0</a></li>
+<li><a href="https://www.tensorflow.org/install/install_linux" target="_blank" rel="external">https://www.tensorflow.org/install/install_linux</a></li>
+<li><a href="https://www.tensorflow.org/tutorials/using_gpu" target="_blank" rel="external">https://www.tensorflow.org/tutorials/using_gpu</a></li>
 </ul>
-<p><br><hr></p>
-<h2 id="参考："><a href="#参考：" class="headerlink" title="参考："></a>参考：</h2><p>[1] Baron Scbwartz等 著，王小东等 译；<a href="http://www.amazon.cn/%E9%AB%98%E6%80%A7%E8%83%BDMySQL-%E6%96%BD%E7%93%A6%E8%8C%A8/dp/B00C1W58DE" target="_blank" rel="external">高性能MySQL（High Performance MySQL）</a>；电子工业出版社，2010</p>
-<p>[2] <a href="http://www.searchdatabase.com.cn/showcontent_39678.htm" target="_blank" rel="external">《MySQL的B-Tree索引和Hash索引的区别》</a></p>
-<p>[3] <a href="http://itindex.net/detail/51924-mysql-%E7%B4%A2%E5%BC%95-%E4%BC%98%E5%8C%96" target="_blank" rel="external">《mysql 索引优化 btree hash rtree》</a></p>
-<p><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-13-mysql-hash-index"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-09-13-mysql-hash-index" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/09/13/mysql-hash-index"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/09/13/mysql-hash-index">http://homeway.me/2015/09/13/mysql-hash-index</a></h4><p>-by小草</p>
-<p>2015-09-13 15:49:10</p>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-08-08-setup-gpu-for-tensorflow"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-08-08-setup-gpu-for-tensorflow" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/">http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</a></h4><blockquote>
+<p>by grasses 2017.08.08</p>
+</blockquote>
 
       
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/09/13/mysql-hash-index/" data-id="cj63u2iuu0020mocs2nxd193r" data-title="MySQL索引之哈希索引" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/" data-id="cj63u2ixd004kmocsqnkxp18v" data-title="Deep Learning - Setup GPU for tensorflow" class="article-share-link">Share</a>
       <!--  -->
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
 
     </footer>
 
@@ -375,19 +421,10 @@ DELIMITER ;
     
 <nav id="article-nav">
   
-    <a href="/2015/10/21/nginx-lua-traffic-limit-algorithm/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          Nginx流量拦截算法
-        
-      </div>
-    </a>
   
-  
-    <a href="/2015/09/12/mysql-log/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2017/05/22/machine-learning-naive-bayesian/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">MySQL日志分析</div>
+      <div class="article-nav-title">Machine Learning - Naive Bayesian theory</div>
     </a>
   
 </nav>
@@ -513,7 +550,7 @@ DELIMITER ;
 <script>
   var disqus_shortname = 'homeway';
   
-  var disqus_url = 'http://homeway.me/2015/09/13/mysql-hash-index/';
+  var disqus_url = 'http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/';
   
   (function(){
     var dsq = document.createElement('script');
