@@ -3,17 +3,18 @@
 <head>
   <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
   
-  <title>Archives: 2015/9 | 夏日小草</title>
+  <title>Deep Learning - Camera model identification base on CNN | 夏日小草</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="As we do,as you know.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="夏日小草">
-<meta property="og:url" content="http://homeway.me/archives/2015/09/index.html">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning - Camera model identification base on CNN">
+<meta property="og:url" content="http://homeway.me/2017/10/26/camera-model-identification-base-on-cnn/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:description" content="As we do,as you know.">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/cs231-cnn.jpg">
+<meta property="og:image" content="http://cs231n.github.io/assets/cnn/convnet.jpeg">
+<meta property="og:updated_time" content="2017-10-26T11:59:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="夏日小草">
-<meta name="twitter:description" content="As we do,as you know.">
+<meta name="twitter:title" content="Deep Learning - Camera model identification base on CNN">
+<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/cs231-cnn.jpg">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -237,58 +238,108 @@ ga('send', 'pageview');
 <div id="local-search-result"></div>
 -->
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2015" class="archive-year">2015</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/13/mysql-hash-index/" class="archive-article-date">
-  <time datetime="2015-09-13T07:44:10.000Z" itemprop="datePublished">9月 13</time>
+        <section id="main"><article id="post-camera-model-identification-base-on-cnn" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/26/camera-model-identification-base-on-cnn/" class="article-date">
+  <time datetime="2017-10-25T16:48:10.000Z" itemprop="datePublished">10月 26 2017</time>
 </a>
-      
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/13/mysql-hash-index/">MySQL索引之哈希索引</a>
+    <h1 class="article-title" itemprop="name">
+      Deep Learning - Camera model identification base on CNN
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2015/09/12/mysql-log/" class="archive-article-date">
-  <time datetime="2015-09-11T17:44:10.000Z" itemprop="datePublished">9月 12</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2015/09/12/mysql-log/">MySQL日志分析</a>
-    </h1>
-  
+        <p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/cs231-cnn.jpg" alt="CNN"></p>
+<a id="more"></a>
+<h1 id="Intorduction"><a href="#Intorduction" class="headerlink" title="Intorduction"></a>Intorduction</h1><p>Digital image forensics aims at addressing the two following main problem: image origin identification and image content integrity; while the former aims at identifying the source camera model or device, the latter aims at detection any sort of digital image mainpulation <a href="#Reference">[1]</a>. To solve these problems, research have developed a veriety of image forensic algorithms, all of them try to work by searching for specific tracks on images to gain features(imaging model, noise characteristics, demosaicing strategies, lens distortion, gain histograms, dust traces, natural image modeling, etc.) <a href="#Reference">[2]</a>. Traditionally, we need to obtain thoses features manually, with the improvement of performance and accuracy of deep leaning, we can extract image features automatically <a href="#Reference">[3]</a>. </p>
+<p>In this article, I will post an model for camera identification base on convolutional neural network(CNN). This article will organized as follows:</p>
+<ul>
+<li>Related work will explain how CNN working in briefly, including normalize, convolutional layer, pooling layer, dropout layer, activation layer;</li>
+<li>Proposed method section will introduce my CNN model, and explain how to enhance the robustness of the algorithm;</li>
+<li>Experiment section, I will show several sets of experimental performance.</li>
+</ul>
+<hr>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Deep learning frameworks provide a way to lean feature representations and classification automatically, we can guide framework to lean feature via back propagation algorithm.</p>
+<h3 id="1-Architecture-Overview"><a href="#1-Architecture-Overview" class="headerlink" title="1) Architecture Overview"></a>1) Architecture Overview</h3><p><img src="http://cs231n.github.io/assets/cnn/convnet.jpeg" alt="Fig.1. Framework of CNN with a lot of convolutional layers and pooling layers"></p>
+<p>A convolutional neural network always has one input layer, one output layer for classification, and a series of hidden layers which can be as convolutional layer, activation layer, pooling layer, full connection layer, softmax layer, etc. Convolutional layer has a strong learning ability for image features, they can capture local dependencies among neighbor elements. While pooling layer is us</p>
+<hr>
+<h1 id="Proposed-Method"><a href="#Proposed-Method" class="headerlink" title="Proposed Method"></a>Proposed Method</h1><hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] <a href="http://www.sciencedirect.com/science/article/pii/S0923596516301953" target="_blank" rel="external">Tong Qiao, Florent Retraint, Rémi Cogranne, Thanh HaiThaib, “Individual camera device identification from JPEG images,” Signal Processing: Image Communication, vol 52, pp. 74-86, March 2017.</a></p>
+<p>[2] <a href="http://ieeexplore.ieee.org/document/7786852/" target="_blank" rel="external">L.Bondi, L.Baroffio, D.Gu ̈era, P.Bestagini, E.J.Delp, and S. Tubaro, “First steps toward camera model identification with convolutional neural networks,” IEEE Signal Processing Letters, vol. 24, no. 3, pp. 259–263, March 2017.</a></p>
+<p>[3] <a href="http://ieeexplore.ieee.org/document/7823908/" target="_blank" rel="external">Amel Tuama, Frédéric Comby, Marc Chaumont, “Camera Model Identification With The Use of Deep Convolutional Neural Networks,” IEEE International Workshop on Information Forensics and Security (WIFS), Dec. 2016.</a></p>
+<p>[4] <a href="http://ieeexplore.ieee.org/abstract/document/7113799/" target="_blank" rel="external">Jiansheng Chen, Xiangui Kang, Ye Liu, and Z. Jane Wang, “Median Filtering Forensics Based on Convolutional Neural Networks,” IEEE Signal Processing Society, vol. 22, issue: 11, pp. 1849-1853, Nov. 2015</a></p>
+<p>[] <a href="http://cs231n.github.io/convolutional-networks/" target="_blank" rel="external">Stanford cs231 course: Convolutional Neural Networks (CNNs / ConvNets)</a></p>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-10-26-camera-model-identifaction-base-on-cnn"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-10-26-camera-model-identifaction-base-on-cnn" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/">http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/</a></h4><blockquote>
+<p>by grasses 2017.10.26</p>
+</blockquote>
 
-    </header>
+      
+    </div>
+    
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2017/10/26/camera-model-identification-base-on-cnn/" data-id="cj9apd67m000s3ocs4ksrzobq" data-title="Deep Learning - Camera model identification base on CNN" class="article-share-link">分享到</a>
+      <!--  -->
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+
+    </footer>
+
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2017/08/08/setup-gpu-for-tensorflow/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Deep Learning - Setup GPU for tensorflow</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+<!--
+
+  <section id="comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <section id="comments">
+    <div id="uyan_frame"></div>
+  </section>
+
+-->
+<!--评论模块-->
+
+  <section id="comments">
+    
+      <div id="disqus_thread"></div>
+     
+    
+      <div id="uyan_frame"></div>
+    
+  </section>
 </section>
         
           <aside id="sidebar">
@@ -423,7 +474,7 @@ if (remote_ip_info.city) {
 
 <!--评论模块-->
 <script>
-var permalink = 'undefined';
+var permalink = 'http://homeway.me/2017/10/26/camera-model-identification-base-on-cnn/';
 
 jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",function(){
     var province = remote_ip_info["province"];
@@ -438,8 +489,8 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
     } else {
         // 国外用户用disqus评论系统
         var disqus_shortname = 'homeway';
-        var disqus_url = 'undefined';
-        scriptHtml.src = '//' + disqus_shortname + '.disqus.com/count.js';
+        var disqus_url = 'http://homeway.me/2017/10/26/camera-model-identification-base-on-cnn/';
+        scriptHtml.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     }
      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(scriptHtml);
 });

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2017-08-13T09:18:34.000Z</updated>
+  <updated>2017-10-26T11:59:04.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -14,6 +14,54 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Deep Learning - Camera model identification base on CNN</title>
+    <link href="http://homeway.me/2017/10/26/camera-model-identification-base-on-cnn/"/>
+    <id>http://homeway.me/2017/10/26/camera-model-identification-base-on-cnn/</id>
+    <published>2017-10-25T16:48:10.000Z</published>
+    <updated>2017-10-26T11:59:04.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/cs231-cnn.jpg" alt="CNN"></p>
+<a id="more"></a>
+<h1 id="Intorduction"><a href="#Intorduction" class="headerlink" title="Intorduction"></a>Intorduction</h1><p>Digital image forensics aims at addressing the two following main problem: image origin identification and image content integrity; while the former aims at identifying the source camera model or device, the latter aims at detection any sort of digital image mainpulation <a href="#Reference">[1]</a>. To solve these problems, research have developed a veriety of image forensic algorithms, all of them try to work by searching for specific tracks on images to gain features(imaging model, noise characteristics, demosaicing strategies, lens distortion, gain histograms, dust traces, natural image modeling, etc.) <a href="#Reference">[2]</a>. Traditionally, we need to obtain thoses features manually, with the improvement of performance and accuracy of deep leaning, we can extract image features automatically <a href="#Reference">[3]</a>. </p>
+<p>In this article, I will post an model for camera identification base on convolutional neural network(CNN). This article will organized as follows:</p>
+<ul>
+<li>Related work will explain how CNN working in briefly, including normalize, convolutional layer, pooling layer, dropout layer, activation layer;</li>
+<li>Proposed method section will introduce my CNN model, and explain how to enhance the robustness of the algorithm;</li>
+<li>Experiment section, I will show several sets of experimental performance.</li>
+</ul>
+<hr>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Deep learning frameworks provide a way to lean feature representations and classification automatically, we can guide framework to lean feature via back propagation algorithm.</p>
+<h3 id="1-Architecture-Overview"><a href="#1-Architecture-Overview" class="headerlink" title="1) Architecture Overview"></a>1) Architecture Overview</h3><p><img src="http://cs231n.github.io/assets/cnn/convnet.jpeg" alt="Fig.1. Framework of CNN with a lot of convolutional layers and pooling layers"></p>
+<p>A convolutional neural network always has one input layer, one output layer for classification, and a series of hidden layers which can be as convolutional layer, activation layer, pooling layer, full connection layer, softmax layer, etc. Convolutional layer has a strong learning ability for image features, they can capture local dependencies among neighbor elements. While pooling layer is us</p>
+<hr>
+<h1 id="Proposed-Method"><a href="#Proposed-Method" class="headerlink" title="Proposed Method"></a>Proposed Method</h1><hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] <a href="http://www.sciencedirect.com/science/article/pii/S0923596516301953" target="_blank" rel="external">Tong Qiao, Florent Retraint, Rémi Cogranne, Thanh HaiThaib, “Individual camera device identification from JPEG images,” Signal Processing: Image Communication, vol 52, pp. 74-86, March 2017.</a></p>
+<p>[2] <a href="http://ieeexplore.ieee.org/document/7786852/" target="_blank" rel="external">L.Bondi, L.Baroffio, D.Gu ̈era, P.Bestagini, E.J.Delp, and S. Tubaro, “First steps toward camera model identification with convolutional neural networks,” IEEE Signal Processing Letters, vol. 24, no. 3, pp. 259–263, March 2017.</a></p>
+<p>[3] <a href="http://ieeexplore.ieee.org/document/7823908/" target="_blank" rel="external">Amel Tuama, Frédéric Comby, Marc Chaumont, “Camera Model Identification With The Use of Deep Convolutional Neural Networks,” IEEE International Workshop on Information Forensics and Security (WIFS), Dec. 2016.</a></p>
+<p>[4] <a href="http://ieeexplore.ieee.org/abstract/document/7113799/" target="_blank" rel="external">Jiansheng Chen, Xiangui Kang, Ye Liu, and Z. Jane Wang, “Median Filtering Forensics Based on Convolutional Neural Networks,” IEEE Signal Processing Society, vol. 22, issue: 11, pp. 1849-1853, Nov. 2015</a></p>
+<p>[] <a href="http://cs231n.github.io/convolutional-networks/" target="_blank" rel="external">Stanford cs231 course: Convolutional Neural Networks (CNNs / ConvNets)</a></p>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-10-26-camera-model-identifaction-base-on-cnn"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-10-26-camera-model-identifaction-base-on-cnn" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/">http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/</a></h4><blockquote>
+<p>by grasses 2017.10.26</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/cs231-cnn.jpg&quot; alt=&quot;CNN&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://homeway.me/categories/Machine-Learning/"/>
+    
+    
+      <category term="Machine Learning" scheme="http://homeway.me/tags/Machine-Learning/"/>
+    
+  </entry>
   
   <entry>
     <title>Deep Learning - Setup GPU for tensorflow</title>
@@ -2839,95 +2887,6 @@ if __name__ == &#39;__main__&#39;:
     
     
       <category term="Python" scheme="http://homeway.me/tags/Python/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Raspberry与Arduino通过蓝牙通信</title>
-    <link href="http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/"/>
-    <id>http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</id>
-    <published>2015-06-13T14:34:20.000Z</published>
-    <updated>2015-08-04T13:59:34.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png" alt="Arduino"></p>
-<a id="more"></a>
-<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>之前写过一篇关于Arduino通过串口与Raspberry通信的文章，<a href="http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/">http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</a>，后来找到解决办法，通过主动唤醒被动。让一方主动发起通信，类似心跳包，另一方只保持等待读取一行，这样就不会导致双方同时存在一个计时器，定时发送数据。</p>
-<h1 id="0x02-Coding"><a href="#0x02-Coding" class="headerlink" title="0x02.Coding"></a>0x02.Coding</h1><p>这里蓝牙串口默认波特率9600，所以先要修改树莓派串口波特率：<a href="http://blog.miguelgrinberg.com/post/a-cheap-bluetooth-serial-port-for-your-raspberry-pi" target="_blank" rel="external">http://blog.miguelgrinberg.com/post/a-cheap-bluetooth-serial-port-for-your-raspberry-pi</a></p>
-<p>首先做配对，关于蓝牙与蓝牙之间配对指令集，需要查阅说明书。</p>
-<p>先是Arduino一方代码：</p>
-<pre><code>char line[512] = &quot;&quot;;   // 传入的串行数据
-int ret = 0;
-
-void setup() {
-  Serial.begin(9600);
-  Serial.println(&quot;&quot;);
-}
-void loop() {
-    //纯口可用时操作 
-    if (Serial.available() &gt; 0) {
-        // 读取传入的数据:  读到\n为止，或者最多512个字符
-        ret = Serial.readBytesUntil(&#39;\n&#39;, line, 512);
-        Serial.println(&quot;Arduino Receive =&gt; &quot; + line);
-    }
-    delay(300); 
-}
-</code></pre><p>然后是关于树莓派代码：</p>
-<pre><code>#!/usr/bin/env python
-# -*- coding: UTF-8 -*-
-
-import time,sys
-import serial
-port = &quot;/dev/ttyACM0&quot;
-
-class Communicate:
-    def __init__(self, device):
-        self.device = device
-        self.Seral = serial.Serial(device)
-
-    def send(self, msg):
-        self.Seral.write(msg)
-        print(&quot;Raspberry Send =&gt; &quot; + time.strftime(&quot;%Y-%m-%d %X\t&quot;) + msg)
-
-    def readLine(self):
-        line = self.Seral.readline()
-        #print(&quot;Raspberry Receive =&gt; &quot; + time.strftime(&quot;%Y-%m-%d %X\t&quot;) + line.strip())
-        return line
-
-    def main(self):
-        line = self.readLine()
-        while(line):
-            try:
-                line = self.readLine()
-            except EOFError:
-                print(&quot;No data&quot;)
-
-if __name__ == &#39;__main__&#39;:
-    try:
-        conn = Communicate(sys.argv[1] if len(sys.argv) &gt; 1 else port)
-        conn.main()
-    except KeyboardInterrupt:
-        print(&quot;ERROR&quot;)
-        exit()
-</code></pre><p>串口地址默认<code>/dev/ttyACM0</code>，可以移植到电脑上，相应地修改串口地址就好了。</p>
-<p>Python处理串口部分主要就是-&gt;接收-&gt;反馈。</p>
-<p><br><hr><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-06-13-raspberry-connect-to-arduion-by-bluetooth"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-06-13-raspberry-connect-to-arduion-by-bluetooth" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/">http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-06-13 22:46:20</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-arduino.png&quot; alt=&quot;Arduino&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Work" scheme="http://homeway.me/categories/Work/"/>
-    
-    
-      <category term="树莓派" scheme="http://homeway.me/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/"/>
-    
-      <category term="Arduino" scheme="http://homeway.me/tags/Arduino/"/>
     
   </entry>
   

@@ -4,6 +4,37 @@
   
     
     <entry>
+      <title><![CDATA[Deep Learning - Camera model identification base on CNN]]></title>
+      <url>http://homeway.me/2017/10/26/camera-model-identification-base-on-cnn/</url>
+      <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/cs231-cnn.jpg" alt="CNN"></p>
+<a id="more"></a>
+<h1 id="Intorduction"><a href="#Intorduction" class="headerlink" title="Intorduction"></a>Intorduction</h1><p>Digital image forensics aims at addressing the two following main problem: image origin identification and image content integrity; while the former aims at identifying the source camera model or device, the latter aims at detection any sort of digital image mainpulation <a href="#Reference">[1]</a>. To solve these problems, research have developed a veriety of image forensic algorithms, all of them try to work by searching for specific tracks on images to gain features(imaging model, noise characteristics, demosaicing strategies, lens distortion, gain histograms, dust traces, natural image modeling, etc.) <a href="#Reference">[2]</a>. Traditionally, we need to obtain thoses features manually, with the improvement of performance and accuracy of deep leaning, we can extract image features automatically <a href="#Reference">[3]</a>. </p>
+<p>In this article, I will post an model for camera identification base on convolutional neural network(CNN). This article will organized as follows:</p>
+<ul>
+<li>Related work will explain how CNN working in briefly, including normalize, convolutional layer, pooling layer, dropout layer, activation layer;</li>
+<li>Proposed method section will introduce my CNN model, and explain how to enhance the robustness of the algorithm;</li>
+<li>Experiment section, I will show several sets of experimental performance.</li>
+</ul>
+<hr>
+<h1 id="Related-Work"><a href="#Related-Work" class="headerlink" title="Related Work"></a>Related Work</h1><p>Deep learning frameworks provide a way to lean feature representations and classification automatically, we can guide framework to lean feature via back propagation algorithm.</p>
+<h3 id="1-Architecture-Overview"><a href="#1-Architecture-Overview" class="headerlink" title="1) Architecture Overview"></a>1) Architecture Overview</h3><p><img src="http://cs231n.github.io/assets/cnn/convnet.jpeg" alt="Fig.1. Framework of CNN with a lot of convolutional layers and pooling layers"></p>
+<p>A convolutional neural network always has one input layer, one output layer for classification, and a series of hidden layers which can be as convolutional layer, activation layer, pooling layer, full connection layer, softmax layer, etc. Convolutional layer has a strong learning ability for image features, they can capture local dependencies among neighbor elements. While pooling layer is us</p>
+<hr>
+<h1 id="Proposed-Method"><a href="#Proposed-Method" class="headerlink" title="Proposed Method"></a>Proposed Method</h1><hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>[1] <a href="http://www.sciencedirect.com/science/article/pii/S0923596516301953" target="_blank" rel="external">Tong Qiao, Florent Retraint, Rémi Cogranne, Thanh HaiThaib, “Individual camera device identification from JPEG images,” Signal Processing: Image Communication, vol 52, pp. 74-86, March 2017.</a></p>
+<p>[2] <a href="http://ieeexplore.ieee.org/document/7786852/" target="_blank" rel="external">L.Bondi, L.Baroffio, D.Gu ̈era, P.Bestagini, E.J.Delp, and S. Tubaro, “First steps toward camera model identification with convolutional neural networks,” IEEE Signal Processing Letters, vol. 24, no. 3, pp. 259–263, March 2017.</a></p>
+<p>[3] <a href="http://ieeexplore.ieee.org/document/7823908/" target="_blank" rel="external">Amel Tuama, Frédéric Comby, Marc Chaumont, “Camera Model Identification With The Use of Deep Convolutional Neural Networks,” IEEE International Workshop on Information Forensics and Security (WIFS), Dec. 2016.</a></p>
+<p>[4] <a href="http://ieeexplore.ieee.org/abstract/document/7113799/" target="_blank" rel="external">Jiansheng Chen, Xiangui Kang, Ye Liu, and Z. Jane Wang, “Median Filtering Forensics Based on Convolutional Neural Networks,” IEEE Signal Processing Society, vol. 22, issue: 11, pp. 1849-1853, Nov. 2015</a></p>
+<p>[] <a href="http://cs231n.github.io/convolutional-networks/" target="_blank" rel="external">Stanford cs231 course: Convolutional Neural Networks (CNNs / ConvNets)</a></p>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-10-26-camera-model-identifaction-base-on-cnn"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2017-10-26-camera-model-identifaction-base-on-cnn" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/">http://homeway.me/2017/10/26/camera-model-identifaction-base-on-cnn/</a></h4><blockquote>
+<p>by grasses 2017.10.26</p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Deep Learning - Setup GPU for tensorflow]]></title>
       <url>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</url>
       <content type="html"><![CDATA[<p><br></p>
@@ -7453,25 +7484,27 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title></title>
-      <url>http://homeway.me/resume/index.html</url>
+      <url>http://homeway.me/about/index.html</url>
       <content type="html"><![CDATA[<h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1><blockquote>
-<p>夏日小草<br>社交: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">微博</a> | <a href="http://v2ex.com/member/grasses" target="_blank" rel="external">v2ex</a> | <a href="http://cn.linkedin.com/in/homeway" target="_blank" rel="external">Linkedin</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
+<p>夏日小草<br>Social: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">微博</a> | <a href="http://v2ex.com/member/grasses" target="_blank" rel="external">v2ex</a> | <a href="https://www.instagram.com/homeway.me/" target="_blank" rel="external">instagram</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
 <p>Blog: <a href="http://hoemway.me" target="_blank" rel="external">http://hoemway.me</a><br>Github: <iframe src="https://ghbtns.com/github-btn.html?user=grasses&#038;type=follow&#038;count=true&#038;size=normal" frameborder="0" scrolling="0" width="250px" height="20px"></iframe></p>
 </blockquote>
 <hr>
 
 <h1 id="Education"><a href="#Education" class="headerlink" title="Education"></a>Education</h1><blockquote>
-<p>杭州电子科技大学（本科）    &nbsp;&nbsp;&nbsp;&nbsp;        信息安全（web码农）    &nbsp;&nbsp;&nbsp;&nbsp;            2012.9-2016.6<br>杭州电子科技大学（硕士）    &nbsp;&nbsp;&nbsp;&nbsp;        信息安全（计算机视觉）    &nbsp;&nbsp;&nbsp;&nbsp;        2017.9-*</p>
+<p>Hangzhou Dianzi University&nbsp;&nbsp;(Undergraduate)    &nbsp;&nbsp;&nbsp;&nbsp;        Information Security    &nbsp;&nbsp;&nbsp;&nbsp;            2012.9-2016.6<br>Hangzhou Dianzi University&nbsp;&nbsp;(Master Graduate)    &nbsp;&nbsp;&nbsp;&nbsp;        Information Security    &nbsp;&nbsp;&nbsp;&nbsp;        2017.9-*</p>
 </blockquote>
 <hr>
 
 <h1 id="Experience"><a href="#Experience" class="headerlink" title="Experience"></a>Experience</h1><blockquote>
-<p>魅族科技    在线商城-研发工程师    2015.10-2016.3<br>在线商城抢购、预约反黄牛系统后台研发。</p>
+<p>Department of online mall in <a href="https://meizu.com/" target="_blank" rel="external">Meizu Telecom Equipment Co., Ltd.</a>    - R &amp; D engineers    <strong>2015.9-2016.3</strong><br>The main task is to develop a <a href="https://store.meizu.com/" target="_blank" rel="external">Meizu online shoping system</a>, with high availability, and preventing malicious traffic attacks.</p>
 </blockquote>
 <hr>
 
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><blockquote>
-<p>关于web开发，nginx，python，Raspberry<br>本网站博客遵循 <a href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.zh" target="_blank" rel="external">署名-非商业性使用-相同方式共享 3.0</a>版权协议，转载请注明出处。</p>
+<p>My name is homeway, I’m currently a graduate student studying at School of cybersecurity, in <a href="http://www.hdu.edu.cn/" target="_blank" rel="external">Hangzhou Dianzi University (HDU)</a>.</p>
+<p>I used to addict to high available in website development, and keened on in Hackthon. I call myself geek and love to develop a lot of gadgets to solve problems in life and enjoy problem-solving.</p>
+<p>I am currently mainly concerned with machine learning and multimedia cybercrime forensic, familiar with Convolution Neural Networks(CNN), and learned about Generative Adversarial Network(GAN), interested in common machine learning algorithms.</p>
 </blockquote>
 ]]></content>
     </entry>
