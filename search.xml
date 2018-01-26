@@ -4,6 +4,98 @@
   
     
     <entry>
+      <title><![CDATA[Deep Learning - Installing Caffe on Ubuntu]]></title>
+      <url>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</url>
+      <content type="html"><![CDATA[<p><br></p>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png" alt="Caffe"></p>
+<a id="more"></a>
+<p><img src="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png" alt="Caffe"></p>
+<p>Many developers are complaining about the complex dependence of Caffe environment, I tried it today, it really ran into many problems.<br>In this tutorial, I mainly talked about how to build Caffe environment on 64-bit Ubuntu 16.04 Linux.</p>
+<p>In Caffe official home page, we can find the installation tutorial: <a href="http://caffe.berkeleyvision.org/install_apt.html" target="_blank" rel="external">http://caffe.berkeleyvision.org/install_apt.html</a> which still remaining a stack of problems for different system environments.<br>Caffe (Convolutional Architecture for Fast Feature Embedding) is a deep learning framework, originally developed at UC Berkeley.</p>
+<h1 id="1-General-dependencies"><a href="#1-General-dependencies" class="headerlink" title="1.General dependencies"></a>1.General dependencies</h1><p>First of all, check our ubuntue apt-get source list is updated:</p>
+<pre><code>sudo apt-get update -y
+</code></pre><p>Next, following installation tutorial of home page, we may install the dependencies:</p>
+<pre><code>sudo apt-get install libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler  -y
+sudo apt-get install --no-install-recommends libboost-all-dev  -y
+</code></pre><h1 id="2-Install-Caffe-package"><a href="#2-Install-Caffe-package" class="headerlink" title="2.Install Caffe package"></a>2.Install Caffe package</h1><pre><code>git clone https://github.com/BVLC/caffe
+cd caffe
+cp Makefile.config.example Makefile.config
+</code></pre><p>Install basic python dependencies:</p>
+<pre><code>sudo pip install numpy scikit-image protobuf
+cd python
+for req in $(cat requirements.txt); do sudo pip install $req; done
+</code></pre><hr>
+<h1 id="3-Fix-bugs"><a href="#3-Fix-bugs" class="headerlink" title="3.Fix bugs"></a>3.Fix bugs</h1><h2 id="3-1-gflags"><a href="#3-1-gflags" class="headerlink" title="3.1 gflags"></a>3.1 gflags</h2><pre><code>PROTOC src/caffe/proto/caffe.proto
+CXX .build_release/src/caffe/proto/caffe.pb.cc
+CXX src/caffe/layer.cpp
+In file included from ./include/caffe/blob.hpp:8:0,
+                 from ./include/caffe/layer.hpp:8,
+                 from src/caffe/layer.cpp:1:
+./include/caffe/common.hpp:5:27: fatal error: gflags/gflags.h: ?????????
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/layer.o&#39; failed
+make: *** [.build_release/src/caffe/layer.o] Error 1
+</code></pre><pre><code>sudo apt-get install libgflags-dev -y
+</code></pre><h2 id="3-2-glog"><a href="#3-2-glog" class="headerlink" title="3.2 glog"></a>3.2 glog</h2><pre><code>CXX src/caffe/layer.cpp
+In file included from ./include/caffe/blob.hpp:8:0,
+                 from ./include/caffe/layer.hpp:8,
+                 from src/caffe/layer.cpp:1:
+./include/caffe/common.hpp:6:26: fatal error: glog/logging.h: ?????????
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/layer.o&#39; failed
+make: *** [.build_release/src/caffe/layer.o] Error 1
+</code></pre><p>Install it by apt-get package:</p>
+<pre><code>sudo apt-get install libgoogle-glog-dev liblmdb-dev -y
+</code></pre><p>or install it from source package:</p>
+<pre><code>#: remove the old gflags 
+sudo apt-get purge libgflags-dev
+
+#: download glog from github
+git clone https://github.com/google/glog &amp;&amp; cd glog
+
+# compiling
+mkdir build &amp;&amp; cd build
+cmake -DGFLAGS_NAMESPACE=google -DCMAKE_CXX_FLAGS=-fPIC ..
+make &amp;&amp; sudo make install
+</code></pre><h2 id="3-3-hdf5-h"><a href="#3-3-hdf5-h" class="headerlink" title="3.3 hdf5.h"></a>3.3 hdf5.h</h2><pre><code>src/caffe/layers/hdf5_data_layer.cpp:13:18: fatal error: hdf5.h: No such file or directory
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/layers/hdf5_data_layer.o&#39; failed
+make: *** [.build_release/src/caffe/layers/hdf5_data_layer.o] Error 1
+</code></pre><p>In general, we have installed hdf5.h package in Step1, the problem is that Makefile does not know where to find header file <code>hdf5.h</code>.<br>So, here let us check it:</p>
+<pre><code>➜  package ls /usr/lib/x86_64-linux-gnu/ | grep libhdf5_serial
+...
+libhdf5_serial.so.10.1.0
+libhdf5_serialhl_fortran.so.10.0.2
+...
+</code></pre><p>We can find two files like above, please don’t care about version, what we need to just make a soft link for it:</p>
+<pre><code>sudo ln -s /usr/lib/x86_64-linux-gnu/libhdf5_serial.so.10.1.0 /usr/lib/x86_64-linux-gnu/libhdf5.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libhdf5_serial_hl.so.10.0.2 /usr/lib/x86_64-linux-gnu/libhdf5_hl.so
+</code></pre><p>edit Makefile.conf to tell cmake, where to find <code>hdf5.h</code></p>
+<pre><code>vim ../Makefile.config
+</code></pre><p>Change lines 95~96 like this:</p>
+<pre><code># Whatever else you find you need goes here.
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial
+</code></pre><h2 id="3-4-liblmdb"><a href="#3-4-liblmdb" class="headerlink" title="3.4 liblmdb"></a>3.4 liblmdb</h2><pre><code>In file included from src/caffe/util/db.cpp:3:0:
+./include/caffe/util/db_lmdb.hpp:8:18: fatal error: lmdb.h: No such file or directory
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/util/db.o&#39; failed
+make: *** [.build_release/src/caffe/util/db.o] Error 1
+</code></pre><pre><code>sudo apt install liblmdb-dev -y
+</code></pre><h2 id="3-5-opencv"><a href="#3-5-opencv" class="headerlink" title="3.5 opencv"></a>3.5 opencv</h2><pre><code>/usr/bin/ld: cannot find -lopencv_imgcodecs
+/usr/bin/ld: cannot find -lcblas
+/usr/bin/ld: cannot find -latlas
+collect2: error: ld returned 1 exit status
+Makefile:572: recipe for target &#39;.build_release/lib/libcaffe.so.1.0.0&#39; failed
+make: *** [.build_release/lib/libcaffe.so.1.0.0] Error 1
+</code></pre><p>opencv 3 install tutorial:<a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/" target="_blank" rel="external">https://www.learnopencv.com/install-opencv3-on-ubuntu/</a></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-01-25-setup-caffe-for-deep-learning"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-01-25-setup-caffe-for-deep-learning" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/">http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</a></h4><blockquote>
+<p>by grasses 2018.01.25</p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Deep Learning - Setup GPU for tensorflow]]></title>
       <url>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</url>
       <content type="html"><![CDATA[<p><br></p>

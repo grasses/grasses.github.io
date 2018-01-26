@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</loc>
+    
+    <lastmod>2018-01-26T19:26:23.795Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homeway.me/about/index.html</loc>
     
     <lastmod>2017-11-05T16:06:19.000Z</lastmod>
