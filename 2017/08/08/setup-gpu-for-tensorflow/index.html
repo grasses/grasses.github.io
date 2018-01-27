@@ -12,7 +12,7 @@
 <meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png">
 <meta property="og:image" content="http://os20zg3p7.bkt.clouddn.com/note/wiznot/blog/image/2017-08-08-GPU-cuda.png">
 <meta property="og:image" content="http://os20zg3p7.bkt.clouddn.com/note/wiznote/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png">
-<meta property="og:updated_time" content="2017-08-13T09:18:34.000Z">
+<meta property="og:updated_time" content="2018-01-27T03:19:49.924Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Learning - Setup GPU for tensorflow">
 <meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png">
@@ -269,8 +269,8 @@ ga('send', 'pageview');
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png" alt="Nvidia"></p>
 <a id="more"></a>
 <p>The following explains how to setup tensorflow GPU environment on 64-bit Ubuntu 17.04 Linux.<br>Following the steps, I will show how to install Nvidia drivers, Nvidia toolkit, CudNN and tensorflow.</p>
-<h1 id="1-Nvidia-drivers"><a href="#1-Nvidia-drivers" class="headerlink" title="1. Nvidia drivers"></a>1. Nvidia drivers</h1><p>I just installed Nvidia drivers for graphic card GeForce GTX 1070.</p>
-<h3 id="1-1-Download-drivers"><a href="#1-1-Download-drivers" class="headerlink" title="1.1. Download drivers"></a>1.1. Download drivers</h3><p>First of all, you need to choose specific version and download Nvidia drivers from <a href="http://www.nvidia.com/Download/index.aspx?lang=en" target="_blank" rel="external">Nvidia home page</a>.<br>Here I choose version of 384.59:</p>
+<h1 id="1-Nvidia-driver"><a href="#1-Nvidia-driver" class="headerlink" title="1. Nvidia driver"></a>1. Nvidia driver</h1><p>Install Nvidia driver for graphic card GeForce GTX 1070.</p>
+<h3 id="1-1-Download-driver"><a href="#1-1-Download-driver" class="headerlink" title="1.1. Download driver"></a>1.1. Download driver</h3><p>First of all, you need to choose specific version and download Nvidia drivers from <a href="http://www.nvidia.com/Download/index.aspx?lang=en" target="_blank" rel="external">Nvidia home page</a>.<br>Here I choose version of 384.59:</p>
 <pre><code>NVIDIA-Linux-x86_64-384.59.run
 </code></pre><h3 id="1-2-Install-dependency"><a href="#1-2-Install-dependency" class="headerlink" title="1.2. Install dependency"></a>1.2. Install dependency</h3><p>Second, you need to install dependency environment for Nvidia drivers:</p>
 <pre><code>sudo apt-get update
@@ -317,7 +317,7 @@ Tue Aug  8 22:40:47 2017
 +-----------------------------------------------------------------------------+
 </code></pre><p>OK, this result suggests our Nvidia drivers installed successfully.</p>
 <hr>
-<h1 id="2-Nvidia-toolkit-amp-CudNN"><a href="#2-Nvidia-toolkit-amp-CudNN" class="headerlink" title="2. Nvidia toolkit &amp; CudNN"></a>2. Nvidia toolkit &amp; CudNN</h1><p>Nvidia toolkit is a base sdk for cuda, and you can download it from: <a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="external">https://developer.nvidia.com/cuda-downloads</a><br>For the more, we need CudNN for tensorflow deep learning, and download it from: <a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="external">https://developer.nvidia.com/rdp/cudnn-download</a></p>
+<h1 id="2-Nvidia-toolkit-amp-cuDNN"><a href="#2-Nvidia-toolkit-amp-cuDNN" class="headerlink" title="2. Nvidia toolkit &amp; cuDNN"></a>2. Nvidia toolkit &amp; cuDNN</h1><p>Nvidia toolkit is a base sdk for cuda, and you can download it from: <a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="external">https://developer.nvidia.com/cuda-downloads</a><br>For the more, we need CudNN for tensorflow deep learning, and download it from: <a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="external">https://developer.nvidia.com/rdp/cudnn-download</a></p>
 <h3 id="2-1-Download-cuda"><a href="#2-1-Download-cuda" class="headerlink" title="2.1 Download cuda"></a>2.1 Download cuda</h3><p>Here I choose local deb package <code>cuda-repo-ubuntu1604-8-0-local-ga2_8.0.61-1_amd64.deb</code>:<br><img src="http://os20zg3p7.bkt.clouddn.com/note/wiznot/blog/image/2017-08-08-GPU-cuda.png" alt="cuda installation version"></p>
 <h3 id="2-2-Install-cuda"><a href="#2-2-Install-cuda" class="headerlink" title="2.2 Install cuda"></a>2.2 Install cuda</h3><p>Following cuda installation command lines:</p>
 <pre><code>sudo dpkg -i cuda-repo-ubuntu1604-8-0-local-ga2_8.0.61-1_amd64.deb
@@ -396,7 +396,7 @@ MatMul: /job:localhost/replica:0/task:0/gpu:0
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/" data-id="cjcwbjh8f004jdbcs97n17hrt" data-title="Deep Learning - Setup GPU for tensorflow" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/" data-id="cjcwu5wex004prjcsxenumkz9" data-title="Deep Learning - Setup GPU for tensorflow" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
