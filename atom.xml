@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2018-01-28T08:01:25.429Z</updated>
+  <updated>2018-01-28T08:07:50.126Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,10 +20,10 @@
     <link href="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/"/>
     <id>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</id>
     <published>2018-01-24T18:01:10.000Z</published>
-    <updated>2018-01-28T08:01:25.429Z</updated>
+    <updated>2018-01-28T08:07:50.126Z</updated>
     
     <content type="html"><![CDATA[<p><br><br><img src="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png" alt="Caffe"><br><a id="more"></a></p>
-<p>Recently, I want to try another deep learning framework instead of tensorflow.<br>Then I find Caffe (Convolutional Architecture for Fast Feature Embedding), which is another deep learning framework, originally developed at UC Berkeley. There are still a bunch of troubles, the biggest one is the installation environment. </p>
+<p>Recently, I want to try another deep learning framework instead of tensorflow.<br>I find Caffe (Convolutional Architecture for Fast Feature Embedding), which is another deep learning framework, originally developed at UC Berkeley, is easy to handle. There are still a bunch of troubles, the biggest one is the environment of installation. </p>
 <p>Many developers are complaining about the complex dependence of Caffe environment, I try it today, it really runs into many problems.<br>In this tutorial, I mainly talke about how to build Caffe environment on 64-bit Ubuntu 16.04 Linux.</p>
 <p>In Caffe official home page, we can find the installation tutorial: <a href="http://caffe.berkeleyvision.org/install_apt.html" target="_blank" rel="external">http://caffe.berkeleyvision.org/install_apt.html</a>,<br>which still remaining a stack of problems for different system environments.<br>In order to install Caffe, we need to prepare some dependencies softwares including: libgflags, libatlas, libgoogle-glog, libmdb, python-dev,  while for GPU support, we need to extra install Nvidia driver, cuDNN, opencv3+.<br>After successfully installing those packages, we also need to modify the <code>Makefile.config</code> to tell the compiler where to find it.</p>
 <hr>
