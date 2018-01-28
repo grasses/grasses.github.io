@@ -10,7 +10,7 @@
 <meta property="og:url" content="http://homeway.me/2015/07/10/rebuild-osx-environment/index.html">
 <meta property="og:site_name" content="夏日小草">
 <meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png">
-<meta property="og:updated_time" content="2017-04-26T00:27:37.000Z">
+<meta property="og:updated_time" content="2018-01-28T07:47:36.510Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MAC重装各种的痛点">
 <meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png">
@@ -323,7 +323,19 @@ sudo make install
 <p>两个问题：</p>
 <p>1.openssl依赖，要用源码，要export告诉系统环境变量 </p>
 <p>2.pcre包要手动加上去。</p>
-<p><br><hr></p>
+<p><em>补个centos中一键安装shell：</em></p>
+<pre><code>curr_path=`pwd`
+sudo yum install -y readline-devel pcre-devel openssl-devel gcc gcc-c++ wget
+wget https://openresty.org/download/openresty-1.11.2.3.tar.gz
+tar -zxvf openresty-1.11.2.3.tar.gz
+wget http://os20zg3p7.bkt.clouddn.com/note/wiznote/soft/pcre-8.39.zip
+unzip pcre-8.39.zip
+wget http://os20zg3p7.bkt.clouddn.com/note/wiznote/soft/openssl-1.0.2j.tar.gz
+tar -zvxf openssl-1.0.2j.tar.gz
+cd openresty-1.11.2.3
+./configure --with-openssl=$curr_path/openssl-1.0.2j --with-pcre=$curr_path/pcre-8.39 --without-http_gzip_module --with-http_ssl_module
+gmake &amp;&amp; sudo gmake install
+</code></pre><p><br><hr></p>
 <h1 id="0x03-Hexo"><a href="#0x03-Hexo" class="headerlink" title="0x03.Hexo"></a>0x03.Hexo</h1><p>安装hexo 3.0各种骂声，都是从2.8升上去的人喊的不兼容问题。</p>
 <p>嗯…照着官网的打吧，一步一步走下来吧：</p>
 <blockquote>
@@ -390,7 +402,7 @@ ERROR Plugin load failed: hexo-server
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/07/10/rebuild-osx-environment/" data-id="cjcwu5wet004hrjcs2iybfcly" data-title="MAC重装各种的痛点" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/07/10/rebuild-osx-environment/" data-id="cjcyi02zj0044t6cscqivorf2" data-title="MAC重装各种的痛点" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>

@@ -11,7 +11,7 @@
 <meta property="og:site_name" content="夏日小草">
 <meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png">
 <meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/image/2018-01-25-Caffe-successfully-installed.png.png">
-<meta property="og:updated_time" content="2018-01-27T04:07:51.208Z">
+<meta property="og:updated_time" content="2018-01-28T08:01:25.429Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Learning - Installing Caffe on Ubuntu">
 <meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png">
@@ -265,7 +265,7 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br><br><img src="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png" alt="Caffe"><br><a id="more"></a></p>
-<p>Recently, I want to try another deep learning framework instead of tensorflow.<br>Caffe (Convolutional Architecture for Fast Feature Embedding) is a deep learning framework, originally developed at UC Berkeley.</p>
+<p>Recently, I want to try another deep learning framework instead of tensorflow.<br>Then I find Caffe (Convolutional Architecture for Fast Feature Embedding), which is another deep learning framework, originally developed at UC Berkeley. There are still a bunch of troubles, the biggest one is the installation environment. </p>
 <p>Many developers are complaining about the complex dependence of Caffe environment, I try it today, it really runs into many problems.<br>In this tutorial, I mainly talke about how to build Caffe environment on 64-bit Ubuntu 16.04 Linux.</p>
 <p>In Caffe official home page, we can find the installation tutorial: <a href="http://caffe.berkeleyvision.org/install_apt.html" target="_blank" rel="external">http://caffe.berkeleyvision.org/install_apt.html</a>,<br>which still remaining a stack of problems for different system environments.<br>In order to install Caffe, we need to prepare some dependencies softwares including: libgflags, libatlas, libgoogle-glog, libmdb, python-dev,  while for GPU support, we need to extra install Nvidia driver, cuDNN, opencv3+.<br>After successfully installing those packages, we also need to modify the <code>Makefile.config</code> to tell the compiler where to find it.</p>
 <hr>
@@ -333,7 +333,8 @@ PYTHON_INCLUDE := /usr/include/python2.7 \
 <pre><code>make all
 make test &amp;&amp; make runtest
 </code></pre><hr>
-<h1 id="4-Fix-bugs"><a href="#4-Fix-bugs" class="headerlink" title="4.Fix bugs"></a>4.Fix bugs</h1><h2 id="4-1-gflags-not-found"><a href="#4-1-gflags-not-found" class="headerlink" title="4.1 gflags not found"></a>4.1 gflags not found</h2><p>Error description:</p>
+<h1 id="4-Fix-bugs"><a href="#4-Fix-bugs" class="headerlink" title="4.Fix bugs"></a>4.Fix bugs</h1><p>Make a summary, here lists some common mistakes and solutions, mostly due to missing packages or packages not found by compiler, just install it and tell compiler.</p>
+<h2 id="4-1-gflags-not-found"><a href="#4-1-gflags-not-found" class="headerlink" title="4.1 gflags not found"></a>4.1 gflags not found</h2><p>Error description:</p>
 <pre><code>PROTOC src/caffe/proto/caffe.proto
 CXX .build_release/src/caffe/proto/caffe.pb.cc
 CXX src/caffe/layer.cpp
@@ -380,7 +381,7 @@ libhdf5_serialhl_fortran.so.10.0.2
 </code></pre><p>We can find two files like above, please don’t care about version, what we need to just make a soft link for it:</p>
 <pre><code>sudo ln -s /usr/lib/x86_64-linux-gnu/libhdf5_serial.so.10.1.0 /usr/lib/x86_64-linux-gnu/libhdf5.so
 sudo ln -s /usr/lib/x86_64-linux-gnu/libhdf5_serial_hl.so.10.0.2 /usr/lib/x86_64-linux-gnu/libhdf5_hl.so
-</code></pre><p>edit Makefile.conf to tell cmake, where to find <code>hdf5.h</code></p>
+</code></pre><p>We need to edit <code>Makefile.conf</code> to tell compiler where to find <code>hdf5.h</code></p>
 <pre><code>vim Makefile.config
 </code></pre><p>Change lines 95~96 like this:</p>
 <pre><code># Whatever else you find you need goes here.
@@ -434,7 +435,7 @@ make: *** [python/caffe/_caffe.so] Error 1
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/" data-id="cjcwu5web004arjcssdj6de10" data-title="Deep Learning - Installing Caffe on Ubuntu" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/" data-id="cjcyi02zz004qt6csvqqwtnlo" data-title="Deep Learning - Installing Caffe on Ubuntu" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
