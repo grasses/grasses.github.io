@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="https://static.blog.homeway.me/blog/style.min.css?v=1602255192" type="text/css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
+  <!-- 评论模块 -->
+  <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">
+
   <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>  
   
 <!-- Google Analytics -->
@@ -276,7 +279,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/05/06/python-pquery-reptile/" data-id="cjgzco8hx0040j0c76cp1lbw1" data-title="pyquery抓取页面" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/05/06/python-pquery-reptile/" data-id="cjgzdc9al003tofc72bigqecf" data-title="pyquery抓取页面" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -328,7 +331,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/" data-id="cjgzco8j0004oj0c78bjv6fli" data-title="服务器对比" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/" data-id="cjgzdc9b5004hofc7w8g2q5ov" data-title="服务器对比" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -380,7 +383,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/04/04/Python-Module-Learning-1/" data-id="cjgzco89y0007j0c7xsk7v8aw" data-title="Python模块学习-1" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/04/04/Python-Module-Learning-1/" data-id="cjgzdc9580007ofc73xkoqq5i" data-title="Python模块学习-1" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
@@ -431,7 +434,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/01/02/goodbye-2013-hello-2014/" data-id="cjgzco8c40011j0c7c6xmbbz1" data-title="再见2013，写下2014" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/01/02/goodbye-2013-hello-2014/" data-id="cjgzdc9760014ofc7ox1vb8ma" data-title="再见2013，写下2014" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Summary/">Summary</a></li></ul>
@@ -594,8 +597,9 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
     scriptHtml.type = 'text/javascript';
     scriptHtml.async = true;
 
+    /*
     if (province && city) {
-        // 国内用户用uyan评论系统
+        // 国内用户用评论系统
         scriptHtml.src = 'null';
     } else {
         // 国外用户用disqus评论系统
@@ -604,6 +608,7 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
         scriptHtml.src = '//' + disqus_shortname + '.disqus.com/count.js';
     }
      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(scriptHtml);
+     */
 });
 </script>
 

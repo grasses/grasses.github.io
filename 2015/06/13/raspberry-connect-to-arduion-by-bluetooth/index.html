@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="https://static.blog.homeway.me/blog/style.min.css?v=1602255192" type="text/css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
+  <!-- 评论模块 -->
+  <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">
+
   <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>  
   
 <!-- Google Analytics -->
@@ -332,7 +335,7 @@ if __name__ == &#39;__main__&#39;:
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/" data-id="cjgzco8hn003tj0c724lp115z" data-title="Raspberry与Arduino通过蓝牙通信" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/" data-id="cjgzdc9ar0040ofc7r16gn61s" data-title="Raspberry与Arduino通过蓝牙通信" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arduino/">Arduino</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/树莓派/">树莓派</a></li></ul>
@@ -368,11 +371,6 @@ if __name__ == &#39;__main__&#39;:
 <!--评论模块-->
 
   <section id="comments">
-    
-      <div id="disqus_thread"></div>
-     
-    
-    <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">
     <div id="comments"></div>
   </section>
 </section>
@@ -518,8 +516,9 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
     scriptHtml.type = 'text/javascript';
     scriptHtml.async = true;
 
+    /*
     if (province && city) {
-        // 国内用户用uyan评论系统
+        // 国内用户用评论系统
         scriptHtml.src = 'null';
     } else {
         // 国外用户用disqus评论系统
@@ -528,6 +527,7 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
         scriptHtml.src = '//' + disqus_shortname + '.disqus.com/embed.js';
     }
      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(scriptHtml);
+     */
 });
 </script>
 

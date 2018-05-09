@@ -25,6 +25,9 @@
   <link rel="stylesheet" href="https://static.blog.homeway.me/blog/style.min.css?v=1602255192" type="text/css">
   <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
   
+  <!-- 评论模块 -->
+  <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">
+
   <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>  
   
 <!-- Google Analytics -->
@@ -1174,8 +1177,9 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
     scriptHtml.type = 'text/javascript';
     scriptHtml.async = true;
 
+    /*
     if (province && city) {
-        // 国内用户用uyan评论系统
+        // 国内用户用评论系统
         scriptHtml.src = 'null';
     } else {
         // 国外用户用disqus评论系统
@@ -1184,6 +1188,7 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
         scriptHtml.src = '//' + disqus_shortname + '.disqus.com/count.js';
     }
      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(scriptHtml);
+     */
 });
 </script>
 
