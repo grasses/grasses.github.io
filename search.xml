@@ -7639,7 +7639,7 @@ if __name__ == &#39;__main__&#39;:
       <title></title>
       <url>http://homeway.me/about/index.html</url>
       <content type="html"><![CDATA[<h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1><blockquote>
-<p>夏日小草<br>Social: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">微博</a> | <a href="http://v2ex.com/member/grasses" target="_blank" rel="external">v2ex</a> | <a href="https://www.instagram.com/homeway.me/" target="_blank" rel="external">instagram</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
+<p>夏日小草<br>Social: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">Weibo</a> | <a href="https://twitter.com/yaohomeway" target="_blank" rel="external">Twitter</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
 <p>Blog: <a href="http://homeway.me">http://homeway.me</a><br>Github: <iframe src="https://ghbtns.com/github-btn.html?user=grasses&#038;type=follow&#038;count=true&#038;size=normal" frameborder="0" scrolling="0" width="250px" height="20px"></iframe></p>
 </blockquote>
 <hr>
@@ -7657,9 +7657,40 @@ if __name__ == &#39;__main__&#39;:
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><blockquote>
 <p>My name is homeway, I’m currently a graduate student studying at School of cybersecurity, in <a href="http://www.hdu.edu.cn/" target="_blank" rel="external">Hangzhou Dianzi University (HDU)</a>.</p>
 <p>I used to addict to high available in website development, and keened on in Hackthon. I call myself geek and love to develop a lot of gadgets to solve problems in life and enjoy problem-solving.</p>
-<p>I am currently mainly concerned with machine learning and multimedia cybercrime forensic, familiar with Convolution Neural Networks(CNN), and learned about Generative Adversarial Network(GAN), interested in common machine learning algorithms.</p>
+<p>I’m currently mainly concern with machine learning and multimedia digital forensics, familiar with Convolution Neural Networks(CNN), and learn about Generative Adversarial Network(GAN), interest in common machine learning algorithms.</p>
 </blockquote>
-]]></content>
+<hr>
+
+<h1 id="Publications"><a href="#Publications" class="headerlink" title="Publications"></a>Publications</h1><div class="row paper-box"><br><div class="col-md-2 paper-image"><br>    <img src="https://static.blog.homeway.me/blog/paper/image/sci-training_pipeline.png"><br></div><br><div class="col-md-8 paper-content"><br>    <strong>Robust Multi-classifier for Camera Model Identification based on Convolution Neural Network [<a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">Paper</a>, <a href="https://github.com/grasses/Camera-Identification" target="_blank" rel="external">Code</a>]<br>    </strong><br>    <span><b>H. Yao</b>, T. Qiao, M. Xu, and N. Zheng</span><br>    <span>IEEE Access (SCI-2)</span><br>    <span>May 2018</span><br></div><br></div>
+
+<style type="text/css">
+.paper-box {
+    width: 100%;
+    font-size: 1em;
+    border-width: 2px;
+    border-radius: 5px;
+    border-style: solid;
+    box-shadow: 2px 2px 2px #999999;
+}
+
+.paper-image {
+    height: 200px;
+    float: left;
+    margin: 0px 30px;
+}
+
+.paper-image img {
+    width: 180px;
+}
+
+.paper-content {
+    margin-top: -50px;
+}
+
+.paper-content strong {
+    font-size: 15px;
+}
+</style>]]></content>
     </entry>
     
     <entry>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2018-01-28T08:07:50.126Z</updated>
+  <updated>2018-01-28T08:07:50.000Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/"/>
     <id>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</id>
     <published>2018-01-24T18:01:10.000Z</published>
-    <updated>2018-01-28T08:07:50.126Z</updated>
+    <updated>2018-01-28T08:07:50.000Z</updated>
     
     <content type="html"><![CDATA[<p><br><br><img src="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png" alt="Caffe"><br><a id="more"></a></p>
 <p>Recently, I want to try another deep learning framework instead of tensorflow.<br>I find Caffe (Convolutional Architecture for Fast Feature Embedding), which is another deep learning framework, originally developed at UC Berkeley, is easy to handle. There are still a bunch of troubles, the biggest one is the environment of installation. </p>
@@ -208,7 +208,7 @@ make: *** [python/caffe/_caffe.so] Error 1
     <link href="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/"/>
     <id>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</id>
     <published>2017-08-07T16:48:10.000Z</published>
-    <updated>2018-01-27T03:19:49.924Z</updated>
+    <updated>2018-01-27T03:19:49.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png" alt="Nvidia"></p>
@@ -2504,7 +2504,7 @@ Content-Type: text/xml
     <link href="http://homeway.me/2015/07/10/rebuild-osx-environment/"/>
     <id>http://homeway.me/2015/07/10/rebuild-osx-environment/</id>
     <published>2015-07-09T16:56:01.000Z</published>
-    <updated>2018-01-28T07:47:36.510Z</updated>
+    <updated>2018-01-28T07:47:36.000Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png" alt="OSX"></p>

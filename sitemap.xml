@@ -2,30 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homeway.me/about/index.html</loc>
+    
+    <lastmod>2018-05-09T14:41:21.118Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</loc>
     
-    <lastmod>2018-01-28T08:07:50.126Z</lastmod>
+    <lastmod>2018-01-28T08:07:50.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://homeway.me/2015/07/10/rebuild-osx-environment/</loc>
     
-    <lastmod>2018-01-28T07:47:36.510Z</lastmod>
+    <lastmod>2018-01-28T07:47:36.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</loc>
     
-    <lastmod>2018-01-27T03:19:49.924Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/about/index.html</loc>
-    
-    <lastmod>2017-11-05T16:06:19.000Z</lastmod>
+    <lastmod>2018-01-27T03:19:49.000Z</lastmod>
     
   </url>
   
