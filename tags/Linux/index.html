@@ -501,7 +501,7 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
 
     if (province && city) {
         // 国内用户用uyan评论系统
-        scriptHtml.src = 'http://v2.uyan.cc/code/uyan.js?uid=2133103';
+        scriptHtml.src = 'http://comment.blog.seclab.org.cn/js/static.js';
     } else {
         // 国外用户用disqus评论系统
         var disqus_shortname = 'homeway';
@@ -635,6 +635,12 @@ var searchFunc = function(path, search_id, content_id) {
      searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 -->
+
+<script>
+LaraDuoshuo.APP_KEY = 'base64:x8zNmv3JSS79l7S9YgPB1MO4drZJ5HIUmOu1VDN9hUA=';
+LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
+</script>
+
 
 <!--七牛静态文件加速-->
 <script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>

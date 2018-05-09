@@ -365,7 +365,7 @@ write_buffer = 2M
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/12/27/hack-mysql/" data-id="cjgz8b4jn001dmnc7fg2tj4uy" data-title="Mysql提权留后门" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/12/27/hack-mysql/" data-id="cjgzc58h4001bdac7lfynfeej" data-title="Mysql提权留后门" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
@@ -397,30 +397,22 @@ write_buffer = 2M
   
 </article>
 
-<!--
 
-  <section id="comments">
-    <div id="disqus_thread">
-      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-    </div>
-  </section>
-
-  <section id="comments">
-    <div id="uyan_frame"></div>
-  </section>
-
--->
 <!--评论模块-->
+<!--
 
   <section id="comments">
     
       <div id="disqus_thread"></div>
      
     
-      <div id="uyan_frame"></div>
     
+      <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">
+      <div id="comments"></div>
+     
   </section>
-</section>
+
+--></section>
         
           <aside id="sidebar">
   
@@ -565,7 +557,7 @@ jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",
 
     if (province && city) {
         // 国内用户用uyan评论系统
-        scriptHtml.src = 'http://v2.uyan.cc/code/uyan.js?uid=2133103';
+        scriptHtml.src = 'http://comment.blog.seclab.org.cn/js/static.js';
     } else {
         // 国外用户用disqus评论系统
         var disqus_shortname = 'homeway';
@@ -699,6 +691,12 @@ var searchFunc = function(path, search_id, content_id) {
      searchFunc(path, 'local-search-input', 'local-search-result');
 </script>
 -->
+
+<script>
+LaraDuoshuo.APP_KEY = 'base64:x8zNmv3JSS79l7S9YgPB1MO4drZJ5HIUmOu1VDN9hUA=';
+LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
+</script>
+
 
 <!--七牛静态文件加速-->
 <script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
