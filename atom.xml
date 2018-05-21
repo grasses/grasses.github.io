@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2018-05-21T18:32:47.952Z</updated>
+  <updated>2018-05-21T19:12:32.876Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,17 +20,20 @@
     <link href="http://homeway.me/2018/05/21/talking-about-hackathon/"/>
     <id>http://homeway.me/2018/05/21/talking-about-hackathon/</id>
     <published>2018-05-21T12:57:10.000Z</published>
-    <updated>2018-05-21T18:32:47.952Z</updated>
+    <updated>2018-05-21T19:12:32.876Z</updated>
     
     <content type="html"><![CDATA[<p><br><br><img src="https://static.blog.homeway.me/blog/logo/hackathon-logo.png" alt="Hackathon"><br><a id="more"></a></p>
-<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>上周周末刚刚参加了一场“Hack{中国}全国高校黑客马拉松比赛”，想着写篇简单的感悟。<br>比赛上遇见了几个学霸级队友，非常感叹现在的本科生这么厉害，都是未来改变世界的人才。<br>我从本科开始就在关注Hackathon，前前后后大概参加了六七次比赛，现在再参加这种比赛有点欺负晚辈们了。<br>Hackathon的初衷是为了在很短时间内快速开发，通过压缩时间、提高效率，把原本懒散想做的一些项目、创意在非常短的时间内完成。<br>我在经常参加Hackathon后，也不断磨练出了很强的短时间爆发能力，规划时间、提高效率、团队合作。</p>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>上周周末刚刚参加了一场杭电的“Hack{中国}全国高校黑客马拉松比赛”，想着写篇简单的感悟。<br>比赛上遇见了几个学霸级队友，非常感叹现在的本科生这么厉害，都是未来改变世界的人才。<br>我从本科开始就在关注Hackathon，前前后后大概参加了六七次比赛，现在再参加这种比赛有点欺负晚辈们了。<br>Hackathon的初衷是为了在很短时间内快速开发，通过压缩时间、提高效率，把原本懒散想做的一些项目、创意在非常短的时间内完成。<br>我在经常参加Hackathon后，也不断磨练出了很强的短时间爆发能力，规划时间、提高效率、团队合作。</p>
 <p>接下来说下我这些年参加Hackathon的一些总结：</p>
 <h2 id="1-做什么"><a href="#1-做什么" class="headerlink" title="1.做什么"></a>1.做什么</h2><p>首先是做什么。源于Hackathon开放的思维氛围，大部分Hackathon都不限制选手们做什么，有些仅仅会提出一个相关的主题，这也不影响选手们做什么。大概在2014年的时候，由于移动端的火热，大片大片围绕移动互联网的应用在比赛中流行起来，那个时候做个简单的移动app，有些创意度、完整性、演示良好都能拿奖了；到后来，大家疲惫于移动app、web应用，很多有创意的硬件Geek们开始用硬件来做很多想法，各种类型的智能设备、感官游戏、无人飞行器、3D打印，这些都取得很好的效果；近年来，随着深度学习的兴旺以及国家大力支持智慧城市，很多深度学习算法开始走进Hackathon比赛中，这些项目中，有些很好地解决很多现实问题、有些则是很有创意的吸引眼球。</p>
 <p>早期的一些作品，例如：App List，应用分享的应用，利用app选择手机自带的十个自己已使用的app，并且分享给好友，同时能看到自己好友及附近的朋友的分享，并且下载自己喜欢的应用。这个idea现在想来已经很老套了，2014年还是很有新鲜感的。</p>
-<p><img src="http://segmentfault.com/img/bVcDV8" alt="App List"></p>
-<p>后来开始流行做小游戏，例如：剑气决斗，让手机变身宝剑，通过手机3D感应器来操控游戏！纯js作品，应用使用PhoneGap，后端使用NodeJS、WebSocket，HTML5 页面，使用了云适配的技术，可以适配各种大小的屏幕，这个作品也是拿奖作品。这种游戏创意点非常足，现场演示起来效果也非常棒，有动作、有声音、有激情点，可以很好地把评委带进演讲者氛围里，非常适合演示，缺点之一就是商业性匮乏，但是拿个奖已经足够了。<br><img src="http://segmentfault.com/img/bVbV4m" alt="剑气决斗"></p>
-<p>还有各种硬件游戏，例如：SMAUSH，将刷牙变成一场游戏。主要思路是在牙刷中放入传感器，通过蓝牙传输到后台控制端，另一端连接web游戏界面，显示游戏画面，这款游戏也是拿奖作品。这个游戏和上一个很相似，画面感很足，很容易吸引评委，想想评委坐在那里听一堆无聊的解说也是很烦的。<br><img src="http://segmentfault.com/img/bVbV3v" alt="SMAUSH"></p>
-<p>还有做一款味蕾应用，通过传导味蕾来找到交友人群，想法很有意思，创意点很足。这种应用很大的特点就是创意性，给人一种启发，但是演示时候由于味觉第三者谁也没法说什么相同不同，没法证明什么，这点比较遗憾，如果能在结果上面加上修饰，有声音、动画，也可以展示一番。<br><img src="http://segmentfault.com/img/bVbV04" alt="味蕾"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/hackathon-example-1.jpg" alt="App List"></p>
+<p>后来开始流行做小游戏，例如：剑气决斗，让手机变身宝剑，通过手机3D感应器来操控游戏！纯js作品，应用使用PhoneGap，后端使用NodeJS、WebSocket，HTML5 页面，使用了云适配的技术，可以适配各种大小的屏幕，这个作品也是拿奖作品。这种游戏创意点非常足，现场演示起来效果也非常棒，有动作、有声音、有激情点，可以很好地把评委带进演讲者氛围里，非常适合演示，缺点之一就是商业性匮乏，但是拿个奖已经足够了。<br><img src="https://static.blog.homeway.me/blog/image/hackathon-example-2.jpg" alt="剑气决斗"></p>
+<p>还有各种硬件游戏，例如：SMAUSH，将刷牙变成一场游戏。主要思路是在牙刷中放入传感器，通过蓝牙传输到后台控制端，另一端连接web游戏界面，显示游戏画面，这款游戏也是拿奖作品。这个游戏和上一个很相似，画面感很足，很容易吸引评委，想想评委坐在那里听一堆无聊的解说也是很烦的。<br><img src="https://static.blog.homeway.me/blog/image/hackathon-example-3.jpg" alt="SMAUSH"></p>
+<p>还有做一款味蕾应用，通过传导味蕾来找到交友人群，想法很有意思，创意点很足。这种应用很大的特点就是创意性，给人一种启发，但是演示时候由于味觉第三者谁也没法说什么相同不同，没法证明什么，这点比较遗憾，如果能在结果上面加上修饰，有声音、动画，也可以展示一番。<br><img src="https://static.blog.homeway.me/blog/image/hackathon-example-4.jpg" alt="味蕾"></p>
+<p>下面两个是这次比赛的创意：</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-play-1.jpg" alt=""></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-play-2.jpg" alt=""></p>
 <p>从我参加Hackathon的经历来看，我大部分做的项目都是跟游戏有关，基本上都是带几个队友同时现场再找几个队友。<br>很多时候参加比赛都是破釜沉舟，现场决定idea、现场找队友，因为现场往往会碰到很多很牛逼的队友，下面是我获奖的一些idea：</p>
 <p>2014年6月，在SegmentFault黑客马拉松做了基于Bong手环的传感数据养宠物智能硬件游戏，并获得了Bong手环专项奖；<br>2015年3月，在沪港全球黑客马拉松做了<a href="http://homeway.me/2015/03/30/play-music-through-senses/">基于Raspberry的体感音乐游戏</a>并获得了一等奖；<br>2015年5月，在安空杯黑客马拉松做了<a href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/">基于Raspberry的打地鼠游戏</a>并获得了二等奖；<br>上周参加了全国高校黑客马拉松比赛，做了一个基于心率感应的智能跳舞机，获得了一等奖、心率传感专项奖。</p>
 <p>从2015年华科联创的Unique Hackday没拿奖开始就发现，智能硬件游戏已经遍地开花，想要获奖似乎已经没有那么简单了。<br>越来越多的开发者开始朝着深度学习、虚拟现实、区块链方向转移了，不管怎么说创新性是有了，就是作品的完整度、表现力似乎还不够。</p>
@@ -53,20 +56,25 @@
 <p>很羞耻的放一个这次比赛的视频：</p>
 <video src="https://static.blog.homeway.me/blog/video/2018.05.21-HDU-Hackday-play.mp4" controls="controls"></video>
 
-<p>可以从视频看出来，演讲者很努力把每个部件的功能结合表演者的动作向评委解释清楚，同时表演者故意装出很多肢体动作来吸引评委。</p>
+<p>演讲者很努力把每个部件的功能结合表演者的动作向评委解释清楚，同时表演者故意装出很多肢体动作来吸引评委。</p>
 <hr>
 <h1 id="Game"><a href="#Game" class="headerlink" title="Game"></a>Game</h1><p>接下来说说这场比赛吧，因为还是很有意思的，从一开始到最后都没有太多期待，但是得到太多回馈。<br>比赛当天一个人到现场，没想到具体要做什么、没有很确定的队友，现场找人还被人拒绝，直到后来开始通过经历忽悠才找来队友。<br>有几个队友非常牛逼的，不但名校出身而且大一大二就准备好出国留学的地方了，非常羡慕。</p>
+<p>做的项目是一个智能硬件跳舞机，首先制作跳舞机踏板通过树莓派GPIO接出传感器，同时获取杭州诺朗科技的心率检测仪上的数据，把这个两个输出传输给后端socket后端，后端将这些数据广播给游戏界面客户端，客户端通过心率自动调控游戏速度，同时根据跳舞机踏板信号玩游戏。思路超级简单，基本沿用了我前几年比赛的模型。<br>目前项目已经开放到Github了：<a href="https://github.com/HDU-HackDay/Dance4Me" target="_blank" rel="external">https://github.com/HDU-HackDay/Dance4Me</a></p>
 <p>下面是一些现场照片：</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday.jpg" alt="2点多的现场"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team1.jpg" alt="团队照片1"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team2.jpg" alt="团队照片2"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward1.jpg" alt="获奖照片1"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward2.jpg" alt="获奖照片2"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-game2.jpg" alt="队友在夜间游戏竞技，Hackday最重要的是开心"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-game.jpg" alt="夜间游戏玩得开心也要获奖"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team1.jpg" alt="团队照片，很珍贵"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team2.jpg" alt="团队照片，很珍贵"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward1.jpg" alt="一等奖照片"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward2.jpg" alt="任务获奖照片"></p>
 <hr>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://segmentfault.com/a/1190000000591097" target="_blank" rel="external">SegmentFault 2014黑客马拉松 北京 作品demo</a></li>
 <li><a href="https://segmentfault.com/a/1190000000591097" target="_blank" rel="external">2014 沪港黑客马拉松现场直播 Demo环节</a></li>
 <li><a href="http://www.pingwest.com/2014-shanghai-hk-hackathon/" target="_blank" rel="external">味觉模拟器、牙刷版Wii、无需联网的LBS：黑客马拉松如何改变我们的生活？</a></li>
+<li><a href="http://homeway.me/2015/03/30/play-music-through-senses/">基于树莓派的体感音乐游戏</a></li>
+<li><a href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/">基于Raspberry的打地鼠游戏</a></li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-05-21-talking-about-hackathon"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-05-21-talking-about-hackathon" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/05/21/talking-about-hackathon/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/05/21/talking-about-hackathon/">http://homeway.me/2018/05/21/talking-about-hackathon/</a></h4><blockquote>
