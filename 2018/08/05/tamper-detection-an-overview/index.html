@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Digital Image Tamper Detection An Overview | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Digital Image Tamper Detection An Overview">
+<meta property="og:url" content="http://homeway.me/2018/08/05/tamper-detection-an-overview/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/logo/forensics-logo.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-splicing.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-Iran.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-algorithms.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper1.1.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper2.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-image-processing.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.2.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.3.jpg">
+<meta property="og:updated_time" content="2018-08-08T17:08:59.404Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Digital Image Tamper Detection An Overview">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo/forensics-logo.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <link rel="stylesheet" href="https://static.blog.homeway.me/blog/style.min.css?v=1602255192" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <!-- 评论模块 -->
+  <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">
+
+  <script src="http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js"></script>  
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--
+<div id="site_search" class="main-content-wrap">
+<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="form-control input--xlarge" autofocus="autofocus"/>
+<div id="local-search-result"></div>
+-->
+      <div class="outer">
+        <section id="main"><article id="post-tamper-detection-an-overview" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/08/05/tamper-detection-an-overview/" class="article-date">
+  <time datetime="2018-08-05T13:26:10.000Z" itemprop="datePublished">8月 5 2018</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Digital Image Tamper Detection An Overview
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
+<a id="more"></a>
+<h1 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1.Abstract"></a>1.Abstract</h1><p>图像篡改检测（Tamper Detection）旨在挖掘数字图像的恶意处理，例如删除、添加、复制图像中的对象。</p>
+<p>图像篡改检测在军事防卫、司法鉴定、图像防伪等领域有重要的价值。</p>
+<p>本文旨在通过分析近年来基于深度学习的图像篡改检测发展，总结该方向主要发展方向、可以探索方向。</p>
+<hr>
+<h1 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2.Introduction"></a>2.Introduction</h1><p>图像篡改检测从篡改方法上可以分为：</p>
+<ul>
+<li>（1）图像接片检测（Image Splicing Detection）</li>
+<li><p>（2）图像复制-黏贴检测（Copy-Move Detection）</p>
+</li>
+<li><p>（3）图像对象移除检测（Object Removal Detection）</p>
+</li>
+</ul>
+<p>（1）和（2）有本质区别，（1）主要通过截取图像A的某个物体到图像B，并检测图像B是否被篡改；（2）主要用过复制图像A的某个物体，移动到另外一个位置，并检测图像A是否被篡改，即（1）的复制物体来自于多个图像，（2）的物体对象来自同一张图像。</p>
+<p>关于（1）的例子如下，图像中的第三张图来源于原图像A，原图像B中防火栓标志的合成：</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-splicing.jpg" alt="Image Splicing"></p>
+<p>关于（2）Copy-Move的比较有名的例子是伊朗导弹齐射伪造事件。</p>
+<p>2008年伊朗不断发布该国“试射多枚远程导弹”的消息，随后《纽约时报》发现，这张有四枚导弹腾空而起的照片存在被“人为修改”的痕迹：其中一枚导弹（从小图2右侧数第二枚）很可能是照片上其他两枚导弹“PS后的产物”。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-Iran.jpg" alt="Iran fake image"></p>
+<p>目前，对于（1）、（2）检测的算法比较多，而针对（3）的算法比较少见，接下来我们将分析最近几年使用深度学习解决上面几个问题论文，从而分析该领域的当前现状、未来方向。</p>
+<hr>
+<h1 id="3-Related-Work"><a href="#3-Related-Work" class="headerlink" title="3.Related Work"></a>3.Related Work</h1><p>关于上述几种篡改方法，图像篡改检测算法大致可以分为传统算法和深度学习算法，传统算法的特点是手工提取特征、建立模型、分析特征并分类；深度学习的算法主要通过使用CNN模型，提取特征，并通过Softmax分类，实现端到端（end-to-end）自适应学习模式。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-algorithms.png" alt="基于深度学习模型数字图像篡改分析架构(右)和基于手工制作功能的传统数字图像篡改分析架构(左)。&lt;br&gt;右侧流程图中的向上和向下箭头显示前向和后向传播方向。"></p>
+<p>[2] 总结了这两种算法的框架模型，基于深度学习模型数字图像篡改分析架构将像素作为输入，并且由三种层组成：图像处理层，用于特征表示的若干卷积层，以及用于分类的若干完全连接的层。端到端自动检测系统最大的优势是自动学习参数。接下来我们分析下近年来几篇基于深度学习模型数字图像篡改分析论文。</p>
+<hr>
+<p><br><br></p>
+<h4 id="1-A-deep-learning-approach-to-detection-of-splicing-and-copy-move-forgeries-in-images-3"><a href="#1-A-deep-learning-approach-to-detection-of-splicing-and-copy-move-forgeries-in-images-3" class="headerlink" title="1.A deep learning approach to detection of splicing and copy-move forgeries in images [3]"></a>1.A deep learning approach to detection of splicing and copy-move forgeries in images [3]</h4><p>这篇论文是2016年发表在WIFS，关于深度学习模型数字图像篡改的开山之作。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper1.1.jpg" alt="10层卷积层的架构模型"></p>
+<p>文章提出了一种基于深度学习技术的伪造图像伪造检测方法，该方法包含10层卷积层，其中第一层为SRM富模型（spatial rich model）[4] 预处理层，有助于加快网络收敛；输出使用SVM二分类；中间层卷积核多为3x3。</p>
+<p>早年算法，整体来看比较中规中矩，只能做到检测是否篡改（Detection ），无法做到定位（Localization ），同时使用的是CASIA v1.0、CASIA v2.0、Columbia gray DVMM 这三个数据库完成实验。<br></p>
+<h4 id="2-Detection-and-Localization-of-Image-Forgeries-using-Resampling-Features-and-Deep-Learning-5"><a href="#2-Detection-and-Localization-of-Image-Forgeries-using-Resampling-Features-and-Deep-Learning-5" class="headerlink" title="2.Detection and Localization of Image Forgeries using Resampling Features and Deep Learning [5]"></a>2.Detection and Localization of Image Forgeries using Resampling Features and Deep Learning [5]</h4><p>这篇文章是2017年发表在CVPR Workshop，使用重采样算法实现篡改检测的算法。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper2.jpg" alt="用于检测和本地化数字操作的端到端框架"></p>
+<p>算法主要包含2个步骤，第一，通过重叠的图像块计算重采样随机特征；第二，使用深度学习分类器和高斯条件随机场模型来创建热力图，从而定位篡改区域。算法先将图像块重叠堆放，然后使用CNN特诊提取，接着建立统计学模型，根据统计直方分布，分析篡改小块的位置。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-image-processing.jpg" alt="数字图像成像过程"></p>
+<p>上图显示了数字图像成像过程，其中成像过程需要经历：模拟信号处理、数字信号处理，其中模拟信号处理包含镜头偏移、CFA插值等；数字信号处理包含了去马赛克、伽马矫正、重采样等等，而不同的图像的重采样程度是不同的，经过篡改必然导致篡改部位重采样率的差异，文正的算法正是源于这个原理。<br></p>
+<h4 id="3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6"><a href="#3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6" class="headerlink" title="3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]"></a>3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]</h4><p>这篇文章也是发表在CVPR Workshop的基于CNN篡改检测、定位的文章。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="图像I被分成块P(ij)。 每个补丁由通过CNN提取的特征向量f(ij)和置信度得分Q(ij)描述。&lt;br&gt;自定义聚类算法产生篡改掩码预测M，其也用于检测。"></p>
+<p>文章提出了一种图像篡改检测和定位算法，利用不同相机模型留在图像上的特征足迹，最直接的原理即是检测图像的拍摄相机来源，由于不同型号相机拍摄的照片所携带的模式噪声不一样，以此鉴定图像是否篡改、篡改定位。</p>
+<p>这篇文章是作者 Bondi 在2016年发表[7]的工作的延续，通过建立CNN+SVM模型，鉴定数字图像拍摄来源，但是存在一定的缺陷，即是相同型号相机生成的图像篡改无法被检测出来。算法的基本模型考虑到了两层因数：第一，CNN检测到的部位是否被篡改（即f(i, j)）；第二，我们知道纹理度低的部位的篡改明显存在误差，因此，作者根据纹理度计算公式对每个图像小块计算置信度因子（即Q(i, j)），最后将两个计算结果整合起来进行分类。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.2.png" alt="纹理度转换置信度计算公式"></p>
+<p>算法使用Dresden图像库，该数据集由来自26种不同相机模型的超过16k图像组成，描绘了总共83个场景，关于篡改图像如何制作，本文作者没有解释。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.3.jpg" alt="所提出的定位算法的伪造图像和中间输出的示例，伪造用红色虚线突出显示。&lt;br&gt;K-means检测到的簇被映射到不同的颜色，白色和黑色像素分别代表M的0和1值。"></p>
+<p><br></p>
+<hr>
+<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>简单做个简单总结：</p>
+<ul>
+<li>大部分深度学习算法离不开传统算法的原理，基本上都源于数字图像的成像过程留下的模式噪声；</li>
+<li>老套路依然可以行，传统算法经过改造搬运到深度学习算法中；</li>
+<li>目前算法基本上解决检测是否篡改（Detection ），同时实现定位（Localization ）；</li>
+<li>目前还没有使用深度学习鉴定复制-黏贴（Copy-Move）的算法，基本上都是研究接片检测（Image splicing）；</li>
+</ul>
+<hr>
+<h1 id="5-Reference"><a href="#5-Reference" class="headerlink" title="5. Reference"></a>5. Reference</h1><ul>
+<li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
+<li>[2] Qian, Y., Dong, J., Wang, W., &amp; Tan, T. (2015, March). Deep learning for steganalysis via convolutional neural networks. In <em>Media Watermarking, Security, and Forensics 2015</em> (Vol. 9409, p. 94090J). International Society for Optics and Photonics.</li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7823911/" target="_blank" rel="external">[3] Rao, Y., &amp; Ni, J. (2016, December). A deep learning approach to detection of splicing and copy-move forgeries in images. In <em>Information Forensics and Security (WIFS), 2016 IEEE International Workshop on</em> (pp. 1-6). IEEE.</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/6197267/" target="_blank" rel="external">[4] J. Fridrich, and J. Kodovsky ́, “Rich models for steganalysis of digital images,” IEEE Transactions on Information Forensics and Security, vol. 7, no. 3, pp. 868-882, June 2012. </a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/8014969/" target="_blank" rel="external">[5] Bunk, J., Bappy, J. H., Mohammed, T. M., Nataraj, L., Flenner, A., Manjunath, B. S., … &amp; Peterson, L. (2017, July). Detection and localization of image forgeries using resampling features and deep learning. In <em>Computer Vision and Pattern Recognition Workshops (CVPRW), 2017 IEEE Conference on</em>(pp. 1881-1889). IEEE.</a></li>
+<li><a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6] Bondi, L., Lameri, S., Guera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017, July). Tampering Detection and Localization Through Clustering of Camera-Based CNN Features. In <em>CVPR Workshops</em> (pp. 1855-1864).</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7] Bondi, L., Baroffio, L., Güera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017). First steps toward camera model identification with convolutional neural networks. <em>IEEE Signal Processing Letters</em>, <em>24</em>(3), 259-263.</a></li>
+</ul>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/08/05/tamper-detection-an-overview"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">http://homeway.me/2018/08/05/tamper-detection-an-overview</a></h4><blockquote>
+<p>by grasses 2018.08.05</p>
+</blockquote>
+
+      
+    </div>
+    
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2018/08/05/tamper-detection-an-overview/" data-id="cjkle45nb006hfo2clzfoq7fh" data-title="Digital Image Tamper Detection An Overview" class="article-share-link">Share</a>
+      <!--  -->
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
+
+    </footer>
+
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/05/21/talking-about-hackathon/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Talking about Hackathon</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!--评论模块-->
+
+  <section id="comments">
+    <div id="comments"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/05/tamper-detection-an-overview/">Digital Image Tamper Detection An Overview</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/08/setup-gpu-for-tensorflow/">Deep Learning - Setup GPU for tensorflow</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 id="widget-title" class="widget-title"></h3>
+    <div id="widget-content" class="widget"></div>
+  </div>
+
+
+
+<script>
+var title = "";
+var content = "";
+if (remote_ip_info.city) {
+	// 国内用户方 weibo
+	title = 'Weibo';
+	content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
+} else {
+	// 国外用户放 instagram
+	title = 'Instagram';
+	content = '<iframe src="https://snapwidget.com/embed/422453" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%; height:300px;"></iframe>';
+}
+(document.getElementById('widget-title')).innerHTML += title;
+(document.getElementById('widget-content')).innerHTML += content;
+</script>
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+
+<!--评论模块-->
+<script>
+var permalink = 'http://homeway.me/2018/08/05/tamper-detection-an-overview/';
+
+jQuery.getScript("http://int.dpool.sina.com.cn/iplookup/iplookup.php?format=js",function(){
+    var province = remote_ip_info["province"];
+    var city = remote_ip_info["city"];
+    var scriptHtml = document.createElement('script');
+    scriptHtml.type = 'text/javascript';
+    scriptHtml.async = true;
+
+    /*
+    if (province && city) {
+        // 国内用户用评论系统
+        scriptHtml.src = 'null';
+    } else {
+        // 国外用户用disqus评论系统
+        var disqus_shortname = 'homeway';
+        var disqus_url = 'http://homeway.me/2018/08/05/tamper-detection-an-overview/';
+        scriptHtml.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    }
+     (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(scriptHtml);
+     */
+});
+</script>
+
+
+<!--七牛静态文件加速-->
+<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--
+<script>
+var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            if (!$input) return;
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                var numOfPostFound = 0; // keeping track of # of result
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {//&& data_content != ''
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        numOfPostFound += 1; // keeping track of # of results
+                        str += "<li style='color:white;'><a style='color:white;' href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        /*
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 100;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        */
+                        str += "</li>";
+                    }
+                });
+                str += "</ul>";
+                // attaching a summary of searching result
+                if (numOfPostFound > 0) {
+                    if (numOfPostFound > 1) {
+                        summary = numOfPostFound + " posts found";
+                    } else {
+                        summary = numOfPostFound + " post found";
+                    }
+                } else {
+                    summary = "Nothing found";
+                }
+                var summary = "<p class=\"text-xlarge text-color-base archieve-result search-result-summary\">" + summary + "</ul>";
+                $resultContent.innerHTML = summary + str;
+                console.log($resultContent);
+            });
+        }
+    });
+}
+     var search_path = "search.xml";
+     if (search_path.length == 0) {
+      search_path = "search.xml";
+     }
+     var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+-->
+
+<script src="http://comment.blog.seclab.org.cn/js/static.js"></script>
+<script>
+LaraDuoshuo.APP_KEY = 'base64:x8zNmv3JSS79l7S9YgPB1MO4drZJ5HIUmOu1VDN9hUA=';
+LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
+</script>
+
+
+<!--七牛静态文件加速-->
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

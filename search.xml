@@ -4,6 +4,79 @@
   
     
     <entry>
+      <title><![CDATA[Digital Image Tamper Detection An Overview]]></title>
+      <url>http://homeway.me/2018/08/05/tamper-detection-an-overview/</url>
+      <content type="html"><![CDATA[<p><br></p>
+<p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
+<a id="more"></a>
+<h1 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1.Abstract"></a>1.Abstract</h1><p>图像篡改检测（Tamper Detection）旨在挖掘数字图像的恶意处理，例如删除、添加、复制图像中的对象。</p>
+<p>图像篡改检测在军事防卫、司法鉴定、图像防伪等领域有重要的价值。</p>
+<p>本文旨在通过分析近年来基于深度学习的图像篡改检测发展，总结该方向主要发展方向、可以探索方向。</p>
+<hr>
+<h1 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2.Introduction"></a>2.Introduction</h1><p>图像篡改检测从篡改方法上可以分为：</p>
+<ul>
+<li>（1）图像接片检测（Image Splicing Detection）</li>
+<li><p>（2）图像复制-黏贴检测（Copy-Move Detection）</p>
+</li>
+<li><p>（3）图像对象移除检测（Object Removal Detection）</p>
+</li>
+</ul>
+<p>（1）和（2）有本质区别，（1）主要通过截取图像A的某个物体到图像B，并检测图像B是否被篡改；（2）主要用过复制图像A的某个物体，移动到另外一个位置，并检测图像A是否被篡改，即（1）的复制物体来自于多个图像，（2）的物体对象来自同一张图像。</p>
+<p>关于（1）的例子如下，图像中的第三张图来源于原图像A，原图像B中防火栓标志的合成：</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-splicing.jpg" alt="Image Splicing"></p>
+<p>关于（2）Copy-Move的比较有名的例子是伊朗导弹齐射伪造事件。</p>
+<p>2008年伊朗不断发布该国“试射多枚远程导弹”的消息，随后《纽约时报》发现，这张有四枚导弹腾空而起的照片存在被“人为修改”的痕迹：其中一枚导弹（从小图2右侧数第二枚）很可能是照片上其他两枚导弹“PS后的产物”。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-Iran.jpg" alt="Iran fake image"></p>
+<p>目前，对于（1）、（2）检测的算法比较多，而针对（3）的算法比较少见，接下来我们将分析最近几年使用深度学习解决上面几个问题论文，从而分析该领域的当前现状、未来方向。</p>
+<hr>
+<h1 id="3-Related-Work"><a href="#3-Related-Work" class="headerlink" title="3.Related Work"></a>3.Related Work</h1><p>关于上述几种篡改方法，图像篡改检测算法大致可以分为传统算法和深度学习算法，传统算法的特点是手工提取特征、建立模型、分析特征并分类；深度学习的算法主要通过使用CNN模型，提取特征，并通过Softmax分类，实现端到端（end-to-end）自适应学习模式。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-algorithms.png" alt="基于深度学习模型数字图像篡改分析架构(右)和基于手工制作功能的传统数字图像篡改分析架构(左)。&lt;br&gt;右侧流程图中的向上和向下箭头显示前向和后向传播方向。"></p>
+<p>[2] 总结了这两种算法的框架模型，基于深度学习模型数字图像篡改分析架构将像素作为输入，并且由三种层组成：图像处理层，用于特征表示的若干卷积层，以及用于分类的若干完全连接的层。端到端自动检测系统最大的优势是自动学习参数。接下来我们分析下近年来几篇基于深度学习模型数字图像篡改分析论文。</p>
+<hr>
+<p><br><br></p>
+<h4 id="1-A-deep-learning-approach-to-detection-of-splicing-and-copy-move-forgeries-in-images-3"><a href="#1-A-deep-learning-approach-to-detection-of-splicing-and-copy-move-forgeries-in-images-3" class="headerlink" title="1.A deep learning approach to detection of splicing and copy-move forgeries in images [3]"></a>1.A deep learning approach to detection of splicing and copy-move forgeries in images [3]</h4><p>这篇论文是2016年发表在WIFS，关于深度学习模型数字图像篡改的开山之作。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper1.1.jpg" alt="10层卷积层的架构模型"></p>
+<p>文章提出了一种基于深度学习技术的伪造图像伪造检测方法，该方法包含10层卷积层，其中第一层为SRM富模型（spatial rich model）[4] 预处理层，有助于加快网络收敛；输出使用SVM二分类；中间层卷积核多为3x3。</p>
+<p>早年算法，整体来看比较中规中矩，只能做到检测是否篡改（Detection ），无法做到定位（Localization ），同时使用的是CASIA v1.0、CASIA v2.0、Columbia gray DVMM 这三个数据库完成实验。<br></p>
+<h4 id="2-Detection-and-Localization-of-Image-Forgeries-using-Resampling-Features-and-Deep-Learning-5"><a href="#2-Detection-and-Localization-of-Image-Forgeries-using-Resampling-Features-and-Deep-Learning-5" class="headerlink" title="2.Detection and Localization of Image Forgeries using Resampling Features and Deep Learning [5]"></a>2.Detection and Localization of Image Forgeries using Resampling Features and Deep Learning [5]</h4><p>这篇文章是2017年发表在CVPR Workshop，使用重采样算法实现篡改检测的算法。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper2.jpg" alt="用于检测和本地化数字操作的端到端框架"></p>
+<p>算法主要包含2个步骤，第一，通过重叠的图像块计算重采样随机特征；第二，使用深度学习分类器和高斯条件随机场模型来创建热力图，从而定位篡改区域。算法先将图像块重叠堆放，然后使用CNN特诊提取，接着建立统计学模型，根据统计直方分布，分析篡改小块的位置。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-image-processing.jpg" alt="数字图像成像过程"></p>
+<p>上图显示了数字图像成像过程，其中成像过程需要经历：模拟信号处理、数字信号处理，其中模拟信号处理包含镜头偏移、CFA插值等；数字信号处理包含了去马赛克、伽马矫正、重采样等等，而不同的图像的重采样程度是不同的，经过篡改必然导致篡改部位重采样率的差异，文正的算法正是源于这个原理。<br></p>
+<h4 id="3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6"><a href="#3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6" class="headerlink" title="3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]"></a>3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]</h4><p>这篇文章也是发表在CVPR Workshop的基于CNN篡改检测、定位的文章。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="图像I被分成块P(ij)。 每个补丁由通过CNN提取的特征向量f(ij)和置信度得分Q(ij)描述。&lt;br&gt;自定义聚类算法产生篡改掩码预测M，其也用于检测。"></p>
+<p>文章提出了一种图像篡改检测和定位算法，利用不同相机模型留在图像上的特征足迹，最直接的原理即是检测图像的拍摄相机来源，由于不同型号相机拍摄的照片所携带的模式噪声不一样，以此鉴定图像是否篡改、篡改定位。</p>
+<p>这篇文章是作者 Bondi 在2016年发表[7]的工作的延续，通过建立CNN+SVM模型，鉴定数字图像拍摄来源，但是存在一定的缺陷，即是相同型号相机生成的图像篡改无法被检测出来。算法的基本模型考虑到了两层因数：第一，CNN检测到的部位是否被篡改（即f(i, j)）；第二，我们知道纹理度低的部位的篡改明显存在误差，因此，作者根据纹理度计算公式对每个图像小块计算置信度因子（即Q(i, j)），最后将两个计算结果整合起来进行分类。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.2.png" alt="纹理度转换置信度计算公式"></p>
+<p>算法使用Dresden图像库，该数据集由来自26种不同相机模型的超过16k图像组成，描绘了总共83个场景，关于篡改图像如何制作，本文作者没有解释。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.3.jpg" alt="所提出的定位算法的伪造图像和中间输出的示例，伪造用红色虚线突出显示。&lt;br&gt;K-means检测到的簇被映射到不同的颜色，白色和黑色像素分别代表M的0和1值。"></p>
+<p><br></p>
+<hr>
+<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>简单做个简单总结：</p>
+<ul>
+<li>大部分深度学习算法离不开传统算法的原理，基本上都源于数字图像的成像过程留下的模式噪声；</li>
+<li>老套路依然可以行，传统算法经过改造搬运到深度学习算法中；</li>
+<li>目前算法基本上解决检测是否篡改（Detection ），同时实现定位（Localization ）；</li>
+<li>目前还没有使用深度学习鉴定复制-黏贴（Copy-Move）的算法，基本上都是研究接片检测（Image splicing）；</li>
+</ul>
+<hr>
+<h1 id="5-Reference"><a href="#5-Reference" class="headerlink" title="5. Reference"></a>5. Reference</h1><ul>
+<li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
+<li>[2] Qian, Y., Dong, J., Wang, W., &amp; Tan, T. (2015, March). Deep learning for steganalysis via convolutional neural networks. In <em>Media Watermarking, Security, and Forensics 2015</em> (Vol. 9409, p. 94090J). International Society for Optics and Photonics.</li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7823911/" target="_blank" rel="external">[3] Rao, Y., &amp; Ni, J. (2016, December). A deep learning approach to detection of splicing and copy-move forgeries in images. In <em>Information Forensics and Security (WIFS), 2016 IEEE International Workshop on</em> (pp. 1-6). IEEE.</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/6197267/" target="_blank" rel="external">[4] J. Fridrich, and J. Kodovsky ́, “Rich models for steganalysis of digital images,” IEEE Transactions on Information Forensics and Security, vol. 7, no. 3, pp. 868-882, June 2012. </a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/8014969/" target="_blank" rel="external">[5] Bunk, J., Bappy, J. H., Mohammed, T. M., Nataraj, L., Flenner, A., Manjunath, B. S., … &amp; Peterson, L. (2017, July). Detection and localization of image forgeries using resampling features and deep learning. In <em>Computer Vision and Pattern Recognition Workshops (CVPRW), 2017 IEEE Conference on</em>(pp. 1881-1889). IEEE.</a></li>
+<li><a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6] Bondi, L., Lameri, S., Guera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017, July). Tampering Detection and Localization Through Clustering of Camera-Based CNN Features. In <em>CVPR Workshops</em> (pp. 1855-1864).</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7] Bondi, L., Baroffio, L., Güera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017). First steps toward camera model identification with convolutional neural networks. <em>IEEE Signal Processing Letters</em>, <em>24</em>(3), 259-263.</a></li>
+</ul>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/08/05/tamper-detection-an-overview"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">http://homeway.me/2018/08/05/tamper-detection-an-overview</a></h4><blockquote>
+<p>by grasses 2018.08.05</p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[Talking about Hackathon]]></title>
       <url>http://homeway.me/2018/05/21/talking-about-hackathon/</url>
       <content type="html"><![CDATA[<p><br><br><img src="https://static.blog.homeway.me/blog/logo/hackathon-logo.png" alt="Hackathon"><br><a id="more"></a></p>
