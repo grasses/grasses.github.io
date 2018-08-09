@@ -403,7 +403,7 @@ ERROR Plugin load failed: hexo-server
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/07/10/rebuild-osx-environment/" data-id="cjklwqbqs003dyg2c3i2h2lof" data-title="MAC重装各种的痛点" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/07/10/rebuild-osx-environment/" data-id="cjklx38b1003d2o2cuqjjrvvl" data-title="MAC重装各种的痛点" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mac/">Mac</a></li></ul>
@@ -519,32 +519,24 @@ ERROR Plugin load failed: hexo-server
   
     
   <div class="widget-wrap">
-    <h3 id="widget-title" class="widget-title"></h3>
-    <div id="widget-content" class="widget"></div>
+  	<!-- weibo加载慢，放在footer部分 -->
+    <h3 id="weibo-widget-title" class="widget-title"></h3>
+    <div id="weibo-widget-content" class="widget"></div>
   </div>
 
-
-
-<script>
-var title = "";
-var content = "";
-// 国内用户方 weibo
-title = 'Weibo';
-content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
-(document.getElementById('widget-title')).innerHTML += title;
-(document.getElementById('widget-content')).innerHTML += content;
-
-/**
-// 国外用户放 instagram
-title = 'Instagram';
-content = '<iframe src="https://snapwidget.com/embed/422453" class="snapwidget-widget" allowTransparency="true" frameborder="0" scrolling="no" style="border:none; overflow:hidden; width:100%; height:300px;"></iframe>';
-*/
-</script>
   
 </aside>
         
       </div>
-      <footer id="footer">
+      <script>
+// 微博加载最慢，放最后
+title = 'Weibo';
+content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
+(document.getElementById('weibo-widget-title')).innerHTML += title;
+(document.getElementById('weibo-widget-content')).innerHTML += content;
+</script>
+
+<footer id="footer">
   
   <div class="outer">
     <div id="footer-info" class="inner">
@@ -572,6 +564,7 @@ content = '<iframe src="https://snapwidget.com/embed/422453" class="snapwidget-w
   
 </nav>
     <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+
 
 <!--七牛静态文件加速-->
 <link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
