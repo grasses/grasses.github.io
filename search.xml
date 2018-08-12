@@ -46,11 +46,17 @@
 <h4 id="3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6"><a href="#3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6" class="headerlink" title="3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]"></a>3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]</h4><p>这篇文章也是发表在CVPR Workshop的基于CNN篡改检测、定位的文章。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="图像I被分成块P(ij)。 每个补丁由通过CNN提取的特征向量f(ij)和置信度得分Q(ij)描述。&lt;br&gt;自定义聚类算法产生篡改掩码预测M，其也用于检测。"></p>
 <p>文章提出了一种图像篡改检测和定位算法，利用不同相机模型留在图像上的特征足迹，最直接的原理即是检测图像的拍摄相机来源，由于不同型号相机拍摄的照片所携带的模式噪声不一样，以此鉴定图像是否篡改、篡改定位。</p>
-<p>这篇文章是作者 Bondi 在2016年发表[7]的工作的延续，通过建立CNN+SVM模型，鉴定数字图像拍摄来源，但是存在一定的缺陷，即是相同型号相机生成的图像篡改无法被检测出来。算法的基本模型考虑到了两层因数：第一，CNN检测到的部位是否被篡改（即f(i, j)）；第二，我们知道纹理度低的部位的篡改明显存在误差，因此，作者根据纹理度计算公式对每个图像小块计算置信度因子（即Q(i, j)），最后将两个计算结果整合起来进行分类。</p>
+<p>这篇文章是作者 Bondi 在2016年发表<a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7]</a>的工作的延续，<a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7]</a>通过建立CNN+SVM模型，鉴定数字图像拍摄来源，但是存在一定的缺陷，即是相同型号相机生成的图像篡改无法被检测出来。算法的基本模型考虑到了两层因数：第一，CNN检测到的部位是否被篡改（即f(i, j)）；第二，我们知道纹理度低的部位的篡改明显存在误差，因此，作者根据纹理度计算公式对每个图像小块计算置信度因子（即Q(i, j)），其中Q(i, j)定义为：</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.2.png" alt="纹理度转换置信度计算公式"></p>
-<p>算法使用Dresden图像库，该数据集由来自26种不同相机模型的超过16k图像组成，描绘了总共83个场景，关于篡改图像如何制作，本文作者没有解释。</p>
+<p>最后将两个计算结果合成后得到篡改部位的置信度热力图，然后经过K-mean聚类、概率模型去噪得到最终的结果：</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.3.jpg" alt="所提出的定位算法的伪造图像和中间输出的示例，伪造用红色虚线突出显示。&lt;br&gt;K-means检测到的簇被映射到不同的颜色，白色和黑色像素分别代表M的0和1值。"></p>
+<p>算法使用Dresden图像库，该数据集由来自26种不同相机模型的超过16k图像组成，描绘了总共83个场景，关于篡改图像如何制作，本文作者没有解释。这篇文章做得相对完整，从图像切片（patches）-&gt;CNN特征提取/Q纹理度换算置信度-&gt;整合块热力图-&gt;除噪，每个步骤都很扎实。</p>
 <p><br></p>
+<h4 id="4-Reliability-Map-Estimation-For-CNN-Based-Camera-Model-Attribution-8"><a href="#4-Reliability-Map-Estimation-For-CNN-Based-Camera-Model-Attribution-8" class="headerlink" title="4.Reliability Map Estimation For CNN-Based Camera Model Attribution [8]"></a>4.Reliability Map Estimation For CNN-Based Camera Model Attribution [8]</h4><p>这篇文章是 <a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7]</a>经过简单修改后重新发的文章，本质上没有很大的变化。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper4.1.jpg" alt="Block diagram of the proposed approach. Image I is split into patches. Each patch Pk, k∈[0, K] is processed by the proposed CNN (composed by Mcam and Mip) to obtain a reliability score gk and a camera model estimate."></p>
+<p>文章提出了一个置信度（Reliability）图模型，将补丁块（Patch）放入CNN先训练模型、提取特征，然后得到热力图，得到最终的置信度热力图后除噪过滤出篡改部位。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper4.2.jpg" alt="Accuracy curves on training (Dip) and validation T(DV) datasets using Pre-Trained and Transfer strategies"></p>
+<p>算法主要分为两部分，CNN特征提取、置信度图去噪，其中CNN特征提取使用了预训练（Pre-Trained）方法和迁移学习方法（Transfer），上面是算法在训练集、校验集的正确率。</p>
 <hr>
 <h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>简单做个简单总结：</p>
 <ul>
@@ -68,6 +74,7 @@
 <li><a href="https://ieeexplore.ieee.org/abstract/document/8014969/" target="_blank" rel="external">[5] Bunk, J., Bappy, J. H., Mohammed, T. M., Nataraj, L., Flenner, A., Manjunath, B. S., … &amp; Peterson, L. (2017, July). Detection and localization of image forgeries using resampling features and deep learning. In <em>Computer Vision and Pattern Recognition Workshops (CVPRW), 2017 IEEE Conference on</em>(pp. 1881-1889). IEEE.</a></li>
 <li><a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6] Bondi, L., Lameri, S., Guera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017, July). Tampering Detection and Localization Through Clustering of Camera-Based CNN Features. In <em>CVPR Workshops</em> (pp. 1855-1864).</a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7] Bondi, L., Baroffio, L., Güera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017). First steps toward camera model identification with convolutional neural networks. <em>IEEE Signal Processing Letters</em>, <em>24</em>(3), 259-263.</a></li>
+<li><a href="https://arxiv.org/abs/1805.01946" target="_blank" rel="external">[8] Güera, D., Yarlagadda, S. K., Bestagini, P., Zhu, F., Tubaro, S., &amp; Delp, E. J. (2018). Reliability Map Estimation For CNN-Based Camera Model Attribution. *arXiv preprint arXiv:1805.01946.</a></li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/08/05/tamper-detection-an-overview"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">http://homeway.me/2018/08/05/tamper-detection-an-overview</a></h4><blockquote>
