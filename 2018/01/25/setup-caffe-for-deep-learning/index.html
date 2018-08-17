@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>Deep Learning - Installing Caffe on Ubuntu | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="Deep Learning - Installing Caffe on Ubuntu">
+<meta property="og:url" content="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png">
+<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/image/2018-01-25-Caffe-successfully-installed.png.png">
+<meta property="og:updated_time" content="2018-01-28T08:07:50.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Deep Learning - Installing Caffe on Ubuntu">
+<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <link rel="stylesheet" href="https://static.blog.homeway.me/blog/style.min.css?v=1602255192" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <!-- 评论模块 -->
+  <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">  
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--
+<div id="site_search" class="main-content-wrap">
+<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="form-control input--xlarge" autofocus="autofocus"/>
+<div id="local-search-result"></div>
+-->
+      <div class="outer">
+        <section id="main"><article id="post-setup-caffe-for-deep-learning" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/25/setup-caffe-for-deep-learning/" class="article-date">
+  <time datetime="2018-01-24T18:01:10.000Z" itemprop="datePublished">1月 25 2018</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Machine-Learning/">Machine Learning</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Deep Learning - Installing Caffe on Ubuntu
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br><br><img src="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png" alt="Caffe"><br><a id="more"></a></p>
+<p>Recently, I want to try another deep learning framework instead of tensorflow.<br>I find Caffe (Convolutional Architecture for Fast Feature Embedding), which is another deep learning framework, originally developed at UC Berkeley, is easy to handle. There are still a bunch of troubles, the biggest one is the environment of installation. </p>
+<p>Many developers are complaining about the complex dependence of Caffe environment, I try it today, it really runs into many problems.<br>In this tutorial, I mainly talke about how to build Caffe environment on 64-bit Ubuntu 16.04 Linux.</p>
+<p>In Caffe official home page, we can find the installation tutorial: <a href="http://caffe.berkeleyvision.org/install_apt.html" target="_blank" rel="external">http://caffe.berkeleyvision.org/install_apt.html</a>,<br>which still remaining a stack of problems for different system environments.<br>In order to install Caffe, we need to prepare some dependencies softwares including: libgflags, libatlas, libgoogle-glog, libmdb, python-dev,  while for GPU support, we need to extra install Nvidia driver, cuDNN, opencv3+.<br>After successfully installing those packages, we also need to modify the <code>Makefile.config</code> to tell the compiler where to find it.</p>
+<hr>
+<h1 id="1-General-dependencies"><a href="#1-General-dependencies" class="headerlink" title="1.General dependencies"></a>1.General dependencies</h1><p>First of all, check our ubuntue apt-get source list is updated:</p>
+<pre><code>sudo apt-get update -y
+</code></pre><p>Next, following installation tutorial of home page, we may install the dependencies:</p>
+<pre><code>sudo apt-get install python-dev libprotobuf-dev libleveldb-dev libsnappy-dev libopencv-dev libhdf5-serial-dev protobuf-compiler  -y
+sudo apt-get install --no-install-recommends libboost-all-dev  -y
+</code></pre><hr>
+<h1 id="2-Install-Caffe-package"><a href="#2-Install-Caffe-package" class="headerlink" title="2.Install Caffe package"></a>2.Install Caffe package</h1><p>Secondly, clone Caffe repository, and make a copy of file Makefile.config.example:</p>
+<pre><code>git clone https://github.com/BVLC/caffe
+cd caffe
+cp Makefile.config.example Makefile.config
+</code></pre><p>Install basic python dependencies:</p>
+<pre><code>sudo pip install numpy scikit-image protobuf
+cd python
+for req in $(cat requirements.txt); do sudo pip install $req; done
+cd ../
+</code></pre><p>To this step, we have installed all dependencies for Caffe, we shall tell compiler where to find the package next step.<br>Edit <code>Makefile.config</code> just for cpu support here, if you want to make it supporting gpu, please switch to Step-3:</p>
+<pre><code>➜  $: vim Makefile.config
+...
+# cuDNN acceleration switch (uncomment to build with cuDNN).
+USE_CUDNN := 0
+# CPU-only switch (uncomment to build without GPU support).
+CPU_ONLY := 1
+...
+# Change INCLUDE_DIRS to add hdf5 files, if you have problem with hdf5.h package, please see Step-4.3.
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial
+...
+#: Change python include package path.
+PYTHON_INCLUDE := /usr/include/python2.7 \
+    /usr/local/lib/python2.7/dist-packages/numpy/core/include
+...
+</code></pre><p>After check everything is installed, we begin to compile Caffe, for any fatal error, please see Step-4:</p>
+<pre><code>make all
+</code></pre><p>If no error occur, just to test:</p>
+<pre><code>make test &amp;&amp; make runtest
+</code></pre><p>We shall see the successful interface like this:<br><img src="http://xiaocao.u.qiniudn.com/blog/image/2018-01-25-Caffe-successfully-installed.png.png" alt="Successful installed Caffe"></p>
+<hr>
+<h1 id="3-Setup-for-GPU-supporting"><a href="#3-Setup-for-GPU-supporting" class="headerlink" title="3.Setup for GPU supporting"></a>3.Setup for GPU supporting</h1><p>To make our Caffe supporting GPU, we shall install Nvidia development toolkit at first, tutorial of installation please see: <a href="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/">http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</a><br>Next is opencv3+: <a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/" target="_blank" rel="external">https://www.learnopencv.com/install-opencv3-on-ubuntu/</a></p>
+<p>After a series of installation steps, just edit <code>Makefile.config</code> for compiling:</p>
+<pre><code>➜  $: vim Makefile.config
+...
+# cuDNN acceleration switch (uncomment to build with cuDNN).
+USE_CUDNN := 1
+# CPU-only switch (uncomment to build without GPU support).
+CPU_ONLY := 0
+...
+# CUDA directory contains bin/ and lib/ directories that we need.
+CUDA_DIR := /usr/local/cuda
+...
+# Uncomment if you&#39;re using OpenCV 3
+OPENCV_VERSION := 3
+...
+# Change INCLUDE_DIRS to add hdf5 files, if you have problem with hdf5.h package, please see Step-4.3.
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial
+...
+#: Change python include package path.
+PYTHON_INCLUDE := /usr/include/python2.7 \
+    /usr/local/lib/python2.7/dist-packages/numpy/core/include
+...
+</code></pre><p>Everything is ok, just wait for successful testing in screen:</p>
+<pre><code>make all
+make test &amp;&amp; make runtest
+</code></pre><hr>
+<h1 id="4-Fix-bugs"><a href="#4-Fix-bugs" class="headerlink" title="4.Fix bugs"></a>4.Fix bugs</h1><p>Make a summary, here lists some common mistakes and solutions, mostly due to missing packages or packages not found by compiler, just install it and tell compiler.</p>
+<h2 id="4-1-gflags-not-found"><a href="#4-1-gflags-not-found" class="headerlink" title="4.1 gflags not found"></a>4.1 gflags not found</h2><p>Error description:</p>
+<pre><code>PROTOC src/caffe/proto/caffe.proto
+CXX .build_release/src/caffe/proto/caffe.pb.cc
+CXX src/caffe/layer.cpp
+In file included from ./include/caffe/blob.hpp:8:0,
+                 from ./include/caffe/layer.hpp:8,
+                 from src/caffe/layer.cpp:1:
+./include/caffe/common.hpp:5:27: fatal error: gflags/gflags.h: ?????????
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/layer.o&#39; failed
+make: *** [.build_release/src/caffe/layer.o] Error 1
+</code></pre><p>Just install it, and try again:</p>
+<pre><code>sudo apt-get install libgflags-dev -y
+</code></pre><h2 id="4-2-glog-not-found"><a href="#4-2-glog-not-found" class="headerlink" title="4.2 glog not found"></a>4.2 glog not found</h2><p>Error description:</p>
+<pre><code>CXX src/caffe/layer.cpp
+In file included from ./include/caffe/blob.hpp:8:0,
+                 from ./include/caffe/layer.hpp:8,
+                 from src/caffe/layer.cpp:1:
+./include/caffe/common.hpp:6:26: fatal error: glog/logging.h: ?????????
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/layer.o&#39; failed
+make: *** [.build_release/src/caffe/layer.o] Error 1
+</code></pre><p>Install it by apt-get package:</p>
+<pre><code>sudo apt-get install libgoogle-glog-dev liblmdb-dev -y
+</code></pre><p>Or install it from source package, installation wiki from Github: <a href="https://github.com/google/glog/wiki/Installing-Glog-on-Ubuntu-14.04" target="_blank" rel="external">Installing Glog on Ubuntu 14.04</a></p>
+<pre><code>#: remove the old gflags 
+sudo apt-get purge libgflags-dev
+#: download glog from github
+git clone https://github.com/google/glog &amp;&amp; cd glog
+# compiling
+mkdir build &amp;&amp; cd build
+cmake -DGFLAGS_NAMESPACE=google -DCMAKE_CXX_FLAGS=-fPIC ..
+make &amp;&amp; sudo make install
+</code></pre><h2 id="4-3-hdf5-h"><a href="#4-3-hdf5-h" class="headerlink" title="4.3 hdf5.h"></a>4.3 hdf5.h</h2><p>Error description:</p>
+<pre><code>src/caffe/layers/hdf5_data_layer.cpp:13:18: fatal error: hdf5.h: No such file or directory
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/layers/hdf5_data_layer.o&#39; failed
+make: *** [.build_release/src/caffe/layers/hdf5_data_layer.o] Error 1
+</code></pre><p>In general, we have installed hdf5.h package in Step-1, the problem is that compiler does not know where to find header file <code>hdf5.h</code>.<br>First, let’s check it exists, enter the following command, we should see like this:</p>
+<pre><code>➜  $: ls /usr/lib/x86_64-linux-gnu/ | grep libhdf5_serial
+...
+libhdf5_serial.so.10.1.0
+libhdf5_serialhl_fortran.so.10.0.2
+...
+</code></pre><p>We can find two files like above, please don’t care about version, what we need to just make a soft link for it:</p>
+<pre><code>sudo ln -s /usr/lib/x86_64-linux-gnu/libhdf5_serial.so.10.1.0 /usr/lib/x86_64-linux-gnu/libhdf5.so
+sudo ln -s /usr/lib/x86_64-linux-gnu/libhdf5_serial_hl.so.10.0.2 /usr/lib/x86_64-linux-gnu/libhdf5_hl.so
+</code></pre><p>We need to edit <code>Makefile.conf</code> to tell compiler where to find <code>hdf5.h</code></p>
+<pre><code>vim Makefile.config
+</code></pre><p>Change lines 95~96 like this:</p>
+<pre><code># Whatever else you find you need goes here.
+INCLUDE_DIRS := $(PYTHON_INCLUDE) /usr/local/include /usr/include/hdf5/serial
+LIBRARY_DIRS := $(PYTHON_LIB) /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu/hdf5/serial
+</code></pre><p>And ok now, try to compile again.</p>
+<h2 id="4-4-liblmdb-not-found"><a href="#4-4-liblmdb-not-found" class="headerlink" title="4.4 liblmdb not found"></a>4.4 liblmdb not found</h2><p>Error description:</p>
+<pre><code>In file included from src/caffe/util/db.cpp:3:0:
+./include/caffe/util/db_lmdb.hpp:8:18: fatal error: lmdb.h: No such file or directory
+compilation terminated.
+Makefile:581: recipe for target &#39;.build_release/src/caffe/util/db.o&#39; failed
+make: *** [.build_release/src/caffe/util/db.o] Error 1
+</code></pre><p>Fix it:</p>
+<pre><code>sudo apt install liblmdb-dev -y
+</code></pre><h2 id="4-5-opencv3-not-found"><a href="#4-5-opencv3-not-found" class="headerlink" title="4.5 opencv3 not found"></a>4.5 opencv3 not found</h2><p>Error description:</p>
+<pre><code>/usr/bin/ld: cannot find -lopencv_imgcodecs
+/usr/bin/ld: cannot find -lcblas
+/usr/bin/ld: cannot find -latlas
+collect2: error: ld returned 1 exit status
+Makefile:572: recipe for target &#39;.build_release/lib/libcaffe.so.1.0.0&#39; failed
+make: *** [.build_release/lib/libcaffe.so.1.0.0] Error 1
+</code></pre><p>Please see opencv 3 installation tutorial:<br><a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/" target="_blank" rel="external">https://www.learnopencv.com/install-opencv3-on-ubuntu/</a></p>
+<h2 id="4-6-numpy-not-found"><a href="#4-6-numpy-not-found" class="headerlink" title="4.6 numpy not found"></a>4.6 numpy not found</h2><p>Error description:</p>
+<pre><code>CXX/LD -o python/caffe/_caffe.so python/caffe/_caffe.cpp
+python/caffe/_caffe.cpp:10:31: fatal error: numpy/arrayobject.h: No such file or directory
+compilation terminated.
+Makefile:501: recipe for target &#39;python/caffe/_caffe.so&#39; failed
+make: *** [python/caffe/_caffe.so] Error 1
+</code></pre><p>First, check if you have installed numpy:</p>
+<pre><code>sudo pip install numpy
+</code></pre><p>If still error, this seems to be a configuration file problem, we need to edit <code>Makefile.config</code> from</p>
+<pre><code>PYTHON_INCLUDE := /usr/include/python2.7 \
+    /usr/lib/python2.7/dist-packages/numpy/core/include
+</code></pre><p>to this:</p>
+<pre><code>PYTHON_INCLUDE := /usr/include/python2.7 \
+    /usr/local/lib/python2.7/dist-packages/numpy/core/include
+</code></pre><hr>
+<h1 id="5-Reference"><a href="#5-Reference" class="headerlink" title="5.Reference"></a>5.Reference</h1><ul>
+<li><a href="http://caffe.berkeleyvision.org/install_apt.html" target="_blank" rel="external">Caffe home page, Ubuntu Installation</a></li>
+<li><a href="https://chunml.github.io/ChunML.github.io/project/Installing-Caffe-CPU-Only/" target="_blank" rel="external">Installing Caffe on Ubuntu (CPU-ONLY)</a></li>
+<li><a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/" target="_blank" rel="external">Install OpenCV3 on Ubuntu</a></li>
+<li><a href="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/">Deep Learning - Setup GPU for tensorflow</a></li>
+<li><a href="https://github.com/google/glog/wiki/Installing-Glog-on-Ubuntu-14.04" target="_blank" rel="external">Installing Glog on Ubuntu 14.04</a></li>
+</ul>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-01-25-setup-caffe-for-deep-learning"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-01-25-setup-caffe-for-deep-learning" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/">http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</a></h4><blockquote>
+<p>by grasses 2018.01.25</p>
+</blockquote>
+
+      
+    </div>
+    
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/" data-id="cjky33m74006alo2cjyog7zgx" data-title="Deep Learning - Installing Caffe on Ubuntu" class="article-share-link">Share</a>
+      <!--  -->
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
+
+    </footer>
+
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/05/21/talking-about-hackathon/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Talking about Hackathon
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/08/08/setup-gpu-for-tensorflow/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Deep Learning - Setup GPU for tensorflow</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!--评论模块-->
+
+  <section id="comments">
+    <div id="comments"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/05/tamper-detection-an-overview/">Digital Image Tamper Detection, An Overview</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/08/setup-gpu-for-tensorflow/">Deep Learning - Setup GPU for tensorflow</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+  	<!-- weibo加载慢，放在footer部分 -->
+    <h3 id="weibo-widget-title" class="widget-title"></h3>
+    <div id="weibo-widget-content" class="widget"></div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <script>
+// 微博加载最慢，放最后
+title = 'Weibo';
+content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
+(document.getElementById('weibo-widget-title')).innerHTML += title;
+(document.getElementById('weibo-widget-content')).innerHTML += content;
+</script>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--
+<script>
+var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            if (!$input) return;
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                var numOfPostFound = 0; // keeping track of # of result
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {//&& data_content != ''
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        numOfPostFound += 1; // keeping track of # of results
+                        str += "<li style='color:white;'><a style='color:white;' href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        /*
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 100;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        */
+                        str += "</li>";
+                    }
+                });
+                str += "</ul>";
+                // attaching a summary of searching result
+                if (numOfPostFound > 0) {
+                    if (numOfPostFound > 1) {
+                        summary = numOfPostFound + " posts found";
+                    } else {
+                        summary = numOfPostFound + " post found";
+                    }
+                } else {
+                    summary = "Nothing found";
+                }
+                var summary = "<p class=\"text-xlarge text-color-base archieve-result search-result-summary\">" + summary + "</ul>";
+                $resultContent.innerHTML = summary + str;
+                console.log($resultContent);
+            });
+        }
+    });
+}
+     var search_path = "search.xml";
+     if (search_path.length == 0) {
+      search_path = "search.xml";
+     }
+     var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+-->
+
+<script src="http://comment.blog.seclab.org.cn/js/static.js"></script>
+<script>
+LaraDuoshuo.APP_KEY = 'base64:x8zNmv3JSS79l7S9YgPB1MO4drZJ5HIUmOu1VDN9hUA=';
+LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
+</script>
+
+
+<!--七牛静态文件加速-->
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="http://static.blog.homeway.me/blog/js/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

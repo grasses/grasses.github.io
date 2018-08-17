@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>OpenWrt路由器开发 | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="OpenWrt路由器开发">
+<meta property="og:url" content="http://homeway.me/2015/04/29/openwrt-develop-base-util/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-gpio.jpg">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-sysinfo.png">
+<meta property="og:updated_time" content="2015-08-04T14:01:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenWrt路由器开发">
+<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <link rel="stylesheet" href="https://static.blog.homeway.me/blog/style.min.css?v=1602255192" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <!-- 评论模块 -->
+  <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">  
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--
+<div id="site_search" class="main-content-wrap">
+<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="form-control input--xlarge" autofocus="autofocus"/>
+<div id="local-search-result"></div>
+-->
+      <div class="outer">
+        <section id="main"><article id="post-openwrt-develop-base-util" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/04/29/openwrt-develop-base-util/" class="article-date">
+  <time datetime="2015-04-29T14:32:20.000Z" itemprop="datePublished">4月 29 2015</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenWrt路由器开发
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png" alt="OpenWrt"></p>
+<a id="more"></a>
+<p><br><hr><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>第一次尝试开发路由器，发现并不是想象中那么难，和普通嵌入式开发一样，也是一块ARM板刷上Linux系统。</p>
+<p>OpenWrt有很多好用的软件，附带流量监测。</p>
+<p>OpenWrt主要开发语言为Python、Lua、Shell，还可以做深入研究写ipk软件包。</p>
+<p>写了几个脚本，主要实现了openwrt下面GPIO控制、系统信息获取、wifi扫描器、定时发送邮件系统报警等功能，下面会介绍。</p>
+<p>代码已经在Github开源：    <a href="https://github.com/grasses/OpenWRT-Util" target="_blank" rel="external">https://github.com/grasses/OpenWRT-Util</a></p>
+<p><br><hr></p>
+<h1 id="0x02-About-OpenWrt"><a href="#0x02-About-OpenWrt" class="headerlink" title="0x02.About OpenWrt"></a>0x02.About OpenWrt</h1><p>刷OpenWrt先要去<a href="https://downloads.openwrt.org/" target="_blank" rel="external">https://downloads.openwrt.org/</a>下载你想要的版本，包含aa型和bb型。</p>
+<p>然后用Linux烧入命令烧入系统。</p>
+<p>早MAC下面，先现将U盘插入电脑格式化，然后运行命令查看U盘编号：</p>
+<blockquote>
+<p>diskUtil list</p>
+</blockquote>
+<p>注意查看U盘编号，选择你的U盘，解除挂载：</p>
+<blockquote>
+<p>diskUtil unmountDisk /dev/disk2</p>
+</blockquote>
+<p>然后烧入系统：</p>
+<blockquote>
+<p>dd if=/path/to/openwrt.img of=/dev/disk2 bs=2m</p>
+</blockquote>
+<p>等待几分钟后烧入成功。</p>
+<h4 id="关于痛点："><a href="#关于痛点：" class="headerlink" title="关于痛点："></a>关于痛点：</h4><pre><code>第一次是在树莓派上安装OpenWrt，装好后，用有线把连进上级路由器的Lan口
+
+然后，上级路由的包开始乱了，上级路由把OpenWrt当成路由器，OpenWrt把路由器当成上级路由器，然后就GG了。
+</code></pre><p><br><hr></p>
+<h1 id="0x03-About-WRTnode"><a href="#0x03-About-WRTnode" class="headerlink" title="0x03.About WRTnode"></a>0x03.About WRTnode</h1><p>WRTnode是OpenWrt系统一个硬件解决方案，预先安装了OpenWrt相关软件包，并且内置两块无线网卡。</p>
+<p>关于WRTnode，官方wiki已经介绍的很详细了：<a href="http://wiki.wrtnode.com/index.php?title=Main_Page/zh-cn" target="_blank" rel="external">http://wiki.wrtnode.com/index.php?title=Main_Page/zh-cn</a></p>
+<p>解析来的代码基本上是在WRTnode环境上开发的，主要包含了：</p>
+<ul>
+<li><p>luci(WRTnode自带，非WRTnode用opkg安装即可)</p>
+</li>
+<li><p>python(WRTnode自带，非WRTnode用opkg安装即可)</p>
+</li>
+<li><p>luasocket( <a href="http://see.sl088.com/wiki/Luasocket" target="_blank" rel="external">http://see.sl088.com/wiki/Luasocket</a> )</p>
+</li>
+</ul>
+<p>目前只能想起这3个，如果报错，该装什么再装好了。</p>
+<p><br><hr></p>
+<h1 id="0x04-WRTnode控制GPIO"><a href="#0x04-WRTnode控制GPIO" class="headerlink" title="0x04.WRTnode控制GPIO"></a>0x04.WRTnode控制GPIO</h1><p>GPIO控制可以很好地实现软件硬件之间的交互。</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-gpio.jpg" alt="WRTnode GPIO"></p>
+<p>GPIO的控制也不难，wiki讲得很清晰了，就是文件输入输出<a href="http://wiki.wrtnode.com/index.php?title=The_user_space_gpio_calls/zh-cn" target="_blank" rel="external">http://wiki.wrtnode.com/index.php?title=The_user_space_gpio_calls/zh-cn</a></p>
+<p>这里我写了一个Lua版的GPIO控制模块，文件保存为gpio.lua：</p>
+<pre><code>#!/usr/bin/lua
+--[[
+Copyright 2015 http://homeway.me
+@author homeway
+@version 15.04.29
+@link http://homeway.me
+@function OpenWRT gpio module
+-- ]]--
+
+local M = {}
+M.id = &quot;&quot;
+M.path = &quot;/sys/class/gpio/gpio&quot;
+M.router = &quot;/sys/class/gpio&quot;
+
+M.check = function(where)
+    print(&quot;check path =&gt; &quot;..where)
+    local f=io.open(where, &quot;r&quot;)
+      if f~=nil then io.close(f) return true else return false end
+end
+-- set mode &amp;&amp; check type
+M.mode = function(id, mtype)
+    M.id = id
+    where = M.path..M.id
+    -- if id not use
+    if false==M.check(M.path..id..&#39;/direction&#39;) then
+        --M.writeFile(M.router..&quot;/unexport&quot;,id)
+        M.writeFile(M.router..&quot;/export&quot;, id)
+      end
+      -- if type different 
+      if mtype ~= M.readFile(M.path..id..&#39;/direction&#39;) then
+          print(&quot;type =&gt;&quot;..mtype..&quot; direction=&gt;&quot;..M.readFile(M.path..id..&#39;/direction&#39;)..&quot; different&quot;)
+          M.writeFile(M.path..id..&#39;/direction&#39;, mtype)
+      end
+end
+-- file write
+M.writeFile = function(where, what)
+    print(&quot;write path =&gt; &quot;..where..&quot; data =&gt;&quot;..what)
+    local fp=io.open(where, &#39;w&#39;)
+      fp:write(what)
+      fp:close()    
+end
+-- file read
+M.readFile = function(where)
+    print(&quot;read path =&gt; &quot;..where)
+      local fp=io.open(where, &#39;r&#39;)
+      if fp~=nil then
+        data = fp:read(&quot;*all&quot;)
+        fp:close()
+        return data
+      end
+      return nil
+end
+M.set = function(id)
+    M.id = id
+end
+M.read = function()
+      res = M.readFile(M.path..M.id..&#39;/value&#39;)
+      return res
+end
+M.write = function(value)
+      res = M.writeFile(M.path..M.id..&#39;/value&#39;, value)
+end
+M.close = function()
+    print(&quot;sleep io =&gt; &quot;..M.id)
+    os.execute(&quot;sleep &quot; .. tonumber(M.id))
+end
+
+return M
+</code></pre><p>API很简单，先设置设置模式，GPIO.mode(id, “out/in”)两种模式之一</p>
+<p>如果为’out’即可调用GPIO.write(value)函数，写入当然id端口，如果为’in’模式，只能调用GPIO.read()读取数值。</p>
+<p>这里数值只能是0或1，非0即为1.</p>
+<p>调用方式如下，这个存在一个可忽略的问题，一旦调用mode，数值将被置为默认数值，即0：</p>
+<pre><code>#!/usr/bin/lua
+x=require(&quot;gpio&quot;)
+print(&quot;Please input io id =&gt;&quot;)
+id = io.read(&quot;*num&quot;)
+x.mode(id, &quot;out&quot;)-- 设置io的模式为输入还是输出 [in/out]
+function readGPIO(id)
+    value = x.read()
+    print(&quot;read data from =&gt; `&quot;..id..&quot;` =&gt;&quot;..value)
+end
+function writeGPIO(id, data)
+    x.write(data)
+    print(&quot;write data to =&gt; `&quot;..id..&quot;` =&gt;&quot;..data)
+end
+
+count=1
+repeat
+    count=count+1
+    print(&quot;Please input value =&gt;&quot;)
+    data = io.read(&quot;*num&quot;)
+    writeGPIO(id, data)
+    readGPIO(id)
+until count&gt;3
+</code></pre><p><br><hr></p>
+<h1 id="0x05-WRTnode获取系统信息"><a href="#0x05-WRTnode获取系统信息" class="headerlink" title="0x05.WRTnode获取系统信息"></a>0x05.WRTnode获取系统信息</h1><p>其实获取系统信息不属于WRTnode范围，因为这部分主要是调用Linux Shell获取系统信息，做个反馈。</p>
+<p>这里我也写了个python脚本，主要检查系统信息，这个脚本在树莓派那里面也有：<a href="http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/">http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/</a></p>
+<p>这里我做了部分修改，添加系统ip、连接的ssid等信息：</p>
+<pre><code>#!/usr/bin/python
+&#39;&#39;&#39;
+    @author homeway
+    @version 15.04.29
+    @link http://homeway.me
+    @function python get OpenWRT system info
+&#39;&#39;&#39;
+import os
+# Return CPU temperature as a character string                                     
+def getCPUtemperature():
+    res = os.popen(&#39;vcgencmd measure_temp&#39;).readline()
+    return(res.replace(&quot;temp=&quot;,&quot;&quot;).replace(&quot;&#39;C\n&quot;,&quot;&quot;))
+# Return RAM information (unit=kb) in a list                                      
+# Index 0: total RAM                                                              
+# Index 1: used RAM                                                                
+# Index 2: free RAM                                                                
+def getRAMinfo():
+    p = os.popen(&#39;free&#39;)
+    i = 0
+    while 1:
+        i = i + 1
+        line = p.readline()
+        if i==2:
+            return(line.split()[1:4])
+# Return % of CPU used by user as a character string                               
+def getCPUuse():
+    return(str(os.popen(&quot;top -n1 | awk &#39;/Cpu\(s\):/ {print $2}&#39;&quot;).readline().strip()))
+
+# Return information about disk space as a list (unit included)                    
+# Index 0: total disk space                                                        
+# Index 1: used disk space                                                        
+# Index 2: remaining disk space                                                    
+# Index 3: percentage of disk used                                                 
+def getDiskSpace():
+    p = os.popen(&quot;df -h /&quot;)
+    i = 0
+    while 1:
+        i = i +1
+        line = p.readline()
+        if i==2:
+            return(line.split()[1:5])
+def getSystem():
+    p = os.popen(&quot;uname -amnrspv&quot;)
+    while 1:
+        line = p.readline()
+        return(line)
+def getExtranetIp():
+    p = os.popen(&#39;wget &quot;http://www.ip138.com/ips1388.asp&quot; -q -O - | sed -nr \&#39;s/.*\[(([0-9]+\.){3}[0-9]+)\].*/\1/p\&#39;&#39;)
+    while 1:
+        line = p.readline()
+        print line
+        return(line)
+def getIntranetIp():
+    p = os.popen(&#39;ifconfig apcli0 | grep inet\ addr&#39;)
+    while 1:
+        line = p.readline()
+        return(line)
+def getSsid():
+    p = os.popen(&#39;uci get wireless.@wifi-iface[0].ApCliSsid&#39;)
+    while 1:
+        line = p.readline()
+        return(line)
+# CPU informatiom
+CPU_temp = getCPUtemperature()
+CPU_usage = getCPUuse()
+# RAM information
+# Output is in kb, here I convert it in Mb for readability
+RAM_stats = getRAMinfo()
+RAM_total = round(int(RAM_stats[0]) / 1000,1)
+RAM_used = round(int(RAM_stats[1]) / 1000,1)
+RAM_free = round(int(RAM_stats[2]) / 1000,1)
+# Disk information
+DISK_stats = getDiskSpace()
+DISK_total = DISK_stats[0]
+DISK_used = DISK_stats[1]
+DISK_perc = DISK_stats[3]
+# system info
+SYSTEM_info = getSystem()
+# NET infomation
+NET_extranet_ip = getExtranetIp()
+NET_internet_ip = getIntranetIp().lstrip(&#39;&#39;)
+NET_connect_ssid = getSsid()
+
+if __name__ == &#39;__main__&#39;:
+    print(&#39;-------------------------------------------&#39;)
+    print(&quot;System info =&quot;+str(SYSTEM_info))
+    print(&#39;-------------------------------------------&#39;)
+    print(&#39;RAM Total = &#39;+str(RAM_total)+&#39; MB&#39;)
+    print(&#39;RAM Used = &#39;+str(RAM_used)+&#39; MB&#39;)
+    print(&#39;RAM Free = &#39;+str(RAM_free)+&#39; MB&#39;)
+    print(&#39;-------------------------------------------&#39;)
+    print(&#39;DISK Total Space = &#39;+str(DISK_total)+&#39;B&#39;)
+    print(&#39;DISK Used Space = &#39;+str(DISK_used)+&#39;B&#39;)
+    print(&#39;DISK Used Percentage = &#39;+str(DISK_perc))
+    print(&#39;-------------------------------------------&#39;)
+    print(&#39;NET Extranet Ip =&#39;+str(NET_extranet_ip))
+    print(&#39;NET Connect Ssid =&#39;+str(NET_connect_ssid))
+    print(&#39;NET Internet Wan Ip =&#39;+str(NET_internet_ip))
+</code></pre><p>直接调用<code>python sysinfo.py</code>:</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-sysinfo.png" alt="系统信息"></p>
+<p><br><hr></p>
+<h1 id="0x06-WRTnode发送邮件"><a href="#0x06-WRTnode发送邮件" class="headerlink" title="0x06.WRTnode发送邮件"></a>0x06.WRTnode发送邮件</h1><p>好了，系统信息有了，GPIO信息有了，接下来就试试发送邮件了。</p>
+<p>发送邮件3中法案都可以，Lua，Python，Shell，找了找资料，Python写了，但是缺少了一个包，Lua缺少Luasocket模块，Shell要安装模块。</p>
+<p>最后，懵了，全都要依赖，尼玛，看了看，好像Lua安装个Luasocket最简单，一个包轻松： <a href="http://see.sl088.com/wiki/Luasocket" target="_blank" rel="external">http://see.sl088.com/wiki/Luasocket</a> </p>
+<p>安装也不难，接下来就写写吧。</p>
+<p>Lua发送邮件源码模块，设置文件名为<code>email.lua</code>：</p>
+<pre><code>#!/usr/bin/lua
+--[[
+Copyright 2015 http://homeway.me
+@author homeway
+@version 15.04.29
+@link http://homeway.me
+@function lua email module
+-- ]]--
+local smtp = require(&quot;socket.smtp&quot;)
+local M ={}
+M.user = {[&quot;from&quot;]=&quot;&quot;, [&quot;to&quot;]=&quot;&quot;, [&quot;password&quot;]=&quot;&quot;}
+M.mail = {[&quot;subject&quot;]=&quot;&quot;, [&quot;body&quot;]=&quot;&quot;}
+M.sys = {[&quot;server&quot;]=&quot;&quot;}
+M.set = function(data)
+    M.user = data.user
+    M.mail = data.mail
+    M.sys = data.sys    
+end
+M.send = function()
+    rcpt = {
+        M.user[&quot;to&quot;]
+    }
+    mesgt = {
+        headers = {
+            from = M.user[&quot;from&quot;],
+            to = M.user[&quot;to&quot;], --收件人
+            cc = &quot;&quot;, --抄送 
+            subject = M.mail[&quot;subject&quot;] --主题
+        },
+        body = M.mail[&quot;body&quot;]
+    }
+    r, e = smtp.send{
+        from = M.user[&quot;from&quot;],
+        rcpt = rcpt,
+        source = smtp.message(mesgt),
+        server = M.sys[&quot;server&quot;],
+        port = M.sys[&quot;port&quot;],
+        user = M.user[&quot;from&quot;],
+        password = M.user[&quot;password&quot;],
+    }
+    if not r then
+        print(e)
+    else
+        print(&quot;send ok!&quot;)
+    end
+end
+return M
+</code></pre><p>下面是调用方式：</p>
+<pre><code>#!/usr/bin/lua
+local mail = require(&quot;email&quot;)
+local data = {}
+data.user = {[&quot;from&quot;]=&quot;sender@gmail.com&quot;, [&quot;to&quot;]=&quot;receiver@gmail.com&quot;, [&quot;password&quot;]=&quot;password&quot;}
+data.mail = {[&quot;subject&quot;]=&quot;测试邮件模块&quot;, [&quot;body&quot;]=&quot;这是主体内容...&quot;}
+data.sys = {[&quot;server&quot;]=&quot;smtp.gmail.com&quot;, [&quot;port&quot;]=587}
+
+mail.set(data)
+mail.send()
+</code></pre><p>测试下，是可以接收到邮件的，注意GFW，还是别用非法gmail好了，别等半天收不到。</p>
+<p><br><hr></p>
+<h1 id="0x07-重要的东西放后面"><a href="#0x07-重要的东西放后面" class="headerlink" title="0x07.重要的东西放后面"></a>0x07.重要的东西放后面</h1><p>嗯！看到这里，估计菊花也有点疼了，再看最后一点看完就擦洗擦洗去吧。</p>
+<p>最后就是，设置定时器，让路由器定时发送系统信息给指定邮箱。</p>
+<p>嗯…定时器，Linux的一个模块crontab命令，看看功能吧 <code>crontab --help</code></p>
+<p>关于定时器语法，看看这里吧 <a href="http://kvz.io/blog/2007/07/29/schedule-tasks-on-linux-using-crontab/" target="_blank" rel="external">http://kvz.io/blog/2007/07/29/schedule-tasks-on-linux-using-crontab/</a></p>
+<p>这里，我只做简单地，每隔10分钟发送一次系统信息给我邮箱。</p>
+<p>具体怎么做，去下载这个脚本吧：<a href="https://github.com/grasses/OpenWRT-Util/blob/master/lua/crontab.lua" target="_blank" rel="external">https://github.com/grasses/OpenWRT-Util/blob/master/lua/crontab.lua</a></p>
+<p>我的目录是这样的，用户是root：</p>
+<pre><code>~|--script
+    |--schedule
+    |--send
+|--log
+     |--sys.log
+     |--crontab.log
+</code></pre><p>先开一个定时器，定时跑Lua，Lua调用python读取系统信息，生成日志文件，Lua读取日志文件，发送邮箱。</p>
+<p>how to use:<br>step1: configure you email information in this script<br>step2: mkdir /root/log &amp;&amp; mkdir /root/script<br>step3: mv /path/to/crontab.lua /root/script/send<br>step4: chmod +x /root/script/send<br>step5: echo 10,20,30,40,50  <em> </em> <em> </em> /root/script/send &gt; /root/script/schedule<br>step6: crontab /root/script/schedule</p>
+<p>东西有点多，都是散乱的部件，这篇主要介绍细节信息，接下来会做大得模块。</p>
+<p>如果打通路由器，各种嵌入式开发的联网问题就都解决了，所以路由器系统还是很重要的。</p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-29-openwrt-develop-base-util"><a href="#本文出自-夏日小草-转载请注明出处：-http-homeway-me-2015-04-29-openwrt-develop-base-util" class="headerlink" title="本文出自 夏日小草,转载请注明出处： http://homeway.me/2015/04/29/openwrt-develop-base-util/"></a>本文出自 <a href="http:/homeway.me" target="_blank" rel="external">夏日小草</a>,转载请注明出处： <a href="http://homeway.me/2015/04/29/openwrt-develop-base-util/">http://homeway.me/2015/04/29/openwrt-develop-base-util/</a></h4><h4 id="by-小草"><a href="#by-小草" class="headerlink" title="by 小草"></a>by 小草</h4><p>2015-04-29 23:59:20</p>
+
+      
+    </div>
+    
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2015/04/29/openwrt-develop-base-util/" data-id="cjky33m730067lo2cpgeyi163" data-title="OpenWrt路由器开发" class="article-share-link">Share</a>
+      <!--  -->
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenWRT/">OpenWRT</a></li></ul>
+
+    </footer>
+
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/05/12/think-about-web-develop/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          浅谈web开发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/04/13/Java-implements-and-interface/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Java思想之容器implements与接口interface处理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!--评论模块-->
+
+  <section id="comments">
+    <div id="comments"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/05/tamper-detection-an-overview/">Digital Image Tamper Detection, An Overview</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/08/setup-gpu-for-tensorflow/">Deep Learning - Setup GPU for tensorflow</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+  	<!-- weibo加载慢，放在footer部分 -->
+    <h3 id="weibo-widget-title" class="widget-title"></h3>
+    <div id="weibo-widget-content" class="widget"></div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <script>
+// 微博加载最慢，放最后
+title = 'Weibo';
+content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
+(document.getElementById('weibo-widget-title')).innerHTML += title;
+(document.getElementById('weibo-widget-content')).innerHTML += content;
+</script>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--
+<script>
+var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            if (!$input) return;
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                var numOfPostFound = 0; // keeping track of # of result
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {//&& data_content != ''
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        numOfPostFound += 1; // keeping track of # of results
+                        str += "<li style='color:white;'><a style='color:white;' href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        /*
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 100;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        */
+                        str += "</li>";
+                    }
+                });
+                str += "</ul>";
+                // attaching a summary of searching result
+                if (numOfPostFound > 0) {
+                    if (numOfPostFound > 1) {
+                        summary = numOfPostFound + " posts found";
+                    } else {
+                        summary = numOfPostFound + " post found";
+                    }
+                } else {
+                    summary = "Nothing found";
+                }
+                var summary = "<p class=\"text-xlarge text-color-base archieve-result search-result-summary\">" + summary + "</ul>";
+                $resultContent.innerHTML = summary + str;
+                console.log($resultContent);
+            });
+        }
+    });
+}
+     var search_path = "search.xml";
+     if (search_path.length == 0) {
+      search_path = "search.xml";
+     }
+     var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+-->
+
+<script src="http://comment.blog.seclab.org.cn/js/static.js"></script>
+<script>
+LaraDuoshuo.APP_KEY = 'base64:x8zNmv3JSS79l7S9YgPB1MO4drZJ5HIUmOu1VDN9hUA=';
+LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
+</script>
+
+
+<!--七牛静态文件加速-->
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="http://static.blog.homeway.me/blog/js/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>

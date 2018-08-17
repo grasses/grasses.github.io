@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+  
+  <title>站内消息设计与实现 | 夏日小草</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="article">
+<meta property="og:title" content="站内消息设计与实现">
+<meta property="og:url" content="http://homeway.me/2015/08/03/website-system-message/index.html">
+<meta property="og:site_name" content="夏日小草">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.1.png">
+<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.2.png">
+<meta property="og:updated_time" content="2015-08-04T13:40:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="站内消息设计与实现">
+<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png">
+<meta name="twitter:creator" content="@xiarixiaocao">
+<link rel="publisher" href="yaohomeway">
+  
+    <link rel="alternative" href="/atom.xml" title="夏日小草" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="http://77l5jp.com1.z0.glb.clouddn.com/blog%2Fgithub-ico.png">
+  
+  <link rel="stylesheet" href="https://static.blog.homeway.me/blog/style.min.css?v=1602255192" type="text/css">
+  <!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+  
+  <!-- 评论模块 -->
+  <link rel="stylesheet" href="http://comment.blog.seclab.org.cn/css/static.css">  
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-54364570-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics --><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+
+</head>
+<body>
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">夏日小草</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">念念不忘 必有回响</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="/atom.xml">Rss</a>
+        
+          <a class="main-nav-link" href="/music/">Music</a>
+        
+          <a class="main-nav-link" href="/about/">About</a>
+        
+
+<!-- High一下 -->
+<a class="main-nav-link" href='javascript:(function() {
+  function c() {
+    var e = document.createElement("link");
+    e.setAttribute("type", "text/css");
+    e.setAttribute("rel", "stylesheet");
+    e.setAttribute("href", f);
+    e.setAttribute("class", l);
+    document.body.appendChild(e)
+  }
+  function h() {
+    var e = document.getElementsByClassName(l);
+    for (var t = 0; t < e.length; t++) {
+      document.body.removeChild(e[t])
+    }
+  }
+  function p() {
+    var e = document.createElement("div");
+    e.setAttribute("class", a);
+    document.body.appendChild(e);
+    setTimeout(function() {
+      document.body.removeChild(e)
+    }, 100)
+  }
+  function d(e) {
+    return {
+      height : e.offsetHeight,
+      width : e.offsetWidth
+    }
+  }
+  function v(i) {
+    var s = d(i);
+    return s.height > e && s.height < n && s.width > t && s.width < r
+  }
+  function m(e) {
+    var t = e;
+    var n = 0;
+    while (!!t) {
+      n += t.offsetTop;
+      t = t.offsetParent
+    }
+    return n
+  }
+  function g() {
+    var e = document.documentElement;
+    if (!!window.innerWidth) {
+      return window.innerHeight
+    } else if (e && !isNaN(e.clientHeight)) {
+      return e.clientHeight
+    }
+    return 0
+  }
+  function y() {
+    if (window.pageYOffset) {
+      return window.pageYOffset
+    }
+    return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+  }
+  function E(e) {
+    var t = m(e);
+    return t >= w && t <= b + w
+  }
+  function S() {
+    var e = document.createElement("audio");
+    e.setAttribute("class", l);
+    e.src = i;
+    e.loop = false;
+    e.addEventListener("canplay", function() {
+      setTimeout(function() {
+        x(k)
+      }, 500);
+      setTimeout(function() {
+        N();
+        p();
+        for (var e = 0; e < O.length; e++) {
+          T(O[e])
+        }
+      }, 7000)
+    }, true);
+    e.addEventListener("ended", function() {
+      N();
+      h()
+    }, true);
+    e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+    document.body.appendChild(e);
+    e.play()
+  }
+  function x(e) {
+    e.className += " " + s + " " + o
+  }
+  function T(e) {
+    e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+  }
+  function N() {
+    var e = document.getElementsByClassName(s);
+    var t = new RegExp("\\b" + s + "\\b");
+    for (var n = 0; n < e.length; ) {
+      e[n].className = e[n].className.replace(t, "")
+    }
+  }
+  var e = 30;
+  var t = 30;
+  var n = 450;
+  var r = 450;
+  var i = "//xiaocao.u.qiniudn.com/music/harlem-shake.mp3";
+  var s = "mw-harlem_shake_me";
+  var o = "im_first";
+  var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+  var a = "mw-strobe_light";
+  var f = "//xiaocao.u.qiniudn.com/css/harlem-shake-style.min.css";
+  var l = "mw_added_css";
+  var b = g();
+  var w = y();
+  var C = document.getElementsByTagName("*");
+  var k = null;
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      if (E(A)) {
+        k = A;
+        break
+      }
+    }
+  }
+  if (A === null) {
+    console.warn("Could not find a node of the right size. Please try a different page.");
+    return
+  }
+  c();
+  S();
+  var O = [];
+  for (var L = 0; L < C.length; L++) {
+    var A = C[L];
+    if (v(A)) {
+      O.push(A)
+    }
+  }
+})()'>开心一下~~~</a>
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="http://www.baidu.com/baidu" method="get" accept-charset="utf-8" class="search-form">
+          <input type="search" name="word" maxlength="20" class="search-form-input" placeholder="Search">
+          <input type="submit" value="" class="search-form-submit">
+          <input name=tn type=hidden value="bds">
+          <input name=cl type=hidden value="3">
+          <input name=ct type=hidden value="2097152">
+          <input type="hidden" name="si" value="homeway.me">
+        </form>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--
+<div id="site_search" class="main-content-wrap">
+<input type="text" id="local-search-input" name="q" results="0" placeholder="search" class="form-control input--xlarge" autofocus="autofocus"/>
+<div id="local-search-result"></div>
+-->
+      <div class="outer">
+        <section id="main"><article id="post-website-system-message" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/03/website-system-message/" class="article-date">
+  <time datetime="2015-08-02T16:56:01.000Z" itemprop="datePublished">8月 3 2015</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Tech/">Tech</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      站内消息设计与实现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><br></p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png" alt="http"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近在处理系统消息模块，查阅了很多实践案例，各有针对性。</p>
+<p>首先站内消息主要包括：个人消息（评论，点赞），系统消息，订阅消息，私信。</p>
+<p>其中，订阅区分用户群，即系统消息是一个特殊的所有人订阅的订阅消息，特点是一对多。</p>
+<p>前三个实时性比较低，最后一个实时性高，离线状态下是私信，如果双方在线要转为聊天室，特点是一对一。</p>
+<p>那么，接下来，该选个方案了，SQL or NoSQL?</p>
+<p><br><hr></p>
+<h1 id="0x02-Mysql实现"><a href="#0x02-Mysql实现" class="headerlink" title="0x02.Mysql实现"></a>0x02.Mysql实现</h1><p>首先，对于个人消息、私信(“UserMessage”)，一条消息插一句，Mysql跑跑没问题。</p>
+<p>对于系统消息或订阅消息，必然不可以，假如有10万用户，一次性那么要插入10万条消息，Mysql必死。</p>
+<p>那么就是说，要设立一个系统库（”SystemMessage”），每当用户登录，就去跑跑系统库(“SystemMessage”)，把未读的系统库跑到个人库。</p>
+<p>关于订阅消息就比较麻烦了，对用户分组？对消息分组？</p>
+<p>关系型数据库处理集合问题是比较麻烦的，目前想到的结论是建立一个表(“RssMessage”)存储消息类型，消息索引。</p>
+<p>下面列了大致的数据库模型：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.1.png" alt="Mysql"></p>
+<p>看完这个数据库设计，我也觉得好难受，吐槽前先来想想为什么吧。</p>
+<p>UserSystemRelation表用于记录用户读取到哪个位置的标记。</p>
+<p>可以看到，UserMessage与SystemMessage表中，title、tid、ctime、type字段冗余了，好像也没必要，</p>
+<p>但是从用户功能上看，当用户登陆后，查找自己站内消息，必然要用到的有：status，必然要显示的有：title、ctime，type作为用户进入消息面板后，要筛选的方式之一，这样的话，Mysql就只要跑一个表就可以完成显示给用户的最新站内消息了。</p>
+<p>由于MessageText可能是一个大信息通知，用户查看个人消息时候，并未查看MessageText内容，所以单独放一张表。</p>
+<h2 id="相应处理流程"><a href="#相应处理流程" class="headerlink" title="相应处理流程"></a>相应处理流程</h2><ul>
+<li>用户登录后，先通过”UserSystemRelation”表查询是否有新的系统消息</li>
+<li>如果”UserSystemRelation”，查找到自身uid，同步系统消息到个人消息；如果”UserSystemRelation”未查找到自身uid，直接插入”UserSystemRelation”，并读取最近50条系统消息。</li>
+<li>用户点击未读消息，获取”MessageText””，并更新状态(status)为已读。</li>
+<li>用户通过”status”、”type”，可以筛选系统消息。</li>
+</ul>
+<p><br><hr></p>
+<h1 id="0x03-Mysql-MongoDB实现"><a href="#0x03-Mysql-MongoDB实现" class="headerlink" title="0x03.Mysql+MongoDB实现"></a>0x03.Mysql+MongoDB实现</h1><p>由于Mongodb是一种文档型的数据结构，所以，可以考虑把所有数据转成json直接塞给Mongodb。</p>
+<p>基于用户的习惯，读多写少，大部分时候都是看到消息，删除、更新比较少，如果数据没更新直接读Mongodb，如果数据更新，直接删除Mongodb<br>的索引。</p>
+<p>这个考虑是在，用户数量很大的时候，要在”UserSystem”表里查找到用户消息比较慢的时候用，类似于吧Mongodb当缓存。</p>
+<p><br><hr></p>
+<h1 id="0x04-Redis实现"><a href="#0x04-Redis实现" class="headerlink" title="0x04.Redis实现"></a>0x04.Redis实现</h1><p>看了Mysql下站内消息的数据库设计，我也觉得很蛋疼，临时过渡没事，但是还是NoSQL合适。</p>
+<p>Redis自带订阅与发布系统，<a href="http://redisbook.readthedocs.org/en/latest/feature/pubsub.html" target="_blank" rel="external">http://redisbook.readthedocs.org/en/latest/feature/pubsub.html</a></p>
+<p>在下图展示的这个 pubsub_channels 示例中， client2 、 client5 和 client1 就订阅了 channel1 ， 而其他频道也分别被别的客户端所订阅：</p>
+<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.2.png" alt="订阅"></p>
+<p>只要是订阅了相应地频道，就会收到频道的消息。</p>
+<p>把用户ID作为频道，私信就是反向的频道订阅，系统消息就是所有用户的订阅，那么离线的消息呢？</p>
+<h2 id="1、线上用户"><a href="#1、线上用户" class="headerlink" title="1、线上用户"></a>1、线上用户</h2><p>还是存在系统或个人的哈希表里，等上线后再去读取。</p>
+<p>在Python中，订阅发布消息(Publish)如下：</p>
+<pre><code>import redis,time
+queue = redis.StrictRedis(host=&#39;localhost&#39;, port=6379, db=0)
+channel = queue.pubsub()
+
+for i in range(100): 
+    queue.publish(&quot;test&quot;, i)
+    time.sleep(0.1)
+</code></pre><p>Python中，订阅监听消息(Subcribe)如下：</p>
+<pre><code>import redis,time
+r = redis.StrictRedis(host=&#39;localhost&#39;, port=6379, db=0)
+p = r.pubsub()
+p.subscribe(&#39;test&#39;)
+
+while True:
+    message = p.get_message()
+    if message:
+        print &quot;Subscriber: %s&quot; % message[&#39;data&#39;]
+</code></pre><p>Redis-py的API可以看GitHub：<a href="https://github.com/andymccurdy/redis-py" target="_blank" rel="external">https://github.com/andymccurdy/redis-py</a></p>
+<p>这是线上用户做法。</p>
+<h2 id="2、线下用户"><a href="#2、线下用户" class="headerlink" title="2、线下用户"></a>2、线下用户</h2><p>看过一种做法是建立一个Redis链表，存储登陆用户，当用户登陆就直接发送，没登陆就暂存起来。</p>
+<p>这里的话，可以用WebSocket实时监听，定期发送心跳包，如果在线直接返回Redis自带的订阅系统。</p>
+<p>系统消息建立一个集合：</p>
+<blockquote>
+<p>SADD system:2015-08-03 7 8 9 10 11</p>
+</blockquote>
+<p>第一段标示系统信息，第二段标示日期，后面的数字标示message id。</p>
+<p>个人消息建立一个集合：</p>
+<blockquote>
+<p>SADD user:12345:read    1 2 3 4 </p>
+</blockquote>
+<p>第一段标示用户信息集合，第二段标示用户id，下一段标示消息类型为已读，后面的数字标示message id。</p>
+<p>关于订阅消息如下：</p>
+<blockquote>
+<p>SADD rss:xiaocao 12 13 14 15</p>
+</blockquote>
+<p>那么你就收到小草的订阅消息，消息ID分别是 12, 13, 14, 15</p>
+<p>还有很重要的消息数据存储，</p>
+<blockquote>
+<p>HMSET message:12 title 标题 content 内容 date 2015-08-03</p>
+</blockquote>
+<p>Python创建数据库的例子就是：</p>
+<pre><code>import redis,time,threading,random
+pool = redis.ConnectionPool(host=&#39;localhost&#39;, port=6379, db=1)
+rs = redis.Redis(connection_pool=pool)
+
+rs.sadd(&quot;user:123:read&quot;, &quot;1&quot;, &quot;2&quot;)
+rs.sadd(&quot;user:123:unread&quot;, &quot;4&quot;, &quot;5&quot;, &quot;6&quot;)
+rs.sadd(&quot;system:2015-08-03&quot;, &quot;7&quot;, &quot;8&quot;, &quot;9&quot;, &quot;10&quot;, &quot;11&quot;)
+rs.sadd(&quot;rss:xiaocao&quot;, &quot;12&quot;, &quot;13&quot;, &quot;14&quot;, &quot;15&quot;, &quot;11&quot;)
+
+for i in range(15):
+    rs.hset(&quot;message:&quot;+str(i), &quot;title&quot;, &quot;title=&gt;&quot;+str(random.uniform(1, 99999)))
+    rs.hset(&quot;message:&quot;+str(i), &quot;content&quot;,&quot;content=&gt;&quot;+str(time.time()))
+    rs.hset(&quot;message:&quot;+str(i), &quot;date&quot;, str(time.strftime(&quot;%Y-%m-%d %H:%M:%S&quot;, time.gmtime())))
+</code></pre><p><br></p>
+<p>参考：</p>
+<ul>
+<li><a href="http://redisbook.readthedocs.org/en/latest/feature/pubsub.html" target="_blank" rel="external">http://redisbook.readthedocs.org/en/latest/feature/pubsub.html</a></li>
+<li><a href="http://huoding.com/2012/02/29/146" target="_blank" rel="external">http://huoding.com/2012/02/29/146</a></li>
+<li><a href="http://yijiebuyi.com/blog/faa9e68cb296d88bbc65b24dbc7b8de1.html" target="_blank" rel="external">http://yijiebuyi.com/blog/faa9e68cb296d88bbc65b24dbc7b8de1.html</a></li>
+<li><a href="http://www.cnblogs.com/grenet/archive/2010/03/08/1680655.html" target="_blank" rel="external">http://www.cnblogs.com/grenet/archive/2010/03/08/1680655.html</a></li>
+</ul>
+<p><br><hr></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-08-03-website-system-message"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-08-03-website-system-message" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/08/03/website-system-message/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/08/03/website-system-message/">http://homeway.me/2015/08/03/website-system-message/</a></h4><p>-by小草</p>
+<p>2015-08-03 01:35:10</p>
+
+      
+    </div>
+    
+    <footer class="article-footer">
+      <a data-url="http://homeway.me/2015/08/03/website-system-message/" data-id="cjky33m64003zlo2cdztoaoj3" data-title="站内消息设计与实现" class="article-share-link">Share</a>
+      <!--  -->
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Moogodb/">Moogodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
+
+    </footer>
+
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/08/11/nginx-lua-redis-access-control/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Nginx+Lua+Redis访问频率控制
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/07/19/understand-http-about-content-type/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">理解HTTP之Content-Type</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<!--评论模块-->
+
+  <section id="comments">
+    <div id="comments"></div>
+  </section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/08/05/tamper-detection-an-overview/">Digital Image Tamper Detection, An Overview</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
+          </li>
+        
+          <li>
+            <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/08/setup-gpu-for-tensorflow/">Deep Learning - Setup GPU for tensorflow</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Links</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="http://xiaocaoblog.diandian.com" target="_blank">Old-Blog-diandian</a>
+          </li>
+        
+          <li>
+            <a href="http://blog.segmentfault.com/xiaocao" target="_blank">Old-Blog-SF</a>
+          </li>
+        
+          <li>
+            <a href="http://www.php101.cn/" target="_blank">PHP101(土豆丫)</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+  	<!-- weibo加载慢，放在footer部分 -->
+    <h3 id="weibo-widget-title" class="widget-title"></h3>
+    <div id="weibo-widget-content" class="widget"></div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <script>
+// 微博加载最慢，放最后
+title = 'Weibo';
+content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
+(document.getElementById('weibo-widget-title')).innerHTML += title;
+(document.getElementById('weibo-widget-content')).innerHTML += content;
+</script>
+
+<footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      .
+      Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
+    </div>
+  </div>
+</footer>
+
+<a target="_blank" href="https://github.com/grasses"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-github.png" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="/atom.xml" class="mobile-nav-link">Rss</a>
+  
+    <a href="/music/" class="mobile-nav-link">Music</a>
+  
+    <a href="/about/" class="mobile-nav-link">About</a>
+  
+</nav>
+    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+
+
+<!--七牛静态文件加速-->
+<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+
+
+<!--highlight-->
+<link rel="stylesheet" href="//cdn.bootcss.com/highlight.js/9.8.0/styles/atom-one-dark.min.css">
+<script src="//cdn.bootcss.com/highlight.js/9.9.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<!--
+<script>
+var searchFunc = function(path, search_id, content_id) {
+    'use strict';
+    $.ajax({
+        url: path,
+        dataType: "xml",
+        success: function( xmlResponse ) {
+            // get the contents from search data
+            var datas = $( "entry", xmlResponse ).map(function() {
+                return {
+                    title: $( "title", this ).text(),
+                    content: $("content",this).text(),
+                    url: $( "url" , this).text()
+                };
+            }).get();
+            var $input = document.getElementById(search_id);
+            if (!$input) return;
+            var $resultContent = document.getElementById(content_id);
+            $input.addEventListener('input', function(){
+                var str='<ul class=\"search-result-list\">';                
+                var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                $resultContent.innerHTML = "";
+                if (this.value.trim().length <= 0) {
+                    return;
+                }
+                // perform local searching
+                var numOfPostFound = 0; // keeping track of # of result
+                datas.forEach(function(data) {
+                    var isMatch = true;
+                    var content_index = [];
+                    var data_title = data.title.trim().toLowerCase();
+                    var data_content = data.content.trim().replace(/<[^>]+>/g,"").toLowerCase();
+                    var data_url = data.url;
+                    var index_title = -1;
+                    var index_content = -1;
+                    var first_occur = -1;
+                    // only match artiles with not empty titles and contents
+                    if(data_title != '') {//&& data_content != ''
+                        keywords.forEach(function(keyword, i) {
+                            index_title = data_title.indexOf(keyword);
+                            index_content = data_content.indexOf(keyword);
+                            if( index_title < 0 && index_content < 0 ){
+                                isMatch = false;
+                            } else {
+                                if (index_content < 0) {
+                                    index_content = 0;
+                                }
+                                if (i == 0) {
+                                    first_occur = index_content;
+                                }
+                            }
+                        });
+                    }
+                    // show search results
+                    if (isMatch) {
+                        numOfPostFound += 1; // keeping track of # of results
+                        str += "<li style='color:white;'><a style='color:white;' href='"+ data_url +"' class='search-result-title'>"+ data_title +"</a>";
+                        /*
+                        var content = data.content.trim().replace(/<[^>]+>/g,"");
+                        if (first_occur >= 0) {
+                            // cut out 100 characters
+                            var start = first_occur - 20;
+                            var end = first_occur + 80;
+                            if(start < 0){
+                                start = 0;
+                            }
+                            if(start == 0){
+                                end = 100;
+                            }
+                            if(end > content.length){
+                                end = content.length;
+                            }
+                            var match_content = content.substr(start, end); 
+                            // highlight all keywords
+                            keywords.forEach(function(keyword){
+                                var regS = new RegExp(keyword, "gi");
+                                match_content = match_content.replace(regS, "<em class=\"search-keyword\">"+keyword+"</em>");
+                            });
+                            
+                            str += "<p class=\"search-result\">" + match_content +"...</p>"
+                        }
+                        */
+                        str += "</li>";
+                    }
+                });
+                str += "</ul>";
+                // attaching a summary of searching result
+                if (numOfPostFound > 0) {
+                    if (numOfPostFound > 1) {
+                        summary = numOfPostFound + " posts found";
+                    } else {
+                        summary = numOfPostFound + " post found";
+                    }
+                } else {
+                    summary = "Nothing found";
+                }
+                var summary = "<p class=\"text-xlarge text-color-base archieve-result search-result-summary\">" + summary + "</ul>";
+                $resultContent.innerHTML = summary + str;
+                console.log($resultContent);
+            });
+        }
+    });
+}
+     var search_path = "search.xml";
+     if (search_path.length == 0) {
+      search_path = "search.xml";
+     }
+     var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+</script>
+-->
+
+<script src="http://comment.blog.seclab.org.cn/js/static.js"></script>
+<script>
+LaraDuoshuo.APP_KEY = 'base64:x8zNmv3JSS79l7S9YgPB1MO4drZJ5HIUmOu1VDN9hUA=';
+LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
+</script>
+
+
+<!--七牛静态文件加速-->
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
+<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+
+  </div>
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({});
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+      all[i].SourceElement().parentNode.className += ' has-jax';
+    }
+  });
+</script>
+
+<script type="text/javascript" src="http://static.blog.homeway.me/blog/js/MathJax.js?config=TeX-MML-AM_CHTML">
+</script>
+<!-- End: Injected MathJax -->
+<!-- hexo-inject:end -->
+</body>
+</html>
