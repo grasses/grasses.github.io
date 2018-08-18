@@ -4,7 +4,7 @@
   
     
     <entry>
-      <title><![CDATA[Digital Image Tamper Detection, An Overview]]></title>
+      <title><![CDATA[Forged Image Detection and Location]]></title>
       <url>http://homeway.me/2018/08/05/tamper-detection-an-overview/</url>
       <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
@@ -42,7 +42,7 @@
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper2.jpg" alt="用于检测和本地化数字操作的端到端框架"></p>
 <p>算法主要包含2个步骤，第一，通过重叠的图像块计算重采样随机特征；第二，使用深度学习分类器和高斯条件随机场模型来创建热力图，从而定位篡改区域。算法先将图像块重叠堆放，然后使用CNN特诊提取，接着建立统计学模型，根据统计直方分布，分析篡改小块的位置。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-image-processing.jpg" alt="数字图像成像过程"></p>
-<p>上图显示了数字图像成像过程，其中成像过程需要经历：模拟信号处理、数字信号处理，其中模拟信号处理包含镜头偏移、CFA插值等；数字信号处理包含了去马赛克、伽马矫正、重采样等等，而不同的图像的重采样程度是不同的，经过篡改必然导致篡改部位重采样率的差异，文正的算法正是源于这个原理。<br></p>
+<p>上图显示了数字图像成像过程，其中成像过程需要经历：模拟信号处理、数字信号处理，其中模拟信号处理包含镜头偏移、CFA插值等；数字信号处理包含了去马赛克、伽马矫正、重采样等等，而不同的图像的重采样程度是不同的，经过篡改必然导致篡改部位重采样率的差异，文章的算法正是源于这个原理。<br></p>
 <h4 id="3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6"><a href="#3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-6" class="headerlink" title="3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]"></a>3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[6]</h4><p>这篇文章也是发表在CVPR Workshop的基于CNN篡改检测、定位的文章。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="图像I被分成块P(ij)。 每个补丁由通过CNN提取的特征向量f(ij)和置信度得分Q(ij)描述。&lt;br&gt;自定义聚类算法产生篡改掩码预测M，其也用于检测。"></p>
 <p>文章提出了一种图像篡改检测和定位算法，利用不同相机模型留在图像上的特征足迹，最直接的原理即是检测图像的拍摄相机来源，由于不同型号相机拍摄的照片所携带的模式噪声不一样，以此鉴定图像是否篡改、篡改定位。</p>
@@ -52,16 +52,17 @@
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.3.jpg" alt="所提出的定位算法的伪造图像和中间输出的示例，伪造用红色虚线突出显示。&lt;br&gt;K-means检测到的簇被映射到不同的颜色，白色和黑色像素分别代表M的0和1值。"></p>
 <p>算法使用Dresden图像库，该数据集由来自26种不同相机模型的超过16k图像组成，描绘了总共83个场景，关于篡改图像如何制作，本文作者没有解释。这篇文章做得相对完整，从图像切片（patches）-&gt;CNN特征提取/Q纹理度换算置信度-&gt;整合块热力图-&gt;除噪，每个步骤都很扎实。</p>
 <p><br></p>
-<h4 id="4-Reliability-Map-Estimation-For-CNN-Based-Camera-Model-Attribution-8"><a href="#4-Reliability-Map-Estimation-For-CNN-Based-Camera-Model-Attribution-8" class="headerlink" title="4.Reliability Map Estimation For CNN-Based Camera Model Attribution [8]"></a>4.Reliability Map Estimation For CNN-Based Camera Model Attribution [8]</h4><p>这篇文章是 <a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7]</a>经过简单修改后重新发的文章，本质上没有很大的变化。</p>
+<h4 id="4-Reliability-Map-Estimation-For-CNN-Based-Camera-Model-Attribution-8"><a href="#4-Reliability-Map-Estimation-For-CNN-Based-Camera-Model-Attribution-8" class="headerlink" title="4.Reliability Map Estimation For CNN-Based Camera Model Attribution [8]"></a>4.Reliability Map Estimation For CNN-Based Camera Model Attribution [8]</h4><p>这篇文章是<a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6]</a>经过简单修改后重新发的文章，本质上没有很大的变化。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper4.1.jpg" alt="Block diagram of the proposed approach. Image I is split into patches. Each patch Pk, k∈[0, K] is processed by the proposed CNN (composed by Mcam and Mip) to obtain a reliability score gk and a camera model estimate."></p>
 <p>文章提出了一个置信度（Reliability）图模型，将补丁块（Patch）放入CNN先训练模型、提取特征，然后得到热力图，得到最终的置信度热力图后除噪过滤出篡改部位。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper4.2.jpg" alt="Accuracy curves on training (Dip) and validation T(DV) datasets using Pre-Trained and Transfer strategies"></p>
 <p>算法主要分为两部分，CNN特征提取、置信度图去噪，其中CNN特征提取使用了预训练（Pre-Trained）方法和迁移学习方法（Transfer），上面是算法在训练集、校验集的正确率。</p>
 <hr>
-<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>笔者将<a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7]</a>的算法实现了一遍，其中：<br>（1）CNN特征提取的算法比较普通；<br>（2）后处理中滤波算法显得比较出众，主要有两种：①对CNN输出执行度做L1范式滤波，②对于去除低文理区域预测结果，对于图像纹理度指数获取算法，网上、文献里面都没有找到，应该是作者自己的研究。</p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.1.jpg" alt="(a)图像原始图；(2)使用[7]中的文理检测算法得到的热力图"></p>
+<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>笔者将<a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6]</a>的算法实现了一遍，其中：<br>（1）CNN特征提取的算法比较普通；<br>（2）后处理中滤波算法显得比较出众，主要有两种：①对CNN输出执行度做L1范式滤波，②对于去除低文理区域预测结果，对于图像纹理度指数获取算法，网上、文献里面都没有找到，应该是作者自己的研究。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.1.jpg?t=" alt="(a)图像原始图；(2)使用[7]中的文理检测算法得到的热力图"></p>
+<p>纹理度显示出，最有可能篡改的部位为树，因此滤波时候存在一定的可能性过度过滤，从结果也可以得知监测的篡改部位变小了。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.2.jpg" alt="论文[7]的实现，(a)篡改过的图像；(b)篡改的区域图，黑色为篡改部位；(c)CNN计算出来的概率图，黑色为未篡改部位，颜色越浅越篡改的置信度越高；(e)经过L1均值滤波结果；(e)经过纹理度去噪结果。"></p>
-<h5 id="简单做个简单总结："><a href="#简单做个简单总结：" class="headerlink" title="简单做个简单总结："></a>简单做个简单总结：</h5><ul>
+<h5 id="简单做个总结："><a href="#简单做个总结：" class="headerlink" title="简单做个总结："></a>简单做个总结：</h5><ul>
 <li>大部分深度学习算法离不开传统算法的原理，基本上都源于数字图像的成像过程留下的模式噪声；</li>
 <li>目前算法基本上可以同时解决检测篡改（Detection ）、篡改定位（Localization ）；</li>
 <li>深度学习鉴定复制-黏贴（Copy-Move）的算法比较少，关键是如何让算法认识到寻找两个相似物体，基本上都是研究接片检测（Image splicing）；</li>
