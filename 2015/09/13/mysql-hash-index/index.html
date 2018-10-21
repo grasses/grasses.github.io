@@ -9,12 +9,12 @@
 <meta property="og:title" content="MySQL索引之哈希索引">
 <meta property="og:url" content="http://homeway.me/2015/09/13/mysql-hash-index/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png">
-<meta property="og:updated_time" content="2015-09-13T08:24:57.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/logo-mysql.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-09-13-mysql-hash-index-mysql-design.png">
+<meta property="og:updated_time" content="2018-10-21T16:37:09.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySQL索引之哈希索引">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo-mysql.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -266,12 +266,12 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-mysql.png" alt="mysql-log"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。</p>
 <p>从MySQL逻辑架构来看，MySQL有三层架构，第一层连接，第二层查询解析、分析、优化、视图、缓存，第三层，存储引擎。</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png" alt="MySQL逻辑架构"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-09-13-mysql-hash-index-mysql-design.png" alt="MySQL逻辑架构"></p>
 <p>索引通过分开查询片，节省了扫描查找时间，大大提升查询效率。</p>
 <p>大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构。</p>
 <p>索引主要在存储引擎层上，不同的引擎也就有不同的B-Tree算法。</p>
@@ -350,7 +350,7 @@ DELIMITER ;
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/09/13/mysql-hash-index/" data-id="cjl33w8rq00172j2c788nv1qn" data-title="MySQL索引之哈希索引" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/09/13/mysql-hash-index/" data-id="cjnj3qaze0018o02cyyf7rzu5" data-title="MySQL索引之哈希索引" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li></ul>
@@ -396,7 +396,7 @@ DELIMITER ;
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -405,7 +405,7 @@ DELIMITER ;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -421,10 +421,6 @@ DELIMITER ;
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -434,6 +430,10 @@ DELIMITER ;
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -510,12 +510,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -644,9 +644,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

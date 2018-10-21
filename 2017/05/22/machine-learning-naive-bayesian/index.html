@@ -9,26 +9,26 @@
 <meta property="og:title" content="Machine Learning - Naive Bayesian theory">
 <meta property="og:url" content="http://homeway.me/2017/05/22/machine-learning-naive-bayesian/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-figure-1.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-1.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-2.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-3.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-4.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-5.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-6.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-7.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-8.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-9.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-10.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-11.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-12.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-14.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-15.png">
-<meta property="og:updated_time" content="2017-05-23T16:02:10.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/machine-learning-logox.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-figure-1.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-1.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-2.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-3.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-4.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-5.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-6.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-7.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-8.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-9.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-10.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-11.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-12.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-14.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-15.png">
+<meta property="og:updated_time" content="2018-10-21T16:37:20.382Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Machine Learning - Naive Bayesian theory">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/machine-learning-logox.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -280,46 +280,46 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bayes’ rule is a rigorous method for interpreting evidence in the context of previous experience or knowledge. It was discovered by Thomas Bayes (c. 1701-1761), and independently discovered by Pierre-Simon Laplace (1749-1827).</p>
 <p>The Naive Bayes algorithm is called “naive” because it makes the assumption that the occurrence of a certain feature is independent of the occurrence of other features.</p>
 <p>In naive bayesian, it`s diffcultly to predict posterior probability, and we can use proior probability p(x|y) to consider posterior probability:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-figure-1.png" alt="Figure-1: Naive Bayesian model"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-figure-1.png" alt="Figure-1: Naive Bayesian model"></p>
 <p>After this section, we begin talking about how this bayesian work.</p>
 <h2 id="Bayesian-decision-theory"><a href="#Bayesian-decision-theory" class="headerlink" title="Bayesian decision theory"></a>Bayesian decision theory</h2><p>Suppose n labels defined as <code>Y = {y1, y2, y3, y4...yn}</code>, <code>λij</code> defined as loss probability for wrongly classing yj as yi. After this we can get a conditional risk <code>R(yi | x)</code>: on condition x, probability for wrongly class yj as yi:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-1.png" alt="Formula1: Error risk on condition x"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-1.png" alt="Formula1: Error risk on condition x"></p>
 <p>Make a mathematical expectation:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-2.png" alt="Formula2: Error risk expectation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-2.png" alt="Formula2: Error risk expectation"></p>
 <p>To make E(h(x)) more smaller, we need to find a group of <code>{X -&gt; Y}</code> which make <code>R(h(x)|x)</code> mathematical expectation smallest. The smallest h(x) is called Bayes optiomal classifier. <code>λij</code> can be defined as:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-3.png" alt="Formula-3: λij"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-3.png" alt="Formula-3: λij"></p>
 <p>Error risk probability:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-4.png" alt="Formula-4: risk probability"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-4.png" alt="Formula-4: risk probability"></p>
 <p>Where <code>P(yi|x)</code> is accurate judgment probability, and Bayes optiomal classifier can be defined as:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-5.png" alt="Formula-5: h(x)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-5.png" alt="Formula-5: h(x)"></p>
 <p>From here, we can make a conclusion: in order to make classfy risk more smaller, we need to find max mathematical expectation for P(y|x), but mostly, find bigest <code>P(y | x)</code> is not easy work, in bayesian theory:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-6.png" alt="Formula-6: bayesian formula"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-6.png" alt="Formula-6: bayesian formula"></p>
 <p>Where <code>P(y)</code> is prior probability, <code>P(x|y)</code> is on condition y probability(likehood).</p>
 <h2 id="Maximum-Likelihood-Estimator-MLE"><a href="#Maximum-Likelihood-Estimator-MLE" class="headerlink" title="Maximum Likelihood Estimator (MLE)"></a>Maximum Likelihood Estimator (MLE)</h2><p>In statistics, maximum likelihood estimation (MLE) is a method of estimating the parameters of a statistical model given observations, by finding the parameter values that maximize the likelihood of making the observations given the parameters.(<a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation" target="_blank" rel="external">Wiki: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation</a>)</p>
 <p>Without considering any prior opinion, a typical approach for estimating p is the method of maximum likelihood. For <code>xi ∈ X (i = 1,2,3,4...)</code>, all xi independent and with same distribution, then <code>P(Xi=xi|θ)</code> should be:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-7.png" alt="Formula-7: Likelihood probability"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-7.png" alt="Formula-7: Likelihood probability"></p>
 <p>Now we look at this function from a different perspective by considering the observed values <code>x1, x2, …, xn</code> to be fixed “parameters” of this function, whereas θ will be the function’s variable and allowed to vary freely.In practice the algebra is often more convenient when working with the natural logarithm of the likelihood function, called the log-likelihood:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-8.png" alt="Formula-8:Log-likelihood"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-8.png" alt="Formula-8:Log-likelihood"></p>
 <p>Because log(x) and multiplication function has same incremental decrement attribute, we choose log-likelihood for better caculating.<br>The method of maximum likelihood estimates θ by finding a value of θ that maximizes ln(L(θ)). This method of estimation defines a maximum likelihood estimator (MLE) of θ:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-9.png" alt="Formula-9: Maximum Likelihood Estimator"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-9.png" alt="Formula-9: Maximum Likelihood Estimator"></p>
 <p>In order to find the maximum likelihood function, we need to derive the formula 9, find the derivative is 0 when the θ is the maximum likelihood function solution.</p>
 <h2 id="Naive-Bayesian-theory"><a href="#Naive-Bayesian-theory" class="headerlink" title="Naive Bayesian theory"></a>Naive Bayesian theory</h2><p>Ok, let’s go back to naive bayesian.</p>
 <p>We may find posterior probability <code>P(y|x)</code> not easy to calculate, but if the conditions are interrelated, we can not from the prior probability (<code>P(x|y)</code>) get the results. Bayesian uses the attribute conditional independence hypothesis, which supposing all conditions x do not affect each other. Based on attribute conditional independence hypothesis, formula 6 can be like:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-10.png" alt="Formula-10: attribute conditional independence hypothesis"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-10.png" alt="Formula-10: attribute conditional independence hypothesis"></p>
 <p>Where X has m attributes, all working independently. Formula 5 can be rewrited as:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-11.png" alt="Formula-11: attribute conditional independence hypothesis"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-11.png" alt="Formula-11: attribute conditional independence hypothesis"></p>
 <p>Here we need to choose a distribution to describe p(x|y) called prior distribution.</p>
 <h2 id="Bayesian-prior"><a href="#Bayesian-prior" class="headerlink" title="Bayesian prior"></a>Bayesian prior</h2><p>There are many different bayesian prior: Gaussian or normal distribution, bernoulli distribution, conjugate distributions. Once we have chosen a prior distribution Pr(p)Pr(p), we then observe the process, and use Bayes’ theorem to update our probability distribution appropriately.</p>
 <p>For normal distribution:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-12.png" alt="Formula-12: normal distribution bayesian prior"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-12.png" alt="Formula-12: normal distribution bayesian prior"></p>
 <p>From attributions of normal distribution, P(x|y) ~ N(u, σ^2), we can now get the estimating mathematical expectation and variance from maximum likelihood:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-14.png" alt="Formula-14: normal distribution mathematical expectation"></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-15.png" alt="Formula-15: normal distribution variance"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-14.png" alt="Formula-14: normal distribution mathematical expectation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-15.png" alt="Formula-15: normal distribution variance"></p>
 <blockquote>
 <p>Next post I whil write some code to express how naive bayesian works. </p>
 </blockquote>
@@ -340,7 +340,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2017/05/22/machine-learning-naive-bayesian/" data-id="cjl33w8rt001e2j2cyxp1g21y" data-title="Machine Learning - Naive Bayesian theory" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/05/22/machine-learning-naive-bayesian/" data-id="cjnj3qazd0014o02cvk65wgn7" data-title="Machine Learning - Naive Bayesian theory" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
@@ -386,7 +386,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -395,7 +395,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -411,10 +411,6 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -424,6 +420,10 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -500,12 +500,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -634,9 +634,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

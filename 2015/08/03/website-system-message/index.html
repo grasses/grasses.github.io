@@ -9,13 +9,13 @@
 <meta property="og:title" content="站内消息设计与实现">
 <meta property="og:url" content="http://homeway.me/2015/08/03/website-system-message/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.1.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.2.png">
-<meta property="og:updated_time" content="2015-08-04T13:40:13.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/logo-sql-nosql.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-08-03-website-system-message.1.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-08-03-website-system-message.2.png">
+<meta property="og:updated_time" content="2018-10-21T16:33:11.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="站内消息设计与实现">
-<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo-sql-nosql.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -267,7 +267,7 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png" alt="http"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-sql-nosql.png" alt="http"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近在处理系统消息模块，查阅了很多实践案例，各有针对性。</p>
@@ -282,7 +282,7 @@ ga('send', 'pageview');
 <p>关于订阅消息就比较麻烦了，对用户分组？对消息分组？</p>
 <p>关系型数据库处理集合问题是比较麻烦的，目前想到的结论是建立一个表(“RssMessage”)存储消息类型，消息索引。</p>
 <p>下面列了大致的数据库模型：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.1.png" alt="Mysql"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-08-03-website-system-message.1.png" alt="Mysql"></p>
 <p>看完这个数据库设计，我也觉得好难受，吐槽前先来想想为什么吧。</p>
 <p>UserSystemRelation表用于记录用户读取到哪个位置的标记。</p>
 <p>可以看到，UserMessage与SystemMessage表中，title、tid、ctime、type字段冗余了，好像也没必要，</p>
@@ -302,7 +302,7 @@ ga('send', 'pageview');
 <h1 id="0x04-Redis实现"><a href="#0x04-Redis实现" class="headerlink" title="0x04.Redis实现"></a>0x04.Redis实现</h1><p>看了Mysql下站内消息的数据库设计，我也觉得很蛋疼，临时过渡没事，但是还是NoSQL合适。</p>
 <p>Redis自带订阅与发布系统，<a href="http://redisbook.readthedocs.org/en/latest/feature/pubsub.html" target="_blank" rel="external">http://redisbook.readthedocs.org/en/latest/feature/pubsub.html</a></p>
 <p>在下图展示的这个 pubsub_channels 示例中， client2 、 client5 和 client1 就订阅了 channel1 ， 而其他频道也分别被别的客户端所订阅：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.2.png" alt="订阅"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-08-03-website-system-message.2.png" alt="订阅"></p>
 <p>只要是订阅了相应地频道，就会收到频道的消息。</p>
 <p>把用户ID作为频道，私信就是反向的频道订阅，系统消息就是所有用户的订阅，那么离线的消息呢？</p>
 <h2 id="1、线上用户"><a href="#1、线上用户" class="headerlink" title="1、线上用户"></a>1、线上用户</h2><p>还是存在系统或个人的哈希表里，等上线后再去读取。</p>
@@ -377,7 +377,7 @@ for i in range(15):
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/08/03/website-system-message/" data-id="cjl33w8ta003q2j2c48mx6akv" data-title="站内消息设计与实现" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/08/03/website-system-message/" data-id="cjnj3qb12003wo02cgz0qng3u" data-title="站内消息设计与实现" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Moogodb/">Moogodb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mysql/">Mysql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Redis/">Redis</a></li></ul>
@@ -423,7 +423,7 @@ for i in range(15):
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -432,7 +432,7 @@ for i in range(15):
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -448,10 +448,6 @@ for i in range(15):
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -461,6 +457,10 @@ for i in range(15):
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -537,12 +537,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -671,9 +671,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

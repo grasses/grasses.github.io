@@ -11,21 +11,21 @@
 <meta property="og:url" content="http://homeway.me/2014/06/11/xiaocao-share-web-2/index.html">
 <meta property="og:site_name" content="夏日小草">
 <meta property="og:description" content="本文主要包含：http &amp;amp; web加速">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fcompliance-reverse-proxy.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fhttp1.0-server-push-2014-09-11.jpg">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fhttp1.1-server-push-2014-09-11.jpg">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fhttp2.0-connection-stream-2014-09-10.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fhttp2.0-Header-Compression-2014-09-10.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fhttp2.0-server-push-2014-09-10.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fhpbn_1303.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fget-a-web-2014-09-12.jpg">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fxinglai.org2014-09-12.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fbandwidth-dns-2014-09-12.jpg">
-<meta property="og:updated_time" content="2015-08-18T02:02:23.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fcompliance-reverse-proxy.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fhttp1.0-server-push-2014-09-11.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fhttp1.1-server-push-2014-09-11.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fhttp2.0-connection-stream-2014-09-10.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fhttp2.0-Header-Compression-2014-09-10.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fhttp2.0-server-push-2014-09-10.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fhpbn_1303.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fget-a-web-2014-09-12.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fxinglai.org2014-09-12.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fbandwidth-dns-2014-09-12.jpg">
+<meta property="og:updated_time" content="2018-10-21T16:33:33.093Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="小草浅浅谈web（二）">
 <meta name="twitter:description" content="本文主要包含：http &amp;amp; web加速">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog%2Fcompliance-reverse-proxy.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog%2Fcompliance-reverse-proxy.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -281,11 +281,11 @@ ga('send', 'pageview');
 <p><br><hr><br></p>
 <h1 id="0x01-http-1-0-1-1"><a href="#0x01-http-1-0-1-1" class="headerlink" title="0x01.http 1.0/1.1"></a>0x01.http 1.0/1.1</h1><p>http网上讲的很多啦，不外乎就那几点。</p>
 <p>先看个http流程图：</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fcompliance-reverse-proxy.png" alt="http流程"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fcompliance-reverse-proxy.png" alt="http流程"></p>
 <p>http 1.0, 一个请求开启一次TCP连接。</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fhttp1.0-server-push-2014-09-11.jpg" alt="http 1.0链接方式"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fhttp1.0-server-push-2014-09-11.jpg" alt="http 1.0链接方式"></p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fhttp1.1-server-push-2014-09-11.jpg" alt="http 1.1链接方式"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fhttp1.1-server-push-2014-09-11.jpg" alt="http 1.1链接方式"></p>
 <p>详细的看这里吧： <a href="http://blog.csdn.net/forgotaboutgirl/article/details/6936982" target="_blank" rel="external">http://blog.csdn.net/forgotaboutgirl/article/details/6936982</a></p>
 <p><br><hr><br></p>
 <h1 id="0x02-http-2-0"><a href="#0x02-http-2-0" class="headerlink" title="0x02.http 2.0"></a>0x02.http 2.0</h1><p>http 2.0将可能引入 <a href="http://baike.baidu.com/view/2984528.htm" target="_blank" rel="external">SPDY</a> 协议。</p>
@@ -297,14 +297,14 @@ ga('send', 'pageview');
 <p>SPDY允许在单一TCP连接上并发无限个stream。由于请求可以在单一通道上交错，TCP的效率高了许多：只需很少的连接，并且网络封包也可以更少更紧凑。</p>
 <p>当你打开一个TCP链接，发送请求包，将持续收到stream式数据。</p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fhttp2.0-connection-stream-2014-09-10.png" alt="SPDY 连接流"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fhttp2.0-connection-stream-2014-09-10.png" alt="SPDY 连接流"></p>
 <p><br><hr><br></p>
 <ul>
 <li><h4 id="HTTP头内容压缩"><a href="#HTTP头内容压缩" class="headerlink" title="HTTP头内容压缩"></a>HTTP头内容压缩</h4></li>
 </ul>
 <p>SPDY允许压缩HTTP请求和响应头，因此可以（比传统HTTP）传输更少的包和数据.</p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fhttp2.0-Header-Compression-2014-09-10.png" alt="SPDY 压缩"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fhttp2.0-Header-Compression-2014-09-10.png" alt="SPDY 压缩"></p>
 <p><br><hr><br></p>
 <ul>
 <li><h4 id="服务器推送流-Server-Push"><a href="#服务器推送流-Server-Push" class="headerlink" title="服务器推送流(Server Push)"></a>服务器推送流(Server Push)</h4></li>
@@ -312,18 +312,18 @@ ga('send', 'pageview');
 <p>http 1.0时代，服务器只能被动接受，客户端主动请求，服务器只负责回馈数据。</p>
 <p>SPDY在实验服务器通过声明X-Associated-Content头来推送内容。服务端通过这个头告知客户端需要推送资源。</p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fhttp2.0-server-push-2014-09-10.png" alt="SPDY 连接"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fhttp2.0-server-push-2014-09-10.png" alt="SPDY 连接"></p>
 <p><br><hr><br></p>
 <ul>
 <li>与HTTP兼容</li>
 </ul>
 <p>HTTP本身是单次请求+单次响应的结构，所以SPDY中使用带有FLAG_FIN的SYN_STREAM来兼容HTTP请求，而带有FLAG_FIN的SYN_REPLY来兼容HTTP响应。对于带有请求body（上传文件）的情况，这时在SYN_STREAM可以不包含FLAG_FIN标识，然后客户端将数据按数据帧的大小限制（最大2^31 – 1）进行拆分，跟随发送若干数据帧，在最后一个数据帧上带有FLAG_FIN即可。对于服务端响应中的大量内容（如HTML页面、JS、CSS等），同样采用类似方法，只在最后一个数据帧带上FLAG_FIN。</p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fhpbn_1303.png" alt="SPDY 兼容"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fhpbn_1303.png" alt="SPDY 兼容"></p>
 <p><br><hr><br></p>
 <h1 id="0x03-web速度"><a href="#0x03-web速度" class="headerlink" title="0x03.web速度"></a>0x03.web速度</h1><p>先看看你点击一个网站产生的数据流。</p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fget-a-web-2014-09-12.jpg" alt="访问 web数据流 "></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fget-a-web-2014-09-12.jpg" alt="访问 web数据流 "></p>
 <p><br><hr><br></p>
 <ul>
 <li><p>网口转换</p>
@@ -346,7 +346,7 @@ ga('send', 'pageview');
 <p>一个web测试网站：<a href="http://www.webpagetest.org/" target="_blank" rel="external">http://www.webpagetest.org/</a></p>
 <p>下面对醒来网站的测试：</p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fxinglai.org2014-09-12.png" alt="http://xinglai.org/ 测试"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fxinglai.org2014-09-12.png" alt="http://xinglai.org/ 测试"></p>
 <p>从下面的测试可以看出，访问一个网站耗时的几个东西：</p>
 <ul>
 <li><p>下载一个很大的png</p>
@@ -359,7 +359,7 @@ ga('send', 'pageview');
 <p><br><hr><br></p>
 <p>关于网络带宽与延迟的测试</p>
 <p><br><hr><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fbandwidth-dns-2014-09-12.jpg" alt="网络带宽与延迟"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fbandwidth-dns-2014-09-12.jpg" alt="网络带宽与延迟"></p>
 <p>从上面很容易看到，网络带宽不是最主要的问题，网络延迟才是主要问题。</p>
 <p>查看你本地的DNS缓存：<a href="chrome://dns" target="_blank" rel="external">chrome://dns</a></p>
 <p><br><hr><br></p>
@@ -371,7 +371,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/06/11/xiaocao-share-web-2/" data-id="cjl33w8th00402j2cpru307fx" data-title="小草浅浅谈web（二）" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/06/11/xiaocao-share-web-2/" data-id="cjnj3qb160043o02ciw446t9l" data-title="小草浅浅谈web（二）" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web/">Web</a></li></ul>
@@ -417,7 +417,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -426,7 +426,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -442,10 +442,6 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -455,6 +451,10 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -531,12 +531,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -665,9 +665,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

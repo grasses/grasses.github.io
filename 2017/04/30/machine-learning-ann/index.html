@@ -9,14 +9,14 @@
 <meta property="og:title" content="Machine Learning - Artificial Neural Network">
 <meta property="og:url" content="http://homeway.me/2017/04/30/machine-learning-ann/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neuron.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-sgn-function.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-squashing-function.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neural-networks-working.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-multilayer-perceptron.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-global-minimum-local-minimum.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-basic-neural-network-unit-neuron.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/machine-learning-logox.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-neuron.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-sgn-function.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-squashing-function.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-neural-networks-working.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-multilayer-perceptron.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-global-minimum-local-minimum.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-basic-neural-network-unit-neuron.png">
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-1.png">
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-3.png">
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-4.png">
@@ -26,11 +26,11 @@
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-8.png">
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-9.png">
 <meta property="og:image" content="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-10.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-04-30-ann-cross-validation.jpg">
-<meta property="og:updated_time" content="2017-05-03T07:16:17.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-04-30-ann-cross-validation.jpg">
+<meta property="og:updated_time" content="2018-10-21T16:37:36.531Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Machine Learning - Artificial Neural Network">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/machine-learning-logox.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -282,26 +282,26 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>Artifical Neural Network(ANN) which is inspired by human brain neural, provide a general, practical method for learning real-valued, discrete-valued, and vector-valued functions from examples. Artifical Neural Network algorithm such as Backpropagation use gradient descent to tune network parameters to best fit a training set of input-outputpairs.</p>
 <p><hr><br></p>
-<h1 id="How-to-work"><a href="#How-to-work" class="headerlink" title="How to work"></a>How to work</h1><h2 id="1-Neuron"><a href="#1-Neuron" class="headerlink" title="1.Neuron"></a>1.Neuron</h2><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neuron.png" alt="Figue 1: Artificial Neural Network (picture from 《机器学习-周志华》)"></p>
+<h1 id="How-to-work"><a href="#How-to-work" class="headerlink" title="How to work"></a>How to work</h1><h2 id="1-Neuron"><a href="#1-Neuron" class="headerlink" title="1.Neuron"></a>1.Neuron</h2><p><img src="https://static.blog.homeway.me/blog/2017-04-30-neuron.png" alt="Figue 1: Artificial Neural Network (picture from 《机器学习-周志华》)"></p>
 <p>The basic component of an ANN network is node unit called neuron. These neurons connect with pre-neurons with bridges in different weights. Every neuron receive signal from bridges and evaluated by activation function to output. In ideal situation, activation function is like figue 2, input value from pre-neuron and return 0 or 1:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-sgn-function.png" alt="Figue 2: Output in ideal situation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-sgn-function.png" alt="Figue 2: Output in ideal situation"></p>
 <p>Besides the logistic function, sigmoid functions include the ordinary arctangent, the hyperbolic tangent, the Gudermannian function, and the error function, but also the generalised logistic function and algebraic functions(Figue 3):</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-squashing-function.png" alt="Figue 3: Some sigmoid functions: In the drawing all functions are normalized in such a way &lt;br&gt;that their slope at the origin is like figue 2.(picture from wikipedia)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-squashing-function.png" alt="Figue 3: Some sigmoid functions: In the drawing all functions are normalized in such a way &lt;br&gt;that their slope at the origin is like figue 2.(picture from wikipedia)"></p>
 <h2 id="2-Multilayer-perceptron"><a href="#2-Multilayer-perceptron" class="headerlink" title="2.Multilayer perceptron"></a>2.Multilayer perceptron</h2><p>An ANN network consists at least a input, output layer and hidden layer in which consists multilayer perceptron(MLP), which is a feedforward artificial neural network model that maps sets of input data onto a set of appropriate outputs. </p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neural-networks-working.png" alt="Figue 4: Multilayer perceptron module"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-neural-networks-working.png" alt="Figue 4: Multilayer perceptron module"></p>
 <p>A single perceptron can be used to represent many boolean functions(such as AND/OR/NOT). For example:</p>
 <blockquote>
 <p>AND (X1 ^ X2): Suppose w1 = w2 = 1, θ = 2, X0(bias) = 0, and y = f(1 · X1 + 1 · X2 - 2), then only when X1 = X2 = 1, y = 1<br>OR (X1 v X2): Suppose w1 = w2 = 1, θ = 0.5, X0(bias) = 0, and y = f(1 · X1 + 1 · X2 - 0.5), then only when X1 = 1 or X2 = 1, y = 1<br>NOT (!X1): Suppose w1 = 1, w2 = 0, θ = -0.5, X0(bias) = 0, and y = f(1 · X1 + 0 · X2 + 0.5), when X1 =  1, y = 0; X1 = 0, y = 1</p>
 </blockquote>
 <p>Unfortunately, however, some boolean func- tions cannot be represented by a single perceptron, such as the XOR function whose value is 1 if and only if x1 ≠ x2. Note the set of linearly nonseparable training examples shown in figure 5 corresponds to this XOR function:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-multilayer-perceptron.png" alt="Figue 5: AND/OR/XOR/NOT boolearn function(picture from 《机器学习-周志华》)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-multilayer-perceptron.png" alt="Figue 5: AND/OR/XOR/NOT boolearn function(picture from 《机器学习-周志华》)"></p>
 <p>The ability of perceptrons to represent AND, OR, AND, and NOR is important because every boolean function can be represented by some network of interconnected units based on these primitives. In fact, every boolean function can be represented by some network of perceptrons only two levels deep, in which the inputs are fed to multiple units, and the outputs of these units are then input to a second, final stage. One way is to represent the boolean function in disjunctive normal form (i.e., as the disjunction (OR) of a set of conjunctions (ANDs) of the inputs and their negations). Note that the input to an AND perceptron can be negated simply by changing the sign of the corresponding input weight.</p>
 <h2 id="3-Gradient-descent"><a href="#3-Gradient-descent" class="headerlink" title="3.Gradient descent"></a>3.Gradient descent</h2><p>Gradient descent is a first-order iterative optimization algorithm. To find a local minimum of a function using gradient descent, one takes steps proportional to the negative of the gradient (or of the approximate gradient) of the function at the current point. (From: <a href="https://en.wikipedia.org/wiki/Gradient_descent#Description" target="_blank" rel="external">https://en.wikipedia.org/wiki/Gradient_descent#Description</a>).</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-global-minimum-local-minimum.png" alt="Figue 6: global minimum and local minmum (picture from 《机器学习-周志华》)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-global-minimum-local-minimum.png" alt="Figue 6: global minimum and local minmum (picture from 《机器学习-周志华》)"></p>
 <p>To sum, we may use gradient descent to approach the minimum for a formula. And from gradient descent we may get local minimum and global minimum, but how could we check whether the data I caculate is global minimum but local minimum?(<a href="http://stackoverflow.com/questions/9163801/gradient-descent-implementation" target="_blank" rel="external">http://stackoverflow.com/questions/9163801/gradient-descent-implementation</a>)</p>
 <ul>
 <li>Add noise. This reduces the precision of the parameters you’ve found, which can “blur” out local minima. The search can then jump out of local minima that are small compared to the noise, while still being trapped in deeper minima. A well-known approach for adding noise is simulated annealing.</li>
@@ -324,7 +324,7 @@ ga('send', 'pageview');
 </ul>
 </li>
 </ul>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-basic-neural-network-unit-neuron.png" alt="Figue 7: BackPropagation alogrithm"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-basic-neural-network-unit-neuron.png" alt="Figue 7: BackPropagation alogrithm"></p>
 <p>Step one is caculate nodes output by giving weight, bias, squashing function, then get output node value; Step two needs to correcte predict value and target value, then return an error check value, which using gradient descent algorithm to feed-forward the weights.</p>
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-1.png" alt="Formula 1: Neuron node sum"></p>
 <p>Let`s return to the case of a single neuron N with weights W = (w0, … , wn) and an input X = (x1, x2 … xn), as is shown at Formula 1. And momentarily, let us add the activation function from Figue 3. </p>
@@ -348,7 +348,7 @@ ga('send', 'pageview');
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-10.png" alt="Formula 9: new weight formula"></p>
 <h2 id="5-Cross-Validation"><a href="#5-Cross-Validation" class="headerlink" title="5.Cross Validation"></a>5.Cross Validation</h2><p>www.cs.cmu.edu’s slider “Overfitting, Cross-Validation”: <a href="http://www.cs.cmu.edu/~guestrin/Class/10701-S05/slides/NNet-CrossValidation-2-2-2005.pdf" target="_blank" rel="external">http://www.cs.cmu.edu/~guestrin/Class/10701-S05/slides/NNet-CrossValidation-2-2-2005.pdf</a></p>
 <p>Cross-validation, sometimes called rotation estimation, is a model validation technique for assessing how the results of a statistical analysis will generalize to an independent data set, which can easily described by Figue 8:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-ann-cross-validation.jpg" alt="Figue 8: Cross Validation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-ann-cross-validation.jpg" alt="Figue 8: Cross Validation"></p>
 <p>For Figue 8, we may choose different groups data and finally caculate their average, more information is avaiable in wikipedia: <a href="https://en.wikipedia.org/wiki/Cross-validation" target="_blank" rel="external">https://en.wikipedia.org/wiki/Cross-validation</a> </p>
 <p><hr><br></p>
 <h1 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h1><p>Github code: <a href="https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py</a></p>
@@ -458,7 +458,7 @@ class NeuralNetwork(object):
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2017/04/30/machine-learning-ann/" data-id="cjl33w8uo005m2j2cei836j4g" data-title="Machine Learning - Artificial Neural Network" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/04/30/machine-learning-ann/" data-id="cjnj3qb2m005so02c114b74ot" data-title="Machine Learning - Artificial Neural Network" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>
@@ -504,7 +504,7 @@ class NeuralNetwork(object):
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -513,7 +513,7 @@ class NeuralNetwork(object):
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -529,10 +529,6 @@ class NeuralNetwork(object):
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -542,6 +538,10 @@ class NeuralNetwork(object):
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -618,12 +618,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -752,9 +752,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

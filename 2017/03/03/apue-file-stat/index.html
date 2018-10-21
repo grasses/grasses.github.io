@@ -9,13 +9,13 @@
 <meta property="og:title" content="Unix C Programming - file stat">
 <meta property="og:url" content="http://homeway.me/2017/03/03/apue-file-stat/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/img/gnu.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode.png">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode-permission.png">
-<meta property="og:updated_time" content="2017-04-26T00:24:26.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/img/gnu.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/img/apue-file-dir-st_mode.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/img/apue-file-dir-st_mode-permission.png">
+<meta property="og:updated_time" content="2018-10-21T16:38:55.610Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unix C Programming - file stat">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/img/gnu.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/img/gnu.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -267,9 +267,9 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
-<!-- http://xiaocao.u.qiniudn.com/blog/img/apue-unix-linux.png -->
+<!-- https://static.blog.homeway.me/blog/img/apue-unix-linux.png -->
 <h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><h2 id="1-stat-fstat-fstatat-lstat"><a href="#1-stat-fstat-fstatat-lstat" class="headerlink" title="1.stat()/fstat()/fstatat()/lstat()"></a>1.stat()/fstat()/fstatat()/lstat()</h2><pre><code>int stat (const char *filename, struct stat *buf)
 int fstat (int filedes, struct stat *buf)
 int lstat (const char *filename, struct stat *buf)
@@ -293,7 +293,7 @@ int fstatat(int fd, const char* restrict pathname, struct stat *restrict buff, i
     unsigned long int st_ctime_usec;    // Fractional part of the time.
     blkcnt_t st_blocks;    // This is the amount of disk space that the file occupies, measured in units of 512-byte blocks.
 </code></pre><p>File type contains in <code>mode_t st_mode</code>. We can determine the file type with the macros.</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode.png" alt="mode_t st_mode macros"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/apue-file-dir-st_mode.png" alt="mode_t st_mode macros"></p>
 <p><a id="stat-type"></a><br>Follow description of stat, writing an example to read file stat:</p>
 <pre><code>#include &lt;stdio.h&gt;
 #include &lt;time.h&gt;
@@ -369,7 +369,7 @@ int main(int argc, char** argv) {
 mode_t umask (mode_t mask)
                                 - 返回：mode_t
 </code></pre><p>In *nix, user permission is defined as 4+2+1, 4 = read permission, 2 = write permission, 1 = exec permission, for the more, if you have no permission to a directory, you can`t read this directory. Some common umask values are 002 to prevent others from writing your files, 022 to prevent group members and others from writing your files, and 027 to prevent group members from writing your files and others from reading, writing, or executing your files. We can read user permission from this picture:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode-permission.png" alt="permission"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/apue-file-dir-st_mode-permission.png" alt="permission"></p>
 <p><a id="permision"></a><br>struct mode_t defined here:</p>
 <pre><code>S_IRUSR     // Read permission bit for the owner. 0400
 S_IWUSR    // Write permission bit for the owner. 0200
@@ -508,7 +508,7 @@ int main(int argc, char** argv) {
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2017/03/03/apue-file-stat/" data-id="cjl33w8uf005b2j2cdu7vw2e1" data-title="Unix C Programming - file stat" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/03/03/apue-file-stat/" data-id="cjnj3qb2c005go02cjznp4k3u" data-title="Unix C Programming - file stat" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
@@ -554,7 +554,7 @@ int main(int argc, char** argv) {
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -563,7 +563,7 @@ int main(int argc, char** argv) {
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -579,10 +579,6 @@ int main(int argc, char** argv) {
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -592,6 +588,10 @@ int main(int argc, char** argv) {
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -668,12 +668,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -802,9 +802,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

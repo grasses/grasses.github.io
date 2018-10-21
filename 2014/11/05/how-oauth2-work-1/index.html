@@ -11,17 +11,17 @@
 <meta property="og:url" content="http://homeway.me/2014/11/05/how-oauth2-work-1/index.html">
 <meta property="og:site_name" content="夏日小草">
 <meta property="og:description" content="Oauth2.0是第三方接入的一个安全协议今天查了查Oauth2.0接入原理，感觉挺有意思的">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-01.gif">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-06.gif">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-02.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-04.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-05.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-03.jpg">
-<meta property="og:updated_time" content="2017-01-13T12:57:08.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-01.gif">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-06.gif">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-02.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-04.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-05.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-03.jpg">
+<meta property="og:updated_time" content="2018-10-21T16:37:53.242Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Oauth2.0原理">
 <meta name="twitter:description" content="Oauth2.0是第三方接入的一个安全协议今天查了查Oauth2.0接入原理，感觉挺有意思的">
-<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-01.gif">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-01.gif">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -277,10 +277,10 @@ ga('send', 'pageview');
 <p><br><hr><br></p>
 <h1 id="0x01-关于Oauth"><a href="#0x01-关于Oauth" class="headerlink" title="0x01.关于Oauth"></a>0x01.关于Oauth</h1><p>Oauth是允许用户让第三方应用访问该用户在某一网站上存储的私密的资源（如照片，视频，联系人列表），而无需将用户名和密码提供给第三方应用的协议。</p>
 <p>例如我们想要获取github的用户账号信息。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-01.gif" alt="oauth2.0请求"></p>
+<p><img src="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-01.gif" alt="oauth2.0请求"></p>
 <p><br></p>
 <p>进入到github就能看到，你授权的账号信息了。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-06.gif" alt="github授权账号信息"></p>
+<p><img src="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-06.gif" alt="github授权账号信息"></p>
 <p><br><hr><br></p>
 <h1 id="0x02-Oauth2-0成员"><a href="#0x02-Oauth2-0成员" class="headerlink" title="0x02.Oauth2.0成员"></a>0x02.Oauth2.0成员</h1><ul>
 <li><h4 id="Resource-Owner（资源拥有者：用户）"><a href="#Resource-Owner（资源拥有者：用户）" class="headerlink" title="Resource Owner（资源拥有者：用户）"></a>Resource Owner（资源拥有者：用户）</h4></li>
@@ -290,7 +290,7 @@ ga('send', 'pageview');
 </ul>
 <p><br></p>
 <p>从成员看Oauth2.0基本流程。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-02.png" alt="Oauth2.0基本流程"></p>
+<p><img src="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-02.png" alt="Oauth2.0基本流程"></p>
 <p><br></p>
 <p>原理很简单，用户访问App，App访问Authorization Server请求权限，</p>
 <p>Authorization Server得到用户同意后，返回token，</p>
@@ -307,12 +307,12 @@ ga('send', 'pageview');
 <h3 id="关于Oauth提权类型"><a href="#关于Oauth提权类型" class="headerlink" title="关于Oauth提权类型"></a>关于Oauth提权类型</h3><ul>
 <li><h4 id="authorization-code（Oauth提供的token代码）：-Web-server、apps"><a href="#authorization-code（Oauth提供的token代码）：-Web-server、apps" class="headerlink" title="authorization_code（Oauth提供的token代码）： Web-server、apps"></a>authorization_code（Oauth提供的token代码）： Web-server、apps</h4></li>
 </ul>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-04.png" alt="authorization_code模式"></p>
+<p><img src="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-04.png" alt="authorization_code模式"></p>
 <p><br></p>
 <ul>
 <li><h4 id="implicit-简单模式-：Browser-based-apps，Mobile-apps"><a href="#implicit-简单模式-：Browser-based-apps，Mobile-apps" class="headerlink" title="implicit(简单模式)：Browser-based apps，Mobile apps"></a>implicit(简单模式)：Browser-based apps，Mobile apps</h4></li>
 </ul>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-05.png" alt="implicit模式"></p>
+<p><img src="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-05.png" alt="implicit模式"></p>
 <p><br></p>
 <ul>
 <li><h4 id="password（密码模式）：Username-password-access"><a href="#password（密码模式）：Username-password-access" class="headerlink" title="password（密码模式）：Username/password access"></a>password（密码模式）：Username/password access</h4></li>
@@ -324,7 +324,7 @@ ga('send', 'pageview');
 <p>password是种不安全的方式。</p>
 <p>client_credentials是不需要Oauth认证的，即直接访问该网站提供的开放的API。</p>
 <p><br></p>
-<h3 id="看看例子，从网上偷下来的facebook的Oauth2-0认证："><a href="#看看例子，从网上偷下来的facebook的Oauth2-0认证：" class="headerlink" title="看看例子，从网上偷下来的facebook的Oauth2.0认证："></a>看看例子，从网上偷下来的facebook的Oauth2.0认证：</h3><p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2014-11-04-oauth2_0-03.jpg" alt="facebook Oauth2.0"></p>
+<h3 id="看看例子，从网上偷下来的facebook的Oauth2-0认证："><a href="#看看例子，从网上偷下来的facebook的Oauth2-0认证：" class="headerlink" title="看看例子，从网上偷下来的facebook的Oauth2.0认证："></a>看看例子，从网上偷下来的facebook的Oauth2.0认证：</h3><p><img src="https://static.blog.homeway.me/blog/2014-11-04-oauth2_0-03.jpg" alt="facebook Oauth2.0"></p>
 <p>第一步：</p>
 <p>App向 Oauth Server 请求的URL =&gt; <code>https://facebook.com/dialog/oauth?response_type=code&amp;client_id=YOUR_CLIENT_ID&amp;redirect_uri=REDIRECT_URI&amp;scope=email</code></p>
 <p>里面带着该app的id，key，请求的类型，返回一串的access_token和事件类型code。</p>
@@ -349,7 +349,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/11/05/how-oauth2-work-1/" data-id="cjl33w8rm000x2j2cfs6o7cm6" data-title="Oauth2.0原理" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/11/05/how-oauth2-work-1/" data-id="cjnj3qaz8000uo02cxuducrtw" data-title="Oauth2.0原理" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Oauth/">Oauth</a></li></ul>
@@ -395,7 +395,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -404,7 +404,7 @@ ga('send', 'pageview');
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -420,10 +420,6 @@ ga('send', 'pageview');
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -433,6 +429,10 @@ ga('send', 'pageview');
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -509,12 +509,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -643,9 +643,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

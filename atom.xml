@@ -124,93 +124,13 @@
   </entry>
   
   <entry>
-    <title>Talking about Hackathon</title>
-    <link href="http://homeway.me/2018/05/21/talking-about-hackathon/"/>
-    <id>http://homeway.me/2018/05/21/talking-about-hackathon/</id>
-    <published>2018-05-21T12:57:10.000Z</published>
-    <updated>2018-05-21T19:12:32.870Z</updated>
-    
-    <content type="html"><![CDATA[<p><br><br><img src="https://static.blog.homeway.me/blog/logo/hackathon-logo.png" alt="Hackathon"><br><a id="more"></a></p>
-<h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>上周周末刚刚参加了一场杭电的“Hack{中国}全国高校黑客马拉松比赛”，想着写篇简单的感悟。<br>比赛上遇见了几个学霸级队友，非常感叹现在的本科生这么厉害，都是未来改变世界的人才。<br>我从本科开始就在关注Hackathon，前前后后大概参加了六七次比赛，现在再参加这种比赛有点欺负晚辈们了。<br>Hackathon的初衷是为了在很短时间内快速开发，通过压缩时间、提高效率，把原本懒散想做的一些项目、创意在非常短的时间内完成。<br>我在经常参加Hackathon后，也不断磨练出了很强的短时间爆发能力，规划时间、提高效率、团队合作。</p>
-<p>接下来说下我这些年参加Hackathon的一些总结：</p>
-<h2 id="1-做什么"><a href="#1-做什么" class="headerlink" title="1.做什么"></a>1.做什么</h2><p>首先是做什么。源于Hackathon开放的思维氛围，大部分Hackathon都不限制选手们做什么，有些仅仅会提出一个相关的主题，这也不影响选手们做什么。大概在2014年的时候，由于移动端的火热，大片大片围绕移动互联网的应用在比赛中流行起来，那个时候做个简单的移动app，有些创意度、完整性、演示良好都能拿奖了；到后来，大家疲惫于移动app、web应用，很多有创意的硬件Geek们开始用硬件来做很多想法，各种类型的智能设备、感官游戏、无人飞行器、3D打印，这些都取得很好的效果；近年来，随着深度学习的兴旺以及国家大力支持智慧城市，很多深度学习算法开始走进Hackathon比赛中，这些项目中，有些很好地解决很多现实问题、有些则是很有创意的吸引眼球。</p>
-<p>早期的一些作品，例如：App List，应用分享的应用，利用app选择手机自带的十个自己已使用的app，并且分享给好友，同时能看到自己好友及附近的朋友的分享，并且下载自己喜欢的应用。这个idea现在想来已经很老套了，2014年还是很有新鲜感的。</p>
-<p><img src="https://static.blog.homeway.me/blog/image/hackathon-example-1.jpg" alt="App List"></p>
-<p>后来开始流行做小游戏，例如：剑气决斗，让手机变身宝剑，通过手机3D感应器来操控游戏！纯js作品，应用使用PhoneGap，后端使用NodeJS、WebSocket，HTML5 页面，使用了云适配的技术，可以适配各种大小的屏幕，这个作品也是拿奖作品。这种游戏创意点非常足，现场演示起来效果也非常棒，有动作、有声音、有激情点，可以很好地把评委带进演讲者氛围里，非常适合演示，缺点之一就是商业性匮乏，但是拿个奖已经足够了。<br><img src="https://static.blog.homeway.me/blog/image/hackathon-example-2.jpg" alt="剑气决斗"></p>
-<p>还有各种硬件游戏，例如：SMAUSH，将刷牙变成一场游戏。主要思路是在牙刷中放入传感器，通过蓝牙传输到后台控制端，另一端连接web游戏界面，显示游戏画面，这款游戏也是拿奖作品。这个游戏和上一个很相似，画面感很足，很容易吸引评委，想想评委坐在那里听一堆无聊的解说也是很烦的。<br><img src="https://static.blog.homeway.me/blog/image/hackathon-example-3.jpg" alt="SMAUSH"></p>
-<p>还有做一款味蕾应用，通过传导味蕾来找到交友人群，想法很有意思，创意点很足。这种应用很大的特点就是创意性，给人一种启发，但是演示时候由于味觉第三者谁也没法说什么相同不同，没法证明什么，这点比较遗憾，如果能在结果上面加上修饰，有声音、动画，也可以展示一番。<br><img src="https://static.blog.homeway.me/blog/image/hackathon-example-4.jpg" alt="味蕾"></p>
-<p>下面两个是这次比赛的创意：</p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-play-1.jpg" alt=""></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-play-2.jpg" alt=""></p>
-<p>从我参加Hackathon的经历来看，我大部分做的项目都是跟游戏有关，基本上都是带几个队友同时现场再找几个队友。<br>很多时候参加比赛都是破釜沉舟，现场决定idea、现场找队友，因为现场往往会碰到很多很牛逼的队友，下面是我获奖的一些idea：</p>
-<p>2014年6月，在SegmentFault黑客马拉松做了基于Bong手环的传感数据养宠物智能硬件游戏，并获得了Bong手环专项奖；<br>2015年3月，在沪港全球黑客马拉松做了<a href="http://homeway.me/2015/03/30/play-music-through-senses/">基于Raspberry的体感音乐游戏</a>并获得了一等奖；<br>2015年5月，在安空杯黑客马拉松做了<a href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/">基于Raspberry的打地鼠游戏</a>并获得了二等奖；<br>上周参加了全国高校黑客马拉松比赛，做了一个基于心率感应的智能跳舞机，获得了一等奖、心率传感专项奖。</p>
-<p>从2015年华科联创的Unique Hackday没拿奖开始就发现，智能硬件游戏已经遍地开花，想要获奖似乎已经没有那么简单了。<br>越来越多的开发者开始朝着深度学习、虚拟现实、区块链方向转移了，不管怎么说创新性是有了，就是作品的完整度、表现力似乎还不够。</p>
-<p>中国黑客马拉松比赛中看到了很多后起之秀，有做深度学习相关的智能诊断病症、智能交通、智能行人捕捉等等项目，这些想法都非常棒。<br>今年6月，SegmentFault将要举行的区块链Hackathon就很有创新，顺应时代，把最新的技术引到Hackathon上面，非常看好。</p>
-<h2 id="2-怎么做"><a href="#2-怎么做" class="headerlink" title="2.怎么做"></a>2.怎么做</h2><p>怎么做非常重要了。来参赛可以没有队友、没有idea，但是确定了做一样东西后，怎么做就非常关键了。<br>正常来说，一个成型的队伍，根据需求可能需要有前端/App界面端、后端、硬件端、产品/设计等，不用太多人。<br>对于提高效率来说，定个时间表、交互的数据结构、交互方式是非常必要的，这样交接起来就非常快速了。</p>
-<p>按照参赛的经验（对于2天的比赛），时间可以大致这么安排：</p>
-<ul>
-<li>基本上都是第一天12点前确定做什么，每个人分配模块任务；</li>
-<li>约定个交接时间段，15、18点交接每个模块的进度，做初步的通信交互；</li>
-<li>接下来是联通过程，22点前大致地模块都要完成，开始准备交接，24点前可以交接完成；</li>
-<li>往往在交接完成后会出现bug，而大家这时候都比较疲惫，主力需要协调大家进行快速解决问题，尽量在3点前完成bug的调试，完整地跑几次，然后就去休息了；</li>
-<li>第二天8点前开始封装产品界面，同时测试团队调试产品模型，产品经理写产品文档、演讲稿；</li>
-<li>第二天10点前要做完备的各种调试、测试、包装产品（有时候会有评委提前路过，要展示最好的状态，可以邀请他们观看）；</li>
-<li>12点前要做上台的演讲准备，整个上台流程走几遍，包括环境布置、现场意外、演讲人的演讲要点理清（很多人没做这点出意外）；</li>
-<li>12点前提交最终项目文档、代码，记得提前上路演台看看显示器接口、音箱。</li>
-</ul>
-<p>上面都是些基本的时间安排，往往很多人都只注重开发过程效率问题忽略了模拟路演过程，我拿奖的比赛都是经过提前模拟路演的。<br>很有意思的是，之前参加的比赛都是带着拿奖的决心、娱乐的心态在玩的，每次都会在傍晚和队友吃完饭出去散步、逛超市买设备。</p>
-<h2 id="3-怎么说"><a href="#3-怎么说" class="headerlink" title="3.怎么说"></a>3.怎么说</h2><p>很多人觉得Hackathon没意思都在于觉得它不公平，而这不公平往往来自于觉得这个东西靠骗。<br>其实并不是这样，程序员大都自我满足，然而很多人做了很牛逼的项目却不会表达，最后上台话都没说清。</p>
-<p>为了迎合评委，我经常会在做的东西里面加入很多元素，<br>比如：评委年龄段（适合啥背景音乐、说些什么话得体）；现场做哪个东西的人多，不要撞车；现场演示要怎么跟观众互动起来，展示者手势、肢体动作，演讲者说话重点；比赛评分要求占比是怎样的；怎么表达可以让评委一下子知道我们解决什么问题、创意点在哪、工作量充分、作品完整。其实把上面这些点都做了非常难，但是做到一部分就很完美了，很差的项目都可能拿奖。</p>
-<p>很羞耻的放一个这次比赛的视频：</p>
-<video src="https://static.blog.homeway.me/blog/video/2018.05.21-HDU-Hackday-play.mp4" controls="controls"></video>
-
-<p>演讲者很努力把每个部件的功能结合表演者的动作向评委解释清楚，同时表演者故意装出很多肢体动作来吸引评委。</p>
-<hr>
-<h1 id="Game"><a href="#Game" class="headerlink" title="Game"></a>Game</h1><p>接下来说说这场比赛吧，因为还是很有意思的，从一开始到最后都没有太多期待，但是得到太多回馈。<br>比赛当天一个人到现场，没想到具体要做什么、没有很确定的队友，现场找人还被人拒绝，直到后来开始通过经历忽悠才找来队友。<br>有几个队友非常牛逼的，不但名校出身而且大一大二就准备好出国留学的地方了，非常羡慕。</p>
-<p>做的项目是一个智能硬件跳舞机，首先制作跳舞机踏板通过树莓派GPIO接出传感器，同时获取杭州诺朗科技的心率检测仪上的数据，把这个两个输出传输给后端socket后端，后端将这些数据广播给游戏界面客户端，客户端通过心率自动调控游戏速度，同时根据跳舞机踏板信号玩游戏。思路超级简单，基本沿用了我前几年比赛的模型。<br>目前项目已经开放到Github了：<a href="https://github.com/HDU-HackDay/Dance4Me" target="_blank" rel="external">https://github.com/HDU-HackDay/Dance4Me</a></p>
-<p>下面是一些现场照片：</p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday.jpg" alt="2点多的现场"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-game2.jpg" alt="队友在夜间游戏竞技，Hackday最重要的是开心"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-game.jpg" alt="夜间游戏玩得开心也要获奖"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team1.jpg" alt="团队照片，很珍贵"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-team2.jpg" alt="团队照片，很珍贵"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward1.jpg" alt="一等奖照片"></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.05.21-HDU-Hackday-reward2.jpg" alt="任务获奖照片"></p>
-<hr>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
-<li><a href="https://segmentfault.com/a/1190000000591097" target="_blank" rel="external">SegmentFault 2014黑客马拉松 北京 作品demo</a></li>
-<li><a href="https://segmentfault.com/a/1190000000591097" target="_blank" rel="external">2014 沪港黑客马拉松现场直播 Demo环节</a></li>
-<li><a href="http://www.pingwest.com/2014-shanghai-hk-hackathon/" target="_blank" rel="external">味觉模拟器、牙刷版Wii、无需联网的LBS：黑客马拉松如何改变我们的生活？</a></li>
-<li><a href="http://homeway.me/2015/03/30/play-music-through-senses/">基于树莓派的体感音乐游戏</a></li>
-<li><a href="http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/">基于Raspberry的打地鼠游戏</a></li>
-</ul>
-<hr>
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-05-21-talking-about-hackathon"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-05-21-talking-about-hackathon" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/05/21/talking-about-hackathon/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/05/21/talking-about-hackathon/">http://homeway.me/2018/05/21/talking-about-hackathon/</a></h4><blockquote>
-<p>by grasses 2018.05.21</p>
-</blockquote>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo/hackathon-logo.png&quot; alt=&quot;Hackathon&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-      <category term="Summary" scheme="http://homeway.me/categories/Summary/"/>
-    
-    
-      <category term="hackathon" scheme="http://homeway.me/tags/hackathon/"/>
-    
-  </entry>
-  
-  <entry>
     <title>Deep Learning - Installing Caffe on Ubuntu</title>
     <link href="http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/"/>
     <id>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</id>
     <published>2018-01-24T18:01:10.000Z</published>
-    <updated>2018-01-28T08:07:50.000Z</updated>
+    <updated>2018-10-21T16:32:11.513Z</updated>
     
-    <content type="html"><![CDATA[<p><br><br><img src="http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png" alt="Caffe"><br><a id="more"></a></p>
+    <content type="html"><![CDATA[<p><br><br><img src="https://static.blog.homeway.me/blog/logo/caffe-logo.png" alt="Caffe"><br><a id="more"></a></p>
 <p>Recently, I want to try another deep learning framework instead of tensorflow.<br>I find Caffe (Convolutional Architecture for Fast Feature Embedding), which is another deep learning framework, originally developed at UC Berkeley, is easy to handle. There are still a bunch of troubles, the biggest one is the environment of installation. </p>
 <p>Many developers are complaining about the complex dependence of Caffe environment, I try it today, it really runs into many problems.<br>In this tutorial, I mainly talke about how to build Caffe environment on 64-bit Ubuntu 16.04 Linux.</p>
 <p>In Caffe official home page, we can find the installation tutorial: <a href="http://caffe.berkeleyvision.org/install_apt.html" target="_blank" rel="external">http://caffe.berkeleyvision.org/install_apt.html</a>,<br>which still remaining a stack of problems for different system environments.<br>In order to install Caffe, we need to prepare some dependencies softwares including: libgflags, libatlas, libgoogle-glog, libmdb, python-dev,  while for GPU support, we need to extra install Nvidia driver, cuDNN, opencv3+.<br>After successfully installing those packages, we also need to modify the <code>Makefile.config</code> to tell the compiler where to find it.</p>
@@ -250,7 +170,7 @@ PYTHON_INCLUDE := /usr/include/python2.7 \
 <pre><code>make all
 </code></pre><p>If no error occur, just to test:</p>
 <pre><code>make test &amp;&amp; make runtest
-</code></pre><p>We shall see the successful interface like this:<br><img src="http://xiaocao.u.qiniudn.com/blog/image/2018-01-25-Caffe-successfully-installed.png.png" alt="Successful installed Caffe"></p>
+</code></pre><p>We shall see the successful interface like this:<br><img src="https://static.blog.homeway.me/blog/image/2018-01-25-Caffe-successfully-installed.png.png" alt="Successful installed Caffe"></p>
 <hr>
 <h1 id="3-Setup-for-GPU-supporting"><a href="#3-Setup-for-GPU-supporting" class="headerlink" title="3.Setup for GPU supporting"></a>3.Setup for GPU supporting</h1><p>To make our Caffe supporting GPU, we shall install Nvidia development toolkit at first, tutorial of installation please see: <a href="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/">http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</a><br>Next is opencv3+: <a href="https://www.learnopencv.com/install-opencv3-on-ubuntu/" target="_blank" rel="external">https://www.learnopencv.com/install-opencv3-on-ubuntu/</a></p>
 <p>After a series of installation steps, just edit <code>Makefile.config</code> for compiling:</p>
@@ -380,7 +300,7 @@ make: *** [python/caffe/_caffe.so] Error 1
     
     <summary type="html">
     
-      &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/logo/caffe-logo.png&quot; alt=&quot;Caffe&quot;&gt;&lt;br&gt;
+      &lt;p&gt;&lt;br&gt;&lt;br&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo/caffe-logo.png&quot; alt=&quot;Caffe&quot;&gt;&lt;br&gt;
     
     </summary>
     
@@ -396,10 +316,10 @@ make: *** [python/caffe/_caffe.so] Error 1
     <link href="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/"/>
     <id>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</id>
     <published>2017-08-07T16:48:10.000Z</published>
-    <updated>2018-08-21T02:41:39.199Z</updated>
+    <updated>2018-10-21T16:31:42.913Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png" alt="Nvidia"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo/cudnn-logo.png" alt="Nvidia"></p>
 <a id="more"></a>
 <p>The following explains how to setup tensorflow GPU environment on 64-bit Ubuntu 17.04 Linux.<br>Following the steps, I will show how to install Nvidia drivers, Nvidia toolkit, CudNN and tensorflow.</p>
 <h1 id="1-Nvidia-driver"><a href="#1-Nvidia-driver" class="headerlink" title="1. Nvidia driver"></a>1. Nvidia driver</h1><p>Install Nvidia driver for graphic card GeForce GTX 1070.</p>
@@ -549,7 +469,7 @@ MatMul: /job:localhost/replica:0/task:0/gpu:0
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/logo/cudnn-logo.png&quot; alt=&quot;Nvidia&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo/cudnn-logo.png&quot; alt=&quot;Nvidia&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -565,49 +485,49 @@ MatMul: /job:localhost/replica:0/task:0/gpu:0
     <link href="http://homeway.me/2017/05/22/machine-learning-naive-bayesian/"/>
     <id>http://homeway.me/2017/05/22/machine-learning-naive-bayesian/</id>
     <published>2017-05-22T08:12:10.000Z</published>
-    <updated>2017-05-23T16:02:10.000Z</updated>
+    <updated>2018-10-21T16:37:20.382Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Bayes’ rule is a rigorous method for interpreting evidence in the context of previous experience or knowledge. It was discovered by Thomas Bayes (c. 1701-1761), and independently discovered by Pierre-Simon Laplace (1749-1827).</p>
 <p>The Naive Bayes algorithm is called “naive” because it makes the assumption that the occurrence of a certain feature is independent of the occurrence of other features.</p>
 <p>In naive bayesian, it`s diffcultly to predict posterior probability, and we can use proior probability p(x|y) to consider posterior probability:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-figure-1.png" alt="Figure-1: Naive Bayesian model"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-figure-1.png" alt="Figure-1: Naive Bayesian model"></p>
 <p>After this section, we begin talking about how this bayesian work.</p>
 <h2 id="Bayesian-decision-theory"><a href="#Bayesian-decision-theory" class="headerlink" title="Bayesian decision theory"></a>Bayesian decision theory</h2><p>Suppose n labels defined as <code>Y = {y1, y2, y3, y4...yn}</code>, <code>λij</code> defined as loss probability for wrongly classing yj as yi. After this we can get a conditional risk <code>R(yi | x)</code>: on condition x, probability for wrongly class yj as yi:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-1.png" alt="Formula1: Error risk on condition x"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-1.png" alt="Formula1: Error risk on condition x"></p>
 <p>Make a mathematical expectation:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-2.png" alt="Formula2: Error risk expectation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-2.png" alt="Formula2: Error risk expectation"></p>
 <p>To make E(h(x)) more smaller, we need to find a group of <code>{X -&gt; Y}</code> which make <code>R(h(x)|x)</code> mathematical expectation smallest. The smallest h(x) is called Bayes optiomal classifier. <code>λij</code> can be defined as:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-3.png" alt="Formula-3: λij"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-3.png" alt="Formula-3: λij"></p>
 <p>Error risk probability:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-4.png" alt="Formula-4: risk probability"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-4.png" alt="Formula-4: risk probability"></p>
 <p>Where <code>P(yi|x)</code> is accurate judgment probability, and Bayes optiomal classifier can be defined as:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-5.png" alt="Formula-5: h(x)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-5.png" alt="Formula-5: h(x)"></p>
 <p>From here, we can make a conclusion: in order to make classfy risk more smaller, we need to find max mathematical expectation for P(y|x), but mostly, find bigest <code>P(y | x)</code> is not easy work, in bayesian theory:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-6.png" alt="Formula-6: bayesian formula"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-6.png" alt="Formula-6: bayesian formula"></p>
 <p>Where <code>P(y)</code> is prior probability, <code>P(x|y)</code> is on condition y probability(likehood).</p>
 <h2 id="Maximum-Likelihood-Estimator-MLE"><a href="#Maximum-Likelihood-Estimator-MLE" class="headerlink" title="Maximum Likelihood Estimator (MLE)"></a>Maximum Likelihood Estimator (MLE)</h2><p>In statistics, maximum likelihood estimation (MLE) is a method of estimating the parameters of a statistical model given observations, by finding the parameter values that maximize the likelihood of making the observations given the parameters.(<a href="https://en.wikipedia.org/wiki/Maximum_likelihood_estimation" target="_blank" rel="external">Wiki: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation</a>)</p>
 <p>Without considering any prior opinion, a typical approach for estimating p is the method of maximum likelihood. For <code>xi ∈ X (i = 1,2,3,4...)</code>, all xi independent and with same distribution, then <code>P(Xi=xi|θ)</code> should be:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-7.png" alt="Formula-7: Likelihood probability"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-7.png" alt="Formula-7: Likelihood probability"></p>
 <p>Now we look at this function from a different perspective by considering the observed values <code>x1, x2, …, xn</code> to be fixed “parameters” of this function, whereas θ will be the function’s variable and allowed to vary freely.In practice the algebra is often more convenient when working with the natural logarithm of the likelihood function, called the log-likelihood:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-8.png" alt="Formula-8:Log-likelihood"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-8.png" alt="Formula-8:Log-likelihood"></p>
 <p>Because log(x) and multiplication function has same incremental decrement attribute, we choose log-likelihood for better caculating.<br>The method of maximum likelihood estimates θ by finding a value of θ that maximizes ln(L(θ)). This method of estimation defines a maximum likelihood estimator (MLE) of θ:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-9.png" alt="Formula-9: Maximum Likelihood Estimator"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-9.png" alt="Formula-9: Maximum Likelihood Estimator"></p>
 <p>In order to find the maximum likelihood function, we need to derive the formula 9, find the derivative is 0 when the θ is the maximum likelihood function solution.</p>
 <h2 id="Naive-Bayesian-theory"><a href="#Naive-Bayesian-theory" class="headerlink" title="Naive Bayesian theory"></a>Naive Bayesian theory</h2><p>Ok, let’s go back to naive bayesian.</p>
 <p>We may find posterior probability <code>P(y|x)</code> not easy to calculate, but if the conditions are interrelated, we can not from the prior probability (<code>P(x|y)</code>) get the results. Bayesian uses the attribute conditional independence hypothesis, which supposing all conditions x do not affect each other. Based on attribute conditional independence hypothesis, formula 6 can be like:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-10.png" alt="Formula-10: attribute conditional independence hypothesis"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-10.png" alt="Formula-10: attribute conditional independence hypothesis"></p>
 <p>Where X has m attributes, all working independently. Formula 5 can be rewrited as:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-11.png" alt="Formula-11: attribute conditional independence hypothesis"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-11.png" alt="Formula-11: attribute conditional independence hypothesis"></p>
 <p>Here we need to choose a distribution to describe p(x|y) called prior distribution.</p>
 <h2 id="Bayesian-prior"><a href="#Bayesian-prior" class="headerlink" title="Bayesian prior"></a>Bayesian prior</h2><p>There are many different bayesian prior: Gaussian or normal distribution, bernoulli distribution, conjugate distributions. Once we have chosen a prior distribution Pr(p)Pr(p), we then observe the process, and use Bayes’ theorem to update our probability distribution appropriately.</p>
 <p>For normal distribution:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-12.png" alt="Formula-12: normal distribution bayesian prior"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-12.png" alt="Formula-12: normal distribution bayesian prior"></p>
 <p>From attributions of normal distribution, P(x|y) ~ N(u, σ^2), we can now get the estimating mathematical expectation and variance from maximum likelihood:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-14.png" alt="Formula-14: normal distribution mathematical expectation"></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-22-naive-bayesian-formula-15.png" alt="Formula-15: normal distribution variance"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-14.png" alt="Formula-14: normal distribution mathematical expectation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-22-naive-bayesian-formula-15.png" alt="Formula-15: normal distribution variance"></p>
 <blockquote>
 <p>Next post I whil write some code to express how naive bayesian works. </p>
 </blockquote>
@@ -628,7 +548,7 @@ MatMul: /job:localhost/replica:0/task:0/gpu:0
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -644,14 +564,14 @@ MatMul: /job:localhost/replica:0/task:0/gpu:0
     <link href="http://homeway.me/2017/05/04/pattern-writer-identify/"/>
     <id>http://homeway.me/2017/05/04/pattern-writer-identify/</id>
     <published>2017-05-04T14:02:10.000Z</published>
-    <updated>2017-05-08T16:24:05.000Z</updated>
+    <updated>2018-10-21T16:35:41.385Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <p><hr><br></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>This tutorial is about an approach for writer identification using texture descriptors of handwritten fragments. At the begin of all, I may define image analysis = image conversion + digit analysis, where image conversion is to change image from matrix digital to list digital and digit analysis uses machine learning method.</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-1.png" alt="Figure 1: draws from different writters"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-figure-1.png" alt="Figure 1: draws from different writters"></p>
 <p>Characterizing individual’s handwriting style plays an important role in handwritten document analysis and automatic writer identification has attracted a large number of researchers in the pattern recognition field based on modern handwritten text, musical scores and historical documents. We can learn from figure 1 that different writers have different handwriting style, even for letter ‘l’, well, this gives us a way to use texture descriptors of handwritten fragments identify writer.</p>
 <p>We may easily identify writer by texture descriptors following steps:</p>
 <pre><code>1.cutting image into pieces of letters
@@ -660,22 +580,22 @@ MatMul: /job:localhost/replica:0/task:0/gpu:0
 4.using machine learning method(SVM/KNN) identify writter
 </code></pre><p><hr><br></p>
 <h1 id="Image-Conversion"><a href="#Image-Conversion" class="headerlink" title="Image Conversion"></a>Image Conversion</h1><h2 id="1-Local-Binary-Pattern-LBP"><a href="#1-Local-Binary-Pattern-LBP" class="headerlink" title="1.Local Binary Pattern(LBP)"></a>1.Local Binary Pattern(LBP)</h2><h3 id="3x3-LBP"><a href="#3x3-LBP" class="headerlink" title="3x3 LBP"></a>3x3 LBP</h3><p>Local binary patterns (LBP) is a type of visual descriptor used for classification in computer vision. LBP is the particular case of the Texture Spectrum model proposed in 1990.<a href="https://en.wikipedia.org/wiki/Local_binary_patterns" target="_blank" rel="external">Local binary patterns(wiki): https://en.wikipedia.org/wiki/Local_binary_patterns</a></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-2.png" alt="Figure 2: LBP transform algorithm"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-figure-2.png" alt="Figure 2: LBP transform algorithm"></p>
 <p>Figure 2 shows how LBP transform algorithm works, with clockwise direction, we define position from 0 to 8, coordinate start at (0, 0), center point coordinate as (1, 1). The LBP operator labels the pixels of an image by thresholding the 3x3 neighborhood of each pixel with the center value and summing the thresholded values weighted by powers of 2. The resulting LBP can be expressed in decimal form as follows:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-1.png" alt="Formula 1: LBP formula"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-formula-1.png" alt="Formula 1: LBP formula"></p>
 <p>where gi and gc are, respectively, gray-level values of the central pixel and i surrounding pixels in the circular neighborhood with a radius R. We compare each point(gi) to the center point pigment(gc), if the color depth is greater than the center point we define it to 1, otherwise it is set to 0, the resulting data is multiplied by 2. And s(x) follows:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-2.png" alt="Formula 2: LBP s(x) leap formula"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-formula-2.png" alt="Formula 2: LBP s(x) leap formula"></p>
 <p>Ok, after Formula 1/2, we may get list of 3x3 blocks, the texture is represented by the histogram of the labels:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-3.png" alt="Formula 3: LBP histogram"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-formula-3.png" alt="Formula 3: LBP histogram"></p>
 <p>where δ is the Kronecker delta and is given as:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-4.png" alt="Formula 4: LBP histogram δ(x, y)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-formula-4.png" alt="Formula 4: LBP histogram δ(x, y)"></p>
 <p>Figure 3 is an example shows LBP transform, even though right picture lost a lot of pixels detail, it still remain it’s texture descriptors:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-3.png" alt="Figure 3: Before LBP transform and after LBP transform"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-figure-3.png" alt="Figure 3: Before LBP transform and after LBP transform"></p>
 <h3 id="Multiscale-LBP"><a href="#Multiscale-LBP" class="headerlink" title="Multiscale LBP"></a>Multiscale LBP</h3><p>Multiscale LBP is an improvment for 3x3 LBP, where multiscale LBP allow to convert image block by 8x8 or 16x16 pixels. The bigger block may accelerate it’s caculating speed, but also bring the losing of pixels information. See Figure 4 for how it works:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-4.png" alt="Figure 4: Multiscale LBP transform"></p>
-<h3 id="Rotation-LBP"><a href="#Rotation-LBP" class="headerlink" title="Rotation LBP"></a>Rotation LBP</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-5.png" alt="Figure 4: Multiscale LBP transform"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-figure-4.png" alt="Figure 4: Multiscale LBP transform"></p>
+<h3 id="Rotation-LBP"><a href="#Rotation-LBP" class="headerlink" title="Rotation LBP"></a>Rotation LBP</h3><p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-figure-5.png" alt="Figure 4: Multiscale LBP transform"></p>
 <p>Formally, rotation LBP can be achieved by defining:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-5.png" alt="Formula 5: Rotation LBP"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-formula-5.png" alt="Formula 5: Rotation LBP"></p>
 <p>where ‘d’ is rotation degree, d ∈ (0, 360), and after mapping, we choose minmium value for result value, which is an unique value.</p>
 <h3 id="simple-3x3-LBP-coding"><a href="#simple-3x3-LBP-coding" class="headerlink" title="simple 3x3 LBP coding"></a>simple 3x3 LBP coding</h3><p>Gist source code: <a href="https://gist.github.com/grasses/bacbdfae0626353de12cedc4ceaed552" target="_blank" rel="external">https://gist.github.com/grasses/bacbdfae0626353de12cedc4ceaed552</a></p>
 <pre><code>import numpy as np
@@ -743,16 +663,16 @@ if __name__ == &#39;__main__&#39;:
     main(r&#39;/path/to/img&#39;)
 </code></pre><p><hr><br></p>
 <h2 id="2-Local-Ternary-Patterns-LTP"><a href="#2-Local-Ternary-Patterns-LTP" class="headerlink" title="2.Local Ternary Patterns(LTP)"></a>2.Local Ternary Patterns(LTP)</h2><p>Local Ternary Patterns(LTP) is an advance version algrithm of LBP, which introduces gradient function for block transform.</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-figure-6.png" alt="Figure 6: Multiscale LTP transform"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-figure-6.png" alt="Figure 6: Multiscale LTP transform"></p>
 <p>From figure 6, with clockwise direction, we define position from 0 to 8, coordinate start at <code>(0, 0)</code>, center point coordinate as <code>(1, 1)</code>. With 3 gradients, (0, 30 - t), (30 - t, 30 + t), (30 + t, 256), follows 3 result value: -1, 0, 1. As is shown in picture, when <code>t = 5</code>:</p>
 <pre><code>G0=42 &gt; Gc=30 and G0 &gt; 35, then LTP(0, 0) = 1
 G1=55 &gt; Gc=30 and G1 &gt; 35, then LTP(0, 1) = 1
 ...
 G4=18 &lt; Gc=30 and G4 &lt; 25, then LTP(2, 2) = -1
 </code></pre><p>Then we may define the approach into math formula:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-6.png" alt="Formula 6: LTP generater function"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-formula-6.png" alt="Formula 6: LTP generater function"></p>
 <p>where gc is center pixel, gi is current pixel, range from 0 to 8, t is threshold. Then st() can be define like Formula 7:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-05-04-writer-identify-formula-7.png" alt="Formula 7: LTP st( ) function"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-05-04-writer-identify-formula-7.png" alt="Formula 7: LTP st( ) function"></p>
 <p><hr><br></p>
 <h2 id="3-Local-Phase-Quantization-LPQ"><a href="#3-Local-Phase-Quantization-LPQ" class="headerlink" title="3.Local Phase Quantization(LPQ)"></a>3.Local Phase Quantization(LPQ)</h2><p><hr><br></p>
 <h1 id="Digit-Analysis"><a href="#Digit-Analysis" class="headerlink" title="Digit Analysis"></a>Digit Analysis</h1><p>K-Nearest Neighbor guide: <a href="http://homeway.me/2017/04/21/machine-learning-knn/">http://homeway.me/2017/04/21/machine-learning-knn/</a></p>
@@ -765,7 +685,7 @@ G4=18 &lt; Gc=30 and G4 &lt; 25, then LTP(2, 2) = -1
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
 &lt;p&gt;&lt;hr&gt;&lt;br&gt;&lt;/p&gt;
     
     </summary>
@@ -782,29 +702,29 @@ G4=18 &lt; Gc=30 and G4 &lt; 25, then LTP(2, 2) = -1
     <link href="http://homeway.me/2017/04/30/machine-learning-ann/"/>
     <id>http://homeway.me/2017/04/30/machine-learning-ann/</id>
     <published>2017-04-30T14:02:10.000Z</published>
-    <updated>2017-05-03T07:16:17.000Z</updated>
+    <updated>2018-10-21T16:37:36.531Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <a id="more"></a>
 <h1 id="About"><a href="#About" class="headerlink" title="About"></a>About</h1><p>Artifical Neural Network(ANN) which is inspired by human brain neural, provide a general, practical method for learning real-valued, discrete-valued, and vector-valued functions from examples. Artifical Neural Network algorithm such as Backpropagation use gradient descent to tune network parameters to best fit a training set of input-outputpairs.</p>
 <p><hr><br></p>
-<h1 id="How-to-work"><a href="#How-to-work" class="headerlink" title="How to work"></a>How to work</h1><h2 id="1-Neuron"><a href="#1-Neuron" class="headerlink" title="1.Neuron"></a>1.Neuron</h2><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neuron.png" alt="Figue 1: Artificial Neural Network (picture from 《机器学习-周志华》)"></p>
+<h1 id="How-to-work"><a href="#How-to-work" class="headerlink" title="How to work"></a>How to work</h1><h2 id="1-Neuron"><a href="#1-Neuron" class="headerlink" title="1.Neuron"></a>1.Neuron</h2><p><img src="https://static.blog.homeway.me/blog/2017-04-30-neuron.png" alt="Figue 1: Artificial Neural Network (picture from 《机器学习-周志华》)"></p>
 <p>The basic component of an ANN network is node unit called neuron. These neurons connect with pre-neurons with bridges in different weights. Every neuron receive signal from bridges and evaluated by activation function to output. In ideal situation, activation function is like figue 2, input value from pre-neuron and return 0 or 1:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-sgn-function.png" alt="Figue 2: Output in ideal situation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-sgn-function.png" alt="Figue 2: Output in ideal situation"></p>
 <p>Besides the logistic function, sigmoid functions include the ordinary arctangent, the hyperbolic tangent, the Gudermannian function, and the error function, but also the generalised logistic function and algebraic functions(Figue 3):</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-squashing-function.png" alt="Figue 3: Some sigmoid functions: In the drawing all functions are normalized in such a way &lt;br&gt;that their slope at the origin is like figue 2.(picture from wikipedia)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-squashing-function.png" alt="Figue 3: Some sigmoid functions: In the drawing all functions are normalized in such a way &lt;br&gt;that their slope at the origin is like figue 2.(picture from wikipedia)"></p>
 <h2 id="2-Multilayer-perceptron"><a href="#2-Multilayer-perceptron" class="headerlink" title="2.Multilayer perceptron"></a>2.Multilayer perceptron</h2><p>An ANN network consists at least a input, output layer and hidden layer in which consists multilayer perceptron(MLP), which is a feedforward artificial neural network model that maps sets of input data onto a set of appropriate outputs. </p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-neural-networks-working.png" alt="Figue 4: Multilayer perceptron module"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-neural-networks-working.png" alt="Figue 4: Multilayer perceptron module"></p>
 <p>A single perceptron can be used to represent many boolean functions(such as AND/OR/NOT). For example:</p>
 <blockquote>
 <p>AND (X1 ^ X2): Suppose w1 = w2 = 1, θ = 2, X0(bias) = 0, and y = f(1 · X1 + 1 · X2 - 2), then only when X1 = X2 = 1, y = 1<br>OR (X1 v X2): Suppose w1 = w2 = 1, θ = 0.5, X0(bias) = 0, and y = f(1 · X1 + 1 · X2 - 0.5), then only when X1 = 1 or X2 = 1, y = 1<br>NOT (!X1): Suppose w1 = 1, w2 = 0, θ = -0.5, X0(bias) = 0, and y = f(1 · X1 + 0 · X2 + 0.5), when X1 =  1, y = 0; X1 = 0, y = 1</p>
 </blockquote>
 <p>Unfortunately, however, some boolean func- tions cannot be represented by a single perceptron, such as the XOR function whose value is 1 if and only if x1 ≠ x2. Note the set of linearly nonseparable training examples shown in figure 5 corresponds to this XOR function:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-multilayer-perceptron.png" alt="Figue 5: AND/OR/XOR/NOT boolearn function(picture from 《机器学习-周志华》)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-multilayer-perceptron.png" alt="Figue 5: AND/OR/XOR/NOT boolearn function(picture from 《机器学习-周志华》)"></p>
 <p>The ability of perceptrons to represent AND, OR, AND, and NOR is important because every boolean function can be represented by some network of interconnected units based on these primitives. In fact, every boolean function can be represented by some network of perceptrons only two levels deep, in which the inputs are fed to multiple units, and the outputs of these units are then input to a second, final stage. One way is to represent the boolean function in disjunctive normal form (i.e., as the disjunction (OR) of a set of conjunctions (ANDs) of the inputs and their negations). Note that the input to an AND perceptron can be negated simply by changing the sign of the corresponding input weight.</p>
 <h2 id="3-Gradient-descent"><a href="#3-Gradient-descent" class="headerlink" title="3.Gradient descent"></a>3.Gradient descent</h2><p>Gradient descent is a first-order iterative optimization algorithm. To find a local minimum of a function using gradient descent, one takes steps proportional to the negative of the gradient (or of the approximate gradient) of the function at the current point. (From: <a href="https://en.wikipedia.org/wiki/Gradient_descent#Description" target="_blank" rel="external">https://en.wikipedia.org/wiki/Gradient_descent#Description</a>).</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-global-minimum-local-minimum.png" alt="Figue 6: global minimum and local minmum (picture from 《机器学习-周志华》)"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-global-minimum-local-minimum.png" alt="Figue 6: global minimum and local minmum (picture from 《机器学习-周志华》)"></p>
 <p>To sum, we may use gradient descent to approach the minimum for a formula. And from gradient descent we may get local minimum and global minimum, but how could we check whether the data I caculate is global minimum but local minimum?(<a href="http://stackoverflow.com/questions/9163801/gradient-descent-implementation" target="_blank" rel="external">http://stackoverflow.com/questions/9163801/gradient-descent-implementation</a>)</p>
 <ul>
 <li>Add noise. This reduces the precision of the parameters you’ve found, which can “blur” out local minima. The search can then jump out of local minima that are small compared to the noise, while still being trapped in deeper minima. A well-known approach for adding noise is simulated annealing.</li>
@@ -827,7 +747,7 @@ G4=18 &lt; Gc=30 and G4 &lt; 25, then LTP(2, 2) = -1
 </ul>
 </li>
 </ul>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-basic-neural-network-unit-neuron.png" alt="Figue 7: BackPropagation alogrithm"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-basic-neural-network-unit-neuron.png" alt="Figue 7: BackPropagation alogrithm"></p>
 <p>Step one is caculate nodes output by giving weight, bias, squashing function, then get output node value; Step two needs to correcte predict value and target value, then return an error check value, which using gradient descent algorithm to feed-forward the weights.</p>
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-1.png" alt="Formula 1: Neuron node sum"></p>
 <p>Let`s return to the case of a single neuron N with weights W = (w0, … , wn) and an input X = (x1, x2 … xn), as is shown at Formula 1. And momentarily, let us add the activation function from Figue 3. </p>
@@ -851,7 +771,7 @@ G4=18 &lt; Gc=30 and G4 &lt; 25, then LTP(2, 2) = -1
 <p><img src="http://oorkttmj2.bkt.clouddn.com/blog/ml/2017-04-30-ann-formula-10.png" alt="Formula 9: new weight formula"></p>
 <h2 id="5-Cross-Validation"><a href="#5-Cross-Validation" class="headerlink" title="5.Cross Validation"></a>5.Cross Validation</h2><p>www.cs.cmu.edu’s slider “Overfitting, Cross-Validation”: <a href="http://www.cs.cmu.edu/~guestrin/Class/10701-S05/slides/NNet-CrossValidation-2-2-2005.pdf" target="_blank" rel="external">http://www.cs.cmu.edu/~guestrin/Class/10701-S05/slides/NNet-CrossValidation-2-2-2005.pdf</a></p>
 <p>Cross-validation, sometimes called rotation estimation, is a model validation technique for assessing how the results of a statistical analysis will generalize to an independent data set, which can easily described by Figue 8:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-04-30-ann-cross-validation.jpg" alt="Figue 8: Cross Validation"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-04-30-ann-cross-validation.jpg" alt="Figue 8: Cross Validation"></p>
 <p>For Figue 8, we may choose different groups data and finally caculate their average, more information is avaiable in wikipedia: <a href="https://en.wikipedia.org/wiki/Cross-validation" target="_blank" rel="external">https://en.wikipedia.org/wiki/Cross-validation</a> </p>
 <p><hr><br></p>
 <h1 id="Coding"><a href="#Coding" class="headerlink" title="Coding"></a>Coding</h1><p>Github code: <a href="https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py" target="_blank" rel="external">https://github.com/grasses/Machine-Learning/blob/master/dl/NeuralNetworks/nn.py</a></p>
@@ -961,7 +881,7 @@ class NeuralNetwork(object):
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -977,10 +897,10 @@ class NeuralNetwork(object):
     <link href="http://homeway.me/2017/04/21/machine-learning-knn/"/>
     <id>http://homeway.me/2017/04/21/machine-learning-knn/</id>
     <published>2017-04-21T14:02:10.000Z</published>
-    <updated>2017-05-03T06:55:00.000Z</updated>
+    <updated>2018-10-21T16:37:28.025Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png" alt="Machine Learning"></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Machine Learning"></p>
 <a id="more"></a>
 <h1 id="1-About"><a href="#1-About" class="headerlink" title="1.About"></a>1.About</h1><p><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="external">K-Nearest Neighbor</a> is a type of instance-based learning, or lazy learning, where the function is only approximated locally and all computation is deferred until classification.<br>The KNN algorithm is among the simplest of all machine learning algorithms.</p>
 <p>The KNN classifier offers an alternative approach to classification using lazy learning that allows us to make predictions without any model training but at the cost of expensive prediction step.</p>
@@ -1107,7 +1027,7 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/machine-learning-logox.png&quot; alt=&quot;Machine Learning&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -1123,12 +1043,12 @@ predict()-&gt; instance = [2.3, 3.3, 4.5, 6.7], knn predict = Iris-versicolor
     <link href="http://homeway.me/2017/03/04/apue-file-dir/"/>
     <id>http://homeway.me/2017/03/04/apue-file-dir/</id>
     <published>2017-03-04T12:02:10.000Z</published>
-    <updated>2017-04-26T00:24:36.000Z</updated>
+    <updated>2018-10-21T16:39:09.162Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
-<!-- http://xiaocao.u.qiniudn.com/blog/img/apue-unix-linux.png -->
+<!-- https://static.blog.homeway.me/blog/img/apue-unix-linux.png -->
 <h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><h3 id="1-makir-mkdirat-rmdkir"><a href="#1-makir-mkdirat-rmdkir" class="headerlink" title="1.makir()/mkdirat()/rmdkir()"></a>1.makir()/mkdirat()/rmdkir()</h3><pre><code>#include &lt;sys/stat.h&gt;
 int mkdir (const char *filename, mode_t mode)
 int mkdirat (int fd, const char *filename, mode_t mode)
@@ -1313,7 +1233,7 @@ char * getcwd (char *buffer, size_t size)
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/img/gnu.png&quot; alt=&quot;apue&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/img/gnu.png&quot; alt=&quot;apue&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -1329,12 +1249,12 @@ char * getcwd (char *buffer, size_t size)
     <link href="http://homeway.me/2017/03/03/apue-file-stat/"/>
     <id>http://homeway.me/2017/03/03/apue-file-stat/</id>
     <published>2017-03-03T11:02:10.000Z</published>
-    <updated>2017-04-26T00:24:26.000Z</updated>
+    <updated>2018-10-21T16:38:55.610Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
-<!-- http://xiaocao.u.qiniudn.com/blog/img/apue-unix-linux.png -->
+<!-- https://static.blog.homeway.me/blog/img/apue-unix-linux.png -->
 <h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><h2 id="1-stat-fstat-fstatat-lstat"><a href="#1-stat-fstat-fstatat-lstat" class="headerlink" title="1.stat()/fstat()/fstatat()/lstat()"></a>1.stat()/fstat()/fstatat()/lstat()</h2><pre><code>int stat (const char *filename, struct stat *buf)
 int fstat (int filedes, struct stat *buf)
 int lstat (const char *filename, struct stat *buf)
@@ -1358,7 +1278,7 @@ int fstatat(int fd, const char* restrict pathname, struct stat *restrict buff, i
     unsigned long int st_ctime_usec;    // Fractional part of the time.
     blkcnt_t st_blocks;    // This is the amount of disk space that the file occupies, measured in units of 512-byte blocks.
 </code></pre><p>File type contains in <code>mode_t st_mode</code>. We can determine the file type with the macros.</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode.png" alt="mode_t st_mode macros"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/apue-file-dir-st_mode.png" alt="mode_t st_mode macros"></p>
 <p><a id="stat-type"></a><br>Follow description of stat, writing an example to read file stat:</p>
 <pre><code>#include &lt;stdio.h&gt;
 #include &lt;time.h&gt;
@@ -1434,7 +1354,7 @@ int main(int argc, char** argv) {
 mode_t umask (mode_t mask)
                                 - 返回：mode_t
 </code></pre><p>In *nix, user permission is defined as 4+2+1, 4 = read permission, 2 = write permission, 1 = exec permission, for the more, if you have no permission to a directory, you can`t read this directory. Some common umask values are 002 to prevent others from writing your files, 022 to prevent group members and others from writing your files, and 027 to prevent group members from writing your files and others from reading, writing, or executing your files. We can read user permission from this picture:</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/apue-file-dir-st_mode-permission.png" alt="permission"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/apue-file-dir-st_mode-permission.png" alt="permission"></p>
 <p><a id="permision"></a><br>struct mode_t defined here:</p>
 <pre><code>S_IRUSR     // Read permission bit for the owner. 0400
 S_IWUSR    // Write permission bit for the owner. 0200
@@ -1573,7 +1493,7 @@ int main(int argc, char** argv) {
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/img/gnu.png&quot; alt=&quot;apue&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/img/gnu.png&quot; alt=&quot;apue&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -1589,12 +1509,12 @@ int main(int argc, char** argv) {
     <link href="http://homeway.me/2017/03/02/apue-file-io/"/>
     <id>http://homeway.me/2017/03/02/apue-file-io/</id>
     <published>2017-03-02T11:02:10.000Z</published>
-    <updated>2017-04-26T00:23:53.000Z</updated>
+    <updated>2018-10-21T16:39:02.778Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/img/gnu.png" alt="apue"></p>
+<p><img src="https://static.blog.homeway.me/blog/img/gnu.png" alt="apue"></p>
 <a id="more"></a>
-<!-- http://xiaocao.u.qiniudn.com/blog/img/apue-unix-linux.png -->
+<!-- https://static.blog.homeway.me/blog/img/apue-unix-linux.png -->
 <h1 id="0x01-API"><a href="#0x01-API" class="headerlink" title="0x01.API"></a>0x01.API</h1><p><a id="api"></a></p>
 <h3 id="1-open-creat-close"><a href="#1-open-creat-close" class="headerlink" title="1. open()/creat()/close()"></a>1. open()/creat()/close()</h3><pre><code>#include &lt;fcntl.h&gt;
 int creat (const char *filename, mode_t mode)
@@ -1735,7 +1655,7 @@ int main(int argc, char** argv) {
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/img/gnu.png&quot; alt=&quot;apue&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/img/gnu.png&quot; alt=&quot;apue&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -1751,10 +1671,10 @@ int main(int argc, char** argv) {
     <link href="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/"/>
     <id>http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</id>
     <published>2017-01-12T16:24:10.000Z</published>
-    <updated>2017-03-02T13:54:49.000Z</updated>
+    <updated>2018-10-21T16:33:03.707Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg" alt="OS Process"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg" alt="OS Process"></p>
 <a id="more"></a>
 <p>虽然进程可以共享系统资源，但是许多资源在同一时刻只能被一个进程共享，一次只允许一个进程共享的资源就是临界资源。临界资源的访问过程有四个部分：进入区、临界区、退出区、剩余区。</p>
 <pre><code>do {
@@ -1806,7 +1726,7 @@ int main(int argc, char** argv) {
     flag[1] = false;                         flag[2] = false;
     remainder section;                        remainder section;
 }                                            }
-</code></pre><h1 id="0x02-经典同步与互斥事件"><a href="#0x02-经典同步与互斥事件" class="headerlink" title="0x02.经典同步与互斥事件"></a>0x02.经典同步与互斥事件</h1><h3 id="生产者与消费者"><a href="#生产者与消费者" class="headerlink" title="生产者与消费者"></a>生产者与消费者</h3><p><img src="http://xiaocao.u.qiniudn.com/2017-01-13-understand-os-process-mutex-and-synchronization-producer-consumer-buffer.jpg" alt="Producer &amp;&amp; Consumer"><br>常见问题：生产者、消费者共享一组初始为空，大小为n的缓冲区空间，只有缓冲区不满的时候，生产者才能把消息放入缓冲区，否则必须等待；只有缓冲区不空的时候，消费者才能从缓冲区取出消息；并且放入与取出必须互斥操作。</p>
+</code></pre><h1 id="0x02-经典同步与互斥事件"><a href="#0x02-经典同步与互斥事件" class="headerlink" title="0x02.经典同步与互斥事件"></a>0x02.经典同步与互斥事件</h1><h3 id="生产者与消费者"><a href="#生产者与消费者" class="headerlink" title="生产者与消费者"></a>生产者与消费者</h3><p><img src="https://static.blog.homeway.me/2017-01-13-understand-os-process-mutex-and-synchronization-producer-consumer-buffer.jpg" alt="Producer &amp;&amp; Consumer"><br>常见问题：生产者、消费者共享一组初始为空，大小为n的缓冲区空间，只有缓冲区不满的时候，生产者才能把消息放入缓冲区，否则必须等待；只有缓冲区不空的时候，消费者才能从缓冲区取出消息；并且放入与取出必须互斥操作。</p>
 <p>缓冲区操作必须互斥，因此在对缓冲区操作前要加锁 <code>P(mutex);</code> 执行完后释放锁 <code>V(mutex);</code> 缓冲区操作满和不满需要进程间同步通信通知，empty 和 full 用于进程间同步，当缓冲区有消息时执行 <code>V(full);</code> 唤醒Consumer()，当缓冲区有空位时，执行 <code>V(empty);</code> 唤醒Producer()。</p>
 <pre><code>semaphore mutex = 1;
 semaphore full = 0;
@@ -1862,7 +1782,7 @@ Process Reader() {
         V(write_first);
     }
 }
-</code></pre><h3 id="双向读写者问题"><a href="#双向读写者问题" class="headerlink" title="双向读写者问题"></a>双向读写者问题</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-bridge_crossing.jpg" alt="Crossing the bridge"></p>
+</code></pre><h3 id="双向读写者问题"><a href="#双向读写者问题" class="headerlink" title="双向读写者问题"></a>双向读写者问题</h3><p><img src="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-bridge_crossing.jpg" alt="Crossing the bridge"></p>
 <p>常见问题：单向通行的桥，不允许双向交汇但允许同向而行并且显示单向一次最多 <code>max_size</code> 通行量。这个问题由读写者引申而来，读者 &amp;&amp; 写者都必须互斥操作，并且限制了同时操作数量。作为对称处理，需要同时对东向、西向进程设立锁，并且记录当前用户数以方便为对方设置锁。</p>
 <pre><code>int east_count = 0;
 int west_count = 0;
@@ -1897,7 +1817,7 @@ Process west(int i) {
     if(west_count == 0) V(mutex);    //对于最后一次占用锁
     V(mwest);
 }
-</code></pre><h3 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-philosopher-dining.jpg" alt="Philosopher dining"><br>常见问题：一张桌子上有5个哲学家，每两个哲学家中间放一根筷子，哲学家只有两件事：吃饭、思考。如果哲学家拿到左右手两根筷子就吃饭，进餐完毕后保持思考，如果一根筷子在旁边哲学家手里，只能等待。</p>
+</code></pre><h3 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h3><p><img src="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-philosopher-dining.jpg" alt="Philosopher dining"><br>常见问题：一张桌子上有5个哲学家，每两个哲学家中间放一根筷子，哲学家只有两件事：吃饭、思考。如果哲学家拿到左右手两根筷子就吃饭，进餐完毕后保持思考，如果一根筷子在旁边哲学家手里，只能等待。</p>
 <p>试想，当哲学家都同时拿起左手边的筷子，等到他们想拿右手边的筷子却已被拿走，系统进入死锁。如何让一个哲学家拿到左右两根筷子而不造成死锁或者饥饿现象？(1)让他们同时拿左右两根筷子(2)对每个哲学家动作做规定，当哲学家抢占到抢筷子是加互斥锁，阻止其他哲学家抢占筷子。</p>
 <pre><code>semaphore mutex = 1;
 semaphore chopsticks[5] = {1, 1, 1, 1, 1};//筷子序号
@@ -1966,7 +1886,7 @@ Process User1() {        //有胶水
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg&quot; alt=&quot;OS Process&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg&quot; alt=&quot;OS Process&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -1982,10 +1902,10 @@ Process User1() {        //有胶水
     <link href="http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/"/>
     <id>http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</id>
     <published>2015-10-21T11:39:10.000Z</published>
-    <updated>2017-03-03T14:30:23.000Z</updated>
+    <updated>2018-10-21T16:36:27.018Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>电商平台营销时候，经常会碰到的大流量问题，除了做流量分流处理，可能还要做用户黑白名单、信誉分析，进而根据用户ip信誉权重做相应的流量拦截、限制流量。</p>
@@ -2049,7 +1969,7 @@ end
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-static-merger&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-static-merger&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -2065,15 +1985,15 @@ end
     <link href="http://homeway.me/2015/09/13/mysql-hash-index/"/>
     <id>http://homeway.me/2015/09/13/mysql-hash-index/</id>
     <published>2015-09-13T07:44:10.000Z</published>
-    <updated>2015-09-13T08:24:57.000Z</updated>
+    <updated>2018-10-21T16:37:09.115Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-mysql.png" alt="mysql-log"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x00-About"><a href="#0x00-About" class="headerlink" title="0x00.About"></a>0x00.About</h1><p>索引（Index）是帮助MySQL高效获取数据的数据结构。提取句子主干，就可以得到索引的本质：索引是数据结构。</p>
 <p>从MySQL逻辑架构来看，MySQL有三层架构，第一层连接，第二层查询解析、分析、优化、视图、缓存，第三层，存储引擎。</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2015-09-13-mysql-hash-index-mysql-design.png" alt="MySQL逻辑架构"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-09-13-mysql-hash-index-mysql-design.png" alt="MySQL逻辑架构"></p>
 <p>索引通过分开查询片，节省了扫描查找时间，大大提升查询效率。</p>
 <p>大部分数据库系统及文件系统都采用B-Tree或其变种B+Tree作为索引结构。</p>
 <p>索引主要在存储引擎层上，不同的引擎也就有不同的B-Tree算法。</p>
@@ -2152,7 +2072,7 @@ DELIMITER ;
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/logo-mysql.png&quot; alt=&quot;mysql-log&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-mysql.png&quot; alt=&quot;mysql-log&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -2168,10 +2088,10 @@ DELIMITER ;
     <link href="http://homeway.me/2015/09/12/mysql-log/"/>
     <id>http://homeway.me/2015/09/12/mysql-log/</id>
     <published>2015-09-11T17:44:10.000Z</published>
-    <updated>2015-09-13T06:55:54.000Z</updated>
+    <updated>2018-10-21T16:37:02.827Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/logo-mysql.png" alt="mysql-log"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-mysql.png" alt="mysql-log"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>MySQL有四种类型的日志：Error Log、General Query Log、Binary Log 和 Slow Query Log。</p>
@@ -2334,7 +2254,7 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://xiaocao.u.qiniudn.com/blog/logo-mysql.png&quot; alt=&quot;mysql-log&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-mysql.png&quot; alt=&quot;mysql-log&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -2350,10 +2270,10 @@ SELECT count(*) FROM `File` LEFT JOIN `User` ON `User`.`name`= `File`.`name` WHE
     <link href="http://homeway.me/2015/08/11/nginx-lua-redis-access-control/"/>
     <id>http://homeway.me/2015/08/11/nginx-lua-redis-access-control/</id>
     <published>2015-08-10T16:24:10.000Z</published>
-    <updated>2017-03-03T14:30:05.000Z</updated>
+    <updated>2018-10-21T16:36:39.706Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-redis"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-nginx-lua.png" alt="nginx-lua-redis"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>Nginx来处理访问控制的方法有多种，实现的效果也有多种，访问IP段，访问内容限制，访问频率限制等。</p>
@@ -2443,7 +2363,7 @@ end
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-redis&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-redis&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -2459,10 +2379,10 @@ end
     <link href="http://homeway.me/2015/08/03/website-system-message/"/>
     <id>http://homeway.me/2015/08/03/website-system-message/</id>
     <published>2015-08-02T16:56:01.000Z</published>
-    <updated>2015-08-04T13:40:13.000Z</updated>
+    <updated>2018-10-21T16:33:11.516Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png" alt="http"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-sql-nosql.png" alt="http"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近在处理系统消息模块，查阅了很多实践案例，各有针对性。</p>
@@ -2477,7 +2397,7 @@ end
 <p>关于订阅消息就比较麻烦了，对用户分组？对消息分组？</p>
 <p>关系型数据库处理集合问题是比较麻烦的，目前想到的结论是建立一个表(“RssMessage”)存储消息类型，消息索引。</p>
 <p>下面列了大致的数据库模型：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.1.png" alt="Mysql"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-08-03-website-system-message.1.png" alt="Mysql"></p>
 <p>看完这个数据库设计，我也觉得好难受，吐槽前先来想想为什么吧。</p>
 <p>UserSystemRelation表用于记录用户读取到哪个位置的标记。</p>
 <p>可以看到，UserMessage与SystemMessage表中，title、tid、ctime、type字段冗余了，好像也没必要，</p>
@@ -2497,7 +2417,7 @@ end
 <h1 id="0x04-Redis实现"><a href="#0x04-Redis实现" class="headerlink" title="0x04.Redis实现"></a>0x04.Redis实现</h1><p>看了Mysql下站内消息的数据库设计，我也觉得很蛋疼，临时过渡没事，但是还是NoSQL合适。</p>
 <p>Redis自带订阅与发布系统，<a href="http://redisbook.readthedocs.org/en/latest/feature/pubsub.html" target="_blank" rel="external">http://redisbook.readthedocs.org/en/latest/feature/pubsub.html</a></p>
 <p>在下图展示的这个 pubsub_channels 示例中， client2 、 client5 和 client1 就订阅了 channel1 ， 而其他频道也分别被别的客户端所订阅：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-08-03-website-system-message.2.png" alt="订阅"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-08-03-website-system-message.2.png" alt="订阅"></p>
 <p>只要是订阅了相应地频道，就会收到频道的消息。</p>
 <p>把用户ID作为频道，私信就是反向的频道订阅，系统消息就是所有用户的订阅，那么离线的消息呢？</p>
 <h2 id="1、线上用户"><a href="#1、线上用户" class="headerlink" title="1、线上用户"></a>1、线上用户</h2><p>还是存在系统或个人的哈希表里，等上线后再去读取。</p>
@@ -2572,7 +2492,7 @@ for i in range(15):
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-sql-nosql.png&quot; alt=&quot;http&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-sql-nosql.png&quot; alt=&quot;http&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -2592,10 +2512,10 @@ for i in range(15):
     <link href="http://homeway.me/2015/07/19/understand-http-about-content-type/"/>
     <id>http://homeway.me/2015/07/19/understand-http-about-content-type/</id>
     <published>2015-07-18T16:56:01.000Z</published>
-    <updated>2015-08-04T13:48:22.000Z</updated>
+    <updated>2018-10-21T16:32:56.980Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-http.png" alt="http"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-http.png" alt="http"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>查看Restful API 报头插件：<a href="https://chrome.google.com/webstore/detail/rest-console/cokgbflfommojglbmbpenpphppikmonn/related?utm_source=chrome-ntp-icon" target="_blank" rel="external">Chrome插件REST Console</a>，以及发送Restful API工具：<a href="https://chrome.google.com/webstore/detail/postman/fhbjgbiflinjbdggehcddcbncdddomop?utm_source=chrome-ntp-icon" target="_blank" rel="external">Chrome插件POST Man</a></p>
@@ -2696,7 +2616,7 @@ Content-Type: text/xml
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-http.png&quot; alt=&quot;http&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-http.png&quot; alt=&quot;http&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -2712,10 +2632,10 @@ Content-Type: text/xml
     <link href="http://homeway.me/2015/07/10/rebuild-osx-environment/"/>
     <id>http://homeway.me/2015/07/10/rebuild-osx-environment/</id>
     <published>2015-07-09T16:56:01.000Z</published>
-    <updated>2018-01-28T07:47:36.000Z</updated>
+    <updated>2018-10-21T16:34:29.328Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png" alt="OSX"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-osx.png" alt="OSX"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近不小心做死，删了很多安装包，最后只能重装了MAC，用了3天多修复开发环境。</p>
@@ -2853,7 +2773,7 @@ ERROR Plugin load failed: hexo-server
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-osx.png&quot; alt=&quot;OSX&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-osx.png&quot; alt=&quot;OSX&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -2869,10 +2789,10 @@ ERROR Plugin load failed: hexo-server
     <link href="http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/"/>
     <id>http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</id>
     <published>2015-06-28T16:04:10.000Z</published>
-    <updated>2017-03-03T14:29:23.000Z</updated>
+    <updated>2018-10-21T16:38:42.780Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-oauth2.png" alt="Oauth2.0"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-oauth2.png" alt="Oauth2.0"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近在搭建Oauth2.0第三方接入开放平台，主要是使用Github开源项目服务模块<a href="https://github.com/bshaffer/oauth2-server-php" target="_blank" rel="external">https://github.com/bshaffer/oauth2-server-php</a>和CodeIgniter结合。</p>
@@ -2886,7 +2806,7 @@ ERROR Plugin load failed: hexo-server
 <p>这四种方式最终的目的都是要获得Access Token，然后通过请求Resource服务器获取资源。</p>
 <p><hr><br></p>
 <h1 id="0x03-Grant-type"><a href="#0x03-Grant-type" class="headerlink" title="0x03.Grant_type"></a>0x03.Grant_type</h1><p>说说每种授权方式使用到的地方，或授权的方式。</p>
-<h2 id="Authorization-Code"><a href="#Authorization-Code" class="headerlink" title="Authorization Code"></a>Authorization Code</h2><p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_1.jpg" alt="Authorization Code"></p>
+<h2 id="Authorization-Code"><a href="#Authorization-Code" class="headerlink" title="Authorization Code"></a>Authorization Code</h2><p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_1.jpg" alt="Authorization Code"></p>
 <p>授权码方式在很多地方都有用到，微博登陆，微信登陆等都是。</p>
 <p>认证过程主要是跳转到Oauth2.0平台，认证后跳转回第三方应用平台，并通过callback的url中携带code、state、token_type等信息，然后第三方平台通过code获取到access_token，进而调用开放API获取到资源。</p>
 <p>第三方请求过程必须附带，<code>response_type</code>（回调类型：code，token）,<code>client_id</code>（开发者app key）,<code>redirect_uri</code>（回调链接），<code>state</code>（防止csrf，authorization认证跳转后原样返回）。</p>
@@ -2894,9 +2814,9 @@ ERROR Plugin load failed: hexo-server
 <p>测试例子：<a href="http://brentertainment.com/oauth2/" target="_blank" rel="external">http://brentertainment.com/oauth2/</a></p>
 <p>第一步：跳转到Oauth2.0服务器：</p>
 <p>认证过程中会请求<code>scope</code>权限表，用户可以拒绝相应权限。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_2.jpg" alt="跳转到Oauth2.0服务器"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_2.jpg" alt="跳转到Oauth2.0服务器"></p>
 <p>第二步：用户确认请求的权限，回调得到code：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_3.jpg" alt="用户确认请求的权限"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_3.jpg" alt="用户确认请求的权限"></p>
 <p>第三步：第三方平台通过code得到access_token，然后通过API调用Resource服务器资源。</p>
 <p>这个过程需要发送<code>client_id</code>，<code>client_secret</code>（App Secret），<code>grant_type</code>（’authorization_code’），<code>code</code>，<code>redirect_uri</code>给oauth2服务器获取<code>access_token</code>。</p>
 <p>例如：<a href="http://brentertainment.com/oauth2/client/request_token/authorization_code?code=bab6b7dee32f629397acbb16a4d8e50c6c3d424d" target="_blank" rel="external">http://brentertainment.com/oauth2/client/request_token/authorization_code?code=bab6b7dee32f629397acbb16a4d8e50c6c3d424d</a></p>
@@ -2906,13 +2826,13 @@ ERROR Plugin load failed: hexo-server
 <p>跳转后就得到了，如下链接：<a href="http://brentertainment.com/oauth2/client/receive_implicit_token#access_token=a845c2c81bc57613bbc5dee1fec173a3fbd0f474&amp;expires_in=3600&amp;token_type=Bearer&amp;state=377edd18bd3070e4317889b0b3371c16" target="_blank" rel="external">http://brentertainment.com/oauth2/client/receive_implicit_token#access_token=a845c2c81bc57613bbc5dee1fec173a3fbd0f474&amp;expires_in=3600&amp;token_type=Bearer&amp;state=377edd18bd3070e4317889b0b3371c16</a></p>
 <p><br></p>
 <h2 id="Client-Credentials"><a href="#Client-Credentials" class="headerlink" title="Client Credentials"></a>Client Credentials</h2><p>应用授权（Client Credentials）主要用于第三方应用直接获取一些公开的数据，不需要用户跳转认证，也不需要获取用户的openid，因为都是一些公共的资源。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_2.jpg" alt="Client Credentials"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_2.jpg" alt="Client Credentials"></p>
 <p>我的请求数据为：<code>{client_id: &quot;testclient&quot;, client_secret: &quot;testpass&quot;, grant_type: &quot;client_credentials&quot;, scope: &quot;userinfo cloud file node&quot;}</code></p>
 <p>Oauth2给我的回调数据：<code>{&quot;access_token&quot;:&quot;417206d0e162d743338c04da9f8eb72f99daff6b&quot;,&quot;expires_in&quot;:3600,&quot;token_type&quot;:&quot;Bearer&quot;,&quot;scope&quot;:&quot;userinfo cloud file node&quot;}</code></p>
 <p>可以看到有了access_token，然后我就可以用access_token去找Resource服务器要资源了，这里限定了<code>scope</code>权限表，表的权限在open平台注册的时候就确定下来了。</p>
 <p><br></p>
 <h2 id="Resource-Owner-Password-Credentials"><a href="#Resource-Owner-Password-Credentials" class="headerlink" title="Resource Owner Password Credentials"></a>Resource Owner Password Credentials</h2><p>用户口令（Resource Owner Password Credentials）适合内部应用调用使用，比如公司有两个平台，A和B，那么我就可以在Oauth2下通过<code>Password Credentials</code>模式实现A应用与B应用之间通信，还可以开放内部接口。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_1.jpg" alt="Client Credentials"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_1.jpg" alt="Client Credentials"></p>
 <p>请求的数据格式是：<br><code>{grant_type: &quot;password
 username:&quot;user&quot;, password: &quot;pass&quot;,client_id: &quot;&quot;testclient&quot;, client_secret: &quot;testpass&quot;, scope: &quot;userinfo cloud file node}</code></p>
 <p>回调数据比Client Credentials多了一个<code>refresh_token</code>:</p>
@@ -3010,7 +2930,7 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
 <p><a href="http://785igi.com1.z0.glb.clouddn.com/share/build-oauth2-under-codeigniter.zip" target="_blank" rel="external">http://homeway.me/code/build-oauth2-under-codeigniter.zip</a></p>
 <p>下面是打包好的测试平台你也可以通过<a href="http://oauth2.homeway.me/oauth/test/" target="_blank" rel="external">http://oauth2.homeway.me/oauth/test/</a>来进入测试平台。</p>
 <p>平台web访问路径为：<code>/oauth/test/</code>、<code>/oauth2/RefreshToken</code>,<code>/oauth2/resource</code>,<code>/oauth2/authorize/token</code>,<code>/oauth2/PasswordCredentials</code>,<code>/oauth2/ClientCredentials</code>，你也可以从相应的源码中读到这些地址。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-28-build-oauth2-under-codeigniter.jpg" alt="build-oauth2-under-codeigniter"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter.jpg" alt="build-oauth2-under-codeigniter"></p>
 <p><hr><br></p>
 <p>参考：</p>
 <p>1.<a href="http://tools.ietf.org/html/rfc6749#section-4.3" target="_blank" rel="external">http://tools.ietf.org/html/rfc6749</a><br>2.<a href="http://brentertainment.com/oauth2/" target="_blank" rel="external">http://brentertainment.com/oauth2/</a><br>3.<a href="http://bshaffer.github.io/oauth2-server-php-docs/" target="_blank" rel="external">oauth2-server-php-docs</a><br>4.<a href="http://open.weibo.com/wiki/%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E8%AF%B4%E6%98%8E" target="_blank" rel="external">新浪oauth2授权机制说明</a><br>5.<a href="http://wiki.open.qq.com/wiki/mobile/OAuth2.0%E7%AE%80%E4%BB%8B" target="_blank" rel="external">腾讯OAuth2.0简介</a><br>6.<a href="http://connect.qq.com/sdk/webtools/index.html" target="_blank" rel="external">腾讯API调试平台</a></p>
@@ -3022,7 +2942,7 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
     <summary type="html">
     
       &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-oauth2.png&quot; alt=&quot;Oauth2.0&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-oauth2.png&quot; alt=&quot;Oauth2.0&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -3030,6 +2950,90 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
     
     
       <category term="Oauth" scheme="http://homeway.me/tags/Oauth/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Nginx+Lua服务端合并静态文件</title>
+    <link href="http://homeway.me/2015/06/22/nginx-lua-static-merger/"/>
+    <id>http://homeway.me/2015/06/22/nginx-lua-static-merger/</id>
+    <published>2015-06-22T08:04:10.000Z</published>
+    <updated>2018-10-21T16:36:34.201Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
+<a id="more"></a>
+<p><br></p>
+<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>源码已经上传到github:<a href="https://github.com/grasses/nginx-lua-static-merger" target="_blank" rel="external">https://github.com/grasses/nginx-lua-static-merger</a></p>
+<p><code>nginx-lua-static-merger</code>是一个基于openresty的模块，主要用于合并静态文件，减少http请求，加快静态文件访问速度的模块。</p>
+<p>使用<code>nginx-lua-static-merger</code> 需要在编译nginx时候添加openresty的模块，或者直接安装openresty作为服务器。</p>
+<p><code>nginx-lua-static-merger</code>可以让你的js、css请求不要那么多，一个就够了。</p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-look.jpg" alt="nginx-lua-static-merger"></p>
+<p><hr><br></p>
+<h1 id="0x02-About-Nginx"><a href="#0x02-About-Nginx" class="headerlink" title="0x02.About Nginx"></a>0x02.About Nginx</h1><h2 id="nginx工作"><a href="#nginx工作" class="headerlink" title="nginx工作"></a>nginx工作</h2><p>先从nginx原理来看nginx处理http请求的过程。</p>
+<p>Nginx的模块从功能上分为如下三类:</p>
+<p>Handlers（处理器模块），直接处理请求，并进行输出内容和修改headers信息等操作。Handlers处理器模块一般只能有一个。</p>
+<p>Filters （过滤器模块），主要对其他处理器模块输出的内容进行修改操作，最后由Nginx输出。</p>
+<p>Proxies （代理类模块），Nginx的HTTP Upstream之类的模块，这些模块主要与后端一些服务比如FastCGI等进行交互，实现服务代理和负载均衡等功能。</p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-nginx-handler-http.png" alt="nginx 处理http请求"></p>
+<p>也就是说，一个http请求过来，nginx先处理请求信息，然后过滤信息，最后丢给代理来处理，它本身处理的东西并不多，它仅仅是通过查找配置文件将此次请求映射到一个location block，而此location中所配置的各个指令则会启动不同的模块去完成工作。</p>
+<p>从正常来看，一个页面加载10来个js、css是正常的，还有10来个图片，即使是什么也不干，那么一个页面也要处理掉20多个http请求，每个http请求都要跑一遍TCP请求，nginx回应，过滤，分配。</p>
+<h2 id="speed-test："><a href="#speed-test：" class="headerlink" title="speed test："></a>speed test：</h2><p>看张图吧，国外一个网速测试工具：</p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-reguest.jpg" alt="一个页面请求消耗的时间"></p>
+<p>去掉首页<code>index.html</code>的加载时间，可以看到，加载静态文件css，js时间耗费了很长的等待时间，并且image的加载是在js和css加载完后才加载的，也就是说，如果js或css加载慢了，那么页面就慢了。</p>
+<p>这个页面是github.com/grasses。</p>
+<p><hr><br></p>
+<h1 id="0x02-Usage"><a href="#0x02-Usage" class="headerlink" title="0x02.Usage"></a>0x02.Usage</h1><h2 id="Openresty"><a href="#Openresty" class="headerlink" title="Openresty"></a>Openresty</h2><p><a href="http://openresty.org/cn/" target="_blank" rel="external">http://openresty.org/cn/</a></p>
+<p>Openresty是国人写的开源项目，打包了标准的 Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。</p>
+<pre><code>tar xzvf ngx_openresty-VERSION.tar.gz
+cd ngx_openresty-VERSION/
+./configure
+make
+make install
+</code></pre><p>详细的安装教程还是去看官网吧。</p>
+<h2 id="file-path"><a href="#file-path" class="headerlink" title="file path"></a>file path</h2><pre><code>|--/usr/local/openresty/nginx
+|                        `--lua 
+|                            `--nginx-lua-static-merger.lua
+|                        `--conf 
+|                            `--nginx.lua
+|--/www/openresty/static
+|                `--js
+|                `--css
+|                `--cache
+</code></pre><p>注意</p>
+<p>1、<code>nginx.conf</code>中的<code>lua_package_path &quot;/usr/local/openresty/lualib/?.lua;;&quot;;</code>和<br><code>lua_package_cpath &quot;/usr/local/openresty/lualib/?.so;;&quot;;</code>，如果你是编译nginx而不是直接安装openresty，目录记得放对。</p>
+<p>2、确保<code>/www/openresty/static</code>有Lua写的权限。</p>
+<h2 id="use"><a href="#use" class="headerlink" title="use"></a>use</h2><p>前端调用方法如下：</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/bootstrap/css/bootstrap.min.css;/qiniu/css/main.css;/css/navbar.css&quot;&gt;
+&lt;script src=&quot;/js/jquery.min.js;/js/main.js;/qiniu/bootstrap/js/bootstrap.min.js;/qiniu/js/plupload/plupload.full.min.js;/qiniu/js/plupload/i18n/zh_CN.js&quot;&gt;&lt;/script&gt;
+</code></pre><p><hr><br></p>
+<h1 id="0x03-How-it-work"><a href="#0x03-How-it-work" class="headerlink" title="0x03.How it work"></a>0x03.How it work</h1><p>Nginx在location通过 <code>content_by_lua_file</code> 把接下来的处理丢个Lua做逻辑。</p>
+<p>Lua通过uri进行md5编码，判断cache是否存在，如果cache不存在，循环分割、遍历uri，访问响应的路径，查找静态文件，存在则记录，最后写cache入文件，方便下次访问。</p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-how-work.jpg" alt="how nginx-lua-static-merger work"></p>
+<p><hr><br></p>
+<h1 id="0x04-Effect"><a href="#0x04-Effect" class="headerlink" title="0x04.Effect"></a>0x04.Effect</h1><p>下面是在不作处理情况请求多个js结果：</p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-normal_http_get.jpg" alt="不做处理"></p>
+<p>下面是第一次请求下，lua既要获取数据又要合并生成cache，属于冷数据：</p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_2.jpg" alt="cold_js_by_ngx_static_merger"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_1.jpg" alt="cold_js_by_ngx_static_merger"></p>
+<p>第二次访问就是热数据了，访问速度是增加的：</p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-hot_js_time.jpg" alt="热数据"></p>
+<p><br><hr><br></p>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/06/22/nginx-lua-static-merger/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/22/nginx-lua-static-merger/">http://homeway.me/2015/06/22/nginx-lua-static-merger/</a></h4><p><br><br>-by小草</p>
+<p>2015-06-22 20:04:10</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-static-merger&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
+    
+    
+      <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
     
   </entry>
   

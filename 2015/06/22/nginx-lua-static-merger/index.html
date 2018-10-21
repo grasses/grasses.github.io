@@ -9,19 +9,19 @@
 <meta property="og:title" content="Nginx+Lua服务端合并静态文件">
 <meta property="og:url" content="http://homeway.me/2015/06/22/nginx-lua-static-merger/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-look.jpg">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-nginx-handler-http.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-reguest.jpg">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-how-work.jpg">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-normal_http_get.jpg">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-cold_js_by_ngx_static_merger_2.jpg">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-cold_js_by_ngx_static_merger_1.jpg">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-hot_js_time.jpg">
-<meta property="og:updated_time" content="2017-03-03T14:30:14.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/logo-nginx-lua.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-look.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-nginx-handler-http.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-reguest.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-how-work.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-normal_http_get.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_2.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_1.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-06-22-hot_js_time.jpg">
+<meta property="og:updated_time" content="2018-10-21T16:36:34.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Nginx+Lua服务端合并静态文件">
-<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo-nginx-lua.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -273,25 +273,25 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
 <a id="more"></a>
 <p><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>源码已经上传到github:<a href="https://github.com/grasses/nginx-lua-static-merger" target="_blank" rel="external">https://github.com/grasses/nginx-lua-static-merger</a></p>
 <p><code>nginx-lua-static-merger</code>是一个基于openresty的模块，主要用于合并静态文件，减少http请求，加快静态文件访问速度的模块。</p>
 <p>使用<code>nginx-lua-static-merger</code> 需要在编译nginx时候添加openresty的模块，或者直接安装openresty作为服务器。</p>
 <p><code>nginx-lua-static-merger</code>可以让你的js、css请求不要那么多，一个就够了。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-look.jpg" alt="nginx-lua-static-merger"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-look.jpg" alt="nginx-lua-static-merger"></p>
 <p><hr><br></p>
 <h1 id="0x02-About-Nginx"><a href="#0x02-About-Nginx" class="headerlink" title="0x02.About Nginx"></a>0x02.About Nginx</h1><h2 id="nginx工作"><a href="#nginx工作" class="headerlink" title="nginx工作"></a>nginx工作</h2><p>先从nginx原理来看nginx处理http请求的过程。</p>
 <p>Nginx的模块从功能上分为如下三类:</p>
 <p>Handlers（处理器模块），直接处理请求，并进行输出内容和修改headers信息等操作。Handlers处理器模块一般只能有一个。</p>
 <p>Filters （过滤器模块），主要对其他处理器模块输出的内容进行修改操作，最后由Nginx输出。</p>
 <p>Proxies （代理类模块），Nginx的HTTP Upstream之类的模块，这些模块主要与后端一些服务比如FastCGI等进行交互，实现服务代理和负载均衡等功能。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-nginx-handler-http.png" alt="nginx 处理http请求"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-nginx-handler-http.png" alt="nginx 处理http请求"></p>
 <p>也就是说，一个http请求过来，nginx先处理请求信息，然后过滤信息，最后丢给代理来处理，它本身处理的东西并不多，它仅仅是通过查找配置文件将此次请求映射到一个location block，而此location中所配置的各个指令则会启动不同的模块去完成工作。</p>
 <p>从正常来看，一个页面加载10来个js、css是正常的，还有10来个图片，即使是什么也不干，那么一个页面也要处理掉20多个http请求，每个http请求都要跑一遍TCP请求，nginx回应，过滤，分配。</p>
 <h2 id="speed-test："><a href="#speed-test：" class="headerlink" title="speed test："></a>speed test：</h2><p>看张图吧，国外一个网速测试工具：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-reguest.jpg" alt="一个页面请求消耗的时间"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-reguest.jpg" alt="一个页面请求消耗的时间"></p>
 <p>去掉首页<code>index.html</code>的加载时间，可以看到，加载静态文件css，js时间耗费了很长的等待时间，并且image的加载是在js和css加载完后才加载的，也就是说，如果js或css加载慢了，那么页面就慢了。</p>
 <p>这个页面是github.com/grasses。</p>
 <p><hr><br></p>
@@ -321,15 +321,15 @@ make install
 </code></pre><p><hr><br></p>
 <h1 id="0x03-How-it-work"><a href="#0x03-How-it-work" class="headerlink" title="0x03.How it work"></a>0x03.How it work</h1><p>Nginx在location通过 <code>content_by_lua_file</code> 把接下来的处理丢个Lua做逻辑。</p>
 <p>Lua通过uri进行md5编码，判断cache是否存在，如果cache不存在，循环分割、遍历uri，访问响应的路径，查找静态文件，存在则记录，最后写cache入文件，方便下次访问。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-nginx-lua-static-merger-how-work.jpg" alt="how nginx-lua-static-merger work"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-how-work.jpg" alt="how nginx-lua-static-merger work"></p>
 <p><hr><br></p>
 <h1 id="0x04-Effect"><a href="#0x04-Effect" class="headerlink" title="0x04.Effect"></a>0x04.Effect</h1><p>下面是在不作处理情况请求多个js结果：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-normal_http_get.jpg" alt="不做处理"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-normal_http_get.jpg" alt="不做处理"></p>
 <p>下面是第一次请求下，lua既要获取数据又要合并生成cache，属于冷数据：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-cold_js_by_ngx_static_merger_2.jpg" alt="cold_js_by_ngx_static_merger"></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-cold_js_by_ngx_static_merger_1.jpg" alt="cold_js_by_ngx_static_merger"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_2.jpg" alt="cold_js_by_ngx_static_merger"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_1.jpg" alt="cold_js_by_ngx_static_merger"></p>
 <p>第二次访问就是热数据了，访问速度是增加的：</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-06-22-hot_js_time.jpg" alt="热数据"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-06-22-hot_js_time.jpg" alt="热数据"></p>
 <p><br><hr><br></p>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/06/22/nginx-lua-static-merger/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/22/nginx-lua-static-merger/">http://homeway.me/2015/06/22/nginx-lua-static-merger/</a></h4><p><br><br>-by小草</p>
 <p>2015-06-22 20:04:10</p>
@@ -338,7 +338,7 @@ make install
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/06/22/nginx-lua-static-merger/" data-id="cjl33w8s0001s2j2c52v730lr" data-title="Nginx+Lua服务端合并静态文件" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/06/22/nginx-lua-static-merger/" data-id="cjnj3qazk001mo02cat5w3udw" data-title="Nginx+Lua服务端合并静态文件" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/">Nginx</a></li></ul>
@@ -384,7 +384,7 @@ make install
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -393,7 +393,7 @@ make install
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -409,10 +409,6 @@ make install
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -422,6 +418,10 @@ make install
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -498,12 +498,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -632,9 +632,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

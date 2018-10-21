@@ -9,13 +9,13 @@
 <meta property="og:title" content="OpenWrt路由器开发">
 <meta property="og:url" content="http://homeway.me/2015/04/29/openwrt-develop-base-util/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-gpio.jpg">
-<meta property="og:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-sysinfo.png">
-<meta property="og:updated_time" content="2015-08-04T14:01:05.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/logo-openwrt.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-04-29-openwrt-gpio.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2015-04-29-openwrt-sysinfo.png">
+<meta property="og:updated_time" content="2018-10-21T16:35:49.307Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenWrt路由器开发">
-<meta name="twitter:image" content="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo-openwrt.png">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -267,7 +267,7 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/logo-openwrt.png" alt="OpenWrt"></p>
+<p><img src="https://static.blog.homeway.me/blog/logo-openwrt.png" alt="OpenWrt"></p>
 <a id="more"></a>
 <p><br><hr><br></p>
 <h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>第一次尝试开发路由器，发现并不是想象中那么难，和普通嵌入式开发一样，也是一块ARM板刷上Linux系统。</p>
@@ -309,7 +309,7 @@ ga('send', 'pageview');
 <p>目前只能想起这3个，如果报错，该装什么再装好了。</p>
 <p><br><hr></p>
 <h1 id="0x04-WRTnode控制GPIO"><a href="#0x04-WRTnode控制GPIO" class="headerlink" title="0x04.WRTnode控制GPIO"></a>0x04.WRTnode控制GPIO</h1><p>GPIO控制可以很好地实现软件硬件之间的交互。</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-gpio.jpg" alt="WRTnode GPIO"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-04-29-openwrt-gpio.jpg" alt="WRTnode GPIO"></p>
 <p>GPIO的控制也不难，wiki讲得很清晰了，就是文件输入输出<a href="http://wiki.wrtnode.com/index.php?title=The_user_space_gpio_calls/zh-cn" target="_blank" rel="external">http://wiki.wrtnode.com/index.php?title=The_user_space_gpio_calls/zh-cn</a></p>
 <p>这里我写了一个Lua版的GPIO控制模块，文件保存为gpio.lua：</p>
 <pre><code>#!/usr/bin/lua
@@ -509,7 +509,7 @@ if __name__ == &#39;__main__&#39;:
     print(&#39;NET Connect Ssid =&#39;+str(NET_connect_ssid))
     print(&#39;NET Internet Wan Ip =&#39;+str(NET_internet_ip))
 </code></pre><p>直接调用<code>python sysinfo.py</code>:</p>
-<p><img src="http://77l5jp.com1.z0.glb.clouddn.com/blog/2015-04-29-openwrt-sysinfo.png" alt="系统信息"></p>
+<p><img src="https://static.blog.homeway.me/blog/2015-04-29-openwrt-sysinfo.png" alt="系统信息"></p>
 <p><br><hr></p>
 <h1 id="0x06-WRTnode发送邮件"><a href="#0x06-WRTnode发送邮件" class="headerlink" title="0x06.WRTnode发送邮件"></a>0x06.WRTnode发送邮件</h1><p>好了，系统信息有了，GPIO信息有了，接下来就试试发送邮件了。</p>
 <p>发送邮件3中法案都可以，Lua，Python，Shell，找了找资料，Python写了，但是缺少了一个包，Lua缺少Luasocket模块，Shell要安装模块。</p>
@@ -599,7 +599,7 @@ mail.send()
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2015/04/29/openwrt-develop-base-util/" data-id="cjl33w8uw005y2j2cg9n9vt4r" data-title="OpenWrt路由器开发" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2015/04/29/openwrt-develop-base-util/" data-id="cjnj3qb2y0064o02c14f64a64" data-title="OpenWrt路由器开发" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OpenWRT/">OpenWRT</a></li></ul>
@@ -645,7 +645,7 @@ mail.send()
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -654,7 +654,7 @@ mail.send()
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -670,10 +670,6 @@ mail.send()
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -683,6 +679,10 @@ mail.send()
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -759,12 +759,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -893,9 +893,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

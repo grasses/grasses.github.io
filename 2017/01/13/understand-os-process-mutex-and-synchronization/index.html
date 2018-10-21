@@ -9,14 +9,14 @@
 <meta property="og:title" content="Understand OS - Process">
 <meta property="og:url" content="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/index.html">
 <meta property="og:site_name" content="夏日小草">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/2017-01-13-understand-os-process-mutex-and-synchronization-producer-consumer-buffer.jpg">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-bridge_crossing.jpg">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-philosopher-dining.jpg">
-<meta property="og:updated_time" content="2017-03-02T13:54:49.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/2017-01-13-understand-os-process-mutex-and-synchronization-producer-consumer-buffer.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-bridge_crossing.jpg">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-philosopher-dining.jpg">
+<meta property="og:updated_time" content="2018-10-21T16:33:03.707Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Understand OS - Process">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -268,7 +268,7 @@ ga('send', 'pageview');
     <div class="article-entry" itemprop="articleBody">
       
         <p><br></p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg" alt="OS Process"></p>
+<p><img src="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-deadlock.jpg" alt="OS Process"></p>
 <a id="more"></a>
 <p>虽然进程可以共享系统资源，但是许多资源在同一时刻只能被一个进程共享，一次只允许一个进程共享的资源就是临界资源。临界资源的访问过程有四个部分：进入区、临界区、退出区、剩余区。</p>
 <pre><code>do {
@@ -320,7 +320,7 @@ ga('send', 'pageview');
     flag[1] = false;                         flag[2] = false;
     remainder section;                        remainder section;
 }                                            }
-</code></pre><h1 id="0x02-经典同步与互斥事件"><a href="#0x02-经典同步与互斥事件" class="headerlink" title="0x02.经典同步与互斥事件"></a>0x02.经典同步与互斥事件</h1><h3 id="生产者与消费者"><a href="#生产者与消费者" class="headerlink" title="生产者与消费者"></a>生产者与消费者</h3><p><img src="http://xiaocao.u.qiniudn.com/2017-01-13-understand-os-process-mutex-and-synchronization-producer-consumer-buffer.jpg" alt="Producer &amp;&amp; Consumer"><br>常见问题：生产者、消费者共享一组初始为空，大小为n的缓冲区空间，只有缓冲区不满的时候，生产者才能把消息放入缓冲区，否则必须等待；只有缓冲区不空的时候，消费者才能从缓冲区取出消息；并且放入与取出必须互斥操作。</p>
+</code></pre><h1 id="0x02-经典同步与互斥事件"><a href="#0x02-经典同步与互斥事件" class="headerlink" title="0x02.经典同步与互斥事件"></a>0x02.经典同步与互斥事件</h1><h3 id="生产者与消费者"><a href="#生产者与消费者" class="headerlink" title="生产者与消费者"></a>生产者与消费者</h3><p><img src="https://static.blog.homeway.me/2017-01-13-understand-os-process-mutex-and-synchronization-producer-consumer-buffer.jpg" alt="Producer &amp;&amp; Consumer"><br>常见问题：生产者、消费者共享一组初始为空，大小为n的缓冲区空间，只有缓冲区不满的时候，生产者才能把消息放入缓冲区，否则必须等待；只有缓冲区不空的时候，消费者才能从缓冲区取出消息；并且放入与取出必须互斥操作。</p>
 <p>缓冲区操作必须互斥，因此在对缓冲区操作前要加锁 <code>P(mutex);</code> 执行完后释放锁 <code>V(mutex);</code> 缓冲区操作满和不满需要进程间同步通信通知，empty 和 full 用于进程间同步，当缓冲区有消息时执行 <code>V(full);</code> 唤醒Consumer()，当缓冲区有空位时，执行 <code>V(empty);</code> 唤醒Producer()。</p>
 <pre><code>semaphore mutex = 1;
 semaphore full = 0;
@@ -376,7 +376,7 @@ Process Reader() {
         V(write_first);
     }
 }
-</code></pre><h3 id="双向读写者问题"><a href="#双向读写者问题" class="headerlink" title="双向读写者问题"></a>双向读写者问题</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-bridge_crossing.jpg" alt="Crossing the bridge"></p>
+</code></pre><h3 id="双向读写者问题"><a href="#双向读写者问题" class="headerlink" title="双向读写者问题"></a>双向读写者问题</h3><p><img src="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-bridge_crossing.jpg" alt="Crossing the bridge"></p>
 <p>常见问题：单向通行的桥，不允许双向交汇但允许同向而行并且显示单向一次最多 <code>max_size</code> 通行量。这个问题由读写者引申而来，读者 &amp;&amp; 写者都必须互斥操作，并且限制了同时操作数量。作为对称处理，需要同时对东向、西向进程设立锁，并且记录当前用户数以方便为对方设置锁。</p>
 <pre><code>int east_count = 0;
 int west_count = 0;
@@ -411,7 +411,7 @@ Process west(int i) {
     if(west_count == 0) V(mutex);    //对于最后一次占用锁
     V(mwest);
 }
-</code></pre><h3 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h3><p><img src="http://xiaocao.u.qiniudn.com/blog/2017-01-13-understand-os-process-mutex-and-synchronization-philosopher-dining.jpg" alt="Philosopher dining"><br>常见问题：一张桌子上有5个哲学家，每两个哲学家中间放一根筷子，哲学家只有两件事：吃饭、思考。如果哲学家拿到左右手两根筷子就吃饭，进餐完毕后保持思考，如果一根筷子在旁边哲学家手里，只能等待。</p>
+</code></pre><h3 id="哲学家就餐问题"><a href="#哲学家就餐问题" class="headerlink" title="哲学家就餐问题"></a>哲学家就餐问题</h3><p><img src="https://static.blog.homeway.me/blog/2017-01-13-understand-os-process-mutex-and-synchronization-philosopher-dining.jpg" alt="Philosopher dining"><br>常见问题：一张桌子上有5个哲学家，每两个哲学家中间放一根筷子，哲学家只有两件事：吃饭、思考。如果哲学家拿到左右手两根筷子就吃饭，进餐完毕后保持思考，如果一根筷子在旁边哲学家手里，只能等待。</p>
 <p>试想，当哲学家都同时拿起左手边的筷子，等到他们想拿右手边的筷子却已被拿走，系统进入死锁。如何让一个哲学家拿到左右两根筷子而不造成死锁或者饥饿现象？(1)让他们同时拿左右两根筷子(2)对每个哲学家动作做规定，当哲学家抢占到抢筷子是加互斥锁，阻止其他哲学家抢占筷子。</p>
 <pre><code>semaphore mutex = 1;
 semaphore chopsticks[5] = {1, 1, 1, 1, 1};//筷子序号
@@ -480,7 +480,7 @@ Process User1() {        //有胶水
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/" data-id="cjl33w8v1006a2j2chzair2bt" data-title="Understand OS - Process" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/" data-id="cjnj3qb3a006ho02cj23yemuq" data-title="Understand OS - Process" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OS/">OS</a></li></ul>
@@ -526,7 +526,7 @@ Process User1() {        //有胶水
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -535,7 +535,7 @@ Process User1() {        //有胶水
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -551,10 +551,6 @@ Process User1() {        //有胶水
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -564,6 +560,10 @@ Process User1() {        //有胶水
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -640,12 +640,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -774,9 +774,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">

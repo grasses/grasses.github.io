@@ -2,9 +2,380 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homeway.me/2015/03/25/add-check-code-for-typecho/</loc>
+    
+    <lastmod>2018-10-21T16:39:31.530Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/09/13/Android-Learning-1/</loc>
+    
+    <lastmod>2018-10-21T16:39:25.598Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/12/02/android-service-share-data-with-activity/</loc>
+    
+    <lastmod>2018-10-21T16:39:15.627Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/03/04/apue-file-dir/</loc>
+    
+    <lastmod>2018-10-21T16:39:09.162Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/03/02/apue-file-io/</loc>
+    
+    <lastmod>2018-10-21T16:39:02.778Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/03/03/apue-file-stat/</loc>
+    
+    <lastmod>2018-10-21T16:38:55.610Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/09/25/base62-shorter-url-server/</loc>
+    
+    <lastmod>2018-10-21T16:38:49.538Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</loc>
+    
+    <lastmod>2018-10-21T16:38:42.780Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/05/23/centos-install-vpn-and-use-iftop-monitoring-traffic/</loc>
+    
+    <lastmod>2018-10-21T16:38:34.297Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/07/05/code-performance-php-2/</loc>
+    
+    <lastmod>2018-10-21T16:38:21.622Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/01/02/goodbye-2013-hello-2014/</loc>
+    
+    <lastmod>2018-10-21T16:38:10.203Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/01/05/goodbye-2014-hello-2015/</loc>
+    
+    <lastmod>2018-10-21T16:38:04.723Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/12/27/hack-mysql/</loc>
+    
+    <lastmod>2018-10-21T16:37:59.564Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/11/05/how-oauth2-work-1/</loc>
+    
+    <lastmod>2018-10-21T16:37:53.242Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/04/13/Java-implements-and-interface/</loc>
+    
+    <lastmod>2018-10-21T16:37:46.634Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/04/30/machine-learning-ann/</loc>
+    
+    <lastmod>2018-10-21T16:37:36.531Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/04/21/machine-learning-knn/</loc>
+    
+    <lastmod>2018-10-21T16:37:28.025Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/05/22/machine-learning-naive-bayesian/</loc>
+    
+    <lastmod>2018-10-21T16:37:20.382Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/09/13/mysql-hash-index/</loc>
+    
+    <lastmod>2018-10-21T16:37:09.115Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/09/12/mysql-log/</loc>
+    
+    <lastmod>2018-10-21T16:37:02.827Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/03/15/netease-wireless-music-box/</loc>
+    
+    <lastmod>2018-10-21T16:36:56.194Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/11/11/nginx-http-auth-request-module/</loc>
+    
+    <lastmod>2018-10-21T16:36:45.786Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/08/11/nginx-lua-redis-access-control/</loc>
+    
+    <lastmod>2018-10-21T16:36:39.706Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/06/22/nginx-lua-static-merger/</loc>
+    
+    <lastmod>2018-10-21T16:36:34.201Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</loc>
+    
+    <lastmod>2018-10-21T16:36:27.018Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/12/25/nginx-redis-srcache-cache/</loc>
+    
+    <lastmod>2018-10-21T16:36:20.540Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/</loc>
+    
+    <lastmod>2018-10-21T16:36:14.761Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/</loc>
+    
+    <lastmod>2018-10-21T16:36:07.977Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/05/22/nginx-rewrite-conf/</loc>
+    
+    <lastmod>2018-10-21T16:36:01.699Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/03/03/nodejs-gzip-deflate-compression/</loc>
+    
+    <lastmod>2018-10-21T16:35:55.649Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/04/29/openwrt-develop-base-util/</loc>
+    
+    <lastmod>2018-10-21T16:35:49.307Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/05/04/pattern-writer-identify/</loc>
+    
+    <lastmod>2018-10-21T16:35:41.385Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</loc>
+    
+    <lastmod>2018-10-21T16:35:17.752Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/03/17/play-mp3-under-mac-use-python/</loc>
+    
+    <lastmod>2018-10-21T16:35:11.896Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/03/30/play-music-through-senses/</loc>
+    
+    <lastmod>2018-10-21T16:35:06.095Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/04/04/Python-Module-Learning-1/</loc>
+    
+    <lastmod>2018-10-21T16:34:58.859Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/05/06/python-pquery-reptile/</loc>
+    
+    <lastmod>2018-10-21T16:34:52.109Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/</loc>
+    
+    <lastmod>2018-10-21T16:34:35.819Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/07/10/rebuild-osx-environment/</loc>
+    
+    <lastmod>2018-10-21T16:34:29.328Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/</loc>
+    
+    <lastmod>2018-10-21T16:34:21.932Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/10/15/raspberry-socket-remote-ppt-flappy-bird/</loc>
+    
+    <lastmod>2018-10-21T16:34:14.227Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</loc>
+    
+    <lastmod>2018-10-21T16:34:05.923Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</loc>
+    
+    <lastmod>2018-10-21T16:33:59.605Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/06/20/python-violence-ssh-attack/</loc>
+    
+    <lastmod>2018-10-21T16:33:52.091Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/10/21/python-socket-1/</loc>
+    
+    <lastmod>2018-10-21T16:33:45.212Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/06/11/xiaocao-share-web-2/</loc>
+    
+    <lastmod>2018-10-21T16:33:33.093Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/09/04/writed-before-school/</loc>
+    
+    <lastmod>2018-10-21T16:33:24.363Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/08/03/website-system-message/</loc>
+    
+    <lastmod>2018-10-21T16:33:11.516Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</loc>
+    
+    <lastmod>2018-10-21T16:33:03.707Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/07/19/understand-http-about-content-type/</loc>
+    
+    <lastmod>2018-10-21T16:32:56.980Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2015/05/12/think-about-web-develop/</loc>
+    
+    <lastmod>2018-10-21T16:32:47.972Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2014/12/10/think-about-distributed-clusters/</loc>
+    
+    <lastmod>2018-10-21T16:32:40.197Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</loc>
+    
+    <lastmod>2018-10-21T16:32:11.513Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</loc>
     
-    <lastmod>2018-08-21T02:41:39.199Z</lastmod>
+    <lastmod>2018-10-21T16:31:42.913Z</lastmod>
     
   </url>
   
@@ -16,142 +387,9 @@
   </url>
   
   <url>
-    <loc>http://homeway.me/2018/05/21/talking-about-hackathon/</loc>
-    
-    <lastmod>2018-05-21T19:12:32.870Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://homeway.me/about/index.html</loc>
     
     <lastmod>2018-05-09T14:41:21.110Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</loc>
-    
-    <lastmod>2018-01-28T08:07:50.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/07/10/rebuild-osx-environment/</loc>
-    
-    <lastmod>2018-01-28T07:47:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/05/22/machine-learning-naive-bayesian/</loc>
-    
-    <lastmod>2017-05-23T16:02:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/05/04/pattern-writer-identify/</loc>
-    
-    <lastmod>2017-05-08T16:24:05.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/04/30/machine-learning-ann/</loc>
-    
-    <lastmod>2017-05-03T07:16:17.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/04/21/machine-learning-knn/</loc>
-    
-    <lastmod>2017-05-03T06:55:00.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/03/04/apue-file-dir/</loc>
-    
-    <lastmod>2017-04-26T00:24:36.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/03/03/apue-file-stat/</loc>
-    
-    <lastmod>2017-04-26T00:24:26.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/03/02/apue-file-io/</loc>
-    
-    <lastmod>2017-04-26T00:23:53.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/04/13/server-performance-test-for-aws-vs-qingcloud/</loc>
-    
-    <lastmod>2017-03-03T14:31:12.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/10/21/nginx-lua-traffic-limit-algorithm/</loc>
-    
-    <lastmod>2017-03-03T14:30:23.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/06/22/nginx-lua-static-merger/</loc>
-    
-    <lastmod>2017-03-03T14:30:14.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/08/11/nginx-lua-redis-access-control/</loc>
-    
-    <lastmod>2017-03-03T14:30:05.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/09/25/base62-shorter-url-server/</loc>
-    
-    <lastmod>2017-03-03T14:29:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</loc>
-    
-    <lastmod>2017-03-03T14:29:23.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/05/23/centos-install-vpn-and-use-iftop-monitoring-traffic/</loc>
-    
-    <lastmod>2017-03-03T14:29:03.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/12/27/hack-mysql/</loc>
-    
-    <lastmod>2017-03-03T14:28:46.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/01/13/understand-os-process-mutex-and-synchronization/</loc>
-    
-    <lastmod>2017-03-02T13:54:49.000Z</lastmod>
     
   </url>
   
@@ -184,100 +422,9 @@
   </url>
   
   <url>
-    <loc>http://homeway.me/2014/07/05/code-performance-php-2/</loc>
-    
-    <lastmod>2017-01-13T12:58:19.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/12/10/think-about-distributed-clusters/</loc>
-    
-    <lastmod>2017-01-13T12:57:37.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/11/05/how-oauth2-work-1/</loc>
-    
-    <lastmod>2017-01-13T12:57:08.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/10/09/raspberry-the-current-status-and-data/</loc>
-    
-    <lastmod>2017-01-13T12:56:19.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/12/05/nginx-reverse-proxy-to-load-balance/</loc>
-    
-    <lastmod>2017-01-13T12:55:43.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/10/28/nginx-reverse-proxy-conf/</loc>
-    
-    <lastmod>2017-01-13T12:55:39.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/12/25/nginx-redis-srcache-cache/</loc>
-    
-    <lastmod>2017-01-13T12:55:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://homeway.me/2014/10/29/linux-shell-write-service/</loc>
     
     <lastmod>2017-01-13T12:55:11.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/01/02/goodbye-2013-hello-2014/</loc>
-    
-    <lastmod>2016-12-29T17:10:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/09/13/mysql-hash-index/</loc>
-    
-    <lastmod>2015-09-13T08:24:57.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/09/12/mysql-log/</loc>
-    
-    <lastmod>2015-09-13T06:55:54.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/04/04/Python-Module-Learning-1/</loc>
-    
-    <lastmod>2015-08-18T05:25:08.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/05/06/python-pquery-reptile/</loc>
-    
-    <lastmod>2015-08-18T05:24:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/06/11/xiaocao-share-web-2/</loc>
-    
-    <lastmod>2015-08-18T02:02:23.000Z</lastmod>
     
   </url>
   
@@ -289,163 +436,9 @@
   </url>
   
   <url>
-    <loc>http://homeway.me/2014/12/02/android-service-share-data-with-activity/</loc>
-    
-    <lastmod>2015-08-04T14:06:28.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/04/13/Java-implements-and-interface/</loc>
-    
-    <lastmod>2015-08-04T14:05:09.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/03/17/play-mp3-under-mac-use-python/</loc>
-    
-    <lastmod>2015-08-04T14:04:49.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/05/22/nginx-rewrite-conf/</loc>
-    
-    <lastmod>2015-08-04T14:02:53.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/03/03/nodejs-gzip-deflate-compression/</loc>
-    
-    <lastmod>2015-08-04T14:02:12.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/04/29/openwrt-develop-base-util/</loc>
-    
-    <lastmod>2015-08-04T14:01:05.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/06/13/raspberry-connect-to-arduion-by-bluetooth/</loc>
-    
-    <lastmod>2015-08-04T13:59:34.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/04/08/raspberry-connect-to-arduion-by-serial/</loc>
-    
-    <lastmod>2015-08-04T13:59:20.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/06/20/python-violence-ssh-attack/</loc>
-    
-    <lastmod>2015-08-04T13:58:33.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/03/30/play-music-through-senses/</loc>
-    
-    <lastmod>2015-08-04T13:53:32.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/03/15/netease-wireless-music-box/</loc>
-    
-    <lastmod>2015-08-04T13:52:41.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/10/15/raspberry-socket-remote-ppt-flappy-bird/</loc>
-    
-    <lastmod>2015-08-04T13:51:06.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/05/12/think-about-web-develop/</loc>
-    
-    <lastmod>2015-08-04T13:49:26.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/07/19/understand-http-about-content-type/</loc>
-    
-    <lastmod>2015-08-04T13:48:22.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/05/26/play-hamster-game-through-raspberry/</loc>
-    
-    <lastmod>2015-08-04T13:47:44.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/09/13/Android-Learning-1/</loc>
-    
-    <lastmod>2015-08-04T13:45:23.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/08/03/website-system-message/</loc>
-    
-    <lastmod>2015-08-04T13:40:13.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://homeway.me/music/index.html</loc>
     
     <lastmod>2015-05-31T17:07:59.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/01/05/goodbye-2014-hello-2015/</loc>
-    
-    <lastmod>2015-03-27T05:23:08.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/10/21/python-socket-1/</loc>
-    
-    <lastmod>2015-03-27T05:16:23.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/11/11/nginx-http-auth-request-module/</loc>
-    
-    <lastmod>2015-03-27T05:14:31.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2015/03/25/add-check-code-for-typecho/</loc>
-    
-    <lastmod>2015-03-27T05:13:19.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2014/09/04/writed-before-school/</loc>
-    
-    <lastmod>2014-10-09T13:05:50.000Z</lastmod>
     
   </url>
   

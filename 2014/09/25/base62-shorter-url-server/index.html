@@ -11,13 +11,13 @@
 <meta property="og:url" content="http://homeway.me/2014/09/25/base62-shorter-url-server/index.html">
 <meta property="og:site_name" content="夏日小草">
 <meta property="og:description" content="本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。服务主页详见 =&amp;gt; homeway.me , T_T 没域名了，暂且这个。类似谷歌的 =&amp;gt; goo.gl关于源代码，暂不公开，尚缺一个监控模块和用户中心。">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fshrot-url-2014-09-25.gif">
-<meta property="og:image" content="http://xiaocao.u.qiniudn.com/blog%2Fxinglai.org2014-09-12.png">
-<meta property="og:updated_time" content="2017-03-03T14:29:32.000Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fshrot-url-2014-09-25.gif">
+<meta property="og:image" content="https://static.blog.homeway.me/blog%2Fxinglai.org2014-09-12.png">
+<meta property="og:updated_time" content="2018-10-21T16:38:49.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="一个base62的短连接服务">
 <meta name="twitter:description" content="本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。服务主页详见 =&amp;gt; homeway.me , T_T 没域名了，暂且这个。类似谷歌的 =&amp;gt; goo.gl关于源代码，暂不公开，尚缺一个监控模块和用户中心。">
-<meta name="twitter:image" content="http://xiaocao.u.qiniudn.com/blog%2Fshrot-url-2014-09-25.gif">
+<meta name="twitter:image" content="https://static.blog.homeway.me/blog%2Fshrot-url-2014-09-25.gif">
 <meta name="twitter:creator" content="@xiarixiaocao">
 <link rel="publisher" href="yaohomeway">
   
@@ -271,7 +271,7 @@ ga('send', 'pageview');
         <p><br></p>
 <h4 id="本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。"><a href="#本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。" class="headerlink" title="本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。"></a>本文主要浅析最近写过的一个短连接服务，以及短连接服务意义。</h4><h5 id="服务主页详见-gt-homeway-me-T-T-没域名了，暂且这个。类似谷歌的-gt-goo-gl"><a href="#服务主页详见-gt-homeway-me-T-T-没域名了，暂且这个。类似谷歌的-gt-goo-gl" class="headerlink" title="服务主页详见 =&gt; homeway.me , T_T 没域名了，暂且这个。类似谷歌的 =&gt; goo.gl"></a>服务主页详见 =&gt; <a href="http://homeway.me">homeway.me</a> , T_T 没域名了，暂且这个。类似谷歌的 =&gt; <a href="http://goo.gl" target="_blank" rel="external">goo.gl</a></h5><h5 id="关于源代码，暂不公开，尚缺一个监控模块和用户中心。"><a href="#关于源代码，暂不公开，尚缺一个监控模块和用户中心。" class="headerlink" title="关于源代码，暂不公开，尚缺一个监控模块和用户中心。"></a>关于源代码，暂不公开，尚缺一个监控模块和用户中心。</h5><a id="more"></a>
 <p><br></p>
-<h1 id="0x01-原理"><a href="#0x01-原理" class="headerlink" title="0x01.原理"></a>0x01.原理</h1><p><img src="http://xiaocao.u.qiniudn.com/blog%2Fshrot-url-2014-09-25.gif" alt="短连接服务"></p>
+<h1 id="0x01-原理"><a href="#0x01-原理" class="headerlink" title="0x01.原理"></a>0x01.原理</h1><p><img src="https://static.blog.homeway.me/blog%2Fshrot-url-2014-09-25.gif" alt="短连接服务"></p>
 <p><br><hr><br></p>
 <h1 id="0x02-base62源码"><a href="#0x02-base62源码" class="headerlink" title="0x02.base62源码"></a>0x02.base62源码</h1><pre><code>class Base62{
     private $string = &quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;;
@@ -320,7 +320,7 @@ echo $object-&gt;base62_decode($object-&gt;base62_encode($str)) . &quot;\n&quot;
 </li>
 </ul>
 <p>其实，来看一张统计图（ 这个在 <a href="http://homeway.me/2014/09/11/%E5%B0%8F%E8%8D%89%E6%B5%85%E6%B5%85%E8%B0%88web%EF%BC%88%E4%BA%8C%EF%BC%89/">《浅谈web》</a>里面有提到 ）</p>
-<p><img src="http://xiaocao.u.qiniudn.com/blog%2Fxinglai.org2014-09-12.png" alt="网络速度测试"></p>
+<p><img src="https://static.blog.homeway.me/blog%2Fxinglai.org2014-09-12.png" alt="网络速度测试"></p>
 <p>我们可以看到，dns查询，用了很长一段时间。</p>
 <p>对于一些域名，可能查询时间很长，短连接将是一种累赘。</p>
 <p><br><hr><br></p>
@@ -332,7 +332,7 @@ echo $object-&gt;base62_decode($object-&gt;base62_encode($str)) . &quot;\n&quot;
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2014/09/25/base62-shorter-url-server/" data-id="cjl33w8rd000m2j2cn2qmiv6n" data-title="一个base62的短连接服务" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2014/09/25/base62-shorter-url-server/" data-id="cjnj3qayw000eo02cilpbbtez" data-title="一个base62的短连接服务" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PHP/">PHP</a></li></ul>
@@ -378,7 +378,7 @@ echo $object-&gt;base62_decode($object-&gt;base62_encode($str)) . &quot;\n&quot;
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
   </div>
 
@@ -387,7 +387,7 @@ echo $object-&gt;base62_decode($object-&gt;base62_encode($str)) . &quot;\n&quot;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/hackathon/" style="font-size: 10px;">hackathon</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
+      <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
   </div>
 
@@ -403,10 +403,6 @@ echo $object-&gt;base62_decode($object-&gt;base62_encode($str)) . &quot;\n&quot;
           </li>
         
           <li>
-            <a href="/2018/05/21/talking-about-hackathon/">Talking about Hackathon</a>
-          </li>
-        
-          <li>
             <a href="/2018/01/25/setup-caffe-for-deep-learning/">Deep Learning - Installing Caffe on Ubuntu</a>
           </li>
         
@@ -416,6 +412,10 @@ echo $object-&gt;base62_decode($object-&gt;base62_encode($str)) . &quot;\n&quot;
         
           <li>
             <a href="/2017/05/22/machine-learning-naive-bayesian/">Machine Learning - Naive Bayesian theory</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/04/pattern-writer-identify/">Pattern - writter identify using texture descriptors</a>
           </li>
         
       </ul>
@@ -492,12 +492,12 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
     <a href="/about/" class="mobile-nav-link">About</a>
   
 </nav>
-    <script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+    <script src="https://static.blog.homeway.me/blog/jquery.2.1.1.js"></script>
 
 
 <!--七牛静态文件加速-->
-<link rel="stylesheet" href="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.css" media="screen" type="text/css">
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.fancybox.js"></script>
+<link rel="stylesheet" href="https://static.blog.homeway.me/blog/jquery.fancybox.css" media="screen" type="text/css">
+<script src="https://static.blog.homeway.me/blog/jquery.fancybox.js"></script>
 
 
 <!--highlight-->
@@ -626,9 +626,9 @@ LaraDuoshuo.BaseURL = 'http://comment.blog.seclab.org.cn';
 
 
 <!--七牛静态文件加速-->
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/qrcode.js"></script>
-<script src="http://xiaocao.u.qiniudn.com/blog/script.js"></script>
+<script src="https://static.blog.homeway.me/blog/jquery.qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/qrcode.js"></script>
+<script src="https://static.blog.homeway.me/blog/script.js"></script>
 
   </div>
 <script type="text/x-mathjax-config">
