@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</loc>
+    
+    <lastmod>2018-11-08T08:38:02.561Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://homeway.me/2018/08/05/tamper-detection-an-overview/</loc>
+    
+    <lastmod>2018-11-05T08:56:15.557Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homeway.me/2015/03/25/add-check-code-for-typecho/</loc>
     
     <lastmod>2018-10-21T16:39:31.530Z</lastmod>
@@ -369,20 +383,6 @@
     <loc>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</loc>
     
     <lastmod>2018-10-21T16:32:11.513Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</loc>
-    
-    <lastmod>2018-10-21T16:31:42.913Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2018/08/05/tamper-detection-an-overview/</loc>
-    
-    <lastmod>2018-08-18T07:27:16.915Z</lastmod>
     
   </url>
   

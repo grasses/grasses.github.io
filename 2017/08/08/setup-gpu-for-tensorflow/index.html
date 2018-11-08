@@ -10,9 +10,9 @@
 <meta property="og:url" content="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/index.html">
 <meta property="og:site_name" content="夏日小草">
 <meta property="og:image" content="https://static.blog.homeway.me/blog/logo/cudnn-logo.png">
-<meta property="og:image" content="http://os20zg3p7.bkt.clouddn.com/note/wiznot/blog/image/2017-08-08-GPU-cuda.png">
-<meta property="og:image" content="http://os20zg3p7.bkt.clouddn.com/note/wiznote/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png">
-<meta property="og:updated_time" content="2018-10-21T16:31:42.913Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2017-08-08-GPU-cuda.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png">
+<meta property="og:updated_time" content="2018-11-08T08:38:02.561Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Deep Learning - Setup GPU for tensorflow">
 <meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo/cudnn-logo.png">
@@ -319,7 +319,7 @@ Tue Aug  8 22:40:47 2017
 </code></pre><p>OK, this result suggests our Nvidia drivers installed successfully.</p>
 <hr>
 <h1 id="2-Nvidia-toolkit-amp-cuDNN"><a href="#2-Nvidia-toolkit-amp-cuDNN" class="headerlink" title="2. Nvidia toolkit &amp; cuDNN"></a>2. Nvidia toolkit &amp; cuDNN</h1><p>Nvidia toolkit is a base sdk for cuda, and you can download it from: <a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="external">https://developer.nvidia.com/cuda-downloads</a><br>For the more, we need CudNN for tensorflow deep learning, and download it from: <a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="external">https://developer.nvidia.com/rdp/cudnn-download</a></p>
-<h3 id="2-1-Download-cuda"><a href="#2-1-Download-cuda" class="headerlink" title="2.1 Download cuda"></a>2.1 Download cuda</h3><p>Here I choose local deb package <code>cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb</code>:<br><img src="http://os20zg3p7.bkt.clouddn.com/note/wiznot/blog/image/2017-08-08-GPU-cuda.png" alt="cuda installation version"></p>
+<h3 id="2-1-Download-cuda"><a href="#2-1-Download-cuda" class="headerlink" title="2.1 Download cuda"></a>2.1 Download cuda</h3><p>Here I choose local deb package <code>cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb</code>:<br><img src="https://static.blog.homeway.me/blog/image/2017-08-08-GPU-cuda.png" alt="cuda installation version"></p>
 <h3 id="2-2-Install-cuda"><a href="#2-2-Install-cuda" class="headerlink" title="2.2 Install cuda"></a>2.2 Install cuda</h3><p>Following cuda installation command lines:</p>
 <pre><code>sudo dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 sudo apt-key add /var/cuda-repo-9-0-local/7fa2af80.pub
@@ -348,7 +348,7 @@ Device 0: &quot;GeForce GTX 1070&quot;
 ......
 </code></pre><p>OK, this result suggests our Nvidia toolkit installed successfully.</p>
 <h3 id="2-4-Download-CudNN"><a href="#2-4-Download-CudNN" class="headerlink" title="2.4 Download CudNN"></a>2.4 Download CudNN</h3><p>At first, I choose to download lastest pckage of CudNN: <code>cuDNN v7.0 (August 3, 2017), for CUDA 9.0 RC</code>,<br>but I find it doesn’t work at all, my tensorflow can’t find my gpu,<br>then I try <code>cuDNN v5.1 (Jan 20, 2017), for CUDA 8.0</code> instead.</p>
-<p><img src="http://os20zg3p7.bkt.clouddn.com/note/wiznote/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png" alt="CudNN version"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png" alt="CudNN version"></p>
 <h3 id="2-5-Install-CudNN"><a href="#2-5-Install-CudNN" class="headerlink" title="2.5 Install CudNN"></a>2.5 Install CudNN</h3><p>To install CudNN, download cudNN v5.0 for Cuda 8.0 from Nvidia website and extract into <code>/usr/local/cuda</code> via:</p>
 <pre><code>tar xzvf cudnn-8.0-linux-x64-v5.1.tgz
 sudo cp cuda/include/cudnn.h /usr/local/cuda/include
@@ -417,7 +417,7 @@ MatMul: /job:localhost/replica:0/task:0/gpu:0
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/" data-id="cjnj55fmf006dzc2c6me3w9f1" data-title="Deep Learning - Setup GPU for tensorflow" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/" data-id="cjo8cb69f006cjbolx30oeg7u" data-title="Deep Learning - Setup GPU for tensorflow" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Machine-Learning/">Machine Learning</a></li></ul>

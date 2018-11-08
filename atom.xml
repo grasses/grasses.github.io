@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2018-08-18T07:27:16.915Z</updated>
+  <updated>2018-11-05T08:56:15.557Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://homeway.me/2018/08/05/tamper-detection-an-overview/"/>
     <id>http://homeway.me/2018/08/05/tamper-detection-an-overview/</id>
     <published>2018-08-05T13:26:10.000Z</published>
-    <updated>2018-08-18T07:27:16.915Z</updated>
+    <updated>2018-11-05T08:56:15.557Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
@@ -64,7 +64,7 @@
 <p>文章提出了一种图像篡改检测和定位算法，利用不同相机模型留在图像上的特征足迹，最直接的原理即是检测图像的拍摄相机来源，由于不同型号相机拍摄的照片所携带的模式噪声不一样，以此鉴定图像是否篡改、篡改定位。</p>
 <p>这篇文章是作者 Bondi 在2016年发表<a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7]</a>的工作的延续，<a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7]</a>通过建立<strong>CNN+SVM模型</strong>，鉴定数字图像拍摄来源，但是存在一定的缺陷，即是相同型号相机生成的图像篡改无法被检测出来。算法的基本模型考虑到了两层因数：第一，CNN检测到的部位是否被篡改（即f(i, j)）；第二，我们知道纹理度低的部位的篡改明显存在误差，因此，作者根据纹理度计算公式对每个图像小块计算置信度因子（即Q(i, j)），其中Q(i, j)定义为：</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.2.png" alt="纹理度转换置信度计算公式"></p>
-<p>最后将两个计算结果合成后得到篡改部位的置信度热力图，然后经过K-mean聚类、概率模型去噪得到最终的结果：</p>
+<p>最后将两个计算结果合成后得到篡改部位的置信度热力图，1.CNN输出f做K-means聚类；2.对检测散点图做密度去噪（检测最小篡改粒度为128x128）；3.并使用纹理度去噪（不计算纹理度低的检测结果）；4.最终使用平均篡改率（篡改点÷所有测点）阈值判定输入图像是否为篡改图像，得到最终的结果：</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.3.jpg" alt="所提出的定位算法的伪造图像和中间输出的示例，伪造用红色虚线突出显示。&lt;br&gt;K-means检测到的簇被映射到不同的颜色，白色和黑色像素分别代表M的0和1值。"></p>
 <p>算法使用Dresden图像库，该数据集由来自26种不同相机模型的超过16k图像组成，描绘了总共83个场景，关于篡改图像如何制作，本文作者没有解释。这篇文章做得相对完整，从图像切片（patches）-&gt;CNN特征提取/Q纹理度换算置信度-&gt;整合块热力图-&gt;除噪，每个步骤都很扎实。</p>
 <p><br></p>
@@ -74,12 +74,13 @@
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper4.2.jpg" alt="Accuracy curves on training (Dip) and validation T(DV) datasets using Pre-Trained and Transfer strategies"></p>
 <p>算法主要分为两部分，CNN特征提取、置信度图去噪，其中CNN特征提取使用了预训练（Pre-Trained）方法和迁移学习方法（Transfer），上面是算法在训练集、校验集的正确率。<br></p>
 <h5 id="5-Deep-Matching-and-Validation-Network-An-End-to-End-Solution-to-Constrained-Image-Splicing-Localization-and-Detection-9"><a href="#5-Deep-Matching-and-Validation-Network-An-End-to-End-Solution-to-Constrained-Image-Splicing-Localization-and-Detection-9" class="headerlink" title="5.Deep Matching and Validation Network: An End-to-End Solution to Constrained Image Splicing Localization and Detection [9]"></a>5.Deep Matching and Validation Network: An End-to-End Solution to Constrained Image Splicing Localization and Detection [9]</h5><p>文章发表在2017 ACM on Multimedia Conference，作者代码在Gitlab: <a href="https://gitlab.com/rex-yue-wu/Deep-Matching-Validation-Network" target="_blank" rel="external">https://gitlab.com/rex-yue-wu/Deep-Matching-Validation-Network</a></p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper5.1.jpg" alt="Constrained image splicing detection problem, where true spliced pixels are labeled as white. From top to bottom, sample detection labels are 1, 1, and 0, respectively. "></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper5.1.2.jpg" alt="Constrained image splicing detection problem, where true spliced pixels are labeled as white. From top to bottom, sample detection labels are 1, 1, and 0, respectively. "></p>
 <p>文章考虑的主要问题是<strong>限制性的图像篡改检测问题</strong>(constrained image splicing detection (CISD) problem)，即问题提供查询图像Q和潜在篡改来源图像P，需要从图像Q中检测是否有物体来源于图像P，问题更倾向于Copy-Move篡改模型。文章提出一种<strong>深度匹配网络(Deep Matching and Verification Network (DMVN))</strong>，扩展了底层拼接问题的公式，以考虑两个输入图像，一个查询图像Q和一个潜在的供体图像P。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper5.2.jpg" alt="Deep matching and validation network for the constrained image splicing detection and localization. "></p>
 <p>文章提到创新点为：(1) 相比传统算法，DMVN是一种端到端(End-to-End)模型；(2) 相比其他深度学习算法，DMVN不仅特征提取自动，而且后处理也是非干预；(3) 创新地提出深度学习模块（Deep Dense Matching和Visual Consistency Validator），用于执行视觉匹配和验证。</p>
 <p>仔细地看了下论文，算法主要包含以下流程(1) CNN Feature Extractor：使用的是VGG-16；(2)  Deep Dense Matching：使用的是inception-based Mask Deconvolution模块，来源于<a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/Szegedy_Rethinking_the_Inception_CVPR_2016_paper.html" target="_blank" rel="external">[10]</a>；(3) Visual Consistency Validator：用于强制模型聚焦于两个图像中的分割区域，将两个Mask快融合起来。总体看来，是将多个深度学习网络拼接起来。</p>
-<hr>
+<p><br></p>
+<h5 id="6-Image-Splicing-Detection-via-Camera-Response-Function-Analysis-11"><a href="#6-Image-Splicing-Detection-via-Camera-Response-Function-Analysis-11" class="headerlink" title="6. Image Splicing Detection via Camera Response Function Analysis [11]"></a>6. Image Splicing Detection via Camera Response Function Analysis [11]</h5><p>文章发表在2017 CVPR上面，主要采用相机响应函数（Camera Response Function, CRF）分析篡改部位的轮廓直方图差异，并以此鉴定Copy-Move和Splicing篡改。非线性CRF对于图像处理有很大作用，很多图像去燥算法有所使用，实验表明篡改区域的CRF值比起未篡改区域有所不同。虽然目前的研究未知CRF如何成为模糊估计中的噪声源，但是文章证明CRF是一个关键信号，有助于区分不同的边缘和伪造的拼接边界。</p>
 <h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>笔者将<a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6]</a>的算法实现了一遍，其中：<br>（1）CNN特征提取的算法比较普通；<br>（2）后处理中滤波算法显得比较出众，主要有两种：①对CNN输出执行度做L1范式滤波，②对于去除低文理区域预测结果，对于图像纹理度指数获取算法，网上、文献里面都没有找到，应该是作者自己的研究。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.1.jpg?t=" alt="(a)图像原始图；(2)使用[7]中的文理检测算法得到的热力图"></p>
 <p>纹理度可知：最有可能篡改的部位为树，因此滤波时候存在一定的可能性过度过滤早点，从结果也可以得知监测的篡改部位变小了。</p>
@@ -102,6 +103,8 @@
 <li><a href="https://arxiv.org/abs/1805.01946" target="_blank" rel="external">[8] Güera, D., Yarlagadda, S. K., Bestagini, P., Zhu, F., Tubaro, S., &amp; Delp, E. J. (2018). Reliability Map Estimation For CNN-Based Camera Model Attribution. *arXiv preprint arXiv:1805.01946.</a></li>
 <li><a href="https://dl.acm.org/citation.cfm?id=3123411" target="_blank" rel="external">[9] Wu, Y., Abd-Almageed, W., &amp; Natarajan, P. (2017, October). Deep matching and validation network: An end-to-end solution to constrained image splicing localization and detection. In <em>Proceedings of the 2017 ACM on Multimedia Conference</em> (pp. 1480-1502). ACM.</a></li>
 <li><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/Szegedy_Rethinking_the_Inception_CVPR_2016_paper.html" target="_blank" rel="external">[10] Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., &amp; Wojna, Z. (2016). Rethinking the inception architecture for computer vision. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em> (pp. 2818-2826).</a></li>
+<li><a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Chen_Image_Splicing_Detection_CVPR_2017_paper.pdf" target="_blank" rel="external">[11] Chen, Can, Scott McCloskey, and Jingyi Yu. “Image Splicing Detection via Camera Response Function Analysis.” <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em>. 2017.</a></li>
+<li></li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/08/05/tamper-detection-an-overview"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">http://homeway.me/2018/08/05/tamper-detection-an-overview</a></h4><blockquote>
@@ -316,7 +319,7 @@ make: *** [python/caffe/_caffe.so] Error 1
     <link href="http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/"/>
     <id>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</id>
     <published>2017-08-07T16:48:10.000Z</published>
-    <updated>2018-10-21T16:31:42.913Z</updated>
+    <updated>2018-11-08T08:38:02.561Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/cudnn-logo.png" alt="Nvidia"></p>
@@ -371,7 +374,7 @@ Tue Aug  8 22:40:47 2017
 </code></pre><p>OK, this result suggests our Nvidia drivers installed successfully.</p>
 <hr>
 <h1 id="2-Nvidia-toolkit-amp-cuDNN"><a href="#2-Nvidia-toolkit-amp-cuDNN" class="headerlink" title="2. Nvidia toolkit &amp; cuDNN"></a>2. Nvidia toolkit &amp; cuDNN</h1><p>Nvidia toolkit is a base sdk for cuda, and you can download it from: <a href="https://developer.nvidia.com/cuda-downloads" target="_blank" rel="external">https://developer.nvidia.com/cuda-downloads</a><br>For the more, we need CudNN for tensorflow deep learning, and download it from: <a href="https://developer.nvidia.com/rdp/cudnn-download" target="_blank" rel="external">https://developer.nvidia.com/rdp/cudnn-download</a></p>
-<h3 id="2-1-Download-cuda"><a href="#2-1-Download-cuda" class="headerlink" title="2.1 Download cuda"></a>2.1 Download cuda</h3><p>Here I choose local deb package <code>cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb</code>:<br><img src="http://os20zg3p7.bkt.clouddn.com/note/wiznot/blog/image/2017-08-08-GPU-cuda.png" alt="cuda installation version"></p>
+<h3 id="2-1-Download-cuda"><a href="#2-1-Download-cuda" class="headerlink" title="2.1 Download cuda"></a>2.1 Download cuda</h3><p>Here I choose local deb package <code>cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb</code>:<br><img src="https://static.blog.homeway.me/blog/image/2017-08-08-GPU-cuda.png" alt="cuda installation version"></p>
 <h3 id="2-2-Install-cuda"><a href="#2-2-Install-cuda" class="headerlink" title="2.2 Install cuda"></a>2.2 Install cuda</h3><p>Following cuda installation command lines:</p>
 <pre><code>sudo dpkg -i cuda-repo-ubuntu1604-9-0-local_9.0.176-1_amd64.deb
 sudo apt-key add /var/cuda-repo-9-0-local/7fa2af80.pub
@@ -400,7 +403,7 @@ Device 0: &quot;GeForce GTX 1070&quot;
 ......
 </code></pre><p>OK, this result suggests our Nvidia toolkit installed successfully.</p>
 <h3 id="2-4-Download-CudNN"><a href="#2-4-Download-CudNN" class="headerlink" title="2.4 Download CudNN"></a>2.4 Download CudNN</h3><p>At first, I choose to download lastest pckage of CudNN: <code>cuDNN v7.0 (August 3, 2017), for CUDA 9.0 RC</code>,<br>but I find it doesn’t work at all, my tensorflow can’t find my gpu,<br>then I try <code>cuDNN v5.1 (Jan 20, 2017), for CUDA 8.0</code> instead.</p>
-<p><img src="http://os20zg3p7.bkt.clouddn.com/note/wiznote/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png" alt="CudNN version"></p>
+<p><img src="https://static.blog.homeway.me/blog/image/2017-08-08-setup-GPU-cudnn-ubuntu.png.crdownload.png" alt="CudNN version"></p>
 <h3 id="2-5-Install-CudNN"><a href="#2-5-Install-CudNN" class="headerlink" title="2.5 Install CudNN"></a>2.5 Install CudNN</h3><p>To install CudNN, download cudNN v5.0 for Cuda 8.0 from Nvidia website and extract into <code>/usr/local/cuda</code> via:</p>
 <pre><code>tar xzvf cudnn-8.0-linux-x64-v5.1.tgz
 sudo cp cuda/include/cudnn.h /usr/local/cuda/include
