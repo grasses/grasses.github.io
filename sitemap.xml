@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homeway.me/about/index.html</loc>
+    
+    <lastmod>2018-11-08T08:43:49.356Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</loc>
     
     <lastmod>2018-11-08T08:38:02.561Z</lastmod>
@@ -383,13 +390,6 @@
     <loc>http://homeway.me/2018/01/25/setup-caffe-for-deep-learning/</loc>
     
     <lastmod>2018-10-21T16:32:11.513Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/about/index.html</loc>
-    
-    <lastmod>2018-05-09T14:41:21.110Z</lastmod>
     
   </url>
   
