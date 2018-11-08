@@ -7775,7 +7775,7 @@ if __name__ == &#39;__main__&#39;:
 </blockquote>
 <hr>
 
-<h1 id="Publications"><a href="#Publications" class="headerlink" title="Publications"></a>Publications</h1><div class="row paper-box"><br>    <div class="col-md-2 paper-image"><br>        <img src="https://static.blog.homeway.me/blog/paper/image/sci-training_pipeline.png"><br>    </div><br>    <div class="col-md-8 paper-content"><br>        <strong>Robust Multi-classifier for Camera Model Identification based on Convolution Neural Network [<a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">Paper</a>, <a href="https://github.com/grasses/Camera-Identification" target="_blank" rel="external">Code</a>]<br>        </strong><br>        <span><b>H. Yao</b>, T. Qiao, M. Xu, and N. Zheng</span><br>        <span>IEEE Access (SCI-2)</span><br>        <span>May 2018</span><br>    </div><br>    <br><br>    <div class="col-md-2 paper-image"><br>        <img src="https://static.blog.homeway.me/blog/image/RFM-algorithm.jpg"><br>    </div><br>    <div class="col-md-8 paper-content"><br>        <strong>Image Tampering Detection and Localization via Reliablity Fusing Map (In progress)[<a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">Code</a>]<br>        </strong><br>        <span>Nov 2018</span><br>    </div><br></div>
+<h1 id="Publications"><a href="#Publications" class="headerlink" title="Publications"></a>Publications</h1><div class="row paper-box"><br>    <div class="col-md-2 paper-image"><br>        <img src="https://static.blog.homeway.me/blog/paper/image/sci-training_pipeline.png"><br>    </div><br>    <div class="col-md-8 paper-content"><br>        <strong>Robust Multi-classifier for Camera Model Identification based on Convolution Neural Network [<a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">Paper</a>, <a href="https://github.com/grasses/Camera-Identification" target="_blank" rel="external">Code</a>]<br>        </strong><br>        <span><b>Hongwei Yao</b>, Tong Qiao, Ming Xu, and Ning Zheng</span><br>        <span>IEEE Access (SCI-2)</span><br>        <span>May 2018</span><br>    </div><br></div><br><hr><br><div class="row paper-box"><br>    <div class="col-md-3 paper-image"><br>        <img src="https://static.blog.homeway.me/blog/image/RFM-algorithm.jpg"><br>    </div><br>    <div class="col-md-8 paper-content"><br>        <strong>Image Tampering Detection and Localization via Reliablity Fusing Map (In progress)[<a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">Code</a>]<br>        </strong><br>        <span><b>Hongwei Yao</b>, Ming Xu, Tong Qiao, et al.</span><br>        <span>Nov 2018</span><br>    </div><br></div>
 
 <style type="text/css">
 .paper-box {
@@ -7790,11 +7790,11 @@ if __name__ == &#39;__main__&#39;:
 .paper-image {
     height: 200px;
     float: left;
-    margin: 0px 30px;
+    margin: 0px 20px;
 }
 
 .paper-image img {
-    width: 180px;
+    width: 200px;
 }
 
 .paper-content {
