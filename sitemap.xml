@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://homeway.me/2018/08/05/tamper-detection-an-overview/</loc>
+    
+    <lastmod>2019-01-31T14:49:24.184Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://homeway.me/about/index.html</loc>
     
     <lastmod>2018-11-08T08:49:47.366Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://homeway.me/2017/08/08/setup-gpu-for-tensorflow/</loc>
     
     <lastmod>2018-11-08T08:38:02.561Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://homeway.me/2018/08/05/tamper-detection-an-overview/</loc>
-    
-    <lastmod>2018-11-05T08:56:15.557Z</lastmod>
     
   </url>
   

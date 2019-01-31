@@ -24,8 +24,8 @@
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper5.1.2.jpg">
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper5.2.jpg">
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.1.jpg?t=">
-<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.2.jpg">
-<meta property="og:updated_time" content="2018-11-05T08:56:15.557Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.3.jpg">
+<meta property="og:updated_time" content="2019-01-31T14:49:24.184Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Forged Image Detection and Location">
 <meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo/forensics-logo.png">
@@ -282,8 +282,10 @@ ga('send', 'pageview');
         <p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
 <a id="more"></a>
-<h1 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1.Abstract"></a>1.Abstract</h1><p>图像篡改检测（Tamper Detection）旨在挖掘数字图像的恶意处理，例如删除、添加、复制、截取图像中的对象。</p>
-<p>图像篡改检测在军事防卫、司法鉴定、图像防伪等领域有重要的价值。</p>
+<h1 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1.Abstract"></a>1.Abstract</h1><p>图像处理检测有两个研究类别：图像后处理检测（Image Manipulation Detection）和图像篡改检测（Tamper Detection）。</p>
+<p>（1）图像后处理检测主要挖掘图像是否经历过：中值滤波处理（Median Filtering）、高斯模糊处理（Gaussian Blurring）、添加高斯白噪声（Additive White Gaussian Noise）、重采样（Resampling）、JPEG 压缩（JPEG Compression）等后处理操作。</p>
+<p>（2）另一方面图像篡改检测旨在挖掘数字图像的恶意处理，例如删除（Removal）、添加（Adding）、复制（Copy）、截取（Splicing）图像中的对象。</p>
+<p>图像处理检测在军事防卫、司法鉴定、图像防伪等领域有重要的价值。</p>
 <p>本文旨在通过分析近年来基于深度学习的图像篡改检测发展，总结该方向主要发展方向、可以探索方向。</p>
 <hr>
 <h1 id="2-Introduction"><a href="#2-Introduction" class="headerlink" title="2.Introduction"></a>2.Introduction</h1><p>图像篡改检测从篡改方法上可以分为：</p>
@@ -338,10 +340,12 @@ ga('send', 'pageview');
 <p>仔细地看了下论文，算法主要包含以下流程(1) CNN Feature Extractor：使用的是VGG-16；(2)  Deep Dense Matching：使用的是inception-based Mask Deconvolution模块，来源于<a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/Szegedy_Rethinking_the_Inception_CVPR_2016_paper.html" target="_blank" rel="external">[10]</a>；(3) Visual Consistency Validator：用于强制模型聚焦于两个图像中的分割区域，将两个Mask快融合起来。总体看来，是将多个深度学习网络拼接起来。</p>
 <p><br></p>
 <h5 id="6-Image-Splicing-Detection-via-Camera-Response-Function-Analysis-11"><a href="#6-Image-Splicing-Detection-via-Camera-Response-Function-Analysis-11" class="headerlink" title="6. Image Splicing Detection via Camera Response Function Analysis [11]"></a>6. Image Splicing Detection via Camera Response Function Analysis [11]</h5><p>文章发表在2017 CVPR上面，主要采用相机响应函数（Camera Response Function, CRF）分析篡改部位的轮廓直方图差异，并以此鉴定Copy-Move和Splicing篡改。非线性CRF对于图像处理有很大作用，很多图像去燥算法有所使用，实验表明篡改区域的CRF值比起未篡改区域有所不同。虽然目前的研究未知CRF如何成为模糊估计中的噪声源，但是文章证明CRF是一个关键信号，有助于区分不同的边缘和伪造的拼接边界。</p>
-<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>笔者将<a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6]</a>的算法实现了一遍，其中：<br>（1）CNN特征提取的算法比较普通；<br>（2）后处理中滤波算法显得比较出众，主要有两种：①对CNN输出执行度做L1范式滤波，②对于去除低文理区域预测结果，对于图像纹理度指数获取算法，网上、文献里面都没有找到，应该是作者自己的研究。</p>
+<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>笔者尝试重现了<a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6] Bondi</a>的算法，该算法聚类过程的重现代码已经开源：<a href="https://github.com/grasses/Tampering-Detection-and-Localization/blob/master/experiment/2-2.ipynb" target="_blank" rel="external">https://github.com/grasses/Tampering-Detection-and-Localization/blob/master/experiment/2-2.ipynb</a>。其中：<br>（1）CNN特征提取的算法比较普通；<br>（2）后处理中滤波算法显得比较出众，主要有两种：①对CNN输出执行度做L1范式滤波，②对于去除低文理区域预测结果，对于图像纹理度指数获取算法，网上、文献里面都没有找到，应该是作者自己的研究。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.1.jpg?t=" alt="(a)图像原始图；(2)使用[7]中的文理检测算法得到的热力图"></p>
-<p>纹理度可知：最有可能篡改的部位为树，因此滤波时候存在一定的可能性过度过滤早点，从结果也可以得知监测的篡改部位变小了。</p>
-<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.2.jpg" alt="论文[7]的实现，(a)篡改过的图像；(b)篡改的区域图，黑色为篡改部位；(c)CNN计算出来的概率图，黑色为未篡改部位，颜色越浅越篡改的置信度越高；(e)经过L1均值滤波结果；(e)经过纹理度去噪结果。"></p>
+<p>上图显示了原始图像（左侧）与该图像的纹理度热力图（右侧），纹理度可知：最有可能篡改的部位为树，因此在算法[6]滤波时候存在一定的可能性过度过滤噪点。<br></p>
+<p>另一方面，笔者在自己的文章中提出了一种可靠性融合算法<a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">（Reliablity Fusing Map (RFM)）</a>，主要研究CNN输出的执行度向量关系，并通过两步融合生成篡改二值图，该研究主要贡献为：（1）获得更高的准确性; （2）降低聚类的计算复杂度; （3）将定位细度从64x64提高到32x32。下图主要显示了算法的实验结果：</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-testing.3.jpg" alt="笔者论文实现的效果，"></p>
+<p>上图显示了用<a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6] Bondi</a>等人提出的方法和笔者提出的RFM方法进行对比实验的结果。（a）-（c）分别示出了原始图像、伪造图像和真实篡改区域图像。（d）和（e）分别表RFM算法对于未篡改图像和篡改图像的检测结果，（f）显示Bondi等人的模拟实验结果。 我们篡改检测将定位的细度从64x64图像块提高到32x32图像块，说明RFM算法可以检测更细小的篡改痕迹（参见（e）和（f））。</p>
 <h5 id="简单做个总结："><a href="#简单做个总结：" class="headerlink" title="简单做个总结："></a>简单做个总结：</h5><ul>
 <li>大部分深度学习算法离不开传统算法的原理，基本上都源于数字图像的成像过程留下的模式噪声；</li>
 <li>目前算法基本上可以同时解决检测篡改（Detection ）、篡改定位（Localization ）；</li>
@@ -350,18 +354,28 @@ ga('send', 'pageview');
 </ul>
 <hr>
 <h1 id="5-Reference"><a href="#5-Reference" class="headerlink" title="5. Reference"></a>5. Reference</h1><ul>
-<li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
-<li>[2] Qian, Y., Dong, J., Wang, W., &amp; Tan, T. (2015, March). Deep learning for steganalysis via convolutional neural networks. In <em>Media Watermarking, Security, and Forensics 2015</em> (Vol. 9409, p. 94090J). International Society for Optics and Photonics.</li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/7823911/" target="_blank" rel="external">[3] Rao, Y., &amp; Ni, J. (2016, December). A deep learning approach to detection of splicing and copy-move forgeries in images. In <em>Information Forensics and Security (WIFS), 2016 IEEE International Workshop on</em> (pp. 1-6). IEEE.</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/6197267/" target="_blank" rel="external">[4] J. Fridrich, and J. Kodovsky ́, “Rich models for steganalysis of digital images,” IEEE Transactions on Information Forensics and Security, vol. 7, no. 3, pp. 868-882, June 2012. </a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/8014969/" target="_blank" rel="external">[5] Bunk, J., Bappy, J. H., Mohammed, T. M., Nataraj, L., Flenner, A., Manjunath, B. S., … &amp; Peterson, L. (2017, July). Detection and localization of image forgeries using resampling features and deep learning. In <em>Computer Vision and Pattern Recognition Workshops (CVPRW), 2017 IEEE Conference on</em>(pp. 1881-1889). IEEE.</a></li>
-<li><a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6] Bondi, L., Lameri, S., Guera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017, July). Tampering Detection and Localization Through Clustering of Camera-Based CNN Features. In <em>CVPR Workshops</em> (pp. 1855-1864).</a></li>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7] Bondi, L., Baroffio, L., Güera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017). First steps toward camera model identification with convolutional neural networks. <em>IEEE Signal Processing Letters</em>, <em>24</em>(3), 259-263.</a></li>
-<li><a href="https://arxiv.org/abs/1805.01946" target="_blank" rel="external">[8] Güera, D., Yarlagadda, S. K., Bestagini, P., Zhu, F., Tubaro, S., &amp; Delp, E. J. (2018). Reliability Map Estimation For CNN-Based Camera Model Attribution. *arXiv preprint arXiv:1805.01946.</a></li>
-<li><a href="https://dl.acm.org/citation.cfm?id=3123411" target="_blank" rel="external">[9] Wu, Y., Abd-Almageed, W., &amp; Natarajan, P. (2017, October). Deep matching and validation network: An end-to-end solution to constrained image splicing localization and detection. In <em>Proceedings of the 2017 ACM on Multimedia Conference</em> (pp. 1480-1502). ACM.</a></li>
-<li><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/Szegedy_Rethinking_the_Inception_CVPR_2016_paper.html" target="_blank" rel="external">[10] Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., &amp; Wojna, Z. (2016). Rethinking the inception architecture for computer vision. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em> (pp. 2818-2826).</a></li>
-<li><a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Chen_Image_Splicing_Detection_CVPR_2017_paper.pdf" target="_blank" rel="external">[11] Chen, Can, Scott McCloskey, and Jingyi Yu. “Image Splicing Detection via Camera Response Function Analysis.” <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em>. 2017.</a></li>
-<li></li>
+<li><p><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></p>
+</li>
+<li><p>[2] Qian, Y., Dong, J., Wang, W., &amp; Tan, T. (2015, March). Deep learning for steganalysis via convolutional neural networks. In <em>Media Watermarking, Security, and Forensics 2015</em> (Vol. 9409, p. 94090J). International Society for Optics and Photonics.</p>
+</li>
+<li><p><a href="https://ieeexplore.ieee.org/abstract/document/7823911/" target="_blank" rel="external">[3] Rao, Y., &amp; Ni, J. (2016, December). A deep learning approach to detection of splicing and copy-move forgeries in images. In <em>Information Forensics and Security (WIFS), 2016 IEEE International Workshop on</em> (pp. 1-6). IEEE.</a></p>
+</li>
+<li><p><a href="https://ieeexplore.ieee.org/abstract/document/6197267/" target="_blank" rel="external">[4] J. Fridrich, and J. Kodovsky ́, “Rich models for steganalysis of digital images,” IEEE Transactions on Information Forensics and Security, vol. 7, no. 3, pp. 868-882, June 2012. </a></p>
+</li>
+<li><p><a href="https://ieeexplore.ieee.org/abstract/document/8014969/" target="_blank" rel="external">[5] Bunk, J., Bappy, J. H., Mohammed, T. M., Nataraj, L., Flenner, A., Manjunath, B. S., … &amp; Peterson, L. (2017, July). Detection and localization of image forgeries using resampling features and deep learning. In <em>Computer Vision and Pattern Recognition Workshops (CVPRW), 2017 IEEE Conference on</em>(pp. 1881-1889). IEEE.</a></p>
+</li>
+<li><p><a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[6] Bondi, L., Lameri, S., Guera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017, July). Tampering Detection and Localization Through Clustering of Camera-Based CNN Features. In <em>CVPR Workshops</em> (pp. 1855-1864).</a></p>
+</li>
+<li><p><a href="https://ieeexplore.ieee.org/abstract/document/7786852/" target="_blank" rel="external">[7] Bondi, L., Baroffio, L., Güera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017). First steps toward camera model identification with convolutional neural networks. <em>IEEE Signal Processing Letters</em>, <em>24</em>(3), 259-263.</a></p>
+</li>
+<li><p><a href="https://arxiv.org/abs/1805.01946" target="_blank" rel="external">[8] Güera, D., Yarlagadda, S. K., Bestagini, P., Zhu, F., Tubaro, S., &amp; Delp, E. J. (2018). Reliability Map Estimation For CNN-Based Camera Model Attribution. *arXiv preprint arXiv:1805.01946.</a></p>
+</li>
+<li><p><a href="https://dl.acm.org/citation.cfm?id=3123411" target="_blank" rel="external">[9] Wu, Y., Abd-Almageed, W., &amp; Natarajan, P. (2017, October). Deep matching and validation network: An end-to-end solution to constrained image splicing localization and detection. In <em>Proceedings of the 2017 ACM on Multimedia Conference</em> (pp. 1480-1502). ACM.</a></p>
+</li>
+<li><p><a href="https://www.cv-foundation.org/openaccess/content_cvpr_2016/html/Szegedy_Rethinking_the_Inception_CVPR_2016_paper.html" target="_blank" rel="external">[10] Szegedy, C., Vanhoucke, V., Ioffe, S., Shlens, J., &amp; Wojna, Z. (2016). Rethinking the inception architecture for computer vision. In <em>Proceedings of the IEEE conference on computer vision and pattern recognition</em> (pp. 2818-2826).</a></p>
+</li>
+<li><p><a href="http://openaccess.thecvf.com/content_cvpr_2017/papers/Chen_Image_Splicing_Detection_CVPR_2017_paper.pdf" target="_blank" rel="external">[11] Chen, Can, Scott McCloskey, and Jingyi Yu. “Image Splicing Detection via Camera Response Function Analysis.” <em>Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition</em>. 2017.</a></p>
+</li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2018-08-05-tamper-detection-an-overview" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2018/08/05/tamper-detection-an-overview"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">http://homeway.me/2018/08/05/tamper-detection-an-overview</a></h4><blockquote>
@@ -372,7 +386,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2018/08/05/tamper-detection-an-overview/" data-id="cjo8cqb45006lrdolalosrdt2" data-title="Forged Image Detection and Location" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2018/08/05/tamper-detection-an-overview/" data-id="cjrkqkdce006lhvbk7o7piyr0" data-title="Forged Image Detection and Location" class="article-share-link">分享到</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
@@ -407,7 +421,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">分类</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">7</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
@@ -416,7 +430,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
       <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 10px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
@@ -425,7 +439,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
         
@@ -456,7 +470,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
+    <h3 class="widget-title">友情链接</h3>
     <div class="widget">
       <ul>
         
@@ -490,7 +504,7 @@ ga('send', 'pageview');
       </div>
       <script>
 // 微博加载最慢，放最后
-title = 'Weibo';
+title = '微博';
 content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
 (document.getElementById('weibo-widget-title')).innerHTML += title;
 (document.getElementById('weibo-widget-content')).innerHTML += content;
@@ -500,7 +514,7 @@ content = '<iframe width="100%" height="550" class="share_self"  frameborder="0"
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2018 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
+      &copy; 2019 grasses <a href="http://www.miibeian.gov.cn/" target="_blank"> 浙ICP备14012013号-2 </a>, 浙公安备 2284262 号<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
       .
       Theme by <a href="https://github.com/xiangming/landscape-plus" target="_blank">Landscape+</a>
