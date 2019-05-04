@@ -13,7 +13,10 @@
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-pipeline.png">
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-constrained.png">
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-augmented-framework.png">
-<meta property="og:updated_time" content="2019-05-04T15:02:59.687Z">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_framework.png">
+<meta property="og:image" content="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_result.png">
+<meta property="og:updated_time" content="2019-05-04T15:36:34.519Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图像篡改检测和定位（二）">
 <meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo/forensics-logo.png">
@@ -278,7 +281,7 @@ ga('send', 'pageview');
 <p>我们可以根据经验大致把图像篡改检测一般性方法归纳为Fig-1所示的三个主要步骤：（1）输入图像预处理；（2）特征提取器；（3）特征输出后处理。事实上，目前的算法主要都在研究这三个部分。</p>
 <p>目前的文章大部是基于CNN模型的算法，这里面有一个共同特征：绝大部分文章都把图像做了分片（切割）处理，这里面显然存在一些问题：（1）切片块在篡改区域的交界处，特征是不明显的；（2）切片块的输出特征向量只能代表切片块自己，一但误判，没有补救措施，结果就是误判；（3）很多文章是没考虑纹理度特征的，事实上纹理度密集区域的篡改特征相对低文理处明显。</p>
 <hr>
-<h1 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h1><h3 id="A-预处理（pre-processing"><a href="#A-预处理（pre-processing" class="headerlink" title="A.预处理（pre-processing)"></a>A.预处理（pre-processing)</h3><p>图像的预处理方法有很多，归结来说这些模型的作用都是在抑制图像内容，提取残差噪声。</p>
+<h1 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h1><h3 id="A-预处理（Pre-processing"><a href="#A-预处理（Pre-processing" class="headerlink" title="A.预处理（Pre-processing)"></a>A.预处理（Pre-processing)</h3><p>图像的预处理方法有很多，归结来说这些模型的作用都是在抑制图像内容，提取残差噪声。</p>
 <p>预处理的文章有两个类别：（1）静态滤波器（手工设计）；（2）动态滤波器（CNN模型）；</p>
 <p>静态滤波器有很多了，中值滤波MFR(median filter residual) [4]，相机是别的PRNU噪声(photo response non-uniformity noise) [5]，重采样滤波器[6]、[7]，还有图像隐写分析里面用的SRM（steganalytic features）[8]。下面主要看看动态预处理。</p>
 <h5 id="1-Constrained-convolutional-neural-networks-A-new-approach-towards-general-purpose-image-manipulation-detection-3"><a href="#1-Constrained-convolutional-neural-networks-A-new-approach-towards-general-purpose-image-manipulation-detection-3" class="headerlink" title="1.Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection [3]"></a>1.<a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection [3]</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-constrained.png" alt="Fig. 2 Constrained CNN"></p>
@@ -289,7 +292,18 @@ ga('send', 'pageview');
 <h5 id="2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP"><a href="#2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP" class="headerlink" title="2. [2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)"></a>2. <a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-augmented-framework.png" alt="Fig. 3 Agumented CNN"></p>
 <p>还是Belhassen Bayar 和 Matthew C. Stamm的文章，换了个话题，采用了2中方法融合预处理，MFR（Median Filter Residual）和他们提出来的Constrained CNN。换汤不换药，一样的效果，不一样的问题。</p>
 <p>目前，动态预处理的文章就只有他们的。</p>
-<h2 id="B-特征提取（feature-extraction"><a href="#B-特征提取（feature-extraction" class="headerlink" title="B.特征提取（feature extraction)"></a>B.特征提取（feature extraction)</h2><h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>wait…</p>
+<h2 id="B-特征提取（Feature-Extraction"><a href="#B-特征提取（Feature-Extraction" class="headerlink" title="B.特征提取（Feature Extraction)"></a>B.特征提取（Feature Extraction)</h2><h2 id="C-特征后处理（Post-processing"><a href="#C-特征后处理（Post-processing" class="headerlink" title="C.特征后处理（Post-processing)"></a>C.特征后处理（Post-processing)</h2><p>图像篡改检测最难的地方就在于整张图像中篡改块的定位，因为定位是像素级别（pixel-level），不同于检测是图像级别（image-level）。另一方面，不谈整张图像（full image level）篡改区域定位，单单看单个切片块（patch level）的正确率，很多文章都正确率都是95%以上，事实上这种意义相对较小。</p>
+<p>那么常见后处理，有几种方法呢？简单地可以分为：（1）单特征提取器融合；（2）多特征提取器融合。</p>
+<p>单特征提取融合算法只能检测一种篡改方式；多特征提取器融合主要为了解决多个篡改数据（Copy-Move，Splicing，Removal等等）。</p>
+<h4 id="Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9"><a href="#Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9" class="headerlink" title="Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]"></a>Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]</h4><p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="单特征提取器后处理"></p>
+<p>还是这篇文章，只用了CNN作为输入特征，期间考虑CNN向量中对每个类别的置信度、纹理度特征、以及融合后的密度系数。</p>
+<p>提取的特征简洁、分析的数据很有依据，算法效果也是很好。</p>
+<h4 id="Image-Forgery-Localization-via-Integrating-Tampering-Possibility-Maps-10"><a href="#Image-Forgery-Localization-via-Integrating-Tampering-Possibility-Maps-10" class="headerlink" title="Image Forgery Localization via Integrating Tampering Possibility Maps[10]"></a>Image Forgery Localization via Integrating Tampering Possibility Maps[10]</h4><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_framework.png" alt="多征提取器后处理"></p>
+<p>这篇文章在motivation里面详细讲到了两种检测算法：Splicing和Copy-Move的检测算法，于是作者把CNN+PatchMatch放入特征提取器里面，最后做一步阈值处理决定这张图属于Splicing还是Copy-Move，不同的类别参考的权重系数不一样。</p>
+<p>所以文章能够检测多种算法：</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_result.png" alt="多征提取器后处理"></p>
+<p>但是文章存在比较大的问题是运行速度慢，作者也在文章中阐述特征包含18157维，执行速度比较慢。</p>
+<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>wait…</p>
 <hr>
 <h1 id="5-Reference"><a href="#5-Reference" class="headerlink" title="5. Reference"></a>5. Reference</h1><ul>
 <li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
@@ -300,6 +314,8 @@ ga('send', 'pageview');
 <li>[6] M. Kirchner. Fast and reliable resampling detection by spectral analysis of fixed linear predictor residue. In Proceedings of the 10th ACM workshop on Multimedia and security, pages 11–20. ACM, 2008. </li>
 <li>[7] A. C. Popescu and H. Farid. Exposing digital forgeries by detect- ing traces of resampling. IEEE Transactions on signal processing, 53(2):758–767, 2005. </li>
 <li>[8] X.Qiu,H.Li,W.Luo,andJ.Huang.Auniversalimageforensicstrategy based on steganalytic model. In Proceedings of the 2nd ACM workshop on Information hiding and multimedia security, pages 165–170. ACM, 2014. </li>
+<li><a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[9] Bondi, L., Lameri, S., Guera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017, July). Tampering Detection and Localization Through Clustering of Camera-Based CNN Features. In <em>CVPR Workshops</em> (pp. 1855-1864).</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7829291/" target="_blank" rel="external">[10] H. Li, W. Luo, X. Qiu, and J. Huang. Image forgery localization via integrating tampering possibility maps. IEEE Transactions on Information Forensics and Security, 12(5):1240–1252, 2017. </a></li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2019/05/04/tamper-detection-an-overview-2"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2">http://homeway.me/2019/05/04/tamper-detection-an-overview-2</a></h4><blockquote>
@@ -310,7 +326,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/" data-id="cjv9n050m003acdbk8lgcrdrs" data-title="图像篡改检测和定位（二）" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/" data-id="cjv9o7lha005vlkbk5n798d8h" data-title="图像篡改检测和定位（二）" class="article-share-link">分享到</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
@@ -345,7 +361,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Categories</h3>
+    <h3 class="widget-title">分类</h3>
     <div class="widget">
       <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a><span class="category-list-count">3</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Environment/">Environment</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Life/">Life</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Machine-Learning/">Machine Learning</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Summary/">Summary</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Tech/">Tech</a><span class="category-list-count">40</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Work/">Work</a><span class="category-list-count">6</span></li></ul>
     </div>
@@ -354,7 +370,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tag Cloud</h3>
+    <h3 class="widget-title">标签云</h3>
     <div class="widget tagcloud">
       <a href="/tags/Android/" style="font-size: 11.67px;">Android</a> <a href="/tags/Arduino/" style="font-size: 11.67px;">Arduino</a> <a href="/tags/Deep-Learning/" style="font-size: 11.67px;">Deep Learning</a> <a href="/tags/HTTP/" style="font-size: 11.67px;">HTTP</a> <a href="/tags/Java/" style="font-size: 10px;">Java</a> <a href="/tags/Life/" style="font-size: 11.67px;">Life</a> <a href="/tags/Linux/" style="font-size: 15px;">Linux</a> <a href="/tags/Mac/" style="font-size: 10px;">Mac</a> <a href="/tags/Machine-Learning/" style="font-size: 16.67px;">Machine Learning</a> <a href="/tags/Moogodb/" style="font-size: 10px;">Moogodb</a> <a href="/tags/Mysql/" style="font-size: 13.33px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 20px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/OS/" style="font-size: 10px;">OS</a> <a href="/tags/Oauth/" style="font-size: 11.67px;">Oauth</a> <a href="/tags/OpenWRT/" style="font-size: 10px;">OpenWRT</a> <a href="/tags/PHP/" style="font-size: 15px;">PHP</a> <a href="/tags/Python/" style="font-size: 16.67px;">Python</a> <a href="/tags/Redis/" style="font-size: 10px;">Redis</a> <a href="/tags/Summary/" style="font-size: 11.67px;">Summary</a> <a href="/tags/Typecho/" style="font-size: 10px;">Typecho</a> <a href="/tags/Web/" style="font-size: 11.67px;">Web</a> <a href="/tags/树莓派/" style="font-size: 18.33px;">树莓派</a>
     </div>
@@ -363,7 +379,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">近期文章</h3>
     <div class="widget">
       <ul>
         
@@ -394,7 +410,7 @@ ga('send', 'pageview');
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Links</h3>
+    <h3 class="widget-title">友情链接</h3>
     <div class="widget">
       <ul>
         
@@ -428,7 +444,7 @@ ga('send', 'pageview');
       </div>
       <script>
 // 微博加载最慢，放最后
-title = 'Weibo';
+title = '微博';
 content = '<iframe width="100%" height="550" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=550&fansRow=1&ptype=1&speed=0&skin=2&isTitle=1&noborder=1&isWeibo=1&isFans=1&uid=1964206997&verifier=b9041467&dpc=1"></iframe>';
 (document.getElementById('weibo-widget-title')).innerHTML += title;
 (document.getElementById('weibo-widget-content')).innerHTML += content;
