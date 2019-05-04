@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2019-01-31T14:54:06.269Z</updated>
+  <updated>2019-05-04T15:02:59.687Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -16,11 +16,72 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Forged Image Detection and Location</title>
+    <title>图像篡改检测和定位（二）</title>
+    <link href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/"/>
+    <id>http://homeway.me/2019/05/04/tamper-detection-an-overview-2/</id>
+    <published>2019-05-04T13:26:10.000Z</published>
+    <updated>2019-05-04T15:02:59.687Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
+<a id="more"></a>
+<blockquote>
+<p>本文仅供学习参考，请勿盗用到论文、商业行为。</p>
+</blockquote>
+<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h1><p>在之前的文章中（<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">图像篡改检测和定位（一）</a>），我们谈到图像篡改检测的几种方法，在这里我们主要讨论整个体系的框架里面不同的算法各自的优势，以及存在的问题。</p>
+<p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-pipeline.png" alt="Fig. 1 图像篡改检测一般性框架"></p>
+<p>我们可以根据经验大致把图像篡改检测一般性方法归纳为Fig-1所示的三个主要步骤：（1）输入图像预处理；（2）特征提取器；（3）特征输出后处理。事实上，目前的算法主要都在研究这三个部分。</p>
+<p>目前的文章大部是基于CNN模型的算法，这里面有一个共同特征：绝大部分文章都把图像做了分片（切割）处理，这里面显然存在一些问题：（1）切片块在篡改区域的交界处，特征是不明显的；（2）切片块的输出特征向量只能代表切片块自己，一但误判，没有补救措施，结果就是误判；（3）很多文章是没考虑纹理度特征的，事实上纹理度密集区域的篡改特征相对低文理处明显。</p>
+<hr>
+<h1 id="2-Related-Work"><a href="#2-Related-Work" class="headerlink" title="2.Related Work"></a>2.Related Work</h1><h3 id="A-预处理（pre-processing"><a href="#A-预处理（pre-processing" class="headerlink" title="A.预处理（pre-processing)"></a>A.预处理（pre-processing)</h3><p>图像的预处理方法有很多，归结来说这些模型的作用都是在抑制图像内容，提取残差噪声。</p>
+<p>预处理的文章有两个类别：（1）静态滤波器（手工设计）；（2）动态滤波器（CNN模型）；</p>
+<p>静态滤波器有很多了，中值滤波MFR(median filter residual) [4]，相机是别的PRNU噪声(photo response non-uniformity noise) [5]，重采样滤波器[6]、[7]，还有图像隐写分析里面用的SRM（steganalytic features）[8]。下面主要看看动态预处理。</p>
+<h5 id="1-Constrained-convolutional-neural-networks-A-new-approach-towards-general-purpose-image-manipulation-detection-3"><a href="#1-Constrained-convolutional-neural-networks-A-new-approach-towards-general-purpose-image-manipulation-detection-3" class="headerlink" title="1.Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection [3]"></a>1.<a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection [3]</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-constrained.png" alt="Fig. 2 Constrained CNN"></p>
+<p>Belhassen Bayar 和 Matthew C. Stamm应该是最早提出的动态预处理层的作者了，随后他们在系列的领域（相机模型识别、图像后处理、图像篡改检测）里面开始疯狂地发文章，用的都是一套模型。</p>
+<p>这篇文章作为这个方向的终结发在2018年的TIFS里面，应该是很成功的，而这两位作者从2015年就开始用这个idea发文章了。</p>
+<p>这篇文章主要解决后处理操作的检测，包括了：Median filtering (MF)，Gaussian Blurring (GB)，Additive White Gaussian Noise，Resampling，JPEG compression。不得不说，文章写得真的好，motivation阐述严谨、实验部分做的非常完备。</p>
+<p>文章的思想也朴素的不能再朴素，在预处理层强制地让CNN内核除中心点为1，然后令中心点为-1，也就是类似归一化处理。作者声称是在模仿静态过滤器做的事情，那么到底先有鸡还是先有蛋？？这么做真的有变好吗？这些都是问题。</p>
+<h5 id="2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP"><a href="#2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP" class="headerlink" title="2. [2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)"></a>2. <a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-augmented-framework.png" alt="Fig. 3 Agumented CNN"></p>
+<p>还是Belhassen Bayar 和 Matthew C. Stamm的文章，换了个话题，采用了2中方法融合预处理，MFR（Median Filter Residual）和他们提出来的Constrained CNN。换汤不换药，一样的效果，不一样的问题。</p>
+<p>目前，动态预处理的文章就只有他们的。</p>
+<h2 id="B-特征提取（feature-extraction"><a href="#B-特征提取（feature-extraction" class="headerlink" title="B.特征提取（feature extraction)"></a>B.特征提取（feature extraction)</h2><h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>wait…</p>
+<hr>
+<h1 id="5-Reference"><a href="#5-Reference" class="headerlink" title="5. Reference"></a>5. Reference</h1><ul>
+<li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] B. Bayar and M. C. Stamm. Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP), pages 4098– 4102. IEEE, 2017. </a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3] B. Bayar and M. C. Stamm. Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection. IEEE Transactions on Information Forensics and Security, 13(11):2691– 2706, 2018. </a></li>
+<li>[4] X. Kang, M. C. Stamm, A. Peng, and K. R. Liu. Robust median filtering forensics using an autoregressive model. IEEE Transactions on Information Forensics and Security, 8(9):1456–1468, 2013. </li>
+<li>[5] G. Chierchia, D. Cozzolino, G. Poggi, C. Sansone, and L. Verdoliva. Guided filtering for prnu-based localization of small-size image forg- eries. In 2014 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pages 6231–6235. IEEE, 2014. </li>
+<li>[6] M. Kirchner. Fast and reliable resampling detection by spectral analysis of fixed linear predictor residue. In Proceedings of the 10th ACM workshop on Multimedia and security, pages 11–20. ACM, 2008. </li>
+<li>[7] A. C. Popescu and H. Farid. Exposing digital forgeries by detect- ing traces of resampling. IEEE Transactions on signal processing, 53(2):758–767, 2005. </li>
+<li>[8] X.Qiu,H.Li,W.Luo,andJ.Huang.Auniversalimageforensicstrategy based on steganalytic model. In Proceedings of the 2nd ACM workshop on Information hiding and multimedia security, pages 165–170. ACM, 2014. </li>
+</ul>
+<hr>
+<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2019/05/04/tamper-detection-an-overview-2"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2">http://homeway.me/2019/05/04/tamper-detection-an-overview-2</a></h4><blockquote>
+<p>by grasses 2019.05.04</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo/forensics-logo.png&quot; alt=&quot;Tamper Detection&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://homeway.me/categories/Machine-Learning/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://homeway.me/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>图像篡改检测和定位（一）</title>
     <link href="http://homeway.me/2018/08/05/tamper-detection-an-overview/"/>
     <id>http://homeway.me/2018/08/05/tamper-detection-an-overview/</id>
     <published>2018-08-05T13:26:10.000Z</published>
-    <updated>2019-01-31T14:54:06.269Z</updated>
+    <updated>2019-05-04T13:35:13.904Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
@@ -2967,90 +3028,6 @@ username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;te
     
     
       <category term="Oauth" scheme="http://homeway.me/tags/Oauth/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Nginx+Lua服务端合并静态文件</title>
-    <link href="http://homeway.me/2015/06/22/nginx-lua-static-merger/"/>
-    <id>http://homeway.me/2015/06/22/nginx-lua-static-merger/</id>
-    <published>2015-06-22T08:04:10.000Z</published>
-    <updated>2018-10-21T16:36:34.201Z</updated>
-    
-    <content type="html"><![CDATA[<p><br></p>
-<p><img src="https://static.blog.homeway.me/blog/logo-nginx-lua.png" alt="nginx-lua-static-merger"></p>
-<a id="more"></a>
-<p><br></p>
-<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>源码已经上传到github:<a href="https://github.com/grasses/nginx-lua-static-merger" target="_blank" rel="external">https://github.com/grasses/nginx-lua-static-merger</a></p>
-<p><code>nginx-lua-static-merger</code>是一个基于openresty的模块，主要用于合并静态文件，减少http请求，加快静态文件访问速度的模块。</p>
-<p>使用<code>nginx-lua-static-merger</code> 需要在编译nginx时候添加openresty的模块，或者直接安装openresty作为服务器。</p>
-<p><code>nginx-lua-static-merger</code>可以让你的js、css请求不要那么多，一个就够了。</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-look.jpg" alt="nginx-lua-static-merger"></p>
-<p><hr><br></p>
-<h1 id="0x02-About-Nginx"><a href="#0x02-About-Nginx" class="headerlink" title="0x02.About Nginx"></a>0x02.About Nginx</h1><h2 id="nginx工作"><a href="#nginx工作" class="headerlink" title="nginx工作"></a>nginx工作</h2><p>先从nginx原理来看nginx处理http请求的过程。</p>
-<p>Nginx的模块从功能上分为如下三类:</p>
-<p>Handlers（处理器模块），直接处理请求，并进行输出内容和修改headers信息等操作。Handlers处理器模块一般只能有一个。</p>
-<p>Filters （过滤器模块），主要对其他处理器模块输出的内容进行修改操作，最后由Nginx输出。</p>
-<p>Proxies （代理类模块），Nginx的HTTP Upstream之类的模块，这些模块主要与后端一些服务比如FastCGI等进行交互，实现服务代理和负载均衡等功能。</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-nginx-handler-http.png" alt="nginx 处理http请求"></p>
-<p>也就是说，一个http请求过来，nginx先处理请求信息，然后过滤信息，最后丢给代理来处理，它本身处理的东西并不多，它仅仅是通过查找配置文件将此次请求映射到一个location block，而此location中所配置的各个指令则会启动不同的模块去完成工作。</p>
-<p>从正常来看，一个页面加载10来个js、css是正常的，还有10来个图片，即使是什么也不干，那么一个页面也要处理掉20多个http请求，每个http请求都要跑一遍TCP请求，nginx回应，过滤，分配。</p>
-<h2 id="speed-test："><a href="#speed-test：" class="headerlink" title="speed test："></a>speed test：</h2><p>看张图吧，国外一个网速测试工具：</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-reguest.jpg" alt="一个页面请求消耗的时间"></p>
-<p>去掉首页<code>index.html</code>的加载时间，可以看到，加载静态文件css，js时间耗费了很长的等待时间，并且image的加载是在js和css加载完后才加载的，也就是说，如果js或css加载慢了，那么页面就慢了。</p>
-<p>这个页面是github.com/grasses。</p>
-<p><hr><br></p>
-<h1 id="0x02-Usage"><a href="#0x02-Usage" class="headerlink" title="0x02.Usage"></a>0x02.Usage</h1><h2 id="Openresty"><a href="#Openresty" class="headerlink" title="Openresty"></a>Openresty</h2><p><a href="http://openresty.org/cn/" target="_blank" rel="external">http://openresty.org/cn/</a></p>
-<p>Openresty是国人写的开源项目，打包了标准的 Nginx 核心，很多的常用的第三方模块，以及它们的大多数依赖项。</p>
-<pre><code>tar xzvf ngx_openresty-VERSION.tar.gz
-cd ngx_openresty-VERSION/
-./configure
-make
-make install
-</code></pre><p>详细的安装教程还是去看官网吧。</p>
-<h2 id="file-path"><a href="#file-path" class="headerlink" title="file path"></a>file path</h2><pre><code>|--/usr/local/openresty/nginx
-|                        `--lua 
-|                            `--nginx-lua-static-merger.lua
-|                        `--conf 
-|                            `--nginx.lua
-|--/www/openresty/static
-|                `--js
-|                `--css
-|                `--cache
-</code></pre><p>注意</p>
-<p>1、<code>nginx.conf</code>中的<code>lua_package_path &quot;/usr/local/openresty/lualib/?.lua;;&quot;;</code>和<br><code>lua_package_cpath &quot;/usr/local/openresty/lualib/?.so;;&quot;;</code>，如果你是编译nginx而不是直接安装openresty，目录记得放对。</p>
-<p>2、确保<code>/www/openresty/static</code>有Lua写的权限。</p>
-<h2 id="use"><a href="#use" class="headerlink" title="use"></a>use</h2><p>前端调用方法如下：</p>
-<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;/bootstrap/css/bootstrap.min.css;/qiniu/css/main.css;/css/navbar.css&quot;&gt;
-&lt;script src=&quot;/js/jquery.min.js;/js/main.js;/qiniu/bootstrap/js/bootstrap.min.js;/qiniu/js/plupload/plupload.full.min.js;/qiniu/js/plupload/i18n/zh_CN.js&quot;&gt;&lt;/script&gt;
-</code></pre><p><hr><br></p>
-<h1 id="0x03-How-it-work"><a href="#0x03-How-it-work" class="headerlink" title="0x03.How it work"></a>0x03.How it work</h1><p>Nginx在location通过 <code>content_by_lua_file</code> 把接下来的处理丢个Lua做逻辑。</p>
-<p>Lua通过uri进行md5编码，判断cache是否存在，如果cache不存在，循环分割、遍历uri，访问响应的路径，查找静态文件，存在则记录，最后写cache入文件，方便下次访问。</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-nginx-lua-static-merger-how-work.jpg" alt="how nginx-lua-static-merger work"></p>
-<p><hr><br></p>
-<h1 id="0x04-Effect"><a href="#0x04-Effect" class="headerlink" title="0x04.Effect"></a>0x04.Effect</h1><p>下面是在不作处理情况请求多个js结果：</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-normal_http_get.jpg" alt="不做处理"></p>
-<p>下面是第一次请求下，lua既要获取数据又要合并生成cache，属于冷数据：</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_2.jpg" alt="cold_js_by_ngx_static_merger"></p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-cold_js_by_ngx_static_merger_1.jpg" alt="cold_js_by_ngx_static_merger"></p>
-<p>第二次访问就是热数据了，访问速度是增加的：</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-22-hot_js_time.jpg" alt="热数据"></p>
-<p><br><hr><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-22-nginx-lua-static-merger" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/06/22/nginx-lua-static-merger/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/22/nginx-lua-static-merger/">http://homeway.me/2015/06/22/nginx-lua-static-merger/</a></h4><p><br><br>-by小草</p>
-<p>2015-06-22 20:04:10</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-nginx-lua.png&quot; alt=&quot;nginx-lua-static-merger&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
-    
-    
-      <category term="Nginx" scheme="http://homeway.me/tags/Nginx/"/>
     
   </entry>
   
