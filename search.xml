@@ -28,20 +28,28 @@
 <h5 id="2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP"><a href="#2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP" class="headerlink" title="2. [2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)"></a>2. <a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-augmented-framework.png" alt="Fig. 3 Agumented CNN"></p>
 <p>还是Belhassen Bayar 和 Matthew C. Stamm的文章，换了个话题，采用了2中方法融合预处理，MFR（Median Filter Residual）和他们提出来的Constrained CNN。换汤不换药，一样的效果，不一样的问题。</p>
 <p>目前，动态预处理的文章就只有他们的。</p>
-<h2 id="B-特征提取（Feature-Extraction"><a href="#B-特征提取（Feature-Extraction" class="headerlink" title="B.特征提取（Feature Extraction)"></a>B.特征提取（Feature Extraction)</h2><h2 id="C-特征后处理（Post-processing"><a href="#C-特征后处理（Post-processing" class="headerlink" title="C.特征后处理（Post-processing)"></a>C.特征后处理（Post-processing)</h2><p>图像篡改检测最难的地方就在于整张图像中篡改块的定位，因为定位是像素级别（pixel-level），不同于检测是图像级别（image-level）。另一方面，不谈整张图像（full image level）篡改区域定位，单单看单个切片块（patch level）的正确率，很多文章都正确率都是95%以上，事实上这种意义相对较小。</p>
+<h2 id="B-特征提取（Feature-Extraction"><a href="#B-特征提取（Feature-Extraction" class="headerlink" title="B.特征提取（Feature Extraction)"></a>B.特征提取（Feature Extraction)</h2><p>由于篡改的原理不尽相同，特征提取器需要考虑多种场景，因此越来越多文章考虑多种特征提取器提取特征后用融合算法计算出最优解。特征提取器可以归类为：</p>
+<ol>
+<li>Copy-Move问题中的PatchMatch、Scale Invariant Feature Transform (SIFT) 、Local Binary Patterns（LBP）等，以及用CNN做的深度匹配算法<a href="https://dl.acm.org/citation.cfm?id=3123411" target="_blank" rel="external">[11]</a>；</li>
+<li>相机模式噪声特征：<a href="https://ieeexplore.ieee.org/abstract/document/7026073/" target="_blank" rel="external">[12]</a>、<a href="https://ieeexplore.ieee.org/abstract/document/5580092/" target="_blank" rel="external">[13]</a> 这些算法的主要依据是检测来自不同相机模型的统计学模式噪声差异（photo response non-uniformity noise (PRNU) ）；有几个有些不同用的是相机响应函数（camera response function (CRF) ）差异；</li>
+<li>基于统计学的算法：统计图像方差分布、概率模型偏差等等；</li>
+</ol>
+<p>这部分的文章主要在<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">图像篡改检测和定位（一）</a>已经分析过了。</p>
+<h2 id="C-特征后处理（Post-processing"><a href="#C-特征后处理（Post-processing" class="headerlink" title="C.特征后处理（Post-processing)"></a>C.特征后处理（Post-processing)</h2><p>图像篡改检测最难的地方就在于整张图像中篡改块的定位，因为定位是像素级别（pixel-level），不同于检测是图像级别（image-level）。另一方面，不谈整张图像（full image level）篡改区域定位，单单看单个切片块（patch level）的正确率，很多文章都正确率都是95%以上，事实上这种意义相对较小。</p>
 <p>那么常见后处理，有几种方法呢？简单地可以分为：（1）单特征提取器融合；（2）多特征提取器融合。</p>
 <p>单特征提取融合算法只能检测一种篡改方式；多特征提取器融合主要为了解决多个篡改数据（Copy-Move，Splicing，Removal等等）。</p>
-<h4 id="Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9"><a href="#Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9" class="headerlink" title="Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]"></a>Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]</h4><p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="单特征提取器后处理"></p>
+<h4 id="3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9"><a href="#3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9" class="headerlink" title="3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]"></a>3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]</h4><p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="单特征提取器后处理"></p>
 <p>还是这篇文章，只用了CNN作为输入特征，期间考虑CNN向量中对每个类别的置信度、纹理度特征、以及融合后的密度系数。</p>
 <p>提取的特征简洁、分析的数据很有依据，算法效果也是很好。</p>
-<h4 id="Image-Forgery-Localization-via-Integrating-Tampering-Possibility-Maps-10"><a href="#Image-Forgery-Localization-via-Integrating-Tampering-Possibility-Maps-10" class="headerlink" title="Image Forgery Localization via Integrating Tampering Possibility Maps[10]"></a>Image Forgery Localization via Integrating Tampering Possibility Maps[10]</h4><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_framework.png" alt="多征提取器后处理"></p>
+<h4 id="4-Image-Forgery-Localization-via-Integrating-Tampering-Possibility-Maps-10"><a href="#4-Image-Forgery-Localization-via-Integrating-Tampering-Possibility-Maps-10" class="headerlink" title="4.Image Forgery Localization via Integrating Tampering Possibility Maps[10]"></a>4.Image Forgery Localization via Integrating Tampering Possibility Maps[10]</h4><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_framework.png" alt="多征提取器后处理"></p>
 <p>这篇文章在motivation里面详细讲到了两种检测算法：Splicing和Copy-Move的检测算法，于是作者把CNN+PatchMatch放入特征提取器里面，最后做一步阈值处理决定这张图属于Splicing还是Copy-Move，不同的类别参考的权重系数不一样。</p>
 <p>所以文章能够检测多种算法：</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_result.png" alt="多征提取器后处理"></p>
 <p>但是文章存在比较大的问题是运行速度慢，作者也在文章中阐述特征包含18157维，执行速度比较慢。</p>
-<h1 id="4-Conclusion"><a href="#4-Conclusion" class="headerlink" title="4. Conclusion"></a>4. Conclusion</h1><p>wait…</p>
+<h1 id="3-Conclusion"><a href="#3-Conclusion" class="headerlink" title="3. Conclusion"></a>3. Conclusion</h1><p>上面列出来的这些文章，很多都在patch-level做文章，却比较少的文章在考虑patch与邻居patch之间的关系。</p>
+<p>我们可以根据理论总结出来：（1）邻居图像块统计学特征、指纹特征、视觉性等具有相似性；（2）如果一个图像块被鉴定为篡改块，它的邻居节点更可能倾向于也是篡改块；（3）扁平区域（flat area）的邻居提取的特征更不可靠。</p>
 <hr>
-<h1 id="5-Reference"><a href="#5-Reference" class="headerlink" title="5. Reference"></a>5. Reference</h1><ul>
+<h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
 <li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] B. Bayar and M. C. Stamm. Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP), pages 4098– 4102. IEEE, 2017. </a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3] B. Bayar and M. C. Stamm. Constrained convolutional neural networks: A new approach towards general purpose image manipulation detection. IEEE Transactions on Information Forensics and Security, 13(11):2691– 2706, 2018. </a></li>
@@ -52,6 +60,9 @@
 <li>[8] X.Qiu,H.Li,W.Luo,andJ.Huang.Auniversalimageforensicstrategy based on steganalytic model. In Proceedings of the 2nd ACM workshop on Information hiding and multimedia security, pages 165–170. ACM, 2014. </li>
 <li><a href="http://openaccess.thecvf.com/content_cvpr_2017_workshops/w28/papers/Tubaro_Tampering_Detection_and_CVPR_2017_paper.pdf" target="_blank" rel="external">[9] Bondi, L., Lameri, S., Guera, D., Bestagini, P., Delp, E. J., &amp; Tubaro, S. (2017, July). Tampering Detection and Localization Through Clustering of Camera-Based CNN Features. In <em>CVPR Workshops</em> (pp. 1855-1864).</a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/7829291/" target="_blank" rel="external">[10] H. Li, W. Luo, X. Qiu, and J. Huang. Image forgery localization via integrating tampering possibility maps. IEEE Transactions on Information Forensics and Security, 12(5):1240–1252, 2017. </a></li>
+<li><a href="https://dl.acm.org/citation.cfm?id=3123411" target="_blank" rel="external">[11] Wu, Y., Abd-Almageed, W., &amp; Natarajan, P. (2017, October). Deep matching and validation network: An end-to-end solution to constrained image splicing localization and detection. In <em>Proceedings of the 2017 ACM on Multimedia Conference</em> (pp. 1480-1502). ACM.</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7026073/" target="_blank" rel="external">[12] Cozzolino D, Gragnaniello D, Verdoliva L. Image forgery localization through the fusion of camera-based, feature-based and pixel-based techniques. In2014 IEEE International Conference on Image Processing (ICIP) 2014 Oct 27 (pp. 5302-5306). IEEE.</a></li>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/5580092/" target="_blank" rel="external">[13] Y.-F. Hsu and S.-F. Chang. Camera response functions for image foren- sics: an automatic algorithm for splicing detection. IEEE Transactions on Information Forensics and Security, 5(4):816–825, 2010. </a></li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2019/05/04/tamper-detection-an-overview-2"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2">http://homeway.me/2019/05/04/tamper-detection-an-overview-2</a></h4><blockquote>
@@ -7822,6 +7833,61 @@ if __name__ == &#39;__main__&#39;:
     
     <entry>
       <title></title>
+      <url>http://homeway.me/music/index.html</url>
+      <content type="html"><![CDATA[<!DOCTYPE html>
+<html>
+<head>
+    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
+    <title>夏日小草</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="As we do,as you know.">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="夏日小草">
+    <meta property="og:url" content="http://homeway.me/index.html">
+    <meta property="og:site_name" content="夏日小草">
+    <meta property="og:description" content="As we do,as you know.">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="夏日小草">
+    <meta name="twitter:description" content="As we do,as you know.">
+    <meta name="twitter:creator" content="@xiarixiaocao">
+    <link rel="publisher" href="yaohomeway">
+    <link rel="stylesheet" href="http://lab.homeway.me/netease/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</head>
+<body>
+<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="back">
+    <div class="container">
+        <div class="player">
+            <div id="cd" class="cd">
+                <div class="out">
+                </div>
+                <div id="album" class="album">
+                </div>
+                <div id="in" class="in">
+                </div>
+            </div>
+            <div class="action">
+                <a href="javascript:m_play()" target="_blank" rel="external"><img id="m_play" src="http://lab.homeway.me/netease/images/play.png"></a>
+                <input id="range" type="range" min="0" max="10" value="5" onchange="volume(this.value)">
+                <a href="javascript:next_music()" target="_blank" rel="external"><img id="next_music" src="http://lab.homeway.me/netease/images/forward.png"></a>
+            </div>
+            <div class="info">
+                <span id="music_name"></span><span id="artist"></span>
+            </div>
+            <div id="lrc" class="lrc">
+            </div>
+        </div>
+    </div>
+</div>
+<audio id="player">
+</audio>
+<script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
+<script src="http://lab.homeway.me/netease/js/player.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
+</body>
+</html>]]></content>
+    </entry>
+    
+    <entry>
+      <title></title>
       <url>http://homeway.me/about/index.html</url>
       <content type="html"><![CDATA[<h1 id="Contact"><a href="#Contact" class="headerlink" title="Contact"></a>Contact</h1><blockquote>
 <p>夏日小草<br>Social: <a href="http://weibo.com/yaohomeway" target="_blank" rel="external">Weibo</a> | <a href="https://twitter.com/yaohomeway" target="_blank" rel="external">Twitter</a><br>Email: <a href="mailto:xiacoao.grasses#gmail.com" target="_blank" rel="external">xiacoao.grasses#gmail.com</a></p>
@@ -7876,61 +7942,6 @@ if __name__ == &#39;__main__&#39;:
     font-size: 15px;
 }
 </style>]]></content>
-    </entry>
-    
-    <entry>
-      <title></title>
-      <url>http://homeway.me/music/index.html</url>
-      <content type="html"><![CDATA[<!DOCTYPE html>
-<html>
-<head>
-    <!-- hexo-inject:begin --><!-- hexo-inject:end --><meta charset="utf-8">
-    <title>夏日小草</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <meta name="description" content="As we do,as you know.">
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="夏日小草">
-    <meta property="og:url" content="http://homeway.me/index.html">
-    <meta property="og:site_name" content="夏日小草">
-    <meta property="og:description" content="As we do,as you know.">
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="夏日小草">
-    <meta name="twitter:description" content="As we do,as you know.">
-    <meta name="twitter:creator" content="@xiarixiaocao">
-    <link rel="publisher" href="yaohomeway">
-    <link rel="stylesheet" href="http://lab.homeway.me/netease/css/style.css"><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</head>
-<body>
-<!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="back">
-    <div class="container">
-        <div class="player">
-            <div id="cd" class="cd">
-                <div class="out">
-                </div>
-                <div id="album" class="album">
-                </div>
-                <div id="in" class="in">
-                </div>
-            </div>
-            <div class="action">
-                <a href="javascript:m_play()" target="_blank" rel="external"><img id="m_play" src="http://lab.homeway.me/netease/images/play.png"></a>
-                <input id="range" type="range" min="0" max="10" value="5" onchange="volume(this.value)">
-                <a href="javascript:next_music()" target="_blank" rel="external"><img id="next_music" src="http://lab.homeway.me/netease/images/forward.png"></a>
-            </div>
-            <div class="info">
-                <span id="music_name"></span><span id="artist"></span>
-            </div>
-            <div id="lrc" class="lrc">
-            </div>
-        </div>
-    </div>
-</div>
-<audio id="player">
-</audio>
-<script src="http://xiaocao.u.qiniudn.com/blog/jquery.2.1.1.js"></script>
-<script src="http://lab.homeway.me/netease/js/player.js"></script><!-- hexo-inject:begin --><!-- hexo-inject:end -->
-</body>
-</html>]]></content>
     </entry>
     
   
