@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2019-05-05T15:43:35.624Z</updated>
+  <updated>2019-05-05T15:46:58.268Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/"/>
     <id>http://homeway.me/2019/05/04/tamper-detection-an-overview-2/</id>
     <published>2019-05-04T13:26:10.000Z</published>
-    <updated>2019-05-05T15:43:35.624Z</updated>
+    <updated>2019-05-05T15:46:58.268Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
@@ -40,7 +40,7 @@
 <p>Belhassen Bayar 和 Matthew C. Stamm应该是最早提出的动态预处理层的作者了，随后他们在系列的领域（相机模型识别、图像后处理、图像篡改检测）里面开始疯狂地发文章，用的都是一套模型。</p>
 <p>这篇文章作为这个方向的终结发在2018年的TIFS里面，应该是很成功的，而这两位作者从2015年就开始用这个idea发文章了。</p>
 <p>这篇文章主要解决后处理操作的检测，包括了：Median filtering (MF)，Gaussian Blurring (GB)，Additive White Gaussian Noise，Resampling，JPEG compression。不得不说，文章写得真的好，motivation阐述严谨、实验部分做的非常完备。</p>
-<p>文章的思想也朴素的不能再朴素，在预处理层强制地让CNN内核除中心点为1，然后令中心点为-1，也就是类似归一化处理。作者声称是在模仿静态过滤器做的事情，那么到底先有鸡还是先有蛋？？这么做真的有变好吗？这些都是问题。</p>
+<p>文章的思想也朴素的不能再朴素，在预处理层强制地让CNN内核除中心点为1，然后令中心点为-1，也就是类似归一化处理。作者认为是在模仿静态过滤器做的事情，这么做真的有变好吗？会不会导致更加费时？个问题。</p>
 <h5 id="2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP"><a href="#2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP" class="headerlink" title="2. [2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)"></a>2. <a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-augmented-framework.png" alt="Fig. 3 Agumented CNN"></p>
 <p>还是Belhassen Bayar 和 Matthew C. Stamm的文章，换了个话题，采用了2中方法融合预处理，MFR（Median Filter Residual）和他们提出来的Constrained CNN。换汤不换药，一样的效果，不一样的问题。</p>
 <p>目前，动态预处理的文章就只有他们的。</p>
