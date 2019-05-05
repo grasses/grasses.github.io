@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2019-05-05T15:46:58.268Z</updated>
+  <updated>2019-05-05T15:47:26.179Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -20,13 +20,13 @@
     <link href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/"/>
     <id>http://homeway.me/2019/05/04/tamper-detection-an-overview-2/</id>
     <published>2019-05-04T13:26:10.000Z</published>
-    <updated>2019-05-05T15:46:58.268Z</updated>
+    <updated>2019-05-05T15:47:26.179Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
 <a id="more"></a>
 <blockquote>
-<p>本文仅供学习参考，请勿盗用到论文、商业行为。</p>
+<p>本文仅供学习参考，请勿盗用到论文、商业等行为。</p>
 </blockquote>
 <h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h1><p>在之前的文章中（<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">图像篡改检测和定位（一）</a>），我们谈到图像篡改检测的几种方法，在这里我们主要讨论整个体系的框架里面不同的算法各自的优势，以及存在的问题。</p>
 <p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-pipeline.png" alt="Fig. 1 图像篡改检测一般性框架"></p>
@@ -105,11 +105,14 @@
     <link href="http://homeway.me/2018/08/05/tamper-detection-an-overview/"/>
     <id>http://homeway.me/2018/08/05/tamper-detection-an-overview/</id>
     <published>2018-08-05T13:26:10.000Z</published>
-    <updated>2019-05-04T13:35:13.904Z</updated>
+    <updated>2019-05-05T15:48:06.874Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
 <a id="more"></a>
+<blockquote>
+<p>本文仅供学习参考，请勿盗用到论文、商业等行为。</p>
+</blockquote>
 <h1 id="1-Abstract"><a href="#1-Abstract" class="headerlink" title="1.Abstract"></a>1.Abstract</h1><p>图像处理检测有两个研究类别：图像后处理检测（Image Manipulation Detection）和图像篡改检测（Tamper Detection）。</p>
 <p>（1）图像后处理检测主要挖掘图像是否经历过：中值滤波处理（Median Filtering）、高斯模糊处理（Gaussian Blurring）、添加高斯白噪声（Additive White Gaussian Noise）、重采样（Resampling）、JPEG 压缩（JPEG Compression）等后处理操作。</p>
 <p>（2）另一方面图像篡改检测旨在挖掘数字图像的恶意处理，例如删除（Removal）、添加（Adding）、复制（Copy）、截取（Splicing）图像中的对象。</p>
