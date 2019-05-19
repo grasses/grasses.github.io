@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_framework.png">
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection_possibility_result.png">
 <meta property="og:image" content="https://static.blog.homeway.me/blog/image/pre-processing-results.jpg">
-<meta property="og:updated_time" content="2019-05-19T15:55:54.178Z">
+<meta property="og:updated_time" content="2019-05-19T16:13:00.783Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="图像篡改检测和定位（二）">
 <meta name="twitter:image" content="https://static.blog.homeway.me/blog/logo/forensics-logo.png">
@@ -313,9 +313,9 @@ ga('send', 'pageview');
 <p>但是文章存在比较大的问题是运行速度慢，作者也在文章中阐述特征包含18157维，执行速度比较慢。</p>
 <h1 id="3-Conclusion"><a href="#3-Conclusion" class="headerlink" title="3. Conclusion"></a>3. Conclusion</h1><p>上面列出来的这些文章，很多都在patch-level做文章，却比较少的文章在考虑patch与邻居patch之间的关系。</p>
 <p>我们可以根据理论总结出来：（1）邻居图像块统计学特征、指纹特征、视觉性等具有相似性；（2）如果一个图像块被鉴定为篡改块，它的邻居节点更可能倾向于也是篡改块；（3）扁平区域（flat area）的邻居提取的特征更不可靠。</p>
-<p><img src="https://static.blog.homeway.me/blog/image/pre-processing-results.jpg" alt="预处理层效果对比实验"></p>
-<p>为了了解预处理层（pre-processing）、特征提取层（feature extraction）、后处理层（post-processing）的效果，我们做了一组对比实验，对比了无预处理层SCI-CNN<a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">[14]</a>，和限制性卷积预处理Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>，高通滤波器预处理HP-CNN的可视化效果。我们输出了三种算法预处理层的输出结果（第二列，SCI-CNN没有预处理，所以输入为灰度图像），CNN特征向量未融合的可视化（第三列），经过我们提出来的Reliablity Fusing Map (RFM) <a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">[15]</a> 融合后的结果。</p>
-<p>经过实验，我们发现无预处理层的模型中，没有经过归一化（Normalize），直接用图像输入到CNN，反复调整各种参数仍无法学习到图像的噪声指纹特征。我们可以发现，（1）Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>和高通滤波预处理(High-pass filter)的效果比较像，都提取了图像残差噪声，这步的作用是为了抑制图像内容；（2）高通滤波器预处理的效果很好，CNN特征中残余噪声比较少；（3）RFM融合算法可以很好地滤除CNN的误判结果。（RFM算法可以关注：<a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">https://github.com/grasses/Tampering-Detection-and-Localization</a>）</p>
+<p><img src="https://static.blog.homeway.me/blog/image/pre-processing-results.jpg" alt="预处理层效果对比实验，（a）为源图像；（b）为篡改图像，红色框框内为篡改块；（c）为篡改区域示意图"></p>
+<p>为了了解预处理层（pre-processing）、特征提取层（feature extraction）、后处理层（post-processing）的效果，我们做了一组对比实验，对比了无预处理层SCI-CNN<a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">[14]</a>，和限制性卷积预处理Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>，高通滤波器预处理HP-CNN的可视化效果。我们输出了三种算法预处理层的输出结果（第二列，SCI-CNN没有预处理，所以输入为灰度图像），CNN特征向量未融合的可视化（第三列），经过我们提出来的Reliablity Fusing Map (RFM) <a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">[15]</a> 融合后的结果（第四列）。</p>
+<p>经过实验，我们发现无预处理层的模型中，如果没有经过归一化（Normalize）直接输入到CNN，经过反复调整各种参数仍无法学习到图像的噪声指纹特征。<br>经过上图结果我们可以得出结论：<br>（1）Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>和高通滤波预处理(High-pass filter)的效果比较像，都提取了图像残差噪声，这步的作用是为了抑制图像内容；<br>（2）高通滤波器预处理的效果很好，CNN特征中残余噪声比较少；<br>（3）RFM融合算法可以很好地滤除CNN的误判结果。（RFM算法可以关注：<a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">https://github.com/grasses/Tampering-Detection-and-Localization</a>）</p>
 <hr>
 <h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
 <li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
@@ -343,7 +343,7 @@ ga('send', 'pageview');
     </div>
     
     <footer class="article-footer">
-      <a data-url="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/" data-id="cjvv4v5mc006ccgbkkyhwc8bt" data-title="图像篡改检测和定位（二）" class="article-share-link">Share</a>
+      <a data-url="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/" data-id="cjvv553ty006eg5bkq49ip1bw" data-title="图像篡改检测和定位（二）" class="article-share-link">Share</a>
       <!--  -->
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deep-Learning/">Deep Learning</a></li></ul>
