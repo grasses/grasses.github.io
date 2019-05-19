@@ -4,6 +4,28 @@
   
     
     <entry>
+      <title><![CDATA[基于TF-IDF的新闻推荐算法]]></title>
+      <url>http://homeway.me/2019/05/10/Machine_Learning_Hybrid_News_Recommendation_via_TF-IDF/</url>
+      <content type="html"><![CDATA[<p><br></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Tamper Detection"></p>
+<a id="more"></a>
+<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h1><p>随着互联网上大量的数量广泛传播，获取我们真正想要寻找的数据变得越来越难。虽然，我们有搜索引擎、RSS阅读器等工具，但是这些工具仅仅能够查找，无法实现推荐效果。这里面有两方面原因：（1）读者自己只知道自己认知的事物，无法扩展到未知领域；（2）读者知道想要什么关键字，但是查找的结果仅仅包含部分关键字，无法更具体地从语义上满足读者。<a href="https://ieeexplore.ieee.org/abstract/document/7124857" target="_blank" rel="external">[1]</a></p>
+<p>这篇文章主要讨论使用TF-IDF（term frequency–inverse document frequency，词频-逆文档频率）实现新闻推荐系统，首先介绍TF-IDF、协同过滤原理，然后分析基于Sklearn的TF-IDF代码，最后说明下实验效果。</p>
+<hr>
+<h1 id="2-TF-IDF"><a href="#2-TF-IDF" class="headerlink" title="2.TF-IDF"></a>2.TF-IDF</h1><p>$$TF<em>{ w;{ D }</em>{ i } }=\frac { count(w) }{ { D }_{ i } }$$</p>
+<hr>
+<h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7124857/" target="_blank" rel="external">[1] P. Nagarnaik and A. Thomas. Survey on recommendation system methods. In 2015 2nd International Conference on Electronics and Communication Systems (ICECS), pages 1603–1608. IEEE, 2015.</a></li>
+<li></li>
+</ul>
+<hr>
+<blockquote>
+<p>by grasses 2019.05.10</p>
+</blockquote>
+]]></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[图像篡改检测和定位（二）]]></title>
       <url>http://homeway.me/2019/05/04/tamper-detection-an-overview-2/</url>
       <content type="html"><![CDATA[<p><br></p>
@@ -24,7 +46,7 @@
 <p>Belhassen Bayar 和 Matthew C. Stamm应该是最早提出的动态预处理层的作者了，随后他们在系列的领域（相机模型识别、图像后处理、图像篡改检测）里面开始疯狂地发文章，用的都是一套模型。</p>
 <p>这篇文章作为这个方向的终结发在2018年的TIFS里面，应该是很成功的，而这两位作者从2015年就开始用这个idea发文章了。</p>
 <p>这篇文章主要解决后处理操作的检测，包括了：Median filtering (MF)，Gaussian Blurring (GB)，Additive White Gaussian Noise，Resampling，JPEG compression。不得不说，文章写得真的好，motivation阐述严谨、实验部分做的非常完备。</p>
-<p>文章的思想也朴素的不能再朴素，在预处理层强制地让CNN内核除中心点为1，然后令中心点为-1，也就是类似归一化处理。作者认为是在模仿静态过滤器做的事情，这么做真的有变好吗？会不会导致更加费时？个问题。</p>
+<p>文章的思想也朴素的不能再朴素，在预处理层强制地让CNN内核除中心点为1，然后令中心点为-1，也就是类似归一化处理。作者认为是在模仿静态过滤器做的事情，这么做真的有变好吗？会不会导致更加费时？是个问题。</p>
 <h5 id="2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP"><a href="#2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP" class="headerlink" title="2. [2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)"></a>2. <a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-augmented-framework.png" alt="Fig. 3 Agumented CNN"></p>
 <p>还是Belhassen Bayar 和 Matthew C. Stamm的文章，换了个话题，采用了2中方法融合预处理，MFR（Median Filter Residual）和他们提出来的Constrained CNN。换汤不换药，一样的效果，不一样的问题。</p>
 <p>目前，动态预处理的文章就只有他们的。</p>
@@ -37,7 +59,7 @@
 <p>这部分的文章主要在<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">图像篡改检测和定位（一）</a>已经分析过了。</p>
 <h2 id="C-特征后处理（Post-processing"><a href="#C-特征后处理（Post-processing" class="headerlink" title="C.特征后处理（Post-processing)"></a>C.特征后处理（Post-processing)</h2><p>图像篡改检测最难的地方就在于整张图像中篡改块的定位，因为定位是像素级别（pixel-level），不同于检测是图像级别（image-level）。另一方面，不谈整张图像（full image level）篡改区域定位，单单看单个切片块（patch level）的正确率，很多文章都正确率都是95%以上，事实上这种意义相对较小。</p>
 <p>那么常见后处理，有几种方法呢？简单地可以分为：（1）单特征提取器融合；（2）多特征提取器融合。</p>
-<p>单特征提取融合算法只能检测一种篡改方式；多特征提取器融合主要为了解决多个篡改数据（Copy-Move，Splicing，Removal等等）。</p>
+<p>单特征提取融合算法只能检测一种篡改方式，融合处理主要通过分析相邻的小块的CNN结果、小块的纹理度特征、小块的检测密度等等数据，最后生成鉴定结果；多特征提取器融合主要为了解决多个篡改数据（Copy-Move，Splicing，Removal等等），融合处理主要先确定是哪种算法（通过两个分类器置信度确定），然后输出融合鉴定结果。</p>
 <h4 id="3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9"><a href="#3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9" class="headerlink" title="3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]"></a>3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]</h4><p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="单特征提取器后处理"></p>
 <p>还是这篇文章，只用了CNN作为输入特征，期间考虑CNN向量中对每个类别的置信度、纹理度特征、以及融合后的密度系数。</p>
 <p>提取的特征简洁、分析的数据很有依据，算法效果也是很好。</p>
@@ -48,6 +70,9 @@
 <p>但是文章存在比较大的问题是运行速度慢，作者也在文章中阐述特征包含18157维，执行速度比较慢。</p>
 <h1 id="3-Conclusion"><a href="#3-Conclusion" class="headerlink" title="3. Conclusion"></a>3. Conclusion</h1><p>上面列出来的这些文章，很多都在patch-level做文章，却比较少的文章在考虑patch与邻居patch之间的关系。</p>
 <p>我们可以根据理论总结出来：（1）邻居图像块统计学特征、指纹特征、视觉性等具有相似性；（2）如果一个图像块被鉴定为篡改块，它的邻居节点更可能倾向于也是篡改块；（3）扁平区域（flat area）的邻居提取的特征更不可靠。</p>
+<p><img src="" alt="预处理层效果对比实验"></p>
+<p>为了了解预处理层（pre-processing）、特征提取层（feature extraction）、后处理层（post-processing）的效果，我们做了一组对比实验，对比了无预处理层SCI-CNN<a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">[14]</a>，和限制性卷积预处理Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>，高通滤波器预处理HP-CNN的可视化效果。我们输出了三种算法预处理层的输出结果（第二列，SCI-CNN没有预处理，所以输入为灰度图像），CNN特征向量未融合的可视化（第三列），经过我们提出来的Reliablity Fusing Map (RFM) <a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">[15]</a> 融合后的结果。</p>
+<p>经过实验，我们发现无预处理层的模型中，没有经过归一化（Normalize），直接用图像输入到CNN，反复调整各种参数仍无法学习到图像的噪声指纹特征。我们可以发现，（1）Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>和高通滤波预处理(High-pass filter)的效果比较像，都提取了图像残差噪声，这步的作用是为了抑制图像内容；（2）高通滤波器预处理的效果很好，CNN特征中残余噪声比较少；（3）RFM融合算法可以很好地滤除CNN的误判结果。（RFM算法可以关注：<a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">https://github.com/grasses/Tampering-Detection-and-Localization</a>）</p>
 <hr>
 <h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
 <li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
@@ -63,6 +88,8 @@
 <li><a href="https://dl.acm.org/citation.cfm?id=3123411" target="_blank" rel="external">[11] Wu, Y., Abd-Almageed, W., &amp; Natarajan, P. (2017, October). Deep matching and validation network: An end-to-end solution to constrained image splicing localization and detection. In <em>Proceedings of the 2017 ACM on Multimedia Conference</em> (pp. 1480-1502). ACM.</a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/7026073/" target="_blank" rel="external">[12] Cozzolino D, Gragnaniello D, Verdoliva L. Image forgery localization through the fusion of camera-based, feature-based and pixel-based techniques. In2014 IEEE International Conference on Image Processing (ICIP) 2014 Oct 27 (pp. 5302-5306). IEEE.</a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/5580092/" target="_blank" rel="external">[13] Y.-F. Hsu and S.-F. Chang. Camera response functions for image foren- sics: an automatic algorithm for splicing detection. IEEE Transactions on Information Forensics and Security, 5(4):816–825, 2010. </a></li>
+<li><a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">[14] H.Yao,T.Qiao,M.Xu,andN.Zheng.Robustmulti-classifierforcamera model identification based on convolution neural network. IEEE Access, 6:24973–24982, 2018. </a></li>
+<li><a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">[15] Github: Tampering-Detection-and-Localization</a></li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2019/05/04/tamper-detection-an-overview-2"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2">http://homeway.me/2019/05/04/tamper-detection-an-overview-2</a></h4><blockquote>

@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://homeway.me/"/>
-  <updated>2019-05-05T15:47:26.179Z</updated>
+  <updated>2019-05-10T15:47:16.288Z</updated>
   <id>http://homeway.me/</id>
   
   <author>
@@ -16,11 +16,50 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>基于TF-IDF的新闻推荐算法</title>
+    <link href="http://homeway.me/2019/05/10/Machine_Learning_Hybrid_News_Recommendation_via_TF-IDF/"/>
+    <id>http://homeway.me/2019/05/10/Machine_Learning_Hybrid_News_Recommendation_via_TF-IDF/</id>
+    <published>2019-05-10T13:26:10.000Z</published>
+    <updated>2019-05-10T15:47:16.288Z</updated>
+    
+    <content type="html"><![CDATA[<p><br></p>
+<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Tamper Detection"></p>
+<a id="more"></a>
+<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h1><p>随着互联网上大量的数量广泛传播，获取我们真正想要寻找的数据变得越来越难。虽然，我们有搜索引擎、RSS阅读器等工具，但是这些工具仅仅能够查找，无法实现推荐效果。这里面有两方面原因：（1）读者自己只知道自己认知的事物，无法扩展到未知领域；（2）读者知道想要什么关键字，但是查找的结果仅仅包含部分关键字，无法更具体地从语义上满足读者。<a href="https://ieeexplore.ieee.org/abstract/document/7124857" target="_blank" rel="external">[1]</a></p>
+<p>这篇文章主要讨论使用TF-IDF（term frequency–inverse document frequency，词频-逆文档频率）实现新闻推荐系统，首先介绍TF-IDF、协同过滤原理，然后分析基于Sklearn的TF-IDF代码，最后说明下实验效果。</p>
+<hr>
+<h1 id="2-TF-IDF"><a href="#2-TF-IDF" class="headerlink" title="2.TF-IDF"></a>2.TF-IDF</h1><p>$$TF<em>{ w;{ D }</em>{ i } }=\frac { count(w) }{ { D }_{ i } }$$</p>
+<hr>
+<h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
+<li><a href="https://ieeexplore.ieee.org/abstract/document/7124857/" target="_blank" rel="external">[1] P. Nagarnaik and A. Thomas. Survey on recommendation system methods. In 2015 2nd International Conference on Electronics and Communication Systems (ICECS), pages 1603–1608. IEEE, 2015.</a></li>
+<li></li>
+</ul>
+<hr>
+<blockquote>
+<p>by grasses 2019.05.10</p>
+</blockquote>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/machine-learning-logox.png&quot; alt=&quot;Tamper Detection&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="Machine Learning" scheme="http://homeway.me/categories/Machine-Learning/"/>
+    
+    
+      <category term="Deep Learning" scheme="http://homeway.me/tags/Deep-Learning/"/>
+    
+  </entry>
+  
+  <entry>
     <title>图像篡改检测和定位（二）</title>
     <link href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2/"/>
     <id>http://homeway.me/2019/05/04/tamper-detection-an-overview-2/</id>
     <published>2019-05-04T13:26:10.000Z</published>
-    <updated>2019-05-05T15:47:26.179Z</updated>
+    <updated>2019-05-19T15:53:10.017Z</updated>
     
     <content type="html"><![CDATA[<p><br></p>
 <p><img src="https://static.blog.homeway.me/blog/logo/forensics-logo.png" alt="Tamper Detection"></p>
@@ -40,7 +79,7 @@
 <p>Belhassen Bayar 和 Matthew C. Stamm应该是最早提出的动态预处理层的作者了，随后他们在系列的领域（相机模型识别、图像后处理、图像篡改检测）里面开始疯狂地发文章，用的都是一套模型。</p>
 <p>这篇文章作为这个方向的终结发在2018年的TIFS里面，应该是很成功的，而这两位作者从2015年就开始用这个idea发文章了。</p>
 <p>这篇文章主要解决后处理操作的检测，包括了：Median filtering (MF)，Gaussian Blurring (GB)，Additive White Gaussian Noise，Resampling，JPEG compression。不得不说，文章写得真的好，motivation阐述严谨、实验部分做的非常完备。</p>
-<p>文章的思想也朴素的不能再朴素，在预处理层强制地让CNN内核除中心点为1，然后令中心点为-1，也就是类似归一化处理。作者认为是在模仿静态过滤器做的事情，这么做真的有变好吗？会不会导致更加费时？个问题。</p>
+<p>文章的思想也朴素的不能再朴素，在预处理层强制地让CNN内核除中心点为1，然后令中心点为-1，也就是类似归一化处理。作者认为是在模仿静态过滤器做的事情，这么做真的有变好吗？会不会导致更加费时？是个问题。</p>
 <h5 id="2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP"><a href="#2-2-Augmented-convolutional-feature-maps-for-robust-cnn-based-camera-model-identification-In-2017-IEEE-International-Conference-on-Image-Processing-ICIP" class="headerlink" title="2. [2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)"></a>2. <a href="https://ieeexplore.ieee.org/abstract/document/8297053" target="_blank" rel="external">[2] Augmented convolutional feature maps for robust cnn-based camera model identification. In 2017 IEEE International Conference on Image Processing (ICIP)</a></h5><p><img src="https://static.blog.homeway.me/blog/image/2019.05.04-tamper-detection-augmented-framework.png" alt="Fig. 3 Agumented CNN"></p>
 <p>还是Belhassen Bayar 和 Matthew C. Stamm的文章，换了个话题，采用了2中方法融合预处理，MFR（Median Filter Residual）和他们提出来的Constrained CNN。换汤不换药，一样的效果，不一样的问题。</p>
 <p>目前，动态预处理的文章就只有他们的。</p>
@@ -53,7 +92,7 @@
 <p>这部分的文章主要在<a href="http://homeway.me/2018/08/05/tamper-detection-an-overview/">图像篡改检测和定位（一）</a>已经分析过了。</p>
 <h2 id="C-特征后处理（Post-processing"><a href="#C-特征后处理（Post-processing" class="headerlink" title="C.特征后处理（Post-processing)"></a>C.特征后处理（Post-processing)</h2><p>图像篡改检测最难的地方就在于整张图像中篡改块的定位，因为定位是像素级别（pixel-level），不同于检测是图像级别（image-level）。另一方面，不谈整张图像（full image level）篡改区域定位，单单看单个切片块（patch level）的正确率，很多文章都正确率都是95%以上，事实上这种意义相对较小。</p>
 <p>那么常见后处理，有几种方法呢？简单地可以分为：（1）单特征提取器融合；（2）多特征提取器融合。</p>
-<p>单特征提取融合算法只能检测一种篡改方式；多特征提取器融合主要为了解决多个篡改数据（Copy-Move，Splicing，Removal等等）。</p>
+<p>单特征提取融合算法只能检测一种篡改方式，融合处理主要通过分析相邻的小块的CNN结果、小块的纹理度特征、小块的检测密度等等数据，最后生成鉴定结果；多特征提取器融合主要为了解决多个篡改数据（Copy-Move，Splicing，Removal等等），融合处理主要先确定是哪种算法（通过两个分类器置信度确定），然后输出融合鉴定结果。</p>
 <h4 id="3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9"><a href="#3-Tampering-Detection-and-Localization-through-Clustering-of-Camera-Based-CNN-Features-9" class="headerlink" title="3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]"></a>3.Tampering Detection and Localization through Clustering of Camera-Based CNN Features[9]</h4><p><img src="https://static.blog.homeway.me/blog/image/2018.08.05-tamper-detection-paper3.1.png" alt="单特征提取器后处理"></p>
 <p>还是这篇文章，只用了CNN作为输入特征，期间考虑CNN向量中对每个类别的置信度、纹理度特征、以及融合后的密度系数。</p>
 <p>提取的特征简洁、分析的数据很有依据，算法效果也是很好。</p>
@@ -64,6 +103,9 @@
 <p>但是文章存在比较大的问题是运行速度慢，作者也在文章中阐述特征包含18157维，执行速度比较慢。</p>
 <h1 id="3-Conclusion"><a href="#3-Conclusion" class="headerlink" title="3. Conclusion"></a>3. Conclusion</h1><p>上面列出来的这些文章，很多都在patch-level做文章，却比较少的文章在考虑patch与邻居patch之间的关系。</p>
 <p>我们可以根据理论总结出来：（1）邻居图像块统计学特征、指纹特征、视觉性等具有相似性；（2）如果一个图像块被鉴定为篡改块，它的邻居节点更可能倾向于也是篡改块；（3）扁平区域（flat area）的邻居提取的特征更不可靠。</p>
+<p><img src="" alt="预处理层效果对比实验"></p>
+<p>为了了解预处理层（pre-processing）、特征提取层（feature extraction）、后处理层（post-processing）的效果，我们做了一组对比实验，对比了无预处理层SCI-CNN<a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">[14]</a>，和限制性卷积预处理Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>，高通滤波器预处理HP-CNN的可视化效果。我们输出了三种算法预处理层的输出结果（第二列，SCI-CNN没有预处理，所以输入为灰度图像），CNN特征向量未融合的可视化（第三列），经过我们提出来的Reliablity Fusing Map (RFM) <a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">[15]</a> 融合后的结果。</p>
+<p>经过实验，我们发现无预处理层的模型中，没有经过归一化（Normalize），直接用图像输入到CNN，反复调整各种参数仍无法学习到图像的噪声指纹特征。我们可以发现，（1）Constrained-CNN <a href="https://ieeexplore.ieee.org/abstract/document/8335799/" target="_blank" rel="external">[3]</a>和高通滤波预处理(High-pass filter)的效果比较像，都提取了图像残差噪声，这步的作用是为了抑制图像内容；（2）高通滤波器预处理的效果很好，CNN特征中残余噪声比较少；（3）RFM融合算法可以很好地滤除CNN的误判结果。（RFM算法可以关注：<a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">https://github.com/grasses/Tampering-Detection-and-Localization</a>）</p>
 <hr>
 <h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
 <li><a href="http://cdmd.cnki.com.cn/Article/CDMD-10183-1017152233.htm" target="_blank" rel="external">[1] 朱叶. 数字图像复制—粘贴篡改盲取证关键技术研究[D]. 吉林大学, 2017.</a></li>
@@ -79,6 +121,8 @@
 <li><a href="https://dl.acm.org/citation.cfm?id=3123411" target="_blank" rel="external">[11] Wu, Y., Abd-Almageed, W., &amp; Natarajan, P. (2017, October). Deep matching and validation network: An end-to-end solution to constrained image splicing localization and detection. In <em>Proceedings of the 2017 ACM on Multimedia Conference</em> (pp. 1480-1502). ACM.</a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/7026073/" target="_blank" rel="external">[12] Cozzolino D, Gragnaniello D, Verdoliva L. Image forgery localization through the fusion of camera-based, feature-based and pixel-based techniques. In2014 IEEE International Conference on Image Processing (ICIP) 2014 Oct 27 (pp. 5302-5306). IEEE.</a></li>
 <li><a href="https://ieeexplore.ieee.org/abstract/document/5580092/" target="_blank" rel="external">[13] Y.-F. Hsu and S.-F. Chang. Camera response functions for image foren- sics: an automatic algorithm for splicing detection. IEEE Transactions on Information Forensics and Security, 5(4):816–825, 2010. </a></li>
+<li><a href="https://ieeexplore.ieee.org/document/8353219/" target="_blank" rel="external">[14] H.Yao,T.Qiao,M.Xu,andN.Zheng.Robustmulti-classifierforcamera model identification based on convolution neural network. IEEE Access, 6:24973–24982, 2018. </a></li>
+<li><a href="https://github.com/grasses/Tampering-Detection-and-Localization" target="_blank" rel="external">[15] Github: Tampering-Detection-and-Localization</a></li>
 </ul>
 <hr>
 <h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2019-05-04-tamper-detection-an-overview-2" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2019/05/04/tamper-detection-an-overview-2"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2019/05/04/tamper-detection-an-overview-2">http://homeway.me/2019/05/04/tamper-detection-an-overview-2</a></h4><blockquote>
@@ -2886,175 +2930,6 @@ ERROR Plugin load failed: hexo-server
     
     
       <category term="Mac" scheme="http://homeway.me/tags/Mac/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CI环境下开发Oauth2.0开放平台</title>
-    <link href="http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/"/>
-    <id>http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</id>
-    <published>2015-06-28T16:04:10.000Z</published>
-    <updated>2018-10-21T16:38:42.780Z</updated>
-    
-    <content type="html"><![CDATA[<p><br></p>
-<p><img src="https://static.blog.homeway.me/blog/logo-oauth2.png" alt="Oauth2.0"></p>
-<a id="more"></a>
-<p><br></p>
-<h1 id="0x01-About"><a href="#0x01-About" class="headerlink" title="0x01.About"></a>0x01.About</h1><p>最近在搭建Oauth2.0第三方接入开放平台，主要是使用Github开源项目服务模块<a href="https://github.com/bshaffer/oauth2-server-php" target="_blank" rel="external">https://github.com/bshaffer/oauth2-server-php</a>和CodeIgniter结合。</p>
-<p>一般来说做开放平台主要包括：Oauth2.0认证平台、Resource资源API平台、Open开发者注册平台，以及API说明等。</p>
-<p>Oauth2.0测试平台已经搭建好，请访问 <a href="http://oauth2.homeway.me/oauth/test/" target="_blank" rel="external">http://oauth2.homeway.me/oauth/test/</a></p>
-<p><hr><br></p>
-<h1 id="0x02-About-Oauth2-0"><a href="#0x02-About-Oauth2-0" class="headerlink" title="0x02.About Oauth2.0"></a>0x02.About Oauth2.0</h1><p>OAuth 2.0授权前，第三方应用必须到平台上进行注册，注册过程中可能需要填写的内容有：应用类型，授权成功回调地址，以及其他平台需要的资料（应用名称、网址、介绍、LOGO图片等）。</p>
-<p>OAuth 2.0标准主要围绕三类应用：Web应用、基于客户端的应用、原生应用。</p>
-<p>应用在Open开发者平台注册完成会得到一个应用client_id和一个client_secret，一般叫<code>App Key</code>，密钥叫<code>App Secret</code>，这两样东西作用跟用户名密码是一样的。</p>
-<p><a href="http://tools.ietf.org/html/rfc6749" target="_blank" rel="external">OAuth 2.0 RFC</a> 中提到的授权方式有四种：授权码（Authorization Code）、隐式授权（Implicit Grant）、用户口令（Resource Owner Password Credentials）、应用口令（Client Credentials）。</p>
-<p>这四种方式最终的目的都是要获得Access Token，然后通过请求Resource服务器获取资源。</p>
-<p><hr><br></p>
-<h1 id="0x03-Grant-type"><a href="#0x03-Grant-type" class="headerlink" title="0x03.Grant_type"></a>0x03.Grant_type</h1><p>说说每种授权方式使用到的地方，或授权的方式。</p>
-<h2 id="Authorization-Code"><a href="#Authorization-Code" class="headerlink" title="Authorization Code"></a>Authorization Code</h2><p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_1.jpg" alt="Authorization Code"></p>
-<p>授权码方式在很多地方都有用到，微博登陆，微信登陆等都是。</p>
-<p>认证过程主要是跳转到Oauth2.0平台，认证后跳转回第三方应用平台，并通过callback的url中携带code、state、token_type等信息，然后第三方平台通过code获取到access_token，进而调用开放API获取到资源。</p>
-<p>第三方请求过程必须附带，<code>response_type</code>（回调类型：code，token）,<code>client_id</code>（开发者app key）,<code>redirect_uri</code>（回调链接），<code>state</code>（防止csrf，authorization认证跳转后原样返回）。</p>
-<p>例如：<a href="http://localhost:8085/oauth2/authorize/index?redirect_uri=http://homeway.me&amp;response_type=code&amp;client_id=testclient&amp;state=ae5f8c93dc51d856d6536aec528c31c6f6450458" target="_blank" rel="external">http://localhost:8085/oauth2/authorize/index?redirect_uri=http://homeway.me&amp;response_type=code&amp;client_id=testclient&amp;state=ae5f8c93dc51d856d6536aec528c31c6f6450458</a></p>
-<p>测试例子：<a href="http://brentertainment.com/oauth2/" target="_blank" rel="external">http://brentertainment.com/oauth2/</a></p>
-<p>第一步：跳转到Oauth2.0服务器：</p>
-<p>认证过程中会请求<code>scope</code>权限表，用户可以拒绝相应权限。</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_2.jpg" alt="跳转到Oauth2.0服务器"></p>
-<p>第二步：用户确认请求的权限，回调得到code：</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-authorization_3.jpg" alt="用户确认请求的权限"></p>
-<p>第三步：第三方平台通过code得到access_token，然后通过API调用Resource服务器资源。</p>
-<p>这个过程需要发送<code>client_id</code>，<code>client_secret</code>（App Secret），<code>grant_type</code>（’authorization_code’），<code>code</code>，<code>redirect_uri</code>给oauth2服务器获取<code>access_token</code>。</p>
-<p>例如：<a href="http://brentertainment.com/oauth2/client/request_token/authorization_code?code=bab6b7dee32f629397acbb16a4d8e50c6c3d424d" target="_blank" rel="external">http://brentertainment.com/oauth2/client/request_token/authorization_code?code=bab6b7dee32f629397acbb16a4d8e50c6c3d424d</a></p>
-<p><br></p>
-<h2 id="Implicit-Grant"><a href="#Implicit-Grant" class="headerlink" title="Implicit Grant"></a>Implicit Grant</h2><p>隐式授权流程（Implicit Grant）其实就是Authorization Code的一个简化版本，不是回调code，而是直接回调access_token给第三方开发者，<code>response_type</code>变为token，其他和Authorization Code一样。</p>
-<p>例如：<a href="http://brentertainment.com/oauth2/lockdin/authorize?response_type=token&amp;client_id=demoapp&amp;redirect_uri=http%3A%2F%2Fbrentertainment.com%2Foauth2%2Fclient%2Freceive_implicit_token&amp;state=377edd18bd3070e4317889b0b3371c16" target="_blank" rel="external">http://brentertainment.com/oauth2/lockdin/authorize?response_type=token&amp;client_id=demoapp&amp;redirect_uri=http%3A%2F%2Fbrentertainment.com%2Foauth2%2Fclient%2Freceive_implicit_token&amp;state=377edd18bd3070e4317889b0b3371c16</a></p>
-<p>跳转后就得到了，如下链接：<a href="http://brentertainment.com/oauth2/client/receive_implicit_token#access_token=a845c2c81bc57613bbc5dee1fec173a3fbd0f474&amp;expires_in=3600&amp;token_type=Bearer&amp;state=377edd18bd3070e4317889b0b3371c16" target="_blank" rel="external">http://brentertainment.com/oauth2/client/receive_implicit_token#access_token=a845c2c81bc57613bbc5dee1fec173a3fbd0f474&amp;expires_in=3600&amp;token_type=Bearer&amp;state=377edd18bd3070e4317889b0b3371c16</a></p>
-<p><br></p>
-<h2 id="Client-Credentials"><a href="#Client-Credentials" class="headerlink" title="Client Credentials"></a>Client Credentials</h2><p>应用授权（Client Credentials）主要用于第三方应用直接获取一些公开的数据，不需要用户跳转认证，也不需要获取用户的openid，因为都是一些公共的资源。</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_2.jpg" alt="Client Credentials"></p>
-<p>我的请求数据为：<code>{client_id: &quot;testclient&quot;, client_secret: &quot;testpass&quot;, grant_type: &quot;client_credentials&quot;, scope: &quot;userinfo cloud file node&quot;}</code></p>
-<p>Oauth2给我的回调数据：<code>{&quot;access_token&quot;:&quot;417206d0e162d743338c04da9f8eb72f99daff6b&quot;,&quot;expires_in&quot;:3600,&quot;token_type&quot;:&quot;Bearer&quot;,&quot;scope&quot;:&quot;userinfo cloud file node&quot;}</code></p>
-<p>可以看到有了access_token，然后我就可以用access_token去找Resource服务器要资源了，这里限定了<code>scope</code>权限表，表的权限在open平台注册的时候就确定下来了。</p>
-<p><br></p>
-<h2 id="Resource-Owner-Password-Credentials"><a href="#Resource-Owner-Password-Credentials" class="headerlink" title="Resource Owner Password Credentials"></a>Resource Owner Password Credentials</h2><p>用户口令（Resource Owner Password Credentials）适合内部应用调用使用，比如公司有两个平台，A和B，那么我就可以在Oauth2下通过<code>Password Credentials</code>模式实现A应用与B应用之间通信，还可以开放内部接口。</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter-client-credentials_1.jpg" alt="Client Credentials"></p>
-<p>请求的数据格式是：<br><code>{grant_type: &quot;password
-username:&quot;user&quot;, password: &quot;pass&quot;,client_id: &quot;&quot;testclient&quot;, client_secret: &quot;testpass&quot;, scope: &quot;userinfo cloud file node}</code></p>
-<p>回调数据比Client Credentials多了一个<code>refresh_token</code>:</p>
-<p><code>{&quot;access_token&quot;:&quot;8a478275f8d2d5ac767f94ef0684a1fc2883eb24&quot;,
-&quot;expires_in&quot;:3600,
-&quot;token_type&quot;:&quot;Bearer&quot;,
-&quot;scope&quot;:&quot;userinfo cloud file node&quot;,
-&quot;refresh_token&quot;:&quot;69a5e7b995ed4376bd6dd58380bfe09b51137dcb&quot;}</code></p>
-<p>那么当<code>access_token</code>过期后，就可以通过<code>refresh_token</code>再次激活一个新的<code>access_token</code>，黑魔法，自己给自己开后门。</p>
-<p>激活请求发送的数据为：<br><code>{grant_type: &quot;refresh_token&quot;,
-username:&quot;user&quot;, password: &quot;pass&quot;, client_id: &quot;&quot;testclient&quot;, client_secret: &quot;testpass&quot;, scope: &quot;userinfo cloud file node}</code></p>
-<p>返回还是一个新的access_token数据。</p>
-<p><hr><br></p>
-<h1 id="0x04-CodeIgniter与Oauth2-0"><a href="#0x04-CodeIgniter与Oauth2-0" class="headerlink" title="0x04.CodeIgniter与Oauth2.0"></a>0x04.CodeIgniter与Oauth2.0</h1><p>四种授权方式都说过了，那么就开始搭建基于CodeIgniter的Oauth2.0平台了。</p>
-<h2 id="基础环境搭建"><a href="#基础环境搭建" class="headerlink" title="基础环境搭建"></a>基础环境搭建</h2><p>1.下载CI框架：<code>$wget https://codeload.github.com/bcit-ci/CodeIgniter/zip/3.0.0</code></p>
-<p>2.解压 <code>$unzip CodeIgniter-3.0.0.zip</code></p>
-<p>3.进入library目录 <code>$cd CodeIgniter-3.0.0/application/libraries</code> </p>
-<p>4.获取oauth2-php-server: <code>git clone https://github.com/bshaffer/oauth2-server-php &amp;&amp; mv -f oauth2-server-php oauth2</code></p>
-<p>5.通过composer安装 oauth2-server-php ：<code>cd oauth2 &amp;&amp; composer install</code></p>
-<p>如果国内composer安装慢的话，我打了一个包，可以再这里下载到：<a href="http://785igi.com1.z0.glb.clouddn.com/share/oauth2-server-php.zip" target="_blank" rel="external">oauth2-server-php.zip</a></p>
-<h2 id="Oauth2-0数据库"><a href="#Oauth2-0数据库" class="headerlink" title="Oauth2.0数据库"></a>Oauth2.0数据库</h2><p>好了，ci和oauth2都处理好了，接下来导入下数据库的sql文件。</p>
-<p>oauth2.0平台支持多种数据库，可以在<code>oauth2/src/Oauth2/Storage/</code>里面看到，有mongodb、mysql、redis等。</p>
-<p>这里就选简单的mysql吧，数据库主要包含oauth_access_tokens、oauth_authorization_codes、oauth_clients、oauth_jwt、oauth_refresh_tokens、oauth_scopes、oauth_users几个表。</p>
-<p><code>oauth_users</code>是Password Credentials认证的时候用的表，<code>oauth_scopes</code>存放权限表，<code>oauth_refresh_tokens</code>是Password Credentials认证的时候的refresh_token表，<code>oauth_clients</code>存放开发者注册的信息表。</p>
-<p>sql文件可以在这里下载：<a href="http://homeway.me/code/oauth2.sql">http://homeway.me/code/oauth2.sql</a></p>
-<h2 id="Server服务"><a href="#Server服务" class="headerlink" title="Server服务"></a>Server服务</h2><p>接下来在<code>CodeIgniter-3.0.0/application/libraries/oauth2</code>里面新建一个<code>server.php</code>，<br>用于对oauth2内调用与对外ci服务的接口。</p>
-<p>###创建一个Authorization Code服务</p>
-<pre><code>class Server{
-  function __construct(){
-    OAuth2\Autoloader::register();
-    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
-    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
-    $this-&gt;request = OAuth2\Request::createFromGlobals();
-    $this-&gt;response = new OAuth2\Response();
-  }
-  public function authorize($is_authorized){
-    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\AuthorizationCode($this-&gt;storage));
-    $this-&gt;server-&gt;handleAuthorizeRequest($this-&gt;request, $this-&gt;response, $is_authorized);
-    if ($is_authorized) {
-      $code = substr($response-&gt;getHttpHeader(&#39;Location&#39;), strpos($response-&gt;getHttpHeader(&#39;Location&#39;), &#39;code=&#39;)+5, 40);
-      header(&quot;Location: &quot;.$response-&gt;getHttpHeader(&#39;Location&#39;));
-    }
-    $response-&gt;send();
-  }
-}
-</code></pre><p>###创建一个Password Credentials服务</p>
-<pre><code>class Server{
-  function __construct(){
-    OAuth2\Autoloader::register();
-    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
-    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
-    $this-&gt;request = OAuth2\Request::createFromGlobals();
-    $this-&gt;response = new OAuth2\Response();
-  }
-  public function password_credentials(){
-    $users = array(&quot;user&quot; =&gt; array(&quot;password&quot; =&gt; &#39;pass&#39;, &#39;first_name&#39; =&gt; &#39;homeway&#39;, &#39;last_name&#39; =&gt; &#39;yao&#39;));
-    $storage = new OAuth2\Storage\Memory(array(&#39;user_credentials&#39; =&gt; $users));//user是认证的账户，在表oauth_users中
-    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\UserCredentials($storage));
-    $this-&gt;server-&gt;handleTokenRequest($this-&gt;request)-&gt;send();
-  }
-}
-</code></pre><p>###创建一个Client Credentials服务</p>
-<pre><code>class Server{
-  function __construct(){
-    OAuth2\Autoloader::register();
-    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
-    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
-    $this-&gt;request = OAuth2\Request::createFromGlobals();
-    $this-&gt;response = new OAuth2\Response();
-  }
-  public function client_credentials(){
-    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\ClientCredentials($this-&gt;storage, array(&quot;allow_credentials_in_request_body&quot; =&gt; true)));
-    $this-&gt;server-&gt;handleTokenRequest($this-&gt;request)-&gt;send();
-  }
-}
-</code></pre><p>###创建一个refresh_token服务</p>
-<pre><code>class Server{
-  function __construct(){
-    OAuth2\Autoloader::register();
-    $this-&gt;storage = new OAuth2\Storage\Pdo(array(&#39;dsn&#39; =&gt; &#39;mysql:dbname=oauth;host=localhost&#39;, &#39;username&#39; =&gt; &#39;&#39;, &#39;password&#39; =&gt; &#39;&#39;));
-    $this-&gt;server = new OAuth2\Server($this-&gt;storage, array(&#39;allow_implicit&#39; =&gt; true));
-    $this-&gt;request = OAuth2\Request::createFromGlobals();
-    $this-&gt;response = new OAuth2\Response();
-  }
-  public function refresh_token(){
-    $this-&gt;server-&gt;addGrantType(new OAuth2\GrantType\RefreshToken($this-&gt;storage, array(
-         &quot;always_issue_new_refresh_token&quot; =&gt; true,
-      &quot;unset_refresh_token_after_use&quot; =&gt; true,
-      &quot;refresh_token_lifetime&quot; =&gt; 2419200,
-    )));
-    $this-&gt;server-&gt;handleTokenRequest($this-&gt;request)-&gt;send();
-  }
-}
-</code></pre><h1 id="0x04-About-Package"><a href="#0x04-About-Package" class="headerlink" title="0x04.About Package"></a>0x04.About Package</h1><p>篇幅太大了，我觉定，把代码打包下来，好了。^.().^</p>
-<p><a href="http://785igi.com1.z0.glb.clouddn.com/share/build-oauth2-under-codeigniter.zip" target="_blank" rel="external">http://homeway.me/code/build-oauth2-under-codeigniter.zip</a></p>
-<p>下面是打包好的测试平台你也可以通过<a href="http://oauth2.homeway.me/oauth/test/" target="_blank" rel="external">http://oauth2.homeway.me/oauth/test/</a>来进入测试平台。</p>
-<p>平台web访问路径为：<code>/oauth/test/</code>、<code>/oauth2/RefreshToken</code>,<code>/oauth2/resource</code>,<code>/oauth2/authorize/token</code>,<code>/oauth2/PasswordCredentials</code>,<code>/oauth2/ClientCredentials</code>，你也可以从相应的源码中读到这些地址。</p>
-<p><img src="https://static.blog.homeway.me/blog/2015-06-28-build-oauth2-under-codeigniter.jpg" alt="build-oauth2-under-codeigniter"></p>
-<p><hr><br></p>
-<p>参考：</p>
-<p>1.<a href="http://tools.ietf.org/html/rfc6749#section-4.3" target="_blank" rel="external">http://tools.ietf.org/html/rfc6749</a><br>2.<a href="http://brentertainment.com/oauth2/" target="_blank" rel="external">http://brentertainment.com/oauth2/</a><br>3.<a href="http://bshaffer.github.io/oauth2-server-php-docs/" target="_blank" rel="external">oauth2-server-php-docs</a><br>4.<a href="http://open.weibo.com/wiki/%E6%8E%88%E6%9D%83%E6%9C%BA%E5%88%B6%E8%AF%B4%E6%98%8E" target="_blank" rel="external">新浪oauth2授权机制说明</a><br>5.<a href="http://wiki.open.qq.com/wiki/mobile/OAuth2.0%E7%AE%80%E4%BB%8B" target="_blank" rel="external">腾讯OAuth2.0简介</a><br>6.<a href="http://connect.qq.com/sdk/webtools/index.html" target="_blank" rel="external">腾讯API调试平台</a></p>
-<p><br><hr><br></p>
-<h4 id="本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-29-build-oauth2-under-codeigniter"><a href="#本文出自-夏日小草-转载请注明出处-http-homeway-me-2015-06-29-build-oauth2-under-codeigniter" class="headerlink" title="本文出自 夏日小草,转载请注明出处:http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/"></a>本文出自 <a href="http://homeway.me">夏日小草</a>,转载请注明出处:<a href="http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/">http://homeway.me/2015/06/29/build-oauth2-under-codeigniter/</a></h4><p>-by小草</p>
-<p>2015-06-29 02:04:10</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;br&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;https://static.blog.homeway.me/blog/logo-oauth2.png&quot; alt=&quot;Oauth2.0&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="Tech" scheme="http://homeway.me/categories/Tech/"/>
-    
-    
-      <category term="Oauth" scheme="http://homeway.me/tags/Oauth/"/>
     
   </entry>
   
