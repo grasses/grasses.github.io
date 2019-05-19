@@ -4,28 +4,6 @@
   
     
     <entry>
-      <title><![CDATA[基于TF-IDF的新闻推荐算法]]></title>
-      <url>http://homeway.me/2019/05/10/Machine_Learning_Hybrid_News_Recommendation_via_TF-IDF/</url>
-      <content type="html"><![CDATA[<p><br></p>
-<p><img src="https://static.blog.homeway.me/blog/machine-learning-logox.png" alt="Tamper Detection"></p>
-<a id="more"></a>
-<h1 id="1-Introduction"><a href="#1-Introduction" class="headerlink" title="1.Introduction"></a>1.Introduction</h1><p>随着互联网上大量的数量广泛传播，获取我们真正想要寻找的数据变得越来越难。虽然，我们有搜索引擎、RSS阅读器等工具，但是这些工具仅仅能够查找，无法实现推荐效果。这里面有两方面原因：（1）读者自己只知道自己认知的事物，无法扩展到未知领域；（2）读者知道想要什么关键字，但是查找的结果仅仅包含部分关键字，无法更具体地从语义上满足读者。<a href="https://ieeexplore.ieee.org/abstract/document/7124857" target="_blank" rel="external">[1]</a></p>
-<p>这篇文章主要讨论使用TF-IDF（term frequency–inverse document frequency，词频-逆文档频率）实现新闻推荐系统，首先介绍TF-IDF、协同过滤原理，然后分析基于Sklearn的TF-IDF代码，最后说明下实验效果。</p>
-<hr>
-<h1 id="2-TF-IDF"><a href="#2-TF-IDF" class="headerlink" title="2.TF-IDF"></a>2.TF-IDF</h1><p>$$TF<em>{ w;{ D }</em>{ i } }=\frac { count(w) }{ { D }_{ i } }$$</p>
-<hr>
-<h1 id="4-Reference"><a href="#4-Reference" class="headerlink" title="4. Reference"></a>4. Reference</h1><ul>
-<li><a href="https://ieeexplore.ieee.org/abstract/document/7124857/" target="_blank" rel="external">[1] P. Nagarnaik and A. Thomas. Survey on recommendation system methods. In 2015 2nd International Conference on Electronics and Communication Systems (ICECS), pages 1603–1608. IEEE, 2015.</a></li>
-<li></li>
-</ul>
-<hr>
-<blockquote>
-<p>by grasses 2019.05.10</p>
-</blockquote>
-]]></content>
-    </entry>
-    
-    <entry>
       <title><![CDATA[图像篡改检测和定位（二）]]></title>
       <url>http://homeway.me/2019/05/04/tamper-detection-an-overview-2/</url>
       <content type="html"><![CDATA[<p><br></p>
